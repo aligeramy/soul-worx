@@ -14,6 +14,11 @@ export default async function ProductPage({
     notFound()
   }
 
-  return <ProductDetails product={product} />
+  return <ProductDetails product={{
+    ...product,
+    tags: product.tags || [],
+    specifications: product.specifications || {},
+    variants: product.variants || []
+  }} />
 }
 

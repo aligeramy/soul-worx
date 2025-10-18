@@ -1,16 +1,19 @@
+"use client"
+
 import Link from "next/link"
-import { Suspense } from "react"
 import { Instagram, Twitter, Facebook } from "lucide-react"
-import { UserMenu } from "./user-menu"
-import { UserMenuSkeleton } from "./user-menu-skeleton"
+import { usePathname } from "next/navigation"
+import { UserMenuClient } from "./user-menu-client"
 import { CartButton } from "@/components/shop/cart-button"
 
 interface TopBarProps {
-  isHomepage: boolean  // Also true for pages with transparent nav (events, etc)
+  hasSession: boolean
 }
 
-export function TopBar({ isHomepage }: TopBarProps) {
-  const isTransparent = isHomepage  // Using isHomepage prop for backward compatibility
+export function TopBar({ hasSession }: TopBarProps) {
+  const pathname = usePathname()
+  const isHomepage = pathname === "/"
+  const isTransparent = isHomepage || pathname.includes('/events/')
   const textColor = isTransparent ? "text-white hover:text-white/80" : "text-foreground hover:text-primary"
   const borderColor = isTransparent ? "border-white/10" : "border-border"
   const bgColor = isTransparent ? "bg-black/20" : "bg-background/80"
@@ -52,9 +55,7 @@ export function TopBar({ isHomepage }: TopBarProps) {
 
           {/* Right - Account & Cart */}
           <div className="flex items-center gap-4">
-            <Suspense fallback={<UserMenuSkeleton isHomepage={isTransparent} />}>
-              <UserMenu isHomepage={isTransparent} />
-            </Suspense>
+            <UserMenuClient isHomepage={isTransparent} hasSession={hasSession} />
             
             <div className={isTransparent ? "[&_button]:text-white [&_button:hover]:text-white/80" : ""}>
               <CartButton />

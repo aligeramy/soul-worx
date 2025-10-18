@@ -29,7 +29,11 @@ export default async function EditProductPage({
         </p>
       </div>
 
-      <ProductForm product={product} />
+      <ProductForm product={{
+        ...product,
+        tags: product.tags || [],
+        specifications: product.specifications || {}
+      }} />
     </div>
   )
 }

@@ -6,7 +6,6 @@ import Image from "next/image"
 import { motion, AnimatePresence } from "framer-motion"
 import { NavigationMenu } from "@/components/navigation/navigation-menu"
 import { MobileMenu } from "@/components/navigation/mobile-menu"
-import { CartButton } from "@/components/shop/cart-button"
 import { usePathname } from "next/navigation"
 import { navigationConfig, type NavigationItem } from "@/config/navigation"
 

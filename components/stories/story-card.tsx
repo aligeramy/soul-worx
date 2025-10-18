@@ -1,4 +1,5 @@
 import Link from "next/link"
+import Image from "next/image"
 import type { posts, users } from "@/lib/db/schema"
 
 type Post = typeof posts.$inferSelect & {
@@ -48,9 +49,11 @@ export function StoryCard({ post, variant = "community" }: StoryCardProps) {
         <div className="relative aspect-[4/3] overflow-hidden">
           {post.coverImage ? (
             <>
-              <img
+              <Image
                 src={post.coverImage}
                 alt={post.title}
+                width={400}
+                height={300}
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
@@ -93,9 +96,11 @@ export function StoryCard({ post, variant = "community" }: StoryCardProps) {
           <div className="flex items-center justify-between pt-4 border-t border-neutral-100">
             <div className="flex items-center gap-3">
               {post.author.image && (
-                <img
+                <Image
                   src={post.author.image}
                   alt={post.author.name || "Author"}
+                  width={40}
+                  height={40}
                   className="w-10 h-10 rounded-full"
                 />
               )}
