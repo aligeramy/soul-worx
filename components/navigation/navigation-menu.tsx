@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useRef, useCallback } from "react"
+import { useState, MouseEvent } from "react"
 import Link from "next/link"
 import { motion } from "framer-motion"
 import { ChevronDown } from "lucide-react"
@@ -9,36 +9,22 @@ import type { NavigationItem } from "@/config/navigation"
 interface NavigationMenuProps {
   item: NavigationItem
   isLight?: boolean
-  onSubmenuChange?: (isOpen: boolean, submenu: NavigationItem["submenu"], parentLabel: string) => void
+  onMouseEnter?: (e: MouseEvent<HTMLDivElement>) => void
+  onMouseLeave?: (e: MouseEvent<HTMLDivElement>) => void
 }
 
-export function NavigationMenu({ item, isLight = false, onSubmenuChange }: NavigationMenuProps) {
+export function NavigationMenu({ item, isLight = false, onMouseEnter, onMouseLeave }: NavigationMenuProps) {
   const [isHovered, setIsHovered] = useState(false)
-  const timeoutRef = useRef<NodeJS.Timeout | undefined>(undefined)
 
-  const handleMouseEnter = useCallback(() => {
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current)
-    }
+  const handleMouseEnter = (e: MouseEvent<HTMLDivElement>) => {
     setIsHovered(true)
-    if (item.submenu && onSubmenuChange) {
-      onSubmenuChange(true, item.submenu, item.label)
-    }
-  }, [item.submenu, item.label, onSubmenuChange])
+    onMouseEnter?.(e)
+  }
 
-  const handleMouseLeave = useCallback(() => {
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current)
-      timeoutRef.current = undefined
-    }
-    // Longer delay to give time to move to submenu
-    timeoutRef.current = setTimeout(() => {
-      setIsHovered(false)
-      if (onSubmenuChange) {
-        onSubmenuChange(false, undefined, "")
-      }
-    }, 500)
-  }, [onSubmenuChange])
+  const handleMouseLeave = (e: MouseEvent<HTMLDivElement>) => {
+    setIsHovered(false)
+    onMouseLeave?.(e)
+  }
 
   const textColor = isLight ? "text-white hover:text-white/90" : "text-foreground hover:text-primary"
   const underlineColor = isLight ? "bg-white" : "bg-primary"

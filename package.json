@@ -13,6 +13,8 @@
     "db:studio": "drizzle-kit studio",
     "db:seed": "tsx lib/seed-data.ts",
     "db:seed-products": "tsx lib/seed-products-standalone.ts",
+    "db:seed-community": "tsx lib/seed-community.ts",
+    "setup-stripe": "tsx scripts/setup-stripe-products.ts",
     "check-user": "tsx scripts/check-user.ts",
     "make-admin": "tsx scripts/make-admin.ts"
   },
@@ -35,11 +37,13 @@
     "@radix-ui/react-toggle": "^1.1.10",
     "@radix-ui/react-toggle-group": "^1.1.11",
     "@radix-ui/react-tooltip": "^1.2.8",
+    "@stripe/stripe-js": "^8.1.0",
     "@tabler/icons-react": "^3.35.0",
     "@tanstack/react-table": "^8.21.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
+    "discord.js": "^14.17.3",
     "dotenv": "^17.2.3",
     "drizzle-orm": "^0.44.6",
     "framer-motion": "^12.23.24",
@@ -49,14 +53,17 @@
     "next": "15.5.6",
     "next-auth": "^5.0.0-beta.29",
     "next-themes": "^0.4.6",
+    "pako": "^2.1.0",
     "postgres": "^3.4.7",
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "react-map-gl": "^8.1.0",
     "recharts": "2.15.4",
     "sonner": "^2.0.7",
+    "stripe": "^19.1.0",
     "tailwind-merge": "^3.3.1",
     "vaul": "^1.1.2",
+    "zlib-sync": "npm:pako@^2.1.0",
     "zod": "^4.1.12"
   },
   "devDependencies": {
@@ -72,5 +79,10 @@
     "tsx": "^4.20.6",
     "tw-animate-css": "^1.4.0",
     "typescript": "^5"
+  },
+  "pnpm": {
+    "overrides": {
+      "zlib-sync": "npm:pako@^2.1.0"
+    }
   }
 }

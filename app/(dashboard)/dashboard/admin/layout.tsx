@@ -21,25 +21,13 @@ export default async function AdminLayout({
 
   return (
     <SessionProvider>
-      <div className="min-h-screen bg-black">
-        <SidebarProvider
-          style={
-            {
-              "--sidebar-background": "#1c1c1e",
-              "--sidebar-foreground": "rgb(255 255 255 / 0.9)",
-              "--sidebar-primary": "rgb(255 255 255)",
-              "--sidebar-primary-foreground": "#000000",
-              "--sidebar-accent": "rgb(255 255 255 / 0.1)",
-              "--sidebar-accent-foreground": "rgb(255 255 255)",
-              "--sidebar-border": "rgb(255 255 255 / 0.1)",
-            } as React.CSSProperties
-          }
-        >
+      {/* Force dark theme for the admin area and use design tokens */}
+      <div className="min-h-screen dark">
+        <SidebarProvider>
           <AdminSidebar user={session.user} />
-          <SidebarInset className="bg-black">
-            <AdminHeader />
+          <SidebarInset className="bg-background">
             <main className="flex-1 p-6">
-              <div className="max-w-7xl mx-auto">
+              <div className="w-full">
                 {children}
               </div>
             </main>
