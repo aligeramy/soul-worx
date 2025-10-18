@@ -3,7 +3,7 @@
 
 import "dotenv/config"
 import { db } from "./db/index"
-import { posts, users, type PostCategory, type PostStatus } from "./db/schema"
+import { posts, users as usersTable, type PostCategory, type PostStatus } from "./db/schema"
 
 async function seedStories() {
   console.log("🌱 Seeding stories...")
