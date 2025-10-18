@@ -1,5 +1,4 @@
 import { getPublishedPosts } from "@/lib/db/queries"
-import { eq } from "drizzle-orm"
 import Link from "next/link"
 
 export default async function PoetryDropsPage() {
@@ -108,7 +107,7 @@ export default async function PoetryDropsPage() {
                             
                             {post.excerpt && (
                               <p className="text-lg text-neutral-600 leading-relaxed font-light italic">
-                                "{post.excerpt}"
+                                &ldquo;{post.excerpt}&rdquo;
                               </p>
                             )}
                           </div>

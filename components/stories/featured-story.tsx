@@ -1,4 +1,5 @@
 import Link from "next/link"
+import Image from "next/image"
 import type { posts, users } from "@/lib/db/schema"
 
 type Post = typeof posts.$inferSelect & {
@@ -42,9 +43,11 @@ export function FeaturedStory({ post, variant = "poetry" }: FeaturedStoryProps) 
           <div className="relative aspect-[4/3] md:aspect-auto overflow-hidden">
             {post.coverImage ? (
               <>
-                <img
+                <Image
                   src={post.coverImage}
                   alt={post.title}
+                  width={600}
+                  height={450}
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-br from-black/20 to-transparent"></div>

@@ -1,20 +1,16 @@
-import { headers } from "next/headers"
+import { getHasSession } from "@/lib/actions/session"
 import { TopBar } from "@/components/navigation/top-bar"
 import { NavigationClientWrapper } from "@/components/navigation/navigation-client-wrapper"
 
 /**
- * Server wrapper that composes TopBar (server) with Navigation (client)
- * Determines transparent navigation status from URL
+ * Server wrapper that composes TopBar with Navigation
  */
 export async function NavigationServerWrapper() {
-  const headersList = await headers()
-  const pathname = headersList.get("x-pathname") || "/"
-  // Transparent on homepage and event pages with hero images
-  const isTransparent = pathname === "/" || pathname.includes('/events/')
+  const hasSession = await getHasSession()
 
   return (
-    <NavigationClientWrapper 
-      topBar={<TopBar isHomepage={isTransparent} />}
+    <NavigationClientWrapper
+      topBar={<TopBar hasSession={hasSession} />}
     />
   )
 }

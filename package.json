@@ -10,7 +10,11 @@
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
     "db:push": "drizzle-kit push",
-    "db:studio": "drizzle-kit studio"
+    "db:studio": "drizzle-kit studio",
+    "db:seed": "tsx lib/seed-data.ts",
+    "db:seed-products": "tsx lib/seed-products-standalone.ts",
+    "check-user": "tsx scripts/check-user.ts",
+    "make-admin": "tsx scripts/make-admin.ts"
   },
   "dependencies": {
     "@auth/core": "^0.41.0",

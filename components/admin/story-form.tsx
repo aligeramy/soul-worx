@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
+import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Field } from "@/components/ui/field"
@@ -42,6 +43,59 @@ export function StoryForm({ story }: StoryFormProps) {
     metaTitle: story?.metaTitle || "",
     metaDescription: story?.metaDescription || "",
   })
+
+  // Category-specific guidance
+  const categoryGuidance = {
+    poetry: {
+      title: "Poetry Drop",
+      color: "blue",
+      icon: "✍️",
+      tips: [
+        "Write each verse as a separate paragraph for beautiful fade-in animations",
+        "Use italics and line breaks to create rhythm",
+        "Consider adding a powerful excerpt that captures the poem's essence"
+      ],
+      example: "Each paragraph will fade in one by one, creating an immersive reading experience with purple gradient backgrounds."
+    },
+    news: {
+      title: "Event Recap",
+      color: "amber",
+      icon: "🎉",
+      tips: [
+        "Start with the event date and key highlights",
+        "Include attendee count, performances, and duration",
+        "Add photos from the event for a photo gallery effect",
+        "End with a call-to-action for the next event"
+      ],
+      example: "Event stats will animate with spring effects, and photos will have zoom animations on hover."
+    },
+    stories: {
+      title: "Community Highlight",
+      color: "purple",
+      icon: "❤️",
+      tips: [
+        "Tell a personal story that resonates with the community",
+        "Include quotes from community members",
+        "Focus on transformation and impact",
+        "Add a compelling cover image that represents the story"
+      ],
+      example: "The page features parallax scrolling effects and interactive share buttons with heart animations."
+    },
+    announcements: {
+      title: "Press & Media",
+      color: "emerald",
+      icon: "📰",
+      tips: [
+        "Use formal press release format",
+        "Start with FOR IMMEDIATE RELEASE and date",
+        "Include media contact information",
+        "Keep tone professional and newsworthy"
+      ],
+      example: "Professional news layout with clean typography and prominent media contact section."
+    }
+  }
+
+  const currentGuidance = categoryGuidance[formData.category as keyof typeof categoryGuidance] || categoryGuidance.stories
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -106,6 +160,32 @@ export function StoryForm({ story }: StoryFormProps) {
 
   return (
     <form onSubmit={handleSubmit} className="bg-white rounded-xl border p-8 space-y-8">
+      {/* Category Guidance */}
+      <div className={`bg-gradient-to-br from-${currentGuidance.color}-50 to-${currentGuidance.color}-100 rounded-xl p-6 border-2 border-${currentGuidance.color}-200`}>
+        <div className="flex items-start gap-4">
+          <div className="text-4xl">{currentGuidance.icon}</div>
+          <div className="flex-1">
+            <h3 className="text-xl font-bold text-neutral-900 mb-2">
+              Creating a {currentGuidance.title}
+            </h3>
+            <p className="text-sm text-neutral-700 mb-4 italic">
+              {currentGuidance.example}
+            </p>
+            <div className="space-y-2">
+              <p className="text-sm font-semibold text-neutral-800">Writing Tips:</p>
+              <ul className="space-y-1 text-sm text-neutral-700">
+                {currentGuidance.tips.map((tip, index) => (
+                  <li key={index} className="flex items-start gap-2">
+                    <span className="text-neutral-400 mt-0.5">•</span>
+                    <span>{tip}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Basic Info */}
       <div className="space-y-6">
         <h2 className="text-xl font-bold">Basic Information</h2>
@@ -220,7 +300,7 @@ export function StoryForm({ story }: StoryFormProps) {
           />
           {coverImage && (
             <div className="mt-3 relative group aspect-video bg-neutral-100 rounded-lg overflow-hidden">
-              <img src={coverImage} alt="Cover preview" className="w-full h-full object-cover" />
+              <Image src={coverImage} alt="Cover preview" width={400} height={225} className="w-full h-full object-cover" />
               <button
                 type="button"
                 onClick={() => setCoverImage("")}
@@ -245,7 +325,7 @@ export function StoryForm({ story }: StoryFormProps) {
           />
           {ogImage && (
             <div className="mt-3 relative group aspect-video bg-neutral-100 rounded-lg overflow-hidden max-w-md">
-              <img src={ogImage} alt="OG preview" className="w-full h-full object-cover" />
+              <Image src={ogImage} alt="OG preview" width={400} height={225} className="w-full h-full object-cover" />
               <button
                 type="button"
                 onClick={() => setOgImage("")}

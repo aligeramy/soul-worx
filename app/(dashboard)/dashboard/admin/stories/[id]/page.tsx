@@ -31,7 +31,10 @@ export default async function EditStoryPage({
         </p>
       </div>
 
-      <StoryForm story={story} />
+      <StoryForm story={{
+        ...story,
+        tags: story.tags || []
+      }} />
     </div>
   )
 }

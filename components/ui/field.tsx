@@ -81,8 +81,17 @@ const fieldVariants = cva(
 function Field({
   className,
   orientation = "vertical",
+  label,
+  htmlFor,
+  required,
+  children,
   ...props
-}: React.ComponentProps<"div"> & VariantProps<typeof fieldVariants>) {
+}: React.ComponentProps<"div"> & VariantProps<typeof fieldVariants> & {
+  label?: string
+  htmlFor?: string
+  required?: boolean
+  children?: React.ReactNode
+}) {
   return (
     <div
       role="group"
@@ -90,7 +99,16 @@ function Field({
       data-orientation={orientation}
       className={cn(fieldVariants({ orientation }), className)}
       {...props}
-    />
+    >
+      {label && (
+        <FieldLabel htmlFor={htmlFor} className={required ? "after:content-['*'] after:ml-1 after:text-red-500" : ""}>
+          {label}
+        </FieldLabel>
+      )}
+      <FieldContent>
+        {children}
+      </FieldContent>
+    </div>
   )
 }
 

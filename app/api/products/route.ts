@@ -18,7 +18,7 @@ export async function GET(request: NextRequest) {
       query = db.query.products.findMany({
         where: (products, { and, eq }) => and(
           eq(products.status, "active"),
-          eq(products.category, category as any)
+          eq(products.category, category as "apparel" | "accessories" | "books" | "digital" | "other")
         ),
         orderBy: (products, { desc }) => [desc(products.createdAt)],
       })

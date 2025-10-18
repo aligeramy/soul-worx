@@ -31,7 +31,12 @@ export default async function EditProgramPage({
         </p>
       </div>
 
-      <ProgramForm program={program} />
+      <ProgramForm program={{
+        ...program,
+        images: program.images || [],
+        tags: program.tags || [],
+        faqs: program.faqs || []
+      }} />
     </div>
   )
 }

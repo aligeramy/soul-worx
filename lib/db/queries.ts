@@ -1,6 +1,6 @@
 import { db } from "./index"
-import { programs, events, rsvps, posts, products, users, calendarSyncs, eventUpdates, type UserRole } from "./schema"
-import { eq, and, gte, lte, desc, asc, sql, count } from "drizzle-orm"
+import { programs, events, rsvps, posts, products, users, eventUpdates, type UserRole } from "./schema"
+import { eq, and, gte, desc, asc, count } from "drizzle-orm"
 
 // ==================== USER QUERIES ====================
 
@@ -151,7 +151,7 @@ export async function getPostsByCategory(category: string) {
   return db.query.posts.findMany({
     where: and(
       eq(posts.status, "published"),
-      eq(posts.category, category as any)
+      eq(posts.category, category as "poetry" | "news" | "stories" | "tutorials" | "announcements")
     ),
     with: {
       author: true,
@@ -178,7 +178,7 @@ export async function getProductsByCategory(category: string) {
   return db.query.products.findMany({
     where: and(
       eq(products.status, "active"),
-      eq(products.category, category as any)
+      eq(products.category, category as "apparel" | "accessories" | "books" | "digital" | "other")
     ),
     orderBy: [desc(products.createdAt)],
   })

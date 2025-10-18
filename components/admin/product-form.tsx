@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
+import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Field } from "@/components/ui/field"
@@ -295,7 +296,7 @@ export function ProductForm({ product }: ProductFormProps) {
           <div className="grid grid-cols-4 gap-4">
             {images.map((image, index) => (
               <div key={index} className="relative group aspect-square bg-neutral-100 rounded-lg overflow-hidden">
-                <img src={image} alt="" className="w-full h-full object-cover" />
+                <Image src={image} alt="" width={200} height={200} className="w-full h-full object-cover" />
                 <button
                   type="button"
                   onClick={() => removeImage(index)}
