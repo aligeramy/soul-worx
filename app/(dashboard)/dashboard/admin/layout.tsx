@@ -1,6 +1,9 @@
 import { auth } from "@/auth"
 import { redirect } from "next/navigation"
-import Link from "next/link"
+import { AdminSidebar } from "@/components/admin/admin-sidebar"
+import { AdminHeader } from "@/components/admin/admin-header"
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
+import { SessionProvider } from "@/components/providers/session-provider"
 
 export default async function AdminLayout({
   children,
@@ -12,61 +15,37 @@ export default async function AdminLayout({
   // Double-check admin access
   const isAdmin = session?.user?.role === "admin" || session?.user?.role === "super_admin"
   
-  if (!isAdmin) {
+  if (!isAdmin || !session?.user) {
     redirect("/dashboard")
   }
 
   return (
-    <div className="min-h-screen bg-neutral-50">
-      {/* Admin Navigation */}
-      <div className="bg-black text-white border-b border-white/10">
-        <div className="max-w-7xl mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-2">
-              <div className="px-3 py-1 bg-white/10 rounded-full text-xs font-bold">
-                ADMIN
+    <SessionProvider>
+      <div className="min-h-screen bg-black">
+        <SidebarProvider
+          style={
+            {
+              "--sidebar-background": "#1c1c1e",
+              "--sidebar-foreground": "rgb(255 255 255 / 0.9)",
+              "--sidebar-primary": "rgb(255 255 255)",
+              "--sidebar-primary-foreground": "#000000",
+              "--sidebar-accent": "rgb(255 255 255 / 0.1)",
+              "--sidebar-accent-foreground": "rgb(255 255 255)",
+              "--sidebar-border": "rgb(255 255 255 / 0.1)",
+            } as React.CSSProperties
+          }
+        >
+          <AdminSidebar user={session.user} />
+          <SidebarInset className="bg-black">
+            <AdminHeader />
+            <main className="flex-1 p-6">
+              <div className="max-w-7xl mx-auto">
+                {children}
               </div>
-              <span className="text-sm text-white/70">Content Management System</span>
-            </div>
-            <Link 
-              href="/dashboard"
-              className="text-sm text-white/70 hover:text-white transition-colors"
-            >
-              ← Back to Dashboard
-            </Link>
-          </div>
-        </div>
+            </main>
+          </SidebarInset>
+        </SidebarProvider>
       </div>
-
-      {/* Admin Tabs */}
-      <div className="bg-white border-b border-neutral-200">
-        <div className="max-w-7xl mx-auto px-6">
-          <nav className="flex space-x-8">
-            <AdminNavLink href="/dashboard/admin">Overview</AdminNavLink>
-            <AdminNavLink href="/dashboard/admin/programs">Programs</AdminNavLink>
-            <AdminNavLink href="/dashboard/admin/events">Events</AdminNavLink>
-            <AdminNavLink href="/dashboard/admin/stories">Stories</AdminNavLink>
-            <AdminNavLink href="/dashboard/admin/shop">Shop</AdminNavLink>
-          </nav>
-        </div>
-      </div>
-
-      {/* Content */}
-      <div className="max-w-7xl mx-auto px-6 py-8">
-        {children}
-      </div>
-    </div>
+    </SessionProvider>
   )
 }
-
-function AdminNavLink({ href, children }: { href: string; children: React.ReactNode }) {
-  return (
-    <Link
-      href={href}
-      className="py-4 border-b-2 border-transparent hover:border-black transition-colors text-sm font-medium text-neutral-600 hover:text-black"
-    >
-      {children}
-    </Link>
-  )
-}
-

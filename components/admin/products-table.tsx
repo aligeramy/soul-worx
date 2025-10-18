@@ -4,7 +4,9 @@ import { useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { Edit, Trash2, Eye } from "lucide-react"
+import { Card, CardContent } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+import { Edit, Trash2, Eye, DollarSign, Package } from "lucide-react"
 
 interface Product {
   id: string
@@ -35,36 +37,32 @@ export function ProductsTable({ products }: ProductsTableProps) {
   })
 
   const getStatusBadge = (status: string) => {
-    const styles = {
-      active: "bg-green-100 text-green-800",
-      draft: "bg-yellow-100 text-yellow-800",
-      sold_out: "bg-red-100 text-red-800",
-      archived: "bg-neutral-100 text-neutral-800",
+    const variants = {
+      active: "bg-emerald-500/20 text-emerald-400 border-emerald-500/30",
+      draft: "bg-amber-500/20 text-amber-400 border-amber-500/30",
+      sold_out: "bg-red-500/20 text-red-400 border-red-500/30",
+      archived: "bg-white/10 text-white/70 border-white/20",
     }
     return (
-      <span
-        className={`px-2 py-1 rounded-full text-xs font-medium ${
-          styles[status as keyof typeof styles] || styles.draft
-        }`}
-      >
+      <Badge variant="outline" className={variants[status as keyof typeof variants] || variants.draft}>
         {status.replace("_", " ").toUpperCase()}
-      </span>
+      </Badge>
     )
   }
 
   return (
-    <div className="bg-white rounded-xl border">
+    <Card className="bg-[#1c1c1e] border-white/10">
       {/* Filters */}
-      <div className="p-6 border-b">
-        <div className="flex gap-2">
+      <div className="p-6 border-b border-white/10">
+        <div className="flex flex-wrap gap-2">
           {["all", "active", "draft", "sold_out", "archived"].map((status) => (
             <button
               key={status}
               onClick={() => setFilter(status)}
               className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                 filter === status
-                  ? "bg-black text-white"
-                  : "bg-neutral-100 text-neutral-600 hover:bg-neutral-200"
+                  ? "bg-white text-black"
+                  : "bg-white/10 text-white/70 hover:bg-white/20"
               }`}
             >
               {status === "all" ? "All" : status.replace("_", " ")}
@@ -74,123 +72,131 @@ export function ProductsTable({ products }: ProductsTableProps) {
       </div>
 
       {/* Table */}
-      <div className="overflow-x-auto">
-        <table className="w-full">
-          <thead className="border-b bg-neutral-50">
-            <tr>
-              <th className="text-left p-4 font-medium text-sm text-neutral-600">
-                Product
-              </th>
-              <th className="text-left p-4 font-medium text-sm text-neutral-600">
-                Status
-              </th>
-              <th className="text-left p-4 font-medium text-sm text-neutral-600">
-                Price
-              </th>
-              <th className="text-left p-4 font-medium text-sm text-neutral-600">
-                Stock
-              </th>
-              <th className="text-left p-4 font-medium text-sm text-neutral-600">
-                SKU
-              </th>
-              <th className="text-right p-4 font-medium text-sm text-neutral-600">
-                Actions
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredProducts.map((product) => (
-              <tr key={product.id} className="border-b last:border-0 hover:bg-neutral-50">
-                <td className="p-4">
-                  <div className="flex items-center gap-3">
-                    <div className="relative w-12 h-12 bg-neutral-100 rounded-lg overflow-hidden flex-shrink-0">
-                      {product.images && product.images.length > 0 ? (
-                        <Image
-                          src={product.images[0]}
-                          alt={product.name}
-                          fill
-                          className="object-cover"
-                        />
-                      ) : (
-                        <div className="w-full h-full flex items-center justify-center text-neutral-400">
+      <CardContent className="p-0">
+        <div className="overflow-x-auto">
+          <table className="w-full">
+            <thead className="border-b border-white/10">
+              <tr>
+                <th className="text-left px-6 py-4 text-xs font-semibold text-white/60 uppercase tracking-wider">
+                  Product
+                </th>
+                <th className="text-left px-6 py-4 text-xs font-semibold text-white/60 uppercase tracking-wider">
+                  Status
+                </th>
+                <th className="text-left px-6 py-4 text-xs font-semibold text-white/60 uppercase tracking-wider">
+                  Price
+                </th>
+                <th className="text-left px-6 py-4 text-xs font-semibold text-white/60 uppercase tracking-wider">
+                  Stock
+                </th>
+                <th className="text-left px-6 py-4 text-xs font-semibold text-white/60 uppercase tracking-wider">
+                  SKU
+                </th>
+                <th className="text-right px-6 py-4 text-xs font-semibold text-white/60 uppercase tracking-wider">
+                  Actions
+                </th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-white/10">
+              {filteredProducts.map((product) => (
+                <tr key={product.id} className="hover:bg-white/5 transition-colors">
+                  <td className="px-6 py-4">
+                    <div className="flex items-center gap-3">
+                      <div className="relative w-12 h-12 bg-white/5 rounded-lg overflow-hidden flex-shrink-0">
+                        {product.images && product.images.length > 0 ? (
                           <Image
-                            src="/shop/placeholder.webp"
+                            src={product.images[0]}
                             alt={product.name}
                             fill
                             className="object-cover"
                           />
-                        </div>
-                      )}
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center">
+                            <Image
+                              src="/shop/placeholder.webp"
+                              alt={product.name}
+                              fill
+                              className="object-cover"
+                            />
+                          </div>
+                        )}
+                      </div>
+                      <div className="min-w-0">
+                        <p className="font-semibold text-white truncate">{product.name}</p>
+                        <p className="text-sm text-white/50 line-clamp-1">
+                          {product.description}
+                        </p>
+                      </div>
                     </div>
-                    <div>
-                      <p className="font-medium">{product.name}</p>
-                      <p className="text-sm text-neutral-500 line-clamp-1">
-                        {product.description}
-                      </p>
+                  </td>
+                  <td className="px-6 py-4">{getStatusBadge(product.status)}</td>
+                  <td className="px-6 py-4">
+                    <div className="flex flex-col gap-1">
+                      <div className="flex items-center gap-1 text-white font-medium">
+                        <DollarSign className="h-3 w-3" />
+                        {parseFloat(product.price).toFixed(2)}
+                      </div>
+                      {product.compareAtPrice &&
+                        parseFloat(product.compareAtPrice) > parseFloat(product.price) && (
+                          <span className="text-sm text-white/50 line-through">
+                            ${parseFloat(product.compareAtPrice).toFixed(2)}
+                          </span>
+                        )}
                     </div>
-                  </div>
-                </td>
-                <td className="p-4">{getStatusBadge(product.status)}</td>
-                <td className="p-4">
-                  <div className="flex flex-col">
-                    <span className="font-medium">
-                      ${parseFloat(product.price).toFixed(2)}
+                  </td>
+                  <td className="px-6 py-4">
+                    <div className="flex items-center gap-2">
+                      <Package className="h-4 w-4 text-white/50" />
+                      <span
+                        className={`font-medium ${
+                          product.stock === 0 ? "text-red-400" : "text-white"
+                        }`}
+                      >
+                        {product.stock}
+                      </span>
+                    </div>
+                  </td>
+                  <td className="px-6 py-4">
+                    <span className="text-sm text-white/70">
+                      {product.sku || "—"}
                     </span>
-                    {product.compareAtPrice &&
-                      parseFloat(product.compareAtPrice) > parseFloat(product.price) && (
-                        <span className="text-sm text-neutral-500 line-through">
-                          ${parseFloat(product.compareAtPrice).toFixed(2)}
-                        </span>
-                      )}
-                  </div>
-                </td>
-                <td className="p-4">
-                  <span
-                    className={`font-medium ${
-                      product.stock === 0 ? "text-red-600" : ""
-                    }`}
-                  >
-                    {product.stock}
-                  </span>
-                </td>
-                <td className="p-4">
-                  <span className="text-sm text-neutral-600">
-                    {product.sku || "—"}
-                  </span>
-                </td>
-                <td className="p-4">
-                  <div className="flex items-center justify-end gap-2">
-                    <Link href={`/shop/${product.slug}`} target="_blank">
-                      <Button variant="ghost" size="icon">
-                        <Eye className="h-4 w-4" />
+                  </td>
+                  <td className="px-6 py-4">
+                    <div className="flex items-center justify-end gap-1">
+                      <Link href={`/shop/${product.slug}`} target="_blank">
+                        <Button variant="ghost" size="sm" className="text-white/70 hover:text-white hover:bg-white/10">
+                          <Eye className="h-4 w-4" />
+                        </Button>
+                      </Link>
+                      <Link href={`/dashboard/admin/shop/${product.id}`}>
+                        <Button variant="ghost" size="sm" className="text-white/70 hover:text-white hover:bg-white/10">
+                          <Edit className="h-4 w-4" />
+                        </Button>
+                      </Link>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => handleDelete(product.id)}
+                        className="text-white/70 hover:text-red-400 hover:bg-white/10"
+                      >
+                        <Trash2 className="h-4 w-4" />
                       </Button>
-                    </Link>
-                    <Link href={`/dashboard/admin/shop/${product.id}`}>
-                      <Button variant="ghost" size="icon">
-                        <Edit className="h-4 w-4" />
-                      </Button>
-                    </Link>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      onClick={() => handleDelete(product.id)}
-                    >
-                      <Trash2 className="h-4 w-4" />
-                    </Button>
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
 
-        {filteredProducts.length === 0 && (
-          <div className="p-12 text-center text-neutral-500">
-            <p>No products found</p>
-          </div>
-        )}
-      </div>
-    </div>
+          {filteredProducts.length === 0 && (
+            <div className="p-12 text-center">
+              <Package className="h-12 w-12 mx-auto text-white/40 mb-4" />
+              <p className="text-white/60">No products found</p>
+            </div>
+          )}
+        </div>
+      </CardContent>
+    </Card>
   )
 }
 
@@ -210,4 +216,3 @@ async function handleDelete(id: string) {
     alert("Failed to delete product")
   }
 }
-

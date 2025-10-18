@@ -10,7 +10,7 @@ async function seedStories() {
 
   // Get the admin user
   const adminEmail = "admin@soulworx.com"
-  let adminUser = await db.query.users.findFirst({
+  const adminUser = await db.query.users.findFirst({
     where: (users, { eq }) => eq(users.email, adminEmail)
   })
 

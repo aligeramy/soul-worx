@@ -947,7 +947,7 @@ async function seed() {
         Material: "100% Cotton",
         Fit: "Regular",
         Care: "Machine wash cold",
-      } as const,
+      },
       createdBy: adminUser!.id,
     },
     {
@@ -967,7 +967,7 @@ async function seed() {
         Size: "6x9 inches",
         Cover: "Hardcover",
         Paper: "Premium acid-free",
-      } as const,
+      },
       createdBy: adminUser!.id,
     },
     {
@@ -987,7 +987,7 @@ async function seed() {
         Material: "80% Cotton, 20% Polyester",
         Fit: "Regular",
         Features: "Kangaroo pocket, drawstring hood",
-      } as const,
+      },
       createdBy: adminUser!.id,
     },
     {
@@ -1006,7 +1006,7 @@ async function seed() {
         Material: "100% Organic Cotton Canvas",
         Size: "15x16 inches",
         Capacity: "Large",
-      } as const,
+      },
       createdBy: adminUser!.id,
     },
     {
@@ -1026,7 +1026,7 @@ async function seed() {
         Format: "Hardcover",
         ISBN: "978-1-234567-89-0",
         Edition: "Limited First Edition",
-      } as const,
+      },
       createdBy: adminUser!.id,
     },
     {
@@ -1046,7 +1046,7 @@ async function seed() {
         Material: "Premium vinyl",
         Size: "Various (2-4 inches)",
         Finish: "Glossy, waterproof",
-      } as const,
+      },
       createdBy: adminUser!.id,
     },
     {
@@ -1065,7 +1065,7 @@ async function seed() {
         Duration: "30 days",
         Access: "All virtual workshops",
         Includes: "Recordings and materials",
-      } as const,
+      },
       createdBy: adminUser!.id,
     },
     {
@@ -1084,13 +1084,14 @@ async function seed() {
         Material: "100% Cotton twill",
         Closure: "Adjustable strap",
         Logo: "Embroidered",
-      } as const,
+      },
       createdBy: adminUser!.id,
     },
   ]
 
   console.log("Creating shop products...")
-  const createdProducts = await db.insert(products).values(productsData).returning()
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const createdProducts = await db.insert(products).values(productsData as any).returning()
   console.log(`✅ Created ${createdProducts.length} products`)
 
   console.log("\n🎉 Seeding complete!")

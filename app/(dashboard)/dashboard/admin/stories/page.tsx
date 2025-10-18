@@ -5,6 +5,11 @@ import { posts } from "@/lib/db/schema"
 import { desc } from "drizzle-orm"
 import Link from "next/link"
 import { DeleteStoryButton } from "@/components/admin/delete-story-button"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+import { Plus, ExternalLink, Pencil, FileText, Eye } from "lucide-react"
+import Image from "next/image"
 
 export default async function AdminStoriesPage() {
   const session = await auth()
@@ -44,188 +49,207 @@ export default async function AdminStoriesPage() {
   }
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6 animate-in fade-in duration-500">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-4xl font-bold tracking-tight">Stories Management</h1>
-          <p className="text-neutral-600 mt-2">
-            Manage poetry drops, community highlights, event recaps, and press releases
+          <h1 className="text-3xl font-bold text-white">Stories</h1>
+          <p className="text-white/60 mt-1">
+            Manage poetry, community highlights, event recaps, and press releases
           </p>
         </div>
         <Link href="/dashboard/admin/stories/new">
-          <button className="px-6 py-3 bg-black text-white rounded-lg font-bold hover:bg-neutral-800 transition-colors">
-            + New Story
-          </button>
+          <Button className="bg-white text-black hover:bg-white/90 font-semibold">
+            <Plus className="mr-2 h-4 w-4" />
+            New Story
+          </Button>
         </Link>
       </div>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        <div className="p-6 bg-gradient-to-br from-blue-50 to-cyan-50 rounded-2xl border border-blue-100">
-          <div className="text-sm font-bold text-blue-600 mb-2">POETRY DROPS</div>
-          <div className="text-4xl font-bold text-blue-900">{storyTypes.poetry.length}</div>
-          <div className="text-sm text-blue-600 mt-2">
-            {storyTypes.poetry.filter(s => s.status === "published").length} published
-          </div>
-        </div>
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <Card className="bg-[#1c1c1e] border-blue-500/20">
+          <CardContent className="p-4">
+            <div className="text-xs font-semibold text-blue-400 mb-1 uppercase tracking-wider">Poetry Drops</div>
+            <div className="text-3xl font-bold text-white">{storyTypes.poetry.length}</div>
+            <div className="text-xs text-blue-400/70 mt-1">
+              {storyTypes.poetry.filter(s => s.status === "published").length} published
+            </div>
+          </CardContent>
+        </Card>
         
-        <div className="p-6 bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl border border-purple-100">
-          <div className="text-sm font-bold text-purple-600 mb-2">COMMUNITY</div>
-          <div className="text-4xl font-bold text-purple-900">{storyTypes.stories.length}</div>
-          <div className="text-sm text-purple-600 mt-2">
-            {storyTypes.stories.filter(s => s.status === "published").length} published
-          </div>
-        </div>
+        <Card className="bg-[#1c1c1e] border-purple-500/20">
+          <CardContent className="p-4">
+            <div className="text-xs font-semibold text-purple-400 mb-1 uppercase tracking-wider">Community</div>
+            <div className="text-3xl font-bold text-white">{storyTypes.stories.length}</div>
+            <div className="text-xs text-purple-400/70 mt-1">
+              {storyTypes.stories.filter(s => s.status === "published").length} published
+            </div>
+          </CardContent>
+        </Card>
         
-        <div className="p-6 bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl border border-amber-100">
-          <div className="text-sm font-bold text-amber-600 mb-2">EVENT RECAPS</div>
-          <div className="text-4xl font-bold text-amber-900">{storyTypes.news.length}</div>
-          <div className="text-sm text-amber-600 mt-2">
-            {storyTypes.news.filter(s => s.status === "published").length} published
-          </div>
-        </div>
+        <Card className="bg-[#1c1c1e] border-amber-500/20">
+          <CardContent className="p-4">
+            <div className="text-xs font-semibold text-amber-400 mb-1 uppercase tracking-wider">Event Recaps</div>
+            <div className="text-3xl font-bold text-white">{storyTypes.news.length}</div>
+            <div className="text-xs text-amber-400/70 mt-1">
+              {storyTypes.news.filter(s => s.status === "published").length} published
+            </div>
+          </CardContent>
+        </Card>
         
-        <div className="p-6 bg-gradient-to-br from-green-50 to-teal-50 rounded-2xl border border-green-100">
-          <div className="text-sm font-bold text-green-600 mb-2">PRESS & MEDIA</div>
-          <div className="text-4xl font-bold text-green-900">{storyTypes.announcements.length}</div>
-          <div className="text-sm text-green-600 mt-2">
-            {storyTypes.announcements.filter(s => s.status === "published").length} published
-          </div>
-        </div>
+        <Card className="bg-[#1c1c1e] border-emerald-500/20">
+          <CardContent className="p-4">
+            <div className="text-xs font-semibold text-emerald-400 mb-1 uppercase tracking-wider">Press & Media</div>
+            <div className="text-3xl font-bold text-white">{storyTypes.announcements.length}</div>
+            <div className="text-xs text-emerald-400/70 mt-1">
+              {storyTypes.announcements.filter(s => s.status === "published").length} published
+            </div>
+          </CardContent>
+        </Card>
       </div>
 
-      {/* All Stories Table */}
-      <div className="bg-white rounded-2xl border border-neutral-200 overflow-hidden">
-        <div className="p-6 border-b border-neutral-200">
-          <h2 className="text-2xl font-bold">All Stories</h2>
-        </div>
-        
-        {allStories.length === 0 ? (
-          <div className="p-12 text-center">
-            <div className="text-neutral-400 mb-4">
-              <svg className="w-16 h-16 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-              </svg>
+      {/* All Stories */}
+      {allStories.length === 0 ? (
+        <Card className="bg-[#1c1c1e] border-white/10">
+          <CardContent className="text-center py-16">
+            <div className="w-16 h-16 mx-auto mb-4 bg-white/5 rounded-full flex items-center justify-center">
+              <FileText className="h-8 w-8 text-white/40" />
             </div>
-            <h3 className="text-xl font-bold text-neutral-900 mb-2">No stories yet</h3>
-            <p className="text-neutral-600 mb-6">Create your first story to get started</p>
+            <h3 className="text-xl font-bold text-white mb-2">No stories yet</h3>
+            <p className="text-white/60 mb-6">Create your first story to get started</p>
             <Link href="/dashboard/admin/stories/new">
-              <button className="px-6 py-3 bg-black text-white rounded-lg font-bold hover:bg-neutral-800 transition-colors">
+              <Button className="bg-white text-black hover:bg-white/90 font-semibold">
+                <Plus className="mr-2 h-4 w-4" />
                 Create Story
-              </button>
+              </Button>
             </Link>
-          </div>
-        ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead className="bg-neutral-50">
-                <tr>
-                  <th className="px-6 py-4 text-left text-xs font-bold text-neutral-600 uppercase tracking-wider">
-                    Title
-                  </th>
-                  <th className="px-6 py-4 text-left text-xs font-bold text-neutral-600 uppercase tracking-wider">
-                    Category
-                  </th>
-                  <th className="px-6 py-4 text-left text-xs font-bold text-neutral-600 uppercase tracking-wider">
-                    Status
-                  </th>
-                  <th className="px-6 py-4 text-left text-xs font-bold text-neutral-600 uppercase tracking-wider">
-                    Author
-                  </th>
-                  <th className="px-6 py-4 text-left text-xs font-bold text-neutral-600 uppercase tracking-wider">
-                    Views
-                  </th>
-                  <th className="px-6 py-4 text-left text-xs font-bold text-neutral-600 uppercase tracking-wider">
-                    Published
-                  </th>
-                  <th className="px-6 py-4 text-right text-xs font-bold text-neutral-600 uppercase tracking-wider">
-                    Actions
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-neutral-200">
-                {allStories.map((story) => (
-                  <tr key={story.id} className="hover:bg-neutral-50 transition-colors">
-                    <td className="px-6 py-4">
-                      <div className="flex items-center gap-3">
-                        {story.coverImage && (
-                          <img
-                            src={story.coverImage}
-                            alt=""
-                            className="w-12 h-12 object-cover rounded-lg"
-                          />
-                        )}
-                        <div>
-                          <div className="font-bold text-neutral-900">{story.title}</div>
-                          <div className="text-sm text-neutral-500 line-clamp-1">{story.excerpt}</div>
-                        </div>
-                      </div>
-                    </td>
-                    <td className="px-6 py-4">
-                      <span className={`
-                        inline-flex items-center px-3 py-1 rounded-full text-xs font-bold
-                        ${story.category === "poetry" ? "bg-blue-100 text-blue-700" : ""}
-                        ${story.category === "stories" ? "bg-purple-100 text-purple-700" : ""}
-                        ${story.category === "news" ? "bg-amber-100 text-amber-700" : ""}
-                        ${story.category === "announcements" ? "bg-green-100 text-green-700" : ""}
-                      `}>
-                        {story.category}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4">
-                      <span className={`
-                        inline-flex items-center px-3 py-1 rounded-full text-xs font-bold
-                        ${story.status === "published" ? "bg-green-100 text-green-700" : ""}
-                        ${story.status === "draft" ? "bg-neutral-100 text-neutral-700" : ""}
-                        ${story.status === "archived" ? "bg-red-100 text-red-700" : ""}
-                      `}>
-                        {story.status}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4 text-sm text-neutral-600">
-                      {story.author.name || story.author.email}
-                    </td>
-                    <td className="px-6 py-4 text-sm text-neutral-600">
-                      {story.viewCount.toLocaleString()}
-                    </td>
-                    <td className="px-6 py-4 text-sm text-neutral-600">
-                      {story.publishedAt ? new Date(story.publishedAt).toLocaleDateString() : "—"}
-                    </td>
-                    <td className="px-6 py-4 text-right">
-                      <div className="flex items-center justify-end gap-2">
-                        <Link
-                          href={`/stories/${story.category}/${story.slug}`}
-                          className="p-2 text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100 rounded-lg transition-colors"
-                          target="_blank"
-                        >
-                          <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                          </svg>
-                        </Link>
-                        <Link
-                          href={`/dashboard/admin/stories/${story.id}`}
-                          className="p-2 text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100 rounded-lg transition-colors"
-                        >
-                          <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                          </svg>
-                        </Link>
-                        <DeleteStoryButton 
-                          storyId={story.id} 
-                          storyTitle={story.title}
-                        />
-                      </div>
-                    </td>
+          </CardContent>
+        </Card>
+      ) : (
+        <Card className="bg-[#1c1c1e] border-white/10">
+          <CardContent className="p-0">
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead className="border-b border-white/10">
+                  <tr>
+                    <th className="px-6 py-4 text-left text-xs font-semibold text-white/60 uppercase tracking-wider">
+                      Title
+                    </th>
+                    <th className="px-6 py-4 text-left text-xs font-semibold text-white/60 uppercase tracking-wider">
+                      Category
+                    </th>
+                    <th className="px-6 py-4 text-left text-xs font-semibold text-white/60 uppercase tracking-wider">
+                      Status
+                    </th>
+                    <th className="px-6 py-4 text-left text-xs font-semibold text-white/60 uppercase tracking-wider">
+                      Author
+                    </th>
+                    <th className="px-6 py-4 text-left text-xs font-semibold text-white/60 uppercase tracking-wider">
+                      Views
+                    </th>
+                    <th className="px-6 py-4 text-left text-xs font-semibold text-white/60 uppercase tracking-wider">
+                      Published
+                    </th>
+                    <th className="px-6 py-4 text-right text-xs font-semibold text-white/60 uppercase tracking-wider">
+                      Actions
+                    </th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
-      </div>
+                </thead>
+                <tbody className="divide-y divide-white/10">
+                  {allStories.map((story) => (
+                    <tr key={story.id} className="hover:bg-white/5 transition-colors">
+                      <td className="px-6 py-4">
+                        <div className="flex items-center gap-3">
+                          {story.coverImage && (
+                            <div className="relative w-12 h-12 rounded-lg overflow-hidden bg-white/5 flex-shrink-0">
+                              <Image
+                                src={story.coverImage}
+                                alt=""
+                                fill
+                                className="object-cover"
+                              />
+                            </div>
+                          )}
+                          <div className="min-w-0">
+                            <div className="font-semibold text-white truncate">{story.title}</div>
+                            <div className="text-sm text-white/50 line-clamp-1">{story.excerpt}</div>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="px-6 py-4">
+                        <CategoryBadge category={story.category} />
+                      </td>
+                      <td className="px-6 py-4">
+                        <StatusBadge status={story.status} />
+                      </td>
+                      <td className="px-6 py-4 text-sm text-white/70">
+                        {story.author.name || story.author.email}
+                      </td>
+                      <td className="px-6 py-4">
+                        <div className="flex items-center gap-2 text-white/70">
+                          <Eye className="h-4 w-4" />
+                          <span className="text-sm">{story.viewCount.toLocaleString()}</span>
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 text-sm text-white/70">
+                        {story.publishedAt ? new Date(story.publishedAt).toLocaleDateString() : "—"}
+                      </td>
+                      <td className="px-6 py-4">
+                        <div className="flex items-center justify-end gap-1">
+                          <Link href={`/stories/${story.category}/${story.slug}`} target="_blank">
+                            <Button variant="ghost" size="sm" className="text-white/70 hover:text-white hover:bg-white/10">
+                              <ExternalLink className="h-4 w-4" />
+                            </Button>
+                          </Link>
+                          <Link href={`/dashboard/admin/stories/${story.id}`}>
+                            <Button variant="ghost" size="sm" className="text-white/70 hover:text-white hover:bg-white/10">
+                              <Pencil className="h-4 w-4" />
+                            </Button>
+                          </Link>
+                          <DeleteStoryButton 
+                            storyId={story.id} 
+                            storyTitle={story.title}
+                          />
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </CardContent>
+        </Card>
+      )}
     </div>
   )
 }
 
+function CategoryBadge({ category }: { category: string }) {
+  const variants = {
+    poetry: "bg-blue-500/20 text-blue-400 border-blue-500/30",
+    stories: "bg-purple-500/20 text-purple-400 border-purple-500/30",
+    news: "bg-amber-500/20 text-amber-400 border-amber-500/30",
+    announcements: "bg-emerald-500/20 text-emerald-400 border-emerald-500/30",
+  }
+
+  return (
+    <Badge variant="outline" className={variants[category as keyof typeof variants]}>
+      {category}
+    </Badge>
+  )
+}
+
+function StatusBadge({ status }: { status: string }) {
+  const variants = {
+    published: "bg-emerald-500/20 text-emerald-400 border-emerald-500/30",
+    draft: "bg-white/10 text-white/70 border-white/20",
+    archived: "bg-red-500/20 text-red-400 border-red-500/30",
+  }
+
+  return (
+    <Badge variant="outline" className={variants[status as keyof typeof variants]}>
+      {status.charAt(0).toUpperCase() + status.slice(1)}
+    </Badge>
+  )
+}

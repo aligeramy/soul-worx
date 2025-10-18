@@ -20,7 +20,7 @@ export async function seedProducts(userId: string) {
         Material: "100% Cotton",
         Fit: "Regular",
         Care: "Machine wash cold",
-      },
+      } as {[key: string]: string},
       createdBy: userId,
     },
     {
@@ -40,7 +40,7 @@ export async function seedProducts(userId: string) {
         Size: "6x9 inches",
         Cover: "Hardcover",
         Paper: "Premium acid-free",
-      },
+      } as {[key: string]: string},
       createdBy: userId,
     },
     {
@@ -60,7 +60,7 @@ export async function seedProducts(userId: string) {
         Material: "80% Cotton, 20% Polyester",
         Fit: "Regular",
         Features: "Kangaroo pocket, drawstring hood",
-      },
+      } as {[key: string]: string},
       createdBy: userId,
     },
     {
@@ -79,7 +79,7 @@ export async function seedProducts(userId: string) {
         Material: "100% Organic Cotton Canvas",
         Size: "15x16 inches",
         Capacity: "Large",
-      },
+      } as {[key: string]: string},
       createdBy: userId,
     },
     {
@@ -99,7 +99,7 @@ export async function seedProducts(userId: string) {
         Format: "Hardcover",
         ISBN: "978-1-234567-89-0",
         Edition: "Limited First Edition",
-      },
+      } as {[key: string]: string},
       createdBy: userId,
     },
     {
@@ -119,7 +119,7 @@ export async function seedProducts(userId: string) {
         Material: "Premium vinyl",
         Size: "Various (2-4 inches)",
         Finish: "Glossy, waterproof",
-      },
+      } as {[key: string]: string},
       createdBy: userId,
     },
     {
@@ -138,7 +138,7 @@ export async function seedProducts(userId: string) {
         Duration: "30 days",
         Access: "All virtual workshops",
         Includes: "Recordings and materials",
-      },
+      } as {[key: string]: string},
       createdBy: userId,
     },
     {
@@ -157,7 +157,7 @@ export async function seedProducts(userId: string) {
         Material: "100% Cotton twill",
         Closure: "Adjustable strap",
         Logo: "Embroidered",
-      },
+      } as {[key: string]: string},
       createdBy: userId,
     },
   ]
