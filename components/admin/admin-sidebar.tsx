@@ -65,17 +65,17 @@ export function AdminSidebar({ user }: AdminSidebarProps) {
   const pathname = usePathname()
 
   return (
-    <Sidebar collapsible="icon" className="border-r border-white/10 bg-[#1c1c1e]">
-      <SidebarHeader className="border-b border-white/10">
+    <Sidebar collapsible="icon" className="border-r">
+      <SidebarHeader className="border-b">
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton size="lg" className="hover:bg-white/5">
-              <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-white/10 text-white">
+            <SidebarMenuButton size="lg">
+              <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-accent text-sidebar-accent-foreground">
                 <LayoutDashboard className="size-4" />
               </div>
               <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-semibold text-white">Admin Panel</span>
-                <span className="truncate text-xs text-white/60">Content Management</span>
+                <span className="truncate font-semibold">Admin Panel</span>
+                <span className="truncate text-xs text-muted-foreground">Content Management</span>
               </div>
             </SidebarMenuButton>
           </SidebarMenuItem>
@@ -84,7 +84,7 @@ export function AdminSidebar({ user }: AdminSidebarProps) {
       
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel className="text-white/40 text-xs font-semibold tracking-wider uppercase">
+          <SidebarGroupLabel className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">
             Management
           </SidebarGroupLabel>
           <SidebarGroupContent>
@@ -98,10 +98,6 @@ export function AdminSidebar({ user }: AdminSidebarProps) {
                     <SidebarMenuButton
                       asChild
                       isActive={isActive}
-                      className={`
-                        hover:bg-white/5 transition-colors
-                        ${isActive ? "bg-white/10 text-white" : "text-white/70"}
-                      `}
                     >
                       <Link href={item.url}>
                         <item.icon className="size-4" />
@@ -116,27 +112,27 @@ export function AdminSidebar({ user }: AdminSidebarProps) {
         </SidebarGroup>
       </SidebarContent>
 
-      <SidebarFooter className="border-t border-white/10">
+      <SidebarFooter className="border-t">
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton asChild className="hover:bg-white/5">
+            <SidebarMenuButton asChild>
               <Link href="/dashboard">
                 <ArrowLeft className="size-4" />
-                <span className="text-white/70">Back to Dashboard</span>
+                <span className="text-muted-foreground">Back to Dashboard</span>
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
           <SidebarMenuItem>
-            <SidebarMenuButton size="lg" className="hover:bg-white/5">
+            <SidebarMenuButton size="lg">
               <Avatar className="h-8 w-8 rounded-lg">
                 <AvatarImage src={user.image || ""} alt={user.name || "User"} />
-                <AvatarFallback className="rounded-lg bg-white/10 text-white">
+                <AvatarFallback className="rounded-lg">
                   {user.name?.charAt(0).toUpperCase() || "U"}
                 </AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-semibold text-white">{user.name}</span>
-                <span className="truncate text-xs text-white/60">{user.email}</span>
+                <span className="truncate font-semibold">{user.name}</span>
+                <span className="truncate text-xs text-muted-foreground">{user.email}</span>
               </div>
             </SidebarMenuButton>
           </SidebarMenuItem>

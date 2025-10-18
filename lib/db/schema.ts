@@ -14,6 +14,11 @@ export const users = pgTable("user", {
   emailVerified: timestamp("emailVerified", { mode: "date" }),
   image: text("image"),
   role: text("role").$type<UserRole>().notNull().default("user"),
+  
+  // Discord Integration
+  discordId: text("discordId").unique(), // Discord user ID for server management
+  discordUsername: text("discordUsername"),
+  
   createdAt: timestamp("createdAt", { mode: "date" }).notNull().defaultNow(),
   updatedAt: timestamp("updatedAt", { mode: "date" }).notNull().defaultNow(),
 })
@@ -357,6 +362,191 @@ export const eventUpdates = pgTable("event_update", {
   createdAt: timestamp("createdAt", { mode: "date" }).notNull().defaultNow(),
 })
 
+// ==================== COMMUNITY / MEMBERSHIP TIERS ====================
+export type TierLevel = "free" | "premium" | "vip"
+
+export const membershipTiers = pgTable("membership_tier", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  
+  // Tier details
+  name: text("name").notNull(), // "Free", "Premium", "VIP"
+  slug: text("slug").notNull().unique(), // "free", "premium", "vip"
+  level: text("level").$type<TierLevel>().notNull(),
+  description: text("description").notNull(),
+  
+  // Features
+  features: jsonb("features").$type<string[]>().notNull().default([]),
+  accessLevel: integer("accessLevel").notNull().default(1), // 1=first episode, 2=all videos, 3=all+dm
+  
+  // Pricing
+  price: decimal("price", { precision: 10, scale: 2 }).notNull().default("0"),
+  billingPeriod: text("billingPeriod").$type<"monthly" | "yearly" | "lifetime">().default("monthly"),
+  stripePriceId: text("stripePriceId"), // Stripe Price ID for subscriptions
+  
+  // Discord Integration
+  discordRoleId: text("discordRoleId"), // Discord role ID to assign
+  dmAccessEnabled: boolean("dmAccessEnabled").notNull().default(false),
+  
+  // Status
+  isActive: boolean("isActive").notNull().default(true),
+  sortOrder: integer("sortOrder").notNull().default(0),
+  
+  createdAt: timestamp("createdAt", { mode: "date" }).notNull().defaultNow(),
+  updatedAt: timestamp("updatedAt", { mode: "date" }).notNull().defaultNow(),
+})
+
+// ==================== COMMUNITY CHANNELS ====================
+export type ChannelStatus = "draft" | "published" | "archived"
+export type ChannelCategory = "basketball" | "career" | "scholarships" | "life_skills" | "other"
+
+export const communityChannels = pgTable("community_channel", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  
+  // Channel info
+  slug: text("slug").notNull().unique(),
+  title: text("title").notNull(),
+  description: text("description").notNull(),
+  longDescription: text("longDescription"),
+  category: text("category").$type<ChannelCategory>().notNull(),
+  status: text("status").$type<ChannelStatus>().notNull().default("draft"),
+  
+  // Media
+  coverImage: text("coverImage"),
+  thumbnailImage: text("thumbnailImage"),
+  
+  // Access Control
+  requiredTierLevel: integer("requiredTierLevel").notNull().default(1), // Minimum tier needed
+  isFeatured: boolean("isFeatured").notNull().default(false),
+  
+  // Discord Integration
+  discordChannelId: text("discordChannelId"), // Discord channel ID
+  
+  // Metadata
+  tags: jsonb("tags").$type<string[]>().default([]),
+  videoCount: integer("videoCount").notNull().default(0),
+  
+  // SEO
+  metaTitle: text("metaTitle"),
+  metaDescription: text("metaDescription"),
+  
+  // Order
+  sortOrder: integer("sortOrder").notNull().default(0),
+  
+  createdBy: text("createdBy").notNull().references(() => users.id),
+  createdAt: timestamp("createdAt", { mode: "date" }).notNull().defaultNow(),
+  updatedAt: timestamp("updatedAt", { mode: "date" }).notNull().defaultNow(),
+  publishedAt: timestamp("publishedAt", { mode: "date" }),
+})
+
+// ==================== VIDEOS ====================
+export type VideoStatus = "draft" | "published" | "unlisted" | "archived"
+
+export const videos = pgTable("video", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  
+  // Video details
+  channelId: text("channelId")
+    .notNull()
+    .references(() => communityChannels.id, { onDelete: "cascade" }),
+  slug: text("slug").notNull().unique(),
+  title: text("title").notNull(),
+  description: text("description"),
+  
+  // Media
+  videoUrl: text("videoUrl").notNull(), // YouTube, Vimeo, or direct URL
+  thumbnailUrl: text("thumbnailUrl"),
+  duration: integer("duration"), // in seconds
+  
+  // Access Control
+  isFirstEpisode: boolean("isFirstEpisode").notNull().default(false), // Free for tier 1
+  episodeNumber: integer("episodeNumber"),
+  seasonNumber: integer("seasonNumber").default(1),
+  requiredTierLevel: integer("requiredTierLevel").notNull().default(2), // Default: Premium
+  
+  // Status
+  status: text("status").$type<VideoStatus>().notNull().default("draft"),
+  
+  // Engagement
+  viewCount: integer("viewCount").notNull().default(0),
+  
+  // Metadata
+  tags: jsonb("tags").$type<string[]>().default([]),
+  
+  // SEO
+  metaTitle: text("metaTitle"),
+  metaDescription: text("metaDescription"),
+  
+  createdBy: text("createdBy").notNull().references(() => users.id),
+  createdAt: timestamp("createdAt", { mode: "date" }).notNull().defaultNow(),
+  updatedAt: timestamp("updatedAt", { mode: "date" }).notNull().defaultNow(),
+  publishedAt: timestamp("publishedAt", { mode: "date" }),
+})
+
+// ==================== USER MEMBERSHIPS ====================
+export type SubscriptionStatus = "active" | "cancelled" | "expired" | "past_due" | "trialing"
+
+export const userMemberships = pgTable("user_membership", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  
+  userId: text("userId")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  tierId: text("tierId")
+    .notNull()
+    .references(() => membershipTiers.id),
+  
+  // Subscription details
+  status: text("status").$type<SubscriptionStatus>().notNull().default("active"),
+  
+  // Stripe Integration
+  stripeSubscriptionId: text("stripeSubscriptionId").unique(),
+  stripeCustomerId: text("stripeCustomerId"),
+  
+  // Discord Sync
+  discordRoleAssigned: boolean("discordRoleAssigned").notNull().default(false),
+  lastSyncedAt: timestamp("lastSyncedAt", { mode: "date" }),
+  
+  // Billing dates
+  currentPeriodStart: timestamp("currentPeriodStart", { mode: "date" }),
+  currentPeriodEnd: timestamp("currentPeriodEnd", { mode: "date" }),
+  cancelAt: timestamp("cancelAt", { mode: "date" }),
+  cancelledAt: timestamp("cancelledAt", { mode: "date" }),
+  
+  createdAt: timestamp("createdAt", { mode: "date" }).notNull().defaultNow(),
+  updatedAt: timestamp("updatedAt", { mode: "date" }).notNull().defaultNow(),
+})
+
+// ==================== VIDEO VIEWS ====================
+// Track which users have watched which videos
+export const videoViews = pgTable("video_view", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  
+  videoId: text("videoId")
+    .notNull()
+    .references(() => videos.id, { onDelete: "cascade" }),
+  userId: text("userId")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  
+  // Progress tracking
+  watchedSeconds: integer("watchedSeconds").notNull().default(0),
+  completed: boolean("completed").notNull().default(false),
+  
+  // Timestamps
+  lastWatchedAt: timestamp("lastWatchedAt", { mode: "date" }).notNull().defaultNow(),
+  createdAt: timestamp("createdAt", { mode: "date" }).notNull().defaultNow(),
+})
+
 // ==================== RELATIONS ====================
 
 export const usersRelations = relations(users, ({ many }) => ({
@@ -367,6 +557,10 @@ export const usersRelations = relations(users, ({ many }) => ({
   products: many(products),
   rsvps: many(rsvps),
   calendarSyncs: many(calendarSyncs),
+  memberships: many(userMemberships),
+  communityChannels: many(communityChannels),
+  videos: many(videos),
+  videoViews: many(videoViews),
 }))
 
 export const programsRelations = relations(programs, ({ one, many }) => ({
@@ -425,6 +619,52 @@ export const eventUpdatesRelations = relations(eventUpdates, ({ one }) => ({
   }),
   updatedBy: one(users, {
     fields: [eventUpdates.updatedBy],
+    references: [users.id],
+  }),
+}))
+
+export const membershipTiersRelations = relations(membershipTiers, ({ many }) => ({
+  memberships: many(userMemberships),
+}))
+
+export const communityChannelsRelations = relations(communityChannels, ({ one, many }) => ({
+  createdBy: one(users, {
+    fields: [communityChannels.createdBy],
+    references: [users.id],
+  }),
+  videos: many(videos),
+}))
+
+export const videosRelations = relations(videos, ({ one, many }) => ({
+  channel: one(communityChannels, {
+    fields: [videos.channelId],
+    references: [communityChannels.id],
+  }),
+  createdBy: one(users, {
+    fields: [videos.createdBy],
+    references: [users.id],
+  }),
+  views: many(videoViews),
+}))
+
+export const userMembershipsRelations = relations(userMemberships, ({ one }) => ({
+  user: one(users, {
+    fields: [userMemberships.userId],
+    references: [users.id],
+  }),
+  tier: one(membershipTiers, {
+    fields: [userMemberships.tierId],
+    references: [membershipTiers.id],
+  }),
+}))
+
+export const videoViewsRelations = relations(videoViews, ({ one }) => ({
+  video: one(videos, {
+    fields: [videoViews.videoId],
+    references: [videos.id],
+  }),
+  user: one(users, {
+    fields: [videoViews.userId],
     references: [users.id],
   }),
 }))

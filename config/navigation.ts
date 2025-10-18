@@ -14,6 +14,8 @@ export interface NavigationItem {
   href: string
   /** Optional description for accessibility and tooltips */
   description?: string
+  /** Optional icon name from lucide-react */
+  icon?: string
   /** Child navigation items (submenu) */
   submenu?: NavigationItem[]
 }
@@ -55,22 +57,27 @@ export const navigationConfig: NavigationConfig = {
         {
           label: "Calendar",
           href: "/programs/calendar",
-          description: "View upcoming events and workshops"
+          icon: "Calendar"
+        },
+        {
+          label: "Community",
+          href: "/programs/community",
+          icon: "Users"
         },
         {
           label: "Youth Workshops",
           href: "/programs/youth",
-          description: "Creative writing programs for young minds"
+          icon: "Sparkles"
         },
         {
           label: "School Partnerships",
           href: "/programs/schools",
-          description: "Collaborative programs with educational institutions"
+          icon: "GraduationCap"
         },
         {
           label: "FAQ",
           href: "/programs/faq",
-          description: "Frequently asked questions about our programs"
+          icon: "HelpCircle"
         }
       ]
     },
@@ -81,27 +88,27 @@ export const navigationConfig: NavigationConfig = {
         {
           label: "All Products",
           href: "/shop",
-          description: "Browse our complete collection"
+          icon: "Store"
         },
         {
           label: "Apparel",
           href: "/shop?category=apparel",
-          description: "Clothing and wearable art"
+          icon: "Shirt"
         },
         {
           label: "Accessories",
           href: "/shop?category=accessories",
-          description: "Journals, prints, and literary accessories"
+          icon: "Gem"
         },
         {
           label: "Books",
           href: "/shop?category=books",
-          description: "Poetry collections and literary works"
+          icon: "BookOpen"
         },
         {
           label: "Digital",
           href: "/shop?category=digital",
-          description: "Virtual workshops and online content"
+          icon: "Download"
         }
       ]
     }
@@ -114,22 +121,22 @@ export const navigationConfig: NavigationConfig = {
         {
           label: "Poetry Drops",
           href: "/stories/poetry",
-          description: "Latest poetic expressions and releases"
+          icon: "Feather"
         },
         {
           label: "Community Highlights",
           href: "/stories/community",
-          description: "Stories from our creative community"
+          icon: "Heart"
         },
         {
           label: "Event Recaps",
           href: "/stories/events",
-          description: "Highlights from past workshops and gatherings"
+          icon: "Camera"
         },
         {
           label: "Press & Media",
           href: "/stories/press",
-          description: "Media coverage and press releases"
+          icon: "Newspaper"
         }
       ]
     },
@@ -140,22 +147,22 @@ export const navigationConfig: NavigationConfig = {
         {
           label: "General Inquiry",
           href: "/contact/general",
-          description: "Get in touch with our team"
+          icon: "Mail"
         },
         {
           label: "Sponsors & Partnerships",
           href: "/contact/sponsors",
-          description: "Collaborate and support our mission"
+          icon: "Handshake"
         },
         {
           label: "Youth Program Registration",
           href: "/contact/programs",
-          description: "Enroll in our youth workshops"
+          icon: "ClipboardCheck"
         },
         {
           label: "Press & Media",
           href: "/contact/press",
-          description: "Media inquiries and press kit"
+          icon: "Mic"
         }
       ]
     }

@@ -11,6 +11,7 @@ export async function NavigationServerWrapper() {
   return (
     <NavigationClientWrapper
       topBar={<TopBar hasSession={hasSession} />}
+      hasSession={hasSession}
     />
   )
 }
