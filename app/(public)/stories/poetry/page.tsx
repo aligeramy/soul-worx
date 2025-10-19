@@ -1,5 +1,6 @@
 import { getPublishedPosts } from "@/lib/db/queries"
 import Link from "next/link"
+import Image from "next/image"
 
 export default async function PoetryDropsPage() {
   const posts = await getPublishedPosts()
@@ -70,9 +71,11 @@ export default async function PoetryDropsPage() {
                       <div className={`relative overflow-hidden rounded-3xl aspect-[4/5] ${index % 2 === 1 ? 'md:col-start-2' : ''}`}>
                         {post.coverImage ? (
                           <>
-                            <img
+                            <Image
                               src={post.coverImage}
                               alt={post.title}
+                              width={400}
+                              height={500}
                               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
@@ -114,9 +117,11 @@ export default async function PoetryDropsPage() {
                           
                           <div className="flex items-center gap-4">
                             {post.author.image && (
-                              <img
+                              <Image
                                 src={post.author.image}
                                 alt={post.author.name || "Author"}
+                                width={48}
+                                height={48}
                                 className="w-12 h-12 rounded-full"
                               />
                             )}

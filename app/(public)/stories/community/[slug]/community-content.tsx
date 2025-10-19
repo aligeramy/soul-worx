@@ -3,6 +3,7 @@
 import { motion, useScroll, useTransform } from "framer-motion"
 import Link from "next/link"
 import { useRef } from "react"
+import Image from "next/image"
 
 interface Post {
   id: string
@@ -179,9 +180,11 @@ export function CommunityContent({ post, relatedPosts }: CommunityContentProps) 
               whileHover={{ scale: 1.02 }}
               transition={{ type: "spring", stiffness: 300 }}
             >
-              <img
+              <Image
                 src={post.coverImage}
                 alt={post.title}
+                width={800}
+                height={400}
                 className="w-full h-full object-cover"
               />
               <motion.div

@@ -4,6 +4,7 @@ import { db } from "@/lib/db"
 import { communityChannels, membershipTiers, userMemberships } from "@/lib/db/schema"
 import { eq, and } from "drizzle-orm"
 import Link from "next/link"
+import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { SubscribeButton } from "@/components/community/subscribe-button"
@@ -122,16 +123,17 @@ export default async function CommunityPage({
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {channels.map((channel) => {
               const hasFullAccess = userTierLevel >= channel.requiredTierLevel
-              const canViewChannel = true // Everyone can view channel pages to see first episodes
               const isLocked = !hasFullAccess
 
               return (
                 <Card key={channel.id} className="overflow-hidden">
                   {channel.coverImage && (
                     <div className="relative h-48">
-                      <img
+                      <Image
                         src={channel.coverImage}
                         alt={channel.title}
+                        width={400}
+                        height={192}
                         className="w-full h-full object-cover"
                       />
                       {isLocked && (
@@ -248,7 +250,6 @@ export default async function CommunityPage({
                   ) : (
                     <SubscribeButton
                       tierId={tier.id}
-                      tierName={tier.name}
                       isCurrentPlan={isCurrent}
                       isFree={price === 0}
                       hasExistingMembership={!!membership}

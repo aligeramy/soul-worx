@@ -42,16 +42,11 @@ async function seedCommunity() {
   
   const existingTiers = await db.query.membershipTiers.findMany()
   
-  let __freeTier, __premiumTier, __vipTier
-
   if (existingTiers.length > 0) {
     console.log("✅ Tiers already exist, using existing ones")
-    __freeTier = existingTiers.find(t => t.slug === "free")
-    __premiumTier = existingTiers.find(t => t.slug === "premium")
-    __vipTier = existingTiers.find(t => t.slug === "vip")
   } else {
     console.log("Creating new tiers...")
-    const tiers = await db.insert(membershipTiers).values([
+    await db.insert(membershipTiers).values([
     {
       name: "Community Access",
       slug: "free",
@@ -118,10 +113,7 @@ async function seedCommunity() {
       sortOrder: 3,
     },
   ]).returning()
-    
-    __freeTier = tiers[0]
-    __premiumTier = tiers[1]
-    __vipTier = tiers[2]
+
     console.log("✅ Created 3 membership tiers")
   }
 

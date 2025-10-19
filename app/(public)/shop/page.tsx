@@ -79,7 +79,6 @@ export default async function ShopPage({
                   id={product.id}
                   slug={product.slug}
                   name={product.name}
-                  description={product.description}
                   price={product.price}
                   compareAtPrice={product.compareAtPrice || undefined}
                   images={product.images || []}

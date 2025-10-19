@@ -1,5 +1,6 @@
 import { getPublishedPosts } from "@/lib/db/queries"
 import Link from "next/link"
+import Image from "next/image"
 
 export default async function PressMediaPage() {
   const posts = await getPublishedPosts()
@@ -63,9 +64,11 @@ export default async function PressMediaPage() {
                       <div className="relative aspect-[4/3] md:aspect-auto overflow-hidden">
                         {pressPosts[0].coverImage ? (
                           <>
-                            <img
+                            <Image
                               src={pressPosts[0].coverImage}
                               alt={pressPosts[0].title}
+                              width={400}
+                              height={225}
                               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                             />
                             <div className="absolute inset-0 bg-gradient-to-br from-black/20 to-transparent"></div>
@@ -128,9 +131,11 @@ export default async function PressMediaPage() {
                         {/* Image */}
                         {post.coverImage && (
                           <div className="relative aspect-[16/9] overflow-hidden">
-                            <img
+                            <Image
                               src={post.coverImage}
                               alt={post.title}
+                              width={400}
+                              height={225}
                               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                             />
                           </div>

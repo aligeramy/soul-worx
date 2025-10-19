@@ -38,8 +38,6 @@ export function TestimonialsStats({
 		{ label: "Cities", value: "50+" },
 		{ label: "Schools", value: "100+" },
 	],
-	title = "Testimonials",
-	lede = "Learn what we do through the voices we serve.",
 	testimonials = [
 		{
 			id: "01",
@@ -81,10 +79,8 @@ export function TestimonialsStats({
 	// Filter out the static testimonial (Marcus Thompson) from slideshow
 	const slideshowTestimonials = testimonials.filter((_, index) => index !== 2) // Remove index 2 (Marcus Thompson)
 	const total = slideshowTestimonials.length
-	const next = () => setActive((i) => (i + 1) % total)
-
 	useEffect(() => {
-		const id = setInterval(next, Math.max(2500, intervalMs))
+		const id = setInterval(() => setActive((i) => (i + 1) % total), Math.max(2500, intervalMs))
 		return () => clearInterval(id)
 	}, [intervalMs, total])
 

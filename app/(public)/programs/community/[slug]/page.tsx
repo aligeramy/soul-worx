@@ -5,6 +5,7 @@ import { db } from "@/lib/db"
 import { communityChannels, videos, userMemberships } from "@/lib/db/schema"
 import { eq, and, desc } from "drizzle-orm"
 import Link from "next/link"
+import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 
@@ -120,9 +121,11 @@ export default async function ChannelPage({
                 <Link href={`/programs/community/${slug}/${video.slug}`}>
                   <div className="relative">
                     {video.thumbnailUrl ? (
-                      <img
+                      <Image
                         src={video.thumbnailUrl}
                         alt={video.title}
+                        width={400}
+                        height={192}
                         className="w-full h-48 object-cover"
                       />
                     ) : (
