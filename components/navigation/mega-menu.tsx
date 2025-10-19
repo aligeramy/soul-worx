@@ -22,10 +22,10 @@ export function MegaMenu({ items, isLight = false, isOpen, onMouseEnter, onMouse
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -10 }}
       transition={{ duration: 0.2, ease: "easeOut" }}
-      className={`absolute left-0 right-0 top-full border-b shadow-xl ${
+      className={`absolute left-0 right-0 top-full border-b shadow-xl z-50 ${
         isLight 
-          ? "bg-black/95 backdrop-blur-xl border-white/10" 
-          : "bg-white backdrop-blur-xl border-border"
+          ? "bg-black/20 backdrop-blur-md border-white/10" 
+          : "bg-white/95 backdrop-blur-md border-border"
       }`}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
@@ -33,24 +33,21 @@ export function MegaMenu({ items, isLight = false, isOpen, onMouseEnter, onMouse
       <div className="container mx-auto px-4 py-12">
         <div className="flex items-start justify-center gap-8">
           {items.map((item) => {
-            const IconComponent = item.icon ? Icons[item.icon as keyof typeof Icons] as React.ComponentType<{ className?: string }> : null
+            const IconComponent = item.icon ? Icons[item.icon as keyof typeof Icons] as React.ComponentType<{ className?: string; strokeWidth?: number }> : null
             
             return (
               <Link
                 key={item.href}
                 href={item.href}
-                className="group flex flex-col items-center gap-3 min-w-[140px] p-4 rounded-lg transition-all hover:scale-105"
+                className="group flex flex-col items-center gap-4 min-w-[140px] p-4 rounded-lg transition-all hover:scale-105"
               >
                 {IconComponent && (
-                  <div className={`p-3 rounded-full transition-colors ${
-                    isLight 
-                      ? "bg-white/10 group-hover:bg-white/20" 
-                      : "bg-primary/10 group-hover:bg-primary/20"
-                  }`}>
-                    <IconComponent className={`h-6 w-6 ${
-                      isLight ? "text-white" : "text-primary"
-                    }`} />
-                  </div>
+                  <IconComponent 
+                    className={`h-10 w-10 transition-colors ${
+                      isLight ? "text-white group-hover:text-white/80" : "text-foreground group-hover:text-primary"
+                    }`}
+                    strokeWidth={1}
+                  />
                 )}
                 <span className={`text-sm font-semibold text-center transition-colors ${
                   isLight 

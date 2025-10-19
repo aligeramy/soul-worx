@@ -6,13 +6,21 @@ export default async function CommunityHighlightsPage() {
   const communityPosts = posts.filter(p => p.category === "stories")
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-pink-50">
+    <div className="min-h-screen bg-brand-bg-darker relative">
+      {/* Noise texture overlay */}
+      <div 
+        className="absolute inset-0 pointer-events-none opacity-40"
+        style={{
+          backgroundImage: `url('/noise.png')`,
+          backgroundRepeat: 'repeat',
+        }}
+      />
       {/* Warm Community Header */}
-      <section className="pt-32 pb-20 px-6">
+      <section className="relative z-0 pt-32 pb-20 px-6">
         <div className="max-w-7xl mx-auto">
           <Link 
             href="/stories" 
-            className="inline-flex items-center gap-2 text-neutral-600 hover:text-neutral-900 mb-8 group"
+            className="inline-flex items-center gap-2 text-white/70 hover:text-white mb-8 group"
           >
             <svg className="w-5 h-5 group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -21,33 +29,33 @@ export default async function CommunityHighlightsPage() {
           </Link>
           
           <div className="inline-block mb-6">
-            <span className="px-4 py-2 bg-gradient-to-r from-purple-600 to-pink-600 text-white text-sm font-bold rounded-full">
+            <span className="px-4 py-2 bg-white text-black text-sm font-bold rounded-full">
               COMMUNITY HIGHLIGHTS
             </span>
           </div>
           
-          <h1 className="text-6xl md:text-8xl font-bold tracking-tight mb-6">
+          <h1 className="text-6xl md:text-8xl font-bold tracking-tight mb-6 text-white">
             Our
             <br />
-            <span className="bg-gradient-to-r from-purple-600 via-pink-600 to-rose-600 bg-clip-text text-transparent">
+            <span className="text-gold">
               People
             </span>
           </h1>
           
-          <p className="text-xl text-neutral-600 max-w-2xl font-light">
+          <p className="text-xl text-white/80 max-w-2xl font-light">
             Stories from the heart of our community - celebrating voices, journeys, and connections
           </p>
         </div>
       </section>
 
       {/* Community Cards - Social Media Feed Style */}
-      <section className="pb-32 px-6">
+      <section className="relative z-0 pb-32 px-6">
         <div className="max-w-7xl mx-auto">
           {communityPosts.length === 0 ? (
             <div className="text-center py-20">
               <div className="text-6xl mb-4">💜</div>
-              <h3 className="text-2xl font-bold text-neutral-900 mb-2">No community stories yet</h3>
-              <p className="text-neutral-600">Check back soon for highlights from our community</p>
+              <h3 className="text-2xl font-bold text-white mb-2">No community stories yet</h3>
+              <p className="text-white/70">Check back soon for highlights from our community</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

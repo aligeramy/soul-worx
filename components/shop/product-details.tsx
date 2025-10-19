@@ -130,18 +130,18 @@ export function ProductDetails({ product }: ProductDetailsProps) {
           {/* Product Info */}
           <div className="space-y-8">
             <div>
-              <h1 className="text-5xl font-bold mb-4">{product.name}</h1>
+              <h1 className="text-5xl font-crimson font-bold mb-4 text-white">{product.name}</h1>
               <div className="flex items-center gap-4 mb-6">
-                <span className="text-4xl font-bold">
+                <span className="text-4xl font-geist font-bold text-white">
                   ${displayPrice.toFixed(2)}
                 </span>
                 {product.compareAtPrice &&
                   parseFloat(product.compareAtPrice) > displayPrice && (
                     <>
-                      <span className="text-2xl text-neutral-500 line-through">
+                      <span className="text-2xl text-white/50 line-through">
                         ${parseFloat(product.compareAtPrice).toFixed(2)}
                       </span>
-                      <span className="px-3 py-1 bg-red-100 text-red-800 text-sm font-bold rounded-full">
+                      <span className="px-3 py-1 bg-red-500 text-white text-sm font-bold rounded-full">
                         {Math.round(
                           ((parseFloat(product.compareAtPrice) - displayPrice) /
                             parseFloat(product.compareAtPrice)) *
@@ -152,7 +152,7 @@ export function ProductDetails({ product }: ProductDetailsProps) {
                     </>
                   )}
               </div>
-              <p className="text-lg text-neutral-600 leading-relaxed">
+              <p className="text-lg text-white/80 leading-relaxed">
                 {product.description}
               </p>
             </div>
@@ -160,7 +160,7 @@ export function ProductDetails({ product }: ProductDetailsProps) {
             {/* Variants */}
             {product.variants && product.variants.length > 0 && (
               <div className="space-y-3">
-                <label className="text-sm font-medium">Select Option</label>
+                <label className="text-sm font-medium text-white">Select Option</label>
                 <div className="flex flex-wrap gap-2">
                   {product.variants.map((variant) => (
                     <button

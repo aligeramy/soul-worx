@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, MouseEvent } from "react"
+import { useState } from "react"
 import Link from "next/link"
 import { motion } from "framer-motion"
 import { ChevronDown } from "lucide-react"
@@ -9,21 +9,21 @@ import type { NavigationItem } from "@/config/navigation"
 interface NavigationMenuProps {
   item: NavigationItem
   isLight?: boolean
-  onMouseEnter?: (e: MouseEvent<HTMLDivElement>) => void
-  onMouseLeave?: (e: MouseEvent<HTMLDivElement>) => void
+  onMouseEnter?: () => void
+  onMouseLeave?: () => void
 }
 
 export function NavigationMenu({ item, isLight = false, onMouseEnter, onMouseLeave }: NavigationMenuProps) {
   const [isHovered, setIsHovered] = useState(false)
 
-  const handleMouseEnter = (e: MouseEvent<HTMLDivElement>) => {
+  const handleMouseEnter = () => {
     setIsHovered(true)
-    onMouseEnter?.(e)
+    onMouseEnter?.()
   }
 
-  const handleMouseLeave = (e: MouseEvent<HTMLDivElement>) => {
+  const handleMouseLeave = () => {
     setIsHovered(false)
-    onMouseLeave?.(e)
+    onMouseLeave?.()
   }
 
   const textColor = isLight ? "text-white hover:text-white/90" : "text-foreground hover:text-primary"

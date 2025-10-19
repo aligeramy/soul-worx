@@ -2,6 +2,24 @@ import { NextRequest, NextResponse } from "next/server"
 import { auth } from "@/auth"
 import { db } from "@/lib/db"
 import { programs } from "@/lib/db/schema"
+import { desc } from "drizzle-orm"
+
+export async function GET() {
+  try {
+    // Fetch all programs ordered by creation date
+    const allPrograms = await db.query.programs.findMany({
+      orderBy: [desc(programs.createdAt)],
+    })
+
+    return NextResponse.json(allPrograms)
+  } catch (error) {
+    console.error("Error fetching programs:", error)
+    return NextResponse.json(
+      { message: "Failed to fetch programs" },
+      { status: 500 }
+    )
+  }
+}
 
 export async function POST(request: NextRequest) {
   try {
