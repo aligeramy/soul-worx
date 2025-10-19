@@ -65,26 +65,26 @@ export function AdminSidebar({ user }: AdminSidebarProps) {
   const pathname = usePathname()
 
   return (
-    <Sidebar collapsible="icon" className="border-r">
-      <SidebarHeader className="border-b">
+    <Sidebar collapsible="icon" className="bg-brand-bg-darker border-r border-white/10">
+      <SidebarHeader className="border-b border-white/10 bg-brand-bg-darker">
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton size="lg">
-              <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-accent text-sidebar-accent-foreground">
+              <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-white/10 text-white">
                 <LayoutDashboard className="size-4" />
               </div>
               <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-semibold">Admin Panel</span>
-                <span className="truncate text-xs text-muted-foreground">Content Management</span>
+                <span className="truncate font-semibold text-white">Admin Panel</span>
+                <span className="truncate text-xs text-white/60">Content Management</span>
               </div>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
       
-      <SidebarContent>
+      <SidebarContent className="bg-brand-bg-darker">
         <SidebarGroup>
-          <SidebarGroupLabel className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">
+          <SidebarGroupLabel className="text-white/60 text-xs font-semibold tracking-wider uppercase">
             Management
           </SidebarGroupLabel>
           <SidebarGroupContent>
@@ -98,6 +98,7 @@ export function AdminSidebar({ user }: AdminSidebarProps) {
                     <SidebarMenuButton
                       asChild
                       isActive={isActive}
+                      className={isActive ? "bg-white/10 text-white" : "text-white/70 hover:text-white hover:bg-white/5"}
                     >
                       <Link href={item.url}>
                         <item.icon className="size-4" />
@@ -112,27 +113,27 @@ export function AdminSidebar({ user }: AdminSidebarProps) {
         </SidebarGroup>
       </SidebarContent>
 
-      <SidebarFooter className="border-t">
+      <SidebarFooter className="border-t border-white/10 bg-brand-bg-darker">
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton asChild>
+            <SidebarMenuButton asChild className="text-white/70 hover:text-white hover:bg-white/5">
               <Link href="/dashboard">
                 <ArrowLeft className="size-4" />
-                <span className="text-muted-foreground">Back to Dashboard</span>
+                <span>Back to Dashboard</span>
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
           <SidebarMenuItem>
             <SidebarMenuButton size="lg">
-              <Avatar className="h-8 w-8 rounded-lg">
+              <Avatar className="h-8 w-8 rounded-lg border border-white/20">
                 <AvatarImage src={user.image || ""} alt={user.name || "User"} />
-                <AvatarFallback className="rounded-lg">
+                <AvatarFallback className="rounded-lg bg-white/10 text-white">
                   {user.name?.charAt(0).toUpperCase() || "U"}
                 </AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-semibold">{user.name}</span>
-                <span className="truncate text-xs text-muted-foreground">{user.email}</span>
+                <span className="truncate font-semibold text-white">{user.name}</span>
+                <span className="truncate text-xs text-white/60">{user.email}</span>
               </div>
             </SidebarMenuButton>
           </SidebarMenuItem>

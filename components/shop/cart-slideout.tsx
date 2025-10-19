@@ -4,7 +4,8 @@ import { X, Minus, Plus, Trash2 } from "lucide-react"
 import { useCart } from "./cart-provider"
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
+import { createPortal } from "react-dom"
 
 interface CartSlideoutProps {
   isOpen: boolean
@@ -13,6 +14,12 @@ interface CartSlideoutProps {
 
 export function CartSlideout({ isOpen, onClose }: CartSlideoutProps) {
   const { items, removeItem, updateQuantity, total, clearCart } = useCart()
+  const [mounted, setMounted] = useState(false)
+
+  // Ensure component is mounted before rendering portal
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   // Prevent body scroll when cart is open
   useEffect(() => {
@@ -26,21 +33,21 @@ export function CartSlideout({ isOpen, onClose }: CartSlideoutProps) {
     }
   }, [isOpen])
 
-  if (!isOpen) return null
+  if (!isOpen || !mounted) return null
 
-  return (
+  const slideoutContent = (
     <>
       {/* Backdrop */}
       <div
-        className="fixed inset-0 bg-black/50 z-50 transition-opacity"
+        className="fixed inset-0 bg-black/50 z-[100] transition-opacity"
         onClick={onClose}
       />
 
       {/* Slideout */}
-      <div className="fixed right-0 top-0 h-full w-full max-w-md bg-white shadow-2xl z-50 flex flex-col">
+      <div className="fixed right-0 top-0 h-full w-full max-w-md bg-white shadow-2xl z-[100] flex flex-col">
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b">
-          <h2 className="text-2xl font-bold">Shopping Cart</h2>
+          <h2 className="text-2xl font-normal font-crimson">Shopping Cart</h2>
           <button
             onClick={onClose}
             className="p-2 hover:bg-neutral-100 rounded-full transition-colors"
@@ -169,6 +176,8 @@ export function CartSlideout({ isOpen, onClose }: CartSlideoutProps) {
       </div>
     </>
   )
+
+  return createPortal(slideoutContent, document.body)
 }
 
 function ShoppingCart({ className }: { className?: string }) {

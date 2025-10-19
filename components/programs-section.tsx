@@ -391,7 +391,7 @@ export function ProgramsSection({ programs, upcomingPrograms = [] }: ProgramsSec
                                         {program.upcomingEvent!.venueCity && ` • ${program.upcomingEvent!.venueCity}`}
                                       </div>
                                     ) : null}
-                                    <h4 className="text-lg font-crimson font-bold text-white">
+                                    <h4 className="text-3xl font-crimson font-normal tracking-tighter text-white">
                                       {program.title}
                                     </h4>
                                     <p className="text-xs text-white/90 line-clamp-2">
@@ -468,7 +468,7 @@ export function ProgramsSection({ programs, upcomingPrograms = [] }: ProgramsSec
                                       {program.upcomingEvent!.venueCity && ` • ${program.upcomingEvent!.venueCity}`}
                                     </div>
                                   )}
-                                  <h4 className="text-base font-crimson font-bold text-white line-clamp-2">
+                                  <h4 className="text-2xl font-crimson font-normal tracking-tighter text-white line-clamp-2">
                                     {program.title}
                                   </h4>
                                 </div>
@@ -506,7 +506,7 @@ export function ProgramsSection({ programs, upcomingPrograms = [] }: ProgramsSec
                                 <div className="absolute bottom-0 left-0 right-0 p-4 space-y-2">
                                   <div className="flex items-center gap-2 text-xs text-white/80">
                                     {program.category && (
-                                      <span className="px-2 py-1 bg-white/20 backdrop-blur-sm rounded-full">
+                                      <span className="px-2 py-1 capitalize bg-white/20 backdrop-blur-sm rounded-full">
                                         {program.category}
                                       </span>
                                     )}
@@ -516,7 +516,7 @@ export function ProgramsSection({ programs, upcomingPrograms = [] }: ProgramsSec
                                       </span>
                                     )}
                                   </div>
-                                  <h4 className="text-lg font-bold text-white">
+                                  <h4 className="text-3xl font-crimson font-normal tracking-tighter text-white">
                                     {program.title}
                                   </h4>
                                   <p className="text-xs text-white/90 line-clamp-2">

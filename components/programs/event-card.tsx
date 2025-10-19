@@ -1,112 +1,105 @@
-"use client"
-
-import { format } from "date-fns"
+import Image from "next/image"
 import Link from "next/link"
-import { MapPin, Users, Clock } from "lucide-react"
+import { Clock, MapPin, Users, ArrowRight } from "lucide-react"
+import { format } from "date-fns"
 
-interface Event {
-  id: string
-  title: string
-  description: string | null
-  startTime: Date
-  endTime: Date
-  locationType: "in_person" | "virtual" | "hybrid"
-  venueName: string | null
-  venueAddress: string | null
-  venueCity: string | null
-  venueState: string | null
-  virtualMeetingUrl: string | null
-  capacity: number | null
-  status: string
+interface EventCardProps {
+  event: {
+    id: string
+    title: string
+    startTime: Date
+    endTime: Date
+    venueName: string | null
+    capacity: number | null
+    program: {
+      title: string
+      slug: string
+      coverImage: string | null
+      category: string
+      description: string | null
+    } | null
+  }
+  categoryGradient: string
 }
 
-export function EventCard({ 
-  event, 
-  programSlug 
-}: { 
-  event: Event
-  programSlug: string
-}) {
-  const startDate = new Date(event.startTime)
-  const endDate = new Date(event.endTime)
-
+export function EventCard({ event, categoryGradient }: EventCardProps) {
   return (
-    <div className="bg-white rounded-2xl border border-neutral-200 overflow-hidden hover:shadow-lg transition-shadow">
-      <div className="p-8">
-        <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-6">
+    <Link 
+      href={event.program ? `/programs/${event.program.slug}/events/${event.id}` : '#'}
+      className="h-full"
+    >
+      <div className="group relative bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border border-neutral-200 hover:border-neutral-300 h-full flex flex-col">
+        {/* Image Header */}
+        <div className="relative aspect-[16/10] overflow-hidden flex-shrink-0">
+          {event.program?.coverImage ? (
+            <Image
+              src={event.program.coverImage}
+              alt={event.program.title}
+              fill
+              className="object-cover transition-transform duration-700 group-hover:scale-110"
+            />
+          ) : (
+            <div className={`w-full h-full bg-gradient-to-br ${categoryGradient}`} />
+          )}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+          
           {/* Date Badge */}
-          <div className="flex-shrink-0">
-            <div className="bg-black text-white rounded-2xl p-6 text-center w-32">
-              <div className="text-3xl font-bold">{format(startDate, "d")}</div>
-              <div className="text-sm uppercase tracking-wide">{format(startDate, "MMM")}</div>
-              <div className="text-xs opacity-70">{format(startDate, "yyyy")}</div>
-            </div>
-          </div>
-
-          {/* Event Details */}
-          <div className="flex-grow space-y-4">
-            <div>
-              <h3 className="text-2xl font-bold mb-2">{event.title}</h3>
-              {event.description && (
-                <p className="text-neutral-600">{event.description}</p>
-              )}
-            </div>
-
-            <div className="space-y-2 text-sm text-neutral-600">
-              {/* Time */}
-              <div className="flex items-center space-x-2">
-                <Clock className="w-4 h-4" />
-                <span>
-                  {format(startDate, "h:mm a")} - {format(endDate, "h:mm a")}
-                </span>
+          <div className="absolute top-4 left-4">
+            <div className="bg-white/90 backdrop-blur-sm rounded-2xl px-4 py-2 text-center">
+              <div className="text-2xl font-bold text-black">
+                {format(new Date(event.startTime), 'd')}
               </div>
-
-              {/* Location */}
-              {event.locationType === "in_person" && event.venueName && (
-                <div className="flex items-center space-x-2">
-                  <MapPin className="w-4 h-4" />
-                  <span>
-                    {event.venueName}
-                    {event.venueCity && event.venueState && ` • ${event.venueCity}, ${event.venueState}`}
-                  </span>
-                </div>
-              )}
-
-              {event.locationType === "virtual" && (
-                <div className="flex items-center space-x-2">
-                  <MapPin className="w-4 h-4" />
-                  <span>Virtual Event (Online)</span>
-                </div>
-              )}
-
-              {event.locationType === "hybrid" && (
-                <div className="flex items-center space-x-2">
-                  <MapPin className="w-4 h-4" />
-                  <span>Hybrid Event (In-Person & Virtual)</span>
-                </div>
-              )}
-
-              {/* Capacity */}
-              {event.capacity && (
-                <div className="flex items-center space-x-2">
-                  <Users className="w-4 h-4" />
-                  <span>Up to {event.capacity} participants</span>
-                </div>
-              )}
+              <div className="text-xs font-semibold text-neutral-600 uppercase">
+                {format(new Date(event.startTime), 'MMM')}
+              </div>
             </div>
           </div>
 
-          {/* RSVP Button */}
-          <div className="flex-shrink-0">
-            <Link href={`/programs/${programSlug}/events/${event.id}`}>
-              <button className="px-8 py-4 bg-black text-white font-semibold rounded-xl hover:bg-black/90 transition-all duration-300 hover:scale-105 whitespace-nowrap">
-                RSVP Now
-              </button>
-            </Link>
+          {/* Location - Top Right */}
+          {event.venueName && (
+            <div className="absolute top-4 right-4 flex items-center space-x-1 text-xs text-white text-shadow-md">
+              <MapPin className="w-3.5 h-3.5 flex-shrink-0" />
+              <span>{event.venueName}</span>
+            </div>
+          )}
+
+          {/* Event Details on Image */}
+          <div className="absolute bottom-4 left-4 right-4 flex items-center gap-4 text-xs text-white text-shadow-md">
+            <div className="flex items-center space-x-1">
+              <Clock className="w-3.5 h-3.5 flex-shrink-0" />
+              <span>
+                {format(new Date(event.startTime), 'h:mm a')} - {format(new Date(event.endTime), 'h:mm a')}
+              </span>
+            </div>
+            {event.capacity && (
+              <div className="flex items-center space-x-1">
+                <Users className="w-3.5 h-3.5 flex-shrink-0" />
+                <span>Capacity: {event.capacity}</span>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Content */}
+        <div className="p-6 flex flex-col flex-grow">
+          <h3 className="text-3xl font-crimson font-normal tracking-tighter group-hover:text-amber-900 transition-colors mb-2 flex items-start">
+            {event.program?.title || 'Event'}
+          </h3>
+          {event.program?.description && (
+            <p className="text-neutral-600 text-sm line-clamp-2 mb-4 leading-relaxed min-h-[40px]">
+              {event.program.description}
+            </p>
+          )}
+
+          {/* CTA */}
+          <div className="flex items-center justify-between pt-4 border-t border-neutral-100 mt-auto">
+            <span className="text-sm font-semibold text-amber-900">
+              View Event
+            </span>
+            <ArrowRight className="w-4 h-4 text-amber-900 group-hover:translate-x-1 transition-transform" />
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   )
 }
-

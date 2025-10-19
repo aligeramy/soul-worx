@@ -62,34 +62,50 @@ export default async function ChannelPage({
 
   return (
     <div className="min-h-screen bg-neutral-50">
-      {/* Channel Header */}
-      <section className="bg-gradient-to-br from-purple-600 to-blue-600 text-white py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <Link
-            href="/programs/community"
-            className="text-white/80 hover:text-white mb-4 inline-block"
-          >
-            ← Back to Community
-          </Link>
-          
-          <div className="mt-6">
-            <h1 className="text-4xl font-bold mb-4">{channel.title}</h1>
-            <p className="text-xl text-purple-100 mb-6">
-              {channel.longDescription || channel.description}
-            </p>
+      {/* Channel Header with Cover Image */}
+      <section className="relative h-[50vh] overflow-hidden">
+        {channel.coverImage ? (
+          <Image
+            src={channel.coverImage}
+            alt={channel.title}
+            fill
+            className="object-cover"
+          />
+        ) : (
+          <div className="w-full h-full bg-gradient-to-br from-purple-600 to-blue-600" />
+        )}
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
+        
+        <div className="absolute bottom-0 left-0 right-0 px-6 pb-12">
+          <div className="max-w-7xl mx-auto">
+            <Link
+              href="/programs/community"
+              className="text-white/80 hover:text-white mb-4 inline-block"
+            >
+              ← Back to Community
+            </Link>
             
-            <div className="flex items-center gap-4 text-sm">
-              <span className="px-3 py-1 bg-white/20 rounded-full">
-                {channel.videoCount} videos
-              </span>
-              <span className="px-3 py-1 bg-white/20 rounded-full">
-                {channel.category}
-              </span>
-              {!hasChannelAccess && (
-                <span className="px-3 py-1 bg-yellow-400 text-yellow-900 rounded-full font-medium">
-                  Requires Tier {channel.requiredTierLevel}+
+            <div className="mt-6">
+              <h1 className="text-4xl md:text-6xl font-crimson font-normal tracking-tighter text-white mb-4">
+                {channel.title}
+              </h1>
+              <p className="text-xl text-white/90 mb-6 max-w-3xl">
+                {channel.longDescription || channel.description}
+              </p>
+              
+              <div className="flex items-center gap-3 text-sm">
+                <span className="px-3 py-1.5 bg-white/90 backdrop-blur-sm text-black font-bold rounded-full uppercase tracking-wide">
+                  {channel.videoCount} videos
                 </span>
-              )}
+                <span className="px-3 py-1.5 bg-white/90 backdrop-blur-sm text-black font-bold rounded-full uppercase tracking-wide">
+                  {channel.category.replace('_', ' ')}
+                </span>
+                {!hasChannelAccess && (
+                  <span className="px-3 py-1.5 bg-yellow-400 text-yellow-900 rounded-full font-bold">
+                    Requires Tier {channel.requiredTierLevel}+
+                  </span>
+                )}
+              </div>
             </div>
           </div>
         </div>

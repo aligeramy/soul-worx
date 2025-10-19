@@ -36,39 +36,33 @@ export default async function Home() {
       {/* Combined Testimonials + Stats */}
       <TestimonialsStats />
 
-      {/* Featured Program Section */}
+      {/* The Book Section */}
       <section className="bg-neutral-50 py-32 px-6">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div className="relative aspect-[4/5] overflow-hidden rounded-3xl">
               <Image
-                src="/optimized/0K0A3921.jpg"
-                alt="Featured Program"
+                src="/shop/book-library.png"
+                alt="The Ripple Effect Book"
                 fill
                 className="object-cover"
               />
             </div>
             <div className="space-y-8">
               <div className="inline-block px-4 py-2 bg-black/5 rounded-full">
-                <span className="text-sm font-semibold uppercase tracking-wider">Featured Program</span>
+                <span className="text-sm font-semibold uppercase tracking-wider">The Book</span>
               </div>
               <h2 className="text-5xl md:text-6xl font-crimson font-normal tracking-tight">
-                Youth Poetry Workshop
+                The Ripple Effect
               </h2>
-              <p className="text-xl text-neutral-600 font-light leading-relaxed">
-                Join us for an immersive experience where young voices discover the power of their words. 
-                Through guided sessions and creative exercises, participants learn to express themselves 
-                authentically and connect with their community.
+              <p className="text-2xl text-brand-bg-darker font-normal leading-relaxed font-crimson">
+                A powerful collection of poetry that explores loss, love, faith, and gratitude. Indiana Rotondo&apos;s diverse free-verse poems offer comfort and inspiration, inviting readers to express themselves and share their journey with others.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Link href="/programs">
-                  <button className="px-8 py-4 bg-black text-white font-semibold rounded-full hover:bg-black/90 transition-all duration-300 hover:scale-105">
-                    Register Now
-                  </button>
-                </Link>
-                <Link href="/programs">
-                  <button className="px-8 py-4 bg-white border-2 border-black/10 text-black font-semibold rounded-full hover:bg-black/5 transition-all duration-300">
-                    View All Programs
+                <Link href="/shop?category=books">
+                  <button className="group relative font-crimson font-normal px-10 py-5 bg-brand-bg-darker text-white  text-2xl rounded-md shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 overflow-hidden">
+                    <span className="relative z-10">Get Your Copy</span>
+                    <div className="absolute inset-0 bg-black/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
                   </button>
                 </Link>
               </div>

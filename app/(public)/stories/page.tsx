@@ -1,4 +1,5 @@
 import { CategoryCard } from "@/components/ui/category-card"
+import Image from "next/image"
 
 export default function StoriesPage() {
   const categories = [
@@ -29,40 +30,36 @@ export default function StoriesPage() {
   ]
 
   return (
-    <div className="min-h-screen bg-brand-bg-darker relative">
-      {/* Noise texture overlay */}
-      <div 
-        className="absolute inset-0 pointer-events-none opacity-40"
-        style={{
-          backgroundImage: `url('/noise.png')`,
-          backgroundRepeat: 'repeat',
-        }}
-      />
-      {/* Modern Header */}
-      <section className="relative z-0 pt-32 pb-16 px-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="inline-block mb-6">
-            <span className="px-4 py-2 bg-white text-black text-sm font-bold rounded-full">
+    <div className="min-h-screen bg-white">
+      {/* Hero Section */}
+      <section className="relative h-[50vh] overflow-hidden">
+        <Image
+          src="/optimized/0K0A2992.jpg"
+          alt="Stories"
+          fill
+          className="object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
+        
+        <div className="absolute bottom-0 left-0 right-0 px-6 pb-12">
+          <div className="max-w-7xl mx-auto">
+            <div className="text-white/80 mb-2 text-sm font-bold uppercase tracking-wider">
               STORIES
-            </span>
+            </div>
+            <h1 className="text-4xl md:text-6xl font-crimson font-normal tracking-tighter text-white mb-4">
+              Share The Journey
+            </h1>
+            <p className="text-xl text-white/90 max-w-2xl">
+              Celebrating voices, moments, and the power of community
+            </p>
           </div>
-          <h1 className="text-6xl md:text-8xl font-bold tracking-tight mb-6 text-white">
-            Share The
-            <br />
-            <span className="text-gold">
-              Journey
-            </span>
-          </h1>
-          <p className="text-xl text-white/80 max-w-2xl font-light">
-            Celebrating voices, moments, and the power of community
-          </p>
         </div>
       </section>
 
       {/* Category Cards Grid */}
-      <section className="relative z-0 pb-32 px-6">
+      <section className="relative z-0 pb-32 px-6 pt-16 bg-white">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl font-bold mb-8 text-white">Explore by Category</h2>
+          <h2 className="text-3xl font-crimson font-normal tracking-tighter mb-8">Explore by Category</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {categories.map((category, index) => (
               <CategoryCard
