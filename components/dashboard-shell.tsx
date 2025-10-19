@@ -26,8 +26,17 @@ export default function DashboardShell({
   const user = data?.user
 
   return (
-    <div className="min-h-screen bg-neutral-50">
-      <header className="sticky top-0 z-50 border-b bg-white/80 backdrop-blur-xl">
+    <div className="min-h-screen bg-brand-bg-darker relative">
+      {/* Noise texture overlay */}
+      <div 
+        className="fixed inset-0 pointer-events-none opacity-30 z-0"
+        style={{
+          backgroundImage: `url('/noise.png')`,
+          backgroundRepeat: 'repeat',
+        }}
+      />
+      
+      <header className="sticky top-0 z-50 border-b border-white/10 bg-brand-bg-darker/80 backdrop-blur-xl">
         <div className="container mx-auto px-4 py-3">
           <div className="flex items-center justify-between">
             {/* Left - Logo & Navigation */}
@@ -38,7 +47,7 @@ export default function DashboardShell({
                   alt="Soulworx Logo"
                   width={32}
                   height={48}
-                  className="h-10 w-auto"
+                  className="h-10 w-auto invert"
                 />
               </Link>
 
@@ -47,7 +56,7 @@ export default function DashboardShell({
                   <Button 
                     variant="ghost" 
                     size="sm"
-                    className="rounded-lg text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100"
+                    className="rounded-lg text-white/70 hover:text-white hover:bg-white/10"
                   >
                     <LayoutDashboard className="mr-2 h-4 w-4" />
                     Dashboard
@@ -57,7 +66,7 @@ export default function DashboardShell({
                   <Button 
                     variant="ghost" 
                     size="sm"
-                    className="rounded-lg text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100"
+                    className="rounded-lg text-white/70 hover:text-white hover:bg-white/10"
                   >
                     <Calendar className="mr-2 h-4 w-4" />
                     Calendar
@@ -69,18 +78,18 @@ export default function DashboardShell({
             {/* Right - User Menu */}
             <div className="flex items-center gap-3">
               {user && (
-                <div className="hidden md:flex items-center gap-3 px-3 py-2 rounded-xl bg-neutral-50">
-                  <Avatar className="h-8 w-8">
+                <div className="hidden md:flex items-center gap-3 px-3 py-2 rounded-xl bg-white/5 border border-white/10">
+                  <Avatar className="h-8 w-8 border border-white/20">
                     <AvatarImage src={user.image || ""} alt={user.name || "User"} />
-                    <AvatarFallback className="text-sm bg-neutral-200">
+                    <AvatarFallback className="text-sm bg-white/10 text-white">
                       {user.name?.charAt(0).toUpperCase() || "U"}
                     </AvatarFallback>
                   </Avatar>
                   <div className="text-left">
-                    <p className="text-sm font-medium text-neutral-900 leading-none mb-1">
+                    <p className="text-sm font-medium text-white leading-none mb-1">
                       {user.name}
                     </p>
-                    <p className="text-xs text-neutral-500 leading-none">
+                    <p className="text-xs text-white/60 leading-none">
                       {"Member"}
                     </p>
                   </div>
@@ -92,7 +101,7 @@ export default function DashboardShell({
                 variant="ghost" 
                 size="sm"
                 onClick={() => signOut({ callbackUrl: "/" })}
-                className="rounded-lg text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100"
+                className="rounded-lg text-white/70 hover:text-white hover:bg-white/10"
               >
                 <LogOut className="h-4 w-4 md:mr-2" />
                 <span className="hidden md:inline">Sign Out</span>
@@ -102,7 +111,7 @@ export default function DashboardShell({
         </div>
       </header>
 
-      <main className="container mx-auto px-4 py-8 max-w-7xl">
+      <main className="container mx-auto px-4 py-8 max-w-7xl relative z-10">
         {children}
       </main>
     </div>

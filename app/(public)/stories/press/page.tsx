@@ -1,54 +1,57 @@
 import { getPublishedPosts } from "@/lib/db/queries"
 import Link from "next/link"
 import Image from "next/image"
+import { ArrowLeft } from "lucide-react"
 
 export default async function PressMediaPage() {
   const posts = await getPublishedPosts()
   const pressPosts = posts.filter(p => p.category === "announcements")
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-teal-50">
-      {/* Professional Press Header */}
-      <section className="pt-32 pb-20 px-6">
-        <div className="max-w-7xl mx-auto">
-          <Link 
-            href="/stories" 
-            className="inline-flex items-center gap-2 text-neutral-600 hover:text-neutral-900 mb-8 group"
-          >
-            <svg className="w-5 h-5 group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-            </svg>
-            Back to Stories
-          </Link>
-          
-          <div className="inline-block mb-6">
-            <span className="px-4 py-2 bg-gradient-to-r from-green-600 to-teal-600 text-white text-sm font-bold rounded-full">
+    <div className="min-h-screen bg-white">
+      {/* Hero Section */}
+      <section className="relative h-[50vh] overflow-hidden">
+        <Image
+          src="/optimized/0K0A7770.jpg"
+          alt="Press & Media"
+          fill
+          className="object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
+        
+        <div className="absolute bottom-0 left-0 right-0 px-6 pb-12">
+          <div className="max-w-7xl mx-auto">
+            <Link 
+              href="/stories" 
+              className="inline-flex items-center gap-2 text-white/70 hover:text-white mb-6 group"
+            >
+              <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
+              Back to Stories
+            </Link>
+            
+            <div className="text-white/80 mb-2 text-sm font-bold uppercase tracking-wider">
               PRESS & MEDIA
-            </span>
+            </div>
+            <h1 className="text-4xl md:text-6xl font-crimson font-normal tracking-tighter text-white mb-4">
+              In The Spotlight
+            </h1>
+            <p className="text-xl text-white/90 max-w-2xl">
+              Media coverage, press releases, and official announcements from Soulworx
+            </p>
           </div>
-          
-          <h1 className="text-6xl md:text-8xl font-bold tracking-tight mb-6">
-            In The
-            <br />
-            <span className="bg-gradient-to-r from-green-600 via-teal-600 to-cyan-600 bg-clip-text text-transparent">
-              Spotlight
-            </span>
-          </h1>
-          
-          <p className="text-xl text-neutral-600 max-w-2xl font-light">
-            Media coverage, press releases, and official announcements from Soulworx
-          </p>
         </div>
       </section>
 
-      {/* Press Cards - News Grid Style */}
-      <section className="pb-32 px-6">
+      {/* Press Cards Grid */}
+      <section className="pb-32 px-6 pt-16 bg-white">
         <div className="max-w-7xl mx-auto">
           {pressPosts.length === 0 ? (
-            <div className="text-center py-20">
-              <div className="text-6xl mb-4">📰</div>
-              <h3 className="text-2xl font-bold text-neutral-900 mb-2">No press releases yet</h3>
-              <p className="text-neutral-600">Check back for news and announcements</p>
+            <div className="text-center py-24 bg-white rounded-3xl border border-neutral-200">
+              <div className="w-20 h-20 bg-neutral-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <div className="text-4xl">📰</div>
+              </div>
+              <h3 className="text-2xl font-crimson font-normal mb-2">No press releases yet</h3>
+              <p className="text-neutral-500">Check back for news and announcements</p>
             </div>
           ) : (
             <div className="space-y-8">
@@ -58,7 +61,7 @@ export default async function PressMediaPage() {
                   href={`/stories/press/${pressPosts[0].slug}`}
                   className="group"
                 >
-                  <article className="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500">
+                  <article className="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 border border-neutral-100">
                     <div className="grid md:grid-cols-2 gap-0">
                       {/* Image */}
                       <div className="relative aspect-[4/3] md:aspect-auto overflow-hidden">
@@ -67,19 +70,18 @@ export default async function PressMediaPage() {
                             <Image
                               src={pressPosts[0].coverImage}
                               alt={pressPosts[0].title}
-                              width={400}
-                              height={225}
+                              width={600}
+                              height={450}
                               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                             />
-                            <div className="absolute inset-0 bg-gradient-to-br from-black/20 to-transparent"></div>
                           </>
                         ) : (
-                          <div className="w-full h-full bg-gradient-to-br from-green-100 to-teal-100 flex items-center justify-center">
+                          <div className="w-full h-full bg-gradient-to-br from-neutral-100 to-neutral-200 flex items-center justify-center">
                             <div className="text-6xl">📢</div>
                           </div>
                         )}
                         
-                        <div className="absolute top-6 left-6 bg-gradient-to-r from-green-600 to-teal-600 text-white px-4 py-2 rounded-full font-bold text-sm">
+                        <div className="absolute top-6 left-6 bg-neutral-900 text-white px-4 py-2 rounded-full font-bold text-sm uppercase tracking-wider">
                           FEATURED
                         </div>
                       </div>
@@ -87,7 +89,7 @@ export default async function PressMediaPage() {
                       {/* Content */}
                       <div className="p-12 flex flex-col justify-center">
                         {pressPosts[0].publishedAt && (
-                          <div className="text-sm font-bold text-green-600 mb-4">
+                          <div className="text-sm font-bold text-neutral-600 mb-4">
                             {new Date(pressPosts[0].publishedAt).toLocaleDateString('en-US', { 
                               year: 'numeric',
                               month: 'long', 
@@ -96,7 +98,7 @@ export default async function PressMediaPage() {
                           </div>
                         )}
                         
-                        <h2 className="text-4xl font-bold tracking-tight mb-4 group-hover:text-green-600 transition-colors">
+                        <h2 className="text-3xl font-crimson font-normal tracking-tighter mb-4 group-hover:text-neutral-600 transition-colors">
                           {pressPosts[0].title}
                         </h2>
                         
@@ -106,7 +108,7 @@ export default async function PressMediaPage() {
                           </p>
                         )}
                         
-                        <div className="flex items-center gap-2 text-green-600 font-bold group-hover:gap-4 transition-all">
+                        <div className="flex items-center gap-2 text-neutral-900 font-semibold group-hover:gap-4 transition-all">
                           Read Full Article
                           <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -120,7 +122,7 @@ export default async function PressMediaPage() {
               
               {/* Rest of posts in grid */}
               {pressPosts.length > 1 && (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pt-8">
                   {pressPosts.slice(1).map((post) => (
                     <Link 
                       key={post.id}
@@ -144,7 +146,7 @@ export default async function PressMediaPage() {
                         {/* Content */}
                         <div className="p-6 flex-1 flex flex-col">
                           {post.publishedAt && (
-                            <div className="text-xs font-bold text-green-600 mb-3">
+                            <div className="text-xs font-bold text-neutral-600 mb-3">
                               {new Date(post.publishedAt).toLocaleDateString('en-US', { 
                                 year: 'numeric',
                                 month: 'long', 
@@ -153,7 +155,7 @@ export default async function PressMediaPage() {
                             </div>
                           )}
                           
-                          <h3 className="text-xl font-bold tracking-tight mb-3 group-hover:text-green-600 transition-colors line-clamp-2">
+                          <h3 className="text-xl font-crimson font-normal tracking-tighter mb-3 group-hover:text-neutral-600 transition-colors line-clamp-2">
                             {post.title}
                           </h3>
                           
@@ -170,7 +172,7 @@ export default async function PressMediaPage() {
                               </div>
                             )}
                             
-                            <div className="text-green-600 group-hover:translate-x-1 transition-transform">
+                            <div className="text-neutral-900 group-hover:translate-x-1 transition-transform">
                               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                               </svg>

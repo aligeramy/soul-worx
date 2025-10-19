@@ -34,9 +34,9 @@ export function Footer() {
               <input
                 type="email"
                 placeholder="Enter your email"
-                className="flex-1 px-6 py-4 bg-white/10 border border-white/20 rounded-full text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-white/30 backdrop-blur-sm transition-all"
+                className="flex-1 px-6 py-4 bg-white/10 border border-white/20 rounded-md text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-white/30 backdrop-blur-sm transition-all"
               />
-              <button className="px-8 py-4 bg-white text-black font-semibold rounded-full hover:bg-white/90 transition-all duration-300 hover:scale-105 whitespace-nowrap">
+              <button className="px-8 py-4 bg-white text-black font-semibold rounded-md hover:bg-white/90 transition-all duration-300 hover:scale-105 whitespace-nowrap">
                 Subscribe
               </button>
             </div>

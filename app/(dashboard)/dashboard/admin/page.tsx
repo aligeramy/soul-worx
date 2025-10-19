@@ -57,7 +57,7 @@ export default async function AdminDashboard() {
     <div className="space-y-8 animate-in fade-in duration-500">
       {/* Header */}
       <div>
-        <h1 className="text-4xl font-bold text-white mb-2">Dashboard</h1>
+        <h1 className="text-4xl font-crimson font-normal text-white mb-2">Dashboard</h1>
         <p className="text-white/60">
           Welcome back. Here&apos;s what&apos;s happening with your platform.
         </p>
@@ -119,9 +119,9 @@ export default async function AdminDashboard() {
 
       <div className="grid gap-6 md:grid-cols-2">
         {/* Recent Activity */}
-        <Card className="bg-[#1c1c1e] border-white/10">
+        <Card className="bg-white/5 backdrop-blur-sm border-white/10">
           <CardHeader>
-            <CardTitle className="text-white flex items-center gap-2">
+            <CardTitle className="text-white flex items-center gap-2 font-crimson font-normal">
               <Activity className="h-5 w-5" />
               Recent Events
             </CardTitle>
@@ -166,9 +166,9 @@ export default async function AdminDashboard() {
         </Card>
 
         {/* Quick Actions */}
-        <Card className="bg-[#1c1c1e] border-white/10">
+        <Card className="bg-white/5 backdrop-blur-sm border-white/10">
           <CardHeader>
-            <CardTitle className="text-white flex items-center gap-2">
+            <CardTitle className="text-white flex items-center gap-2 font-crimson font-normal">
               <Plus className="h-5 w-5" />
               Quick Actions
             </CardTitle>
@@ -178,25 +178,25 @@ export default async function AdminDashboard() {
           </CardHeader>
           <CardContent className="space-y-3">
             <Link href="/dashboard/admin/programs/new">
-              <Button className="w-full bg-white text-black hover:bg-white/90 font-semibold">
+              <Button className="w-full bg-white text-brand-bg-darker hover:bg-white/90 font-semibold">
                 <Sparkles className="mr-2 h-4 w-4" />
                 New Program
               </Button>
             </Link>
             <Link href="/dashboard/admin/events/new">
-              <Button className="w-full bg-white/10 text-white hover:bg-white/20 font-semibold">
+              <Button className="w-full bg-white/10 text-white hover:bg-white/20 font-semibold border border-white/10">
                 <Calendar className="mr-2 h-4 w-4" />
                 New Event
               </Button>
             </Link>
             <Link href="/dashboard/admin/stories/new">
-              <Button className="w-full bg-white/10 text-white hover:bg-white/20 font-semibold">
+              <Button className="w-full bg-white/10 text-white hover:bg-white/20 font-semibold border border-white/10">
                 <FileText className="mr-2 h-4 w-4" />
                 New Story
               </Button>
             </Link>
             <Link href="/dashboard/admin/shop/new">
-              <Button className="w-full bg-white/10 text-white hover:bg-white/20 font-semibold">
+              <Button className="w-full bg-white/10 text-white hover:bg-white/20 font-semibold border border-white/10">
                 <ShoppingBag className="mr-2 h-4 w-4" />
                 New Product
               </Button>
@@ -207,11 +207,11 @@ export default async function AdminDashboard() {
 
       {/* Recent Stories */}
       {recentStories.length > 0 && (
-        <Card className="bg-[#1c1c1e] border-white/10">
+        <Card className="bg-white/5 backdrop-blur-sm border-white/10">
           <CardHeader>
             <div className="flex items-center justify-between">
               <div>
-                <CardTitle className="text-white flex items-center gap-2">
+                <CardTitle className="text-white flex items-center gap-2 font-crimson font-normal">
                   <TrendingUp className="h-5 w-5" />
                   Recent Stories
                 </CardTitle>

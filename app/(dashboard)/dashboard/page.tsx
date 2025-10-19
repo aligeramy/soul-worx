@@ -21,18 +21,18 @@ export default async function DashboardPage() {
   return (
     <div className="space-y-8">
       {/* Hero Section */}
-      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-neutral-900 via-neutral-800 to-neutral-900 p-8 md:p-12">
+      <div className="relative overflow-hidden rounded-3xl bg-white/5 backdrop-blur-sm border border-white/10 p-8 md:p-12">
         <div className="absolute inset-0 bg-grid-white/[0.02] bg-[size:32px_32px]" />
         <div className="relative">
           <div className="flex items-center gap-4 mb-6">
-            <Avatar className="h-20 w-20 border-4 border-white/10">
+            <Avatar className="h-20 w-20 border-4 border-white/20">
               <AvatarImage src={session.user.image || ""} alt={session.user.name || "User"} />
               <AvatarFallback className="text-2xl bg-white/5 text-white">
                 {session.user.name?.charAt(0).toUpperCase() || "U"}
               </AvatarFallback>
             </Avatar>
             <div>
-              <h1 className="text-4xl font-bold text-white mb-2">
+              <h1 className="text-4xl font-crimson font-normal text-white mb-2">
                 Welcome back, {session.user.name?.split(' ')[0]}
               </h1>
               <p className="text-white/60 text-lg">
@@ -52,20 +52,20 @@ export default async function DashboardPage() {
 
       {/* Admin Access Card */}
       {isAdmin && (
-        <Card className="border-0 bg-gradient-to-r from-neutral-900 to-neutral-800 overflow-hidden group hover:shadow-2xl transition-all duration-300">
+        <Card className="border border-white/10 bg-white/5 backdrop-blur-sm overflow-hidden group hover:bg-white/10 transition-all duration-300">
           <CardContent className="p-8">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-6">
                 <div className="h-16 w-16 bg-white rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                  <Shield className="h-8 w-8 text-black" />
+                  <Shield className="h-8 w-8 text-brand-bg-darker" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-2xl text-white mb-1">Admin Panel</h3>
+                  <h3 className="font-crimson text-2xl text-white mb-1">Admin Panel</h3>
                   <p className="text-white/60">Manage content, users, and platform settings</p>
                 </div>
               </div>
               <Link href="/dashboard/admin">
-                <Button size="lg" className="bg-white text-black hover:bg-white/90 font-semibold rounded-xl">
+                <Button size="lg" className="bg-white text-brand-bg-darker hover:bg-white/90 font-semibold rounded-xl">
                   Open Admin Panel
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
@@ -77,24 +77,24 @@ export default async function DashboardPage() {
 
       {/* Stats Overview */}
       <div className="grid gap-6 md:grid-cols-3">
-        <Card className="border-neutral-200 bg-white hover:shadow-lg transition-shadow">
+        <Card className="border border-white/10 bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-all duration-300">
           <CardContent className="p-6">
             <div className="flex items-center justify-between mb-4">
-              <div className="p-3 bg-blue-50 rounded-xl">
-                <Calendar className="h-6 w-6 text-blue-600" />
+              <div className="p-3 bg-white/10 rounded-xl">
+                <Calendar className="h-6 w-6 text-white" />
               </div>
-              <Badge variant="secondary" className="bg-blue-50 text-blue-700 hover:bg-blue-50">
+              <Badge variant="secondary" className="bg-white/10 text-white border-white/20 hover:bg-white/20">
                 Active
               </Badge>
             </div>
             <div className="space-y-1">
-              <p className="text-3xl font-bold text-neutral-900">
+              <p className="text-3xl font-crimson font-normal text-white">
                 {upcomingRsvps.length}
               </p>
-              <p className="text-sm text-neutral-500 font-medium">Upcoming Events</p>
+              <p className="text-sm text-white/60 font-medium">Upcoming Events</p>
             </div>
             <Link href="/dashboard/calendar">
-              <Button variant="ghost" size="sm" className="w-full mt-4 text-blue-600 hover:text-blue-700 hover:bg-blue-50">
+              <Button variant="ghost" size="sm" className="w-full mt-4 text-white/80 hover:text-white hover:bg-white/10">
                 View Calendar
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
@@ -102,22 +102,22 @@ export default async function DashboardPage() {
           </CardContent>
         </Card>
 
-        <Card className="border-neutral-200 bg-white hover:shadow-lg transition-shadow">
+        <Card className="border border-white/10 bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-all duration-300">
           <CardContent className="p-6">
             <div className="flex items-center justify-between mb-4">
-              <div className="p-3 bg-purple-50 rounded-xl">
-                <Sparkles className="h-6 w-6 text-purple-600" />
+              <div className="p-3 bg-white/10 rounded-xl">
+                <Sparkles className="h-6 w-6 text-white" />
               </div>
-              <Badge variant="secondary" className="bg-purple-50 text-purple-700 hover:bg-purple-50">
+              <Badge variant="secondary" className="bg-white/10 text-white border-white/20 hover:bg-white/20">
                 Explore
               </Badge>
             </div>
             <div className="space-y-1">
-              <p className="text-3xl font-bold text-neutral-900">Browse</p>
-              <p className="text-sm text-neutral-500 font-medium">Programs & Workshops</p>
+              <p className="text-3xl font-crimson font-normal text-white">Browse</p>
+              <p className="text-sm text-white/60 font-medium">Programs & Workshops</p>
             </div>
             <Link href="/programs">
-              <Button variant="ghost" size="sm" className="w-full mt-4 text-purple-600 hover:text-purple-700 hover:bg-purple-50">
+              <Button variant="ghost" size="sm" className="w-full mt-4 text-white/80 hover:text-white hover:bg-white/10">
                 View Programs
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
@@ -125,22 +125,22 @@ export default async function DashboardPage() {
           </CardContent>
         </Card>
 
-        <Card className="border-neutral-200 bg-white hover:shadow-lg transition-shadow">
+        <Card className="border border-white/10 bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-all duration-300">
           <CardContent className="p-6">
             <div className="flex items-center justify-between mb-4">
-              <div className="p-3 bg-emerald-50 rounded-xl">
-                <Plus className="h-6 w-6 text-emerald-600" />
+              <div className="p-3 bg-white/10 rounded-xl">
+                <Plus className="h-6 w-6 text-white" />
               </div>
-              <Badge variant="secondary" className="bg-emerald-50 text-emerald-700 hover:bg-emerald-50">
+              <Badge variant="secondary" className="bg-white/10 text-white border-white/20 hover:bg-white/20">
                 New
               </Badge>
             </div>
             <div className="space-y-1">
-              <p className="text-3xl font-bold text-neutral-900">Discover</p>
-              <p className="text-sm text-neutral-500 font-medium">Latest Stories</p>
+              <p className="text-3xl font-crimson font-normal text-white">Discover</p>
+              <p className="text-sm text-white/60 font-medium">Latest Stories</p>
             </div>
             <Link href="/stories">
-              <Button variant="ghost" size="sm" className="w-full mt-4 text-emerald-600 hover:text-emerald-700 hover:bg-emerald-50">
+              <Button variant="ghost" size="sm" className="w-full mt-4 text-white/80 hover:text-white hover:bg-white/10">
                 Read Stories
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
@@ -154,11 +154,11 @@ export default async function DashboardPage() {
         <div>
           <div className="flex items-center justify-between mb-6">
             <div>
-              <h2 className="text-2xl font-bold text-neutral-900">Your Upcoming Events</h2>
-              <p className="text-neutral-500 mt-1">Events you&apos;ve registered for</p>
+              <h2 className="text-2xl font-crimson font-normal text-white">Your Upcoming Events</h2>
+              <p className="text-white/60 mt-1">Events you&apos;ve registered for</p>
             </div>
             <Link href="/dashboard/calendar">
-              <Button variant="outline" className="rounded-xl">
+              <Button variant="outline" className="rounded-xl border-white/20 text-white hover:bg-white/10">
                 View All
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
@@ -172,20 +172,20 @@ export default async function DashboardPage() {
                 href={`/programs/${rsvp.program.slug}`}
                 className="block group"
               >
-                <Card className="border-neutral-200 bg-white hover:shadow-xl hover:border-neutral-300 transition-all duration-300">
+                <Card className="border border-white/10 bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-all duration-300">
                   <CardContent className="p-6">
                     <div className="flex items-start justify-between">
                       <div className="flex-1 min-w-0 space-y-3">
                         <div>
-                          <Badge variant="outline" className="mb-2">
+                          <Badge variant="outline" className="mb-2 border-white/20 text-white">
                             {rsvp.program.title}
                           </Badge>
-                          <h3 className="text-xl font-bold text-neutral-900 group-hover:text-neutral-700 transition-colors">
+                          <h3 className="text-xl font-crimson font-normal text-white group-hover:text-white/80 transition-colors">
                             {rsvp.event.title}
                           </h3>
                         </div>
                         
-                        <div className="flex flex-wrap items-center gap-4 text-sm text-neutral-600">
+                        <div className="flex flex-wrap items-center gap-4 text-sm text-white/70">
                           <div className="flex items-center gap-2">
                             <Calendar className="h-4 w-4" />
                             <span>{format(new Date(rsvp.event.startTime), "EEEE, MMMM d, yyyy")}</span>
@@ -204,7 +204,7 @@ export default async function DashboardPage() {
                       </div>
                       
                       <div className="ml-4">
-                        <div className="px-4 py-2 bg-emerald-50 text-emerald-700 text-sm font-semibold rounded-xl">
+                        <div className="px-4 py-2 bg-white/10 text-white text-sm font-semibold rounded-xl border border-white/20">
                           Confirmed
                         </div>
                       </div>
@@ -218,7 +218,7 @@ export default async function DashboardPage() {
           {upcomingRsvps.length > 3 && (
             <div className="text-center mt-4">
               <Link href="/dashboard/calendar">
-                <Button variant="ghost" size="lg" className="text-blue-600 hover:text-blue-700">
+                <Button variant="ghost" size="lg" className="text-white/80 hover:text-white hover:bg-white/10">
                   View all {upcomingRsvps.length} events
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
@@ -227,20 +227,20 @@ export default async function DashboardPage() {
           )}
         </div>
       ) : (
-        <Card className="border-0 bg-gradient-to-br from-neutral-50 to-white">
+        <Card className="border border-white/10 bg-white/5 backdrop-blur-sm">
           <CardContent className="py-16 text-center">
             <div className="max-w-md mx-auto space-y-6">
-              <div className="w-20 h-20 mx-auto bg-neutral-100 rounded-full flex items-center justify-center">
-                <Calendar className="w-10 h-10 text-neutral-400" />
+              <div className="w-20 h-20 mx-auto bg-white/10 rounded-full flex items-center justify-center">
+                <Calendar className="w-10 h-10 text-white/60" />
               </div>
               <div>
-                <h3 className="text-2xl font-bold text-neutral-900 mb-2">No Upcoming Events</h3>
-                <p className="text-neutral-500">
+                <h3 className="text-2xl font-crimson font-normal text-white mb-2">No Upcoming Events</h3>
+                <p className="text-white/60">
                   Discover amazing programs and workshops to expand your horizons
                 </p>
               </div>
               <Link href="/programs">
-                <Button size="lg" className="bg-neutral-900 hover:bg-neutral-800 text-white rounded-xl font-semibold">
+                <Button size="lg" className="bg-white text-brand-bg-darker hover:bg-white/90 rounded-xl font-semibold">
                   <Sparkles className="mr-2 h-5 w-5" />
                   Browse Programs
                 </Button>

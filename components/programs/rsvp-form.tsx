@@ -70,10 +70,10 @@ export function RsvpForm({
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
+    <form onSubmit={handleSubmit} className="space-y-5">
       {/* Guest Count */}
       <div>
-        <label className="block text-sm font-semibold mb-2">
+        <label className="block text-xs font-semibold mb-2 text-neutral-700 uppercase tracking-wide">
           Additional Guests
         </label>
         <input
@@ -82,37 +82,37 @@ export function RsvpForm({
           max="5"
           value={formData.guestCount}
           onChange={(e) => setFormData({ ...formData, guestCount: parseInt(e.target.value) || 0 })}
-          className="w-full px-4 py-3 border border-neutral-300 rounded-xl focus:ring-2 focus:ring-black focus:border-transparent"
+          className="w-full px-4 py-2.5 text-sm border border-neutral-300 rounded-xl focus:ring-2 focus:ring-black focus:border-transparent"
           placeholder="0"
         />
-        <p className="text-xs text-neutral-500 mt-1">
+        <p className="text-xs text-neutral-500 mt-1.5">
           Number of people joining you (not including yourself)
         </p>
       </div>
 
       {/* Dietary Restrictions */}
       <div>
-        <label className="block text-sm font-semibold mb-2">
+        <label className="block text-xs font-semibold mb-2 text-neutral-700 uppercase tracking-wide">
           Dietary Restrictions (Optional)
         </label>
         <input
           type="text"
           value={formData.dietaryRestrictions}
           onChange={(e) => setFormData({ ...formData, dietaryRestrictions: e.target.value })}
-          className="w-full px-4 py-3 border border-neutral-300 rounded-xl focus:ring-2 focus:ring-black focus:border-transparent"
+          className="w-full px-4 py-2.5 text-sm border border-neutral-300 rounded-xl focus:ring-2 focus:ring-black focus:border-transparent"
           placeholder="e.g., Vegetarian, Gluten-free"
         />
       </div>
 
       {/* Special Needs */}
       <div>
-        <label className="block text-sm font-semibold mb-2">
+        <label className="block text-xs font-semibold mb-2 text-neutral-700 uppercase tracking-wide">
           Special Accommodations (Optional)
         </label>
         <textarea
           value={formData.specialNeeds}
           onChange={(e) => setFormData({ ...formData, specialNeeds: e.target.value })}
-          className="w-full px-4 py-3 border border-neutral-300 rounded-xl focus:ring-2 focus:ring-black focus:border-transparent resize-none"
+          className="w-full px-4 py-2.5 text-sm border border-neutral-300 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-transparent resize-none"
           rows={3}
           placeholder="Any accessibility needs or special requests"
         />
@@ -122,7 +122,7 @@ export function RsvpForm({
       {requiresParentConsent && (
         <>
           <div>
-            <label className="block text-sm font-semibold mb-2">
+            <label className="block text-xs font-semibold mb-2 text-neutral-700 uppercase tracking-wide">
               Parent/Guardian Email *
             </label>
             <input
@@ -130,20 +130,20 @@ export function RsvpForm({
               required
               value={formData.parentEmail}
               onChange={(e) => setFormData({ ...formData, parentEmail: e.target.value })}
-              className="w-full px-4 py-3 border border-neutral-300 rounded-xl focus:ring-2 focus:ring-black focus:border-transparent"
+              className="w-full px-4 py-2.5 text-sm border border-neutral-300 rounded-xl focus:ring-2 focus:ring-black focus:border-transparent"
               placeholder="parent@email.com"
             />
           </div>
 
-          <div className="flex items-start space-x-3">
+          <div className="flex items-start space-x-3 bg-neutral-50 border border-neutral-200 rounded-xl p-4">
             <input
               type="checkbox"
               required
               checked={formData.parentConsent}
               onChange={(e) => setFormData({ ...formData, parentConsent: e.target.checked })}
-              className="mt-1 w-5 h-5 border-neutral-300 rounded focus:ring-black"
+              className="mt-0.5 w-4 h-4 border-neutral-300 rounded focus:ring-black text-black"
             />
-            <label className="text-sm text-neutral-700">
+            <label className="text-xs text-neutral-700 leading-relaxed">
               I am the parent/legal guardian and I give consent for the participant to attend this event. *
             </label>
           </div>
@@ -157,13 +157,13 @@ export function RsvpForm({
             type="checkbox"
             checked={formData.calendarSync}
             onChange={(e) => setFormData({ ...formData, calendarSync: e.target.checked })}
-            className="mt-1 w-5 h-5 border-blue-300 rounded focus:ring-blue-500"
+            className="mt-0.5 w-4 h-4 border-blue-300 rounded focus:ring-blue-500 text-blue-600"
           />
           <div className="flex-grow">
-            <label className="text-sm font-semibold text-blue-900">
+            <label className="text-xs font-semibold text-blue-900">
               Enable calendar sync
             </label>
-            <p className="text-xs text-blue-700 mt-1">
+            <p className="text-xs text-blue-700 mt-1 leading-relaxed">
               Automatically update your calendar if event details change
             </p>
           </div>
@@ -172,7 +172,7 @@ export function RsvpForm({
 
       {/* Error Message */}
       {error && (
-        <div className="bg-red-50 border border-red-200 rounded-xl p-4 text-sm text-red-800">
+        <div className="bg-red-50 border border-red-200 rounded-xl p-4 text-xs text-red-800">
           {error}
         </div>
       )}
@@ -181,12 +181,12 @@ export function RsvpForm({
       <button
         type="submit"
         disabled={loading}
-        className="w-full px-8 py-4 bg-black text-white font-bold rounded-xl hover:bg-black/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        className="w-full px-6 py-3 bg-black text-white text-sm font-bold rounded-xl hover:bg-black/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
       >
         {loading ? "Registering..." : "Confirm RSVP"}
       </button>
 
-      <p className="text-xs text-neutral-500 text-center">
+      <p className="text-xs text-neutral-500 text-center leading-relaxed">
         By submitting, you agree to attend or notify us if you can&apos;t make it
       </p>
     </form>

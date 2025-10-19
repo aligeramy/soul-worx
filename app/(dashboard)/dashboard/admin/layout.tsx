@@ -21,10 +21,18 @@ export default async function AdminLayout({
   return (
     <SessionProvider>
       {/* Force dark theme for the admin area and use design tokens */}
-      <div className="min-h-screen dark">
+      <div className="min-h-screen dark bg-brand-bg-darker relative">
+        {/* Noise texture overlay */}
+        <div 
+          className="fixed inset-0 pointer-events-none opacity-30 z-0"
+          style={{
+            backgroundImage: `url('/noise.png')`,
+            backgroundRepeat: 'repeat',
+          }}
+        />
         <SidebarProvider>
           <AdminSidebar user={session.user} />
-          <SidebarInset className="bg-background">
+          <SidebarInset className="bg-transparent relative z-10">
             <main className="flex-1 p-6">
               <div className="w-full">
                 {children}

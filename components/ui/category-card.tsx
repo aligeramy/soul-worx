@@ -50,7 +50,7 @@ export function CategoryCard({ title, description, href, image, index }: Categor
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 + 0.2 }}
             >
-              <h3 className="text-3xl md:text-4xl font-bold text-white mb-3 group-hover:text-white/90 transition-colors">
+              <h3 className="text-3xl md:text-4xl text-shadow-lg font-crimson tracking-tighter font-medium text-white mb-3 group-hover:text-white/90 transition-colors">
                 {title}
               </h3>
               <p className="text-white/80 text-base leading-relaxed mb-6 max-w-md">

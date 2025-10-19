@@ -86,20 +86,28 @@ export default async function CommunityPage({
       )}
       
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-purple-600 to-blue-600 text-white py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">
+      <section className="relative h-[50vh] overflow-hidden">
+        <Image
+          src="/optimized/0K0A3966 (2).jpg"
+          alt="Join Our Community"
+          fill
+          className="object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
+        
+        <div className="absolute bottom-0 left-0 right-0 px-6 pb-12">
+          <div className="max-w-7xl mx-auto">
+            <h1 className="text-4xl md:text-6xl font-crimson font-normal tracking-tighter text-white mb-4">
               Join Our Community
             </h1>
-            <p className="text-xl mb-8 text-purple-100">
+            <p className="text-xl text-white/90 max-w-3xl mb-8">
               Access exclusive video content, tutorials, and resources to help you excel
               in basketball, career development, and more.
             </p>
             {!membership && (
-              <div className="flex gap-4 justify-center">
+              <div className="flex gap-4">
                 <a href="#membership-tiers">
-                  <Button size="lg" variant="default">
+                  <Button size="lg" variant="default" className="bg-white text-neutral-900 hover:bg-white/90">
                     View Membership Tiers
                   </Button>
                 </a>
@@ -107,8 +115,8 @@ export default async function CommunityPage({
             )}
             {membership && (
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 inline-block">
-                <p className="text-sm font-medium">Your Membership</p>
-                <p className="text-2xl font-bold">{membership.tier.name}</p>
+                <p className="text-sm font-medium text-white/80">Your Membership</p>
+                <p className="text-2xl font-crimson font-normal text-white">{membership.tier.name}</p>
               </div>
             )}
           </div>
@@ -117,7 +125,7 @@ export default async function CommunityPage({
 
       {/* Channels Section */}
       <section className="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-3xl font-bold mb-8">Community Channels</h2>
+        <h2 className="text-3xl font-crimson font-normal tracking-tighter mb-8">Community Channels</h2>
         
         <Suspense fallback={<div>Loading channels...</div>}>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -138,7 +146,7 @@ export default async function CommunityPage({
                       />
                       {isLocked && (
                         <div className="absolute top-2 right-2">
-                          <span className="text-xs px-3 py-1.5 bg-purple-600 text-white rounded-full font-medium shadow-lg">
+                          <span className="text-xs px-3 py-1.5 bg-neutral-900 text-white rounded-full font-medium shadow-lg">
                             Tier {channel.requiredTierLevel}+ for All
                           </span>
                         </div>
@@ -179,7 +187,7 @@ export default async function CommunityPage({
       <section id="membership-tiers" className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">Membership Tiers</h2>
+            <h2 className="text-3xl font-crimson font-normal tracking-tighter mb-4">Membership Tiers</h2>
             <p className="text-xl text-neutral-600">
               Choose the plan that works for you
             </p>
@@ -195,20 +203,20 @@ export default async function CommunityPage({
                   key={tier.id}
                   className={`p-8 ${
                     tier.level === "premium"
-                      ? "border-2 border-purple-600 shadow-lg"
+                      ? "border-2 border-neutral-900 shadow-lg"
                       : ""
                   }`}
                 >
                   {tier.level === "premium" && (
                     <div className="text-center mb-4">
-                      <span className="bg-purple-600 text-white px-3 py-1 rounded-full text-sm font-medium">
+                      <span className="bg-neutral-900 text-white px-3 py-1 rounded-full text-sm font-medium">
                         Most Popular
                       </span>
                     </div>
                   )}
 
                   <div className="text-center mb-6">
-                    <h3 className="text-2xl font-bold mb-2">{tier.name}</h3>
+                    <h3 className="text-2xl font-crimson font-normal mb-2">{tier.name}</h3>
                     <div className="text-4xl font-bold mb-2">
                       {price === 0 ? "Free" : `$${price.toFixed(0)}`}
                       {price > 0 && (
