@@ -19,6 +19,7 @@ interface Program {
   title: string
   slug: string
   description: string
+  status: string
 }
 
 type NewsItem = (Post & { type: 'post' }) | (Program & { type: 'program' })
@@ -61,7 +62,7 @@ export function HeroNewsSlideshow() {
         
         if (programsRes.ok) {
           const programs = await programsRes.json()
-          const publishedPrograms = programs.filter((p: any) => p.status === 'published')
+          const publishedPrograms = programs.filter((p: Program) => p.status === 'published')
           items.push(...publishedPrograms.slice(0, 2).map((p: Program) => ({ ...p, type: 'program' as const })))
         }
         

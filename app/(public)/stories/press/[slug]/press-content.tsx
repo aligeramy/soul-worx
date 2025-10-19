@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion"
 import Link from "next/link"
+import Image from "next/image"
 
 interface Post {
   id: string
@@ -105,9 +106,11 @@ export function PressContent({ post, relatedPosts }: PressContentProps) {
           >
             <div className="flex items-center gap-3">
               {post.author.image && (
-                <img
+                <Image
                   src={post.author.image}
                   alt={post.author.name || "Author"}
+                  width={48}
+                  height={48}
                   className="w-12 h-12 rounded-full"
                 />
               )}

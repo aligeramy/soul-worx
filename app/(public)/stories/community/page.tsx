@@ -1,5 +1,6 @@
 import { getPublishedPosts } from "@/lib/db/queries"
 import Link from "next/link"
+import Image from "next/image"
 
 export default async function CommunityHighlightsPage() {
   const posts = await getPublishedPosts()
@@ -72,9 +73,11 @@ export default async function CommunityHighlightsPage() {
                     <div className="relative aspect-[4/3] overflow-hidden">
                       {safePost.coverImage ? (
                         <>
-                          <img
+                          <Image
                             src={safePost.coverImage}
                             alt={safePost.title}
+                            width={400}
+                            height={300}
                             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                           />
                           <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
@@ -106,9 +109,11 @@ export default async function CommunityHighlightsPage() {
                       <div className="flex items-center justify-between pt-4 border-t border-neutral-100">
                         <div className="flex items-center gap-3">
                           {safePost.author.image && (
-                            <img
+                            <Image
                               src={safePost.author.image}
                               alt={safePost.author.name || "Author"}
+                              width={40}
+                              height={40}
                               className="w-10 h-10 rounded-full"
                             />
                           )}

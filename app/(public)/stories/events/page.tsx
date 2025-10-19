@@ -1,5 +1,6 @@
 import { getPublishedPosts } from "@/lib/db/queries"
 import Link from "next/link"
+import Image from "next/image"
 
 export default async function EventRecapsPage() {
   const posts = await getPublishedPosts()
@@ -80,9 +81,11 @@ export default async function EventRecapsPage() {
                         <div className="relative aspect-[16/9] overflow-hidden">
                           {post.coverImage ? (
                             <>
-                              <img
+                              <Image
                                 src={post.coverImage}
                                 alt={post.title}
+                                width={400}
+                                height={225}
                                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                               />
                               <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
@@ -121,9 +124,11 @@ export default async function EventRecapsPage() {
                           <div className="flex items-center justify-between">
                             <div className="flex items-center gap-3">
                               {post.author.image && (
-                                <img
+                                <Image
                                   src={post.author.image}
                                   alt={post.author.name || "Author"}
+                                  width={40}
+                                  height={40}
                                   className="w-10 h-10 rounded-full"
                                 />
                               )}

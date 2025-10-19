@@ -112,7 +112,6 @@ export function ProgramsSection({ programs, upcomingPrograms = [] }: ProgramsSec
   const bgScale = 1 + scrollProgress * 0.2 // Scale from 1 to 1.2 for Ken Burns effect
   const bgTranslateX = scrollProgress * 30 // Ken Burns horizontal pan
   const bgTranslateY = scrollProgress * 20 // Ken Burns vertical pan
-  const fgTranslateY = -scrollProgress * 50 // Parallax movement
   const opacity = Math.min(scrollProgress * 1.5, 1) // Fade in
   const contentTranslateY = (1 - scrollProgress) * 40 // Content rises into view
   const topGradientOpacity = Math.max(1 - scrollProgress * 1.2, 0) // Fade out as we scroll

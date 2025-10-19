@@ -4,6 +4,7 @@ import { db } from "@/lib/db"
 import { communityChannels, videos } from "@/lib/db/schema"
 import { eq, desc } from "drizzle-orm"
 import Link from "next/link"
+import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 
@@ -55,9 +56,11 @@ export default async function ChannelVideosPage({
           <Card key={video.id} className="p-4">
             <div className="space-y-3">
               {video.thumbnailUrl && (
-                <img
+                <Image
                   src={video.thumbnailUrl}
                   alt={video.title}
+                  width={400}
+                  height={128}
                   className="w-full h-32 object-cover rounded"
                 />
               )}

@@ -5,6 +5,7 @@ import { db } from "@/lib/db"
 import { communityChannels } from "@/lib/db/schema"
 import { desc } from "drizzle-orm"
 import Link from "next/link"
+import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 
@@ -47,9 +48,11 @@ export default async function AdminCommunityPage() {
             <Card key={channel.id} className="p-6">
               <div className="space-y-4">
                 {channel.thumbnailImage && (
-                  <img
+                  <Image
                     src={channel.thumbnailImage}
                     alt={channel.title}
+                    width={400}
+                    height={160}
                     className="w-full h-40 object-cover rounded-lg"
                   />
                 )}

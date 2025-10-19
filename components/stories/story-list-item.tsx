@@ -1,4 +1,5 @@
 import Link from "next/link"
+import Image from "next/image"
 import type { posts, users } from "@/lib/db/schema"
 
 type Post = typeof posts.$inferSelect & {
@@ -34,9 +35,11 @@ export function StoryListItem({ post, variant = "poetry" }: StoryListItemProps) 
           {/* Thumbnail */}
           {post.coverImage && (
             <div className="relative aspect-[4/3] rounded-xl overflow-hidden">
-              <img
+              <Image
                 src={post.coverImage}
                 alt={post.title}
+                width={400}
+                height={300}
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
             </div>
@@ -77,9 +80,11 @@ export function StoryListItem({ post, variant = "poetry" }: StoryListItemProps) 
             
             <div className="flex items-center gap-3">
               {post.author.image && (
-                <img
+                <Image
                   src={post.author.image}
                   alt={post.author.name || "Author"}
+                  width={32}
+                  height={32}
                   className="w-8 h-8 rounded-full"
                 />
               )}

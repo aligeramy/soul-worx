@@ -6,7 +6,6 @@ import { toast } from "sonner"
 
 interface SubscribeButtonProps {
   tierId: string
-  tierName?: string
   isCurrentPlan?: boolean
   isFree?: boolean
   hasExistingMembership?: boolean
@@ -14,7 +13,6 @@ interface SubscribeButtonProps {
 
 export function SubscribeButton({
   tierId,
-  tierName,
   isCurrentPlan = false,
   isFree = false,
   hasExistingMembership = false,

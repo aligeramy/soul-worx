@@ -11,7 +11,6 @@ interface ProductCardProps {
   id: string
   slug: string
   name: string
-  description: string
   price: string
   compareAtPrice?: string
   images: string[]
@@ -23,7 +22,6 @@ export function ProductCard({
   id,
   slug,
   name,
-  description,
   price,
   compareAtPrice,
   images,

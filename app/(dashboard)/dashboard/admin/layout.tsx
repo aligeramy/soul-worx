@@ -1,7 +1,6 @@
 import { auth } from "@/auth"
 import { redirect } from "next/navigation"
 import { AdminSidebar } from "@/components/admin/admin-sidebar"
-import { AdminHeader } from "@/components/admin/admin-header"
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
 import { SessionProvider } from "@/components/providers/session-provider"
 

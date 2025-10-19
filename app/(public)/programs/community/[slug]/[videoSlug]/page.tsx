@@ -1,10 +1,10 @@
-import { Suspense } from "react"
 import { auth } from "@/auth"
 import { redirect } from "next/navigation"
 import { db } from "@/lib/db"
 import { communityChannels, videos, userMemberships } from "@/lib/db/schema"
 import { eq, and } from "drizzle-orm"
 import Link from "next/link"
+import Image from "next/image"
 import { Button } from "@/components/ui/button"
 
 async function getUserMembership(userId: string | undefined) {
@@ -190,9 +190,11 @@ export default async function VideoPage({
                         <div className="flex gap-3">
                           <div className="relative flex-shrink-0">
                             {relatedVideo.thumbnailUrl ? (
-                              <img
+                              <Image
                                 src={relatedVideo.thumbnailUrl}
                                 alt={relatedVideo.title}
+                                width={128}
+                                height={80}
                                 className="w-32 h-20 object-cover rounded"
                               />
                             ) : (
