@@ -100,7 +100,7 @@ export function CommunityContent({ post, relatedPosts }: CommunityContentProps) 
           </motion.div>
           
           <motion.h1
-            className="text-5xl md:text-7xl font-bold tracking-tight mb-8 leading-tight bg-gradient-to-r from-purple-900 via-pink-900 to-rose-900 bg-clip-text text-transparent"
+            className="text-5xl md:text-7xl font-bold tracking-tight mb-8 leading-tight text-gold"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.2 }}

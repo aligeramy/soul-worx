@@ -2,6 +2,34 @@ import { NextRequest, NextResponse } from "next/server"
 import { auth } from "@/auth"
 import { db } from "@/lib/db"
 import { posts } from "@/lib/db/schema"
+import { eq, desc } from "drizzle-orm"
+
+export async function GET() {
+  try {
+    // Fetch published posts ordered by published date
+    const publishedPosts = await db.query.posts.findMany({
+      where: eq(posts.status, "published"),
+      orderBy: [desc(posts.publishedAt)],
+      with: {
+        author: {
+          columns: {
+            id: true,
+            name: true,
+            image: true,
+          },
+        },
+      },
+    })
+
+    return NextResponse.json(publishedPosts)
+  } catch (error) {
+    console.error("Error fetching stories:", error)
+    return NextResponse.json(
+      { message: "Failed to fetch stories" },
+      { status: 500 }
+    )
+  }
+}
 
 export async function POST(request: NextRequest) {
   try {

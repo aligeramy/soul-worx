@@ -73,11 +73,6 @@ export const navigationConfig: NavigationConfig = {
           label: "School Partnerships",
           href: "/programs/schools",
           icon: "GraduationCap"
-        },
-        {
-          label: "FAQ",
-          href: "/programs/faq",
-          icon: "HelpCircle"
         }
       ]
     },
@@ -104,11 +99,6 @@ export const navigationConfig: NavigationConfig = {
           label: "Books",
           href: "/shop?category=books",
           icon: "BookOpen"
-        },
-        {
-          label: "Digital",
-          href: "/shop?category=digital",
-          icon: "Download"
         }
       ]
     }
@@ -150,12 +140,12 @@ export const navigationConfig: NavigationConfig = {
           icon: "Mail"
         },
         {
-          label: "Sponsors & Partnerships",
+          label: "Sponsorships",
           href: "/contact/sponsors",
           icon: "Handshake"
         },
         {
-          label: "Youth Program Registration",
+          label: "Youth Program ",
           href: "/contact/programs",
           icon: "ClipboardCheck"
         },

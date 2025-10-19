@@ -30,7 +30,7 @@ export default async function ProgramsCalendarPage() {
           <h1 className="text-6xl md:text-8xl font-bold tracking-tight mb-6">
             Upcoming
             <br />
-            <span className="bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 bg-clip-text text-transparent">
+            <span className="text-gold">
               Events
             </span>
           </h1>

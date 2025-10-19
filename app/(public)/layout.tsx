@@ -1,3 +1,5 @@
+import { Footer } from "@/components/footer"
+
 /**
  * Public Layout
  * 
@@ -9,6 +11,11 @@ export default function PublicLayout({
 }: {
   children: React.ReactNode
 }) {
-  return <>{children}</>
+  return (
+    <>
+      {children}
+      <Footer />
+    </>
+  )
 }
 

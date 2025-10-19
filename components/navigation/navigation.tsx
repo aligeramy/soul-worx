@@ -56,7 +56,7 @@ export function Navigation() {
     <>
       <div 
         ref={navContainerRef}
-        className="relative"
+        className="relative z-50"
       >
         <nav 
           className={`relative w-full border-t border-b transition-colors duration-300 ${
