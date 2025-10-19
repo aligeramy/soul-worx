@@ -174,7 +174,7 @@ export default async function ProgramDetailPage({
             <div className="space-y-6">
               {program.faqs.map((faq, index) => (
                 <div key={index} className="bg-white rounded-2xl p-6 shadow-sm">
-                  <h3 className="text-xl font-medium mb-3">{faq.question}</h3>
+                  <h3 className="text-2xl font-crimson font-normal mb-3">{faq.question}</h3>
                   <p className="text-neutral-600 leading-relaxed">{faq.answer}</p>
                 </div>
               ))}
