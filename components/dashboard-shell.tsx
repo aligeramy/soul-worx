@@ -4,7 +4,7 @@ import Link from "next/link"
 import Image from "next/image"
 import { usePathname } from "next/navigation"
 import { useSession, signOut } from "next-auth/react"
-import { LayoutDashboard, Calendar, LogOut } from "lucide-react"
+import { LayoutDashboard, Calendar, LogOut, Shield } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
@@ -24,6 +24,7 @@ export default function DashboardShell({
   }
 
   const user = data?.user
+  const isAdmin = user?.role === "admin" || user?.role === "super_admin"
 
   return (
     <div className="min-h-screen bg-brand-bg-darker relative">
@@ -90,10 +91,23 @@ export default function DashboardShell({
                       {user.name}
                     </p>
                     <p className="text-xs text-white/60 leading-none">
-                      {"Member"}
+                      {isAdmin ? "Admin" : "Member"}
                     </p>
                   </div>
                 </div>
+              )}
+
+              {isAdmin && (
+                <Link href="/dashboard/admin">
+                  <Button 
+                    variant="ghost" 
+                    size="sm"
+                    className="rounded-lg text-white/70 hover:text-white hover:bg-white/10"
+                  >
+                    <Shield className="h-4 w-4 md:mr-2" />
+                    <span className="hidden md:inline">Admin</span>
+                  </Button>
+                </Link>
               )}
 
               <Button 
