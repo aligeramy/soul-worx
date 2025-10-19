@@ -1,11 +1,10 @@
 import { auth } from "@/auth"
 import { Card, CardContent } from "@/components/ui/card"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { getUpcomingUserRsvps } from "@/lib/db/queries"
 import Link from "next/link"
 import Image from "next/image"
 import { format } from "date-fns"
-import { Calendar, Shield, Sparkles, MapPin, Clock, ArrowRight, Plus } from "lucide-react"
+import { Calendar, Sparkles, MapPin, Clock, ArrowRight, Plus } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 
@@ -16,7 +15,6 @@ export default async function DashboardPage() {
     return null
   }
 
-  const isAdmin = session.user.role === "admin" || session.user.role === "super_admin"
   const upcomingRsvps = await getUpcomingUserRsvps(session.user.id)
 
   // Add mock upcoming event for preview

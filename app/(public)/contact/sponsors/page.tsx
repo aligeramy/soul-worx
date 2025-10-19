@@ -135,7 +135,7 @@ export default function SponsorsPage() {
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
-            {sponsorshipTiers.map((tier, index) => {
+            {sponsorshipTiers.map((tier) => {
               const Icon = tier.icon
               return (
                 <div 
