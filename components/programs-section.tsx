@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
-import { CTAButton } from "@/components/ui/cta-button"
 import { cn } from "@/lib/utils"
 import { Calendar, Users, School, HelpCircle, ArrowRight } from "lucide-react"
 
@@ -308,9 +307,9 @@ export function ProgramsSection({ programs, upcomingPrograms = [] }: ProgramsSec
                   </h2>
 
                   <p className="text-xl font-crimson text-shadow-lg text-neutral-200 font-light leading-tight">
-                    Soulworx exists for the youth who've been overlooked, under-resourced, or underestimated.
-                    Every program is built to open doors, nurture character, and show kids that they are capable of more than they've been told.
-                    We don't just develop skills — we build purpose, passion, and people.
+                    Soulworx exists for the youth who&apos;ve been overlooked, under-resourced, or underestimated.
+                    Every program is built to open doors, nurture character, and show kids that they are capable of more than they&apos;ve been told.
+                    We don&apos;t just develop skills — we build purpose, passion, and people.
                   </p>
 
                   {/* Program Categories */}

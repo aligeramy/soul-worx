@@ -56,9 +56,9 @@ export default async function ProgramsPage() {
               Find Your Voice
             </h1>
             <p className="text-xl text-white/90 max-w-2xl">
-              Soulworx exists for the youth who've been overlooked, under-resourced, or underestimated.
-              Every program is built to open doors, nurture character, and show kids that they are capable of more than they've been told.
-              We don't just develop skills — we build purpose, passion, and people.
+              Soulworx exists for the youth who&apos;ve been overlooked, under-resourced, or underestimated.
+              Every program is built to open doors, nurture character, and show kids that they are capable of more than they&apos;ve been told.
+              We don&apos;t just develop skills — we build purpose, passion, and people.
             </p>
           </div>
         </div>

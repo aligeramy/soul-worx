@@ -42,7 +42,7 @@ export default async function Home() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div className="relative aspect-[4/5] overflow-hidden rounded-3xl">
               <Image
-                src="/shop/book-library.png"
+                src="/optimized/0K0A3923.jpg"
                 alt="The Ripple Effect Book"
                 fill
                 className="object-cover"

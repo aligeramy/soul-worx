@@ -83,7 +83,7 @@ export function EventCard({ event, categoryGradient }: EventCardProps) {
 
         {/* Content */}
         <div className="p-6 flex flex-col flex-grow">
-          <h3 className="text-3xl font-crimson font-normal tracking-tighter group-hover:text-amber-900 transition-colors mb-2 flex items-start">
+          <h3 className="!text-3xl font-crimson font-normal tracking-tighter group-hover:text-amber-900 transition-colors mb-2 flex items-start">
             {event.title}
           </h3>
           {event.description && (

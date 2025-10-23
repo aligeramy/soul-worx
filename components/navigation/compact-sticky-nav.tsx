@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import { usePathname } from "next/navigation"
 import { navigationConfig } from "@/config/navigation"
 import { ShoppingCart, User } from "lucide-react"
+import { Logo } from "@/components/logo"
 
 interface CompactStickyNavProps {
   hasSession: boolean
@@ -66,18 +67,14 @@ export function CompactStickyNav({ hasSession }: CompactStickyNavProps) {
                 </div>
 
                 {/* Center Logo */}
-                <Link href="/" className="absolute left-1/2 -translate-x-1/2">
-                  <Image
-                    src="/logo/svg/logo.svg"
-                    alt="SoulWorx Logo"
-                    width={40}
-                    height={60}
-                    className={`h-12 w-auto transition-transform duration-200 hover:scale-105 ${
-                      isTransparent ? "invert brightness-0 contrast-200" : ""
-                    }`}
+                <div className="absolute left-1/2 -translate-x-1/2">
+                  <Logo 
+                    href="/" 
+                    size="sm" 
+                    variant={isTransparent ? "light" : "dark"}
                     priority
                   />
-                </Link>
+                </div>
 
                 {/* Right Menu Items */}
                 <div className="flex items-center gap-6">
@@ -126,18 +123,13 @@ export function CompactStickyNav({ hasSession }: CompactStickyNavProps) {
               {/* Mobile Navigation */}
               <div className="flex lg:hidden items-center justify-between w-full">
                 {/* Mobile Logo */}
-                <Link href="/" className="absolute left-1/2 -translate-x-1/2">
-                  <Image
-                    src="/logo/svg/logo.svg"
-                    alt="SoulWorx Logo"
-                    width={32}
-                    height={48}
-                    className={`h-10 w-auto ${
-                      isTransparent ? "invert brightness-0 contrast-200" : ""
-                    }`}
-                    priority
+                <div className="absolute left-1/2 -translate-x-1/2">
+                  <Logo 
+                    href="/" 
+                    size="sm" 
+                    variant={isTransparent ? "light" : "dark"}
                   />
-                </Link>
+                </div>
                 
                 <div className="flex items-center gap-3">
                   <Link

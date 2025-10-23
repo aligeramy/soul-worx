@@ -3,14 +3,14 @@
 
 import "dotenv/config"
 import { db } from "./db/index"
-import { programs, events, communityChannels, users, type ProgramCategory, type ProgramStatus, type EventStatus, type ChannelStatus, type ChannelCategory } from "./db/schema"
+import { programs, events, communityChannels, type ProgramCategory, type ProgramStatus, type EventStatus, type ChannelStatus, type ChannelCategory } from "./db/schema"
 import { sql } from "drizzle-orm"
 
 async function seed() {
   console.log("🌱 Seeding real Soulworx data...")
 
   // Get the first admin user (or create one if none exists)
-  let adminUser = await db.query.users.findFirst({
+  const adminUser = await db.query.users.findFirst({
     where: sql`role IN ('admin', 'super_admin')`,
   })
 
