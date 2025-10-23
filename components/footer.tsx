@@ -47,8 +47,8 @@ export function Footer() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 lg:gap-8">
             {/* Brand Column */}
             <div className="lg:col-span-2 space-y-6">
-              <Logo href="/" variant="app-icon" className="mb-4" />
-              <h4 className="text-2xl font-bold">Soulworx</h4>
+              <Logo href="/" variant="light" className=" relative -left-5 -mb-5" />
+              <h4 className="text-2xl font-medium font-exodus-sharp">Soulworx</h4>
               <p className="text-white/70 font-light leading-relaxed max-w-sm">
                 Words that walk through souls. Empowering youth through the transformative power of poetry and creative expression.
               </p>

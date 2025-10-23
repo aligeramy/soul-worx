@@ -17,7 +17,7 @@ async function seedProducts() {
   }
 
   // Get or create a default admin user
-  const adminEmail = "admin@soulworx.com"
+  const adminEmail = "Indianarotondo@soulworx.ca"
   let adminUser = await db.query.users.findFirst({
     where: (users, { eq }) => eq(users.email, adminEmail)
   })

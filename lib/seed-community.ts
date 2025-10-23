@@ -28,7 +28,7 @@ async function seedCommunity() {
   if (!adminUser) {
     console.log("⚠️  Creating admin user...")
     const [user] = await db.insert(users).values({
-      email: "admin@soulworx.com",
+      email: "Indianarotondo@soulworx.ca",
       name: "Admin",
       role: "admin",
       createdAt: new Date(),

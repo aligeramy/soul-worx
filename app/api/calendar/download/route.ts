@@ -78,7 +78,7 @@ export async function GET(request: Request) {
       url: `${process.env.NEXT_PUBLIC_APP_URL || "https://soulworx.com"}/programs/${event.program?.slug}/events/${event.id}`,
       organizer: {
         name: "Soulworx",
-        email: process.env.CALENDAR_EMAIL || "events@soulworx.com",
+        email: process.env.CALENDAR_EMAIL || "Indianarotondo@soulworx.ca",
       },
     })
 

@@ -390,7 +390,7 @@ export default function ProgramsPage() {
               </Button>
 
               <p className="text-sm text-center text-neutral-500">
-                Questions? Email us at <a href="mailto:programs@soulworx.com" className="text-brand-bg-darker hover:underline">programs@soulworx.com</a>
+                Questions? Email us at <a href="mailto:Indianarotondo@soulworx.ca" className="text-brand-bg-darker hover:underline">Indianarotondo@soulworx.ca</a>
               </p>
             </form>
           )}

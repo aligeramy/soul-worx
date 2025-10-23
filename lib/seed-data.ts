@@ -188,7 +188,7 @@ async function seed() {
   ]
 
   // Get or create a default admin user
-  const adminEmail = "admin@soulworx.com"
+  const adminEmail = "Indianarotondo@soulworx.ca"
   let adminUser = await db.query.users.findFirst({
     where: (users, { eq }) => eq(users.email, adminEmail)
   })
@@ -787,7 +787,7 @@ async function seed() {
         
         <h2>Media Contact</h2>
         <p>For press inquiries, interviews, or high-resolution images, please contact:<br>
-        Email: press@soulworx.com<br>
+        Email: Indianarotondo@soulworx.ca<br>
         Phone: (555) 123-4567</p>
       `,
       coverImage: "/optimized/0K0A7770.jpg",
@@ -836,7 +836,7 @@ async function seed() {
         
         <h2>Media Contact</h2>
         <p>For press inquiries, interviews, or additional information:<br>
-        Email: press@soulworx.com<br>
+        Email: Indianarotondo@soulworx.ca<br>
         Phone: (555) 123-4567<br>
         Website: www.soulworx.com</p>
       `,
@@ -904,7 +904,7 @@ async function seed() {
         
         <h2>Media Contact</h2>
         <p>Soulworx:<br>
-        Email: press@soulworx.com<br>
+        Email: Indianarotondo@soulworx.ca<br>
         Phone: (555) 123-4567</p>
         
         <p>NYC Department of Education:<br>

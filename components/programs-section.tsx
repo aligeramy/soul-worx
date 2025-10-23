@@ -308,34 +308,70 @@ export function ProgramsSection({ events = [] }: ProgramsSectionProps) {
                   </p>
 
                   {/* Program Categories */}
-                  <div className="grid grid-cols-4 gap-3 mt-6">
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
                     <Link 
                       href="/programs/calendar"
-                      className="flex flex-col items-center justify-center aspect-square bg-white/10 hover:bg-white/20 rounded-lg border border-white/20 transition-all duration-300 group"
+                      className="group relative aspect-square rounded-xl border border-white/15 bg-white/5 hover:bg-white/10 transition-all duration-300 overflow-hidden"
+                      aria-label="View programs calendar"
                     >
-                      <Calendar className="w-6 h-6 text-white mb-2" />
-                      <span className="text-white font-medium text-sm text-center">Calendar</span>
+                      <div className="absolute inset-px rounded-[10px] bg-gradient-to-b from-white/5 to-transparent pointer-events-none" />
+                      <div className="flex h-full flex-col items-center justify-center gap-2">
+                        <div className="w-12 h-12 rounded-full border border-white/30 bg-white/5 flex items-center justify-center shadow-sm">
+                          <Calendar className="w-7 h-7 text-white/90" strokeWidth={1.5} />
+                        </div>
+                        <span className="text-white font-medium text-sm">Calendar</span>
+                      </div>
+                      <div className="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <ArrowRight className="w-4 h-4 text-white/70" />
+                      </div>
                     </Link>
                     <Link 
                       href="/programs/youth"
-                      className="flex flex-col items-center justify-center aspect-square bg-white/10 hover:bg-white/20 rounded-lg border border-white/20 transition-all duration-300 group"
+                      className="group relative aspect-square rounded-xl border border-white/15 bg-white/5 hover:bg-white/10 transition-all duration-300 overflow-hidden"
+                      aria-label="Explore youth programs"
                     >
-                      <Users className="w-6 h-6 text-white mb-2" />
-                      <span className="text-white font-medium text-sm text-center">Youth</span>
+                      <div className="absolute inset-px rounded-[10px] bg-gradient-to-b from-white/5 to-transparent pointer-events-none" />
+                      <div className="flex h-full flex-col items-center justify-center gap-2">
+                        <div className="w-12 h-12 rounded-full border border-white/30 bg-white/5 flex items-center justify-center shadow-sm">
+                          <Users className="w-7 h-7 text-white/90" strokeWidth={1.5} />
+                        </div>
+                        <span className="text-white font-medium text-sm">Youth</span>
+                      </div>
+                      <div className="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <ArrowRight className="w-4 h-4 text-white/70" />
+                      </div>
                     </Link>
                     <Link 
                       href="/programs/partnerships"
-                      className="flex flex-col items-center justify-center aspect-square bg-white/10 hover:bg-white/20 rounded-lg border border-white/20 transition-all duration-300 group"
+                      className="group relative aspect-square rounded-xl border border-white/15 bg-white/5 hover:bg-white/10 transition-all duration-300 overflow-hidden"
+                      aria-label="Learn about partnerships"
                     >
-                      <School className="w-6 h-6 text-white mb-2" />
-                      <span className="text-white font-medium text-sm text-center">Partnerships</span>
+                      <div className="absolute inset-px rounded-[10px] bg-gradient-to-b from-white/5 to-transparent pointer-events-none" />
+                      <div className="flex h-full flex-col items-center justify-center gap-2">
+                        <div className="w-12 h-12 rounded-full border border-white/30 bg-white/5 flex items-center justify-center shadow-sm">
+                          <School className="w-7 h-7 text-white/90" strokeWidth={1.5} />
+                        </div>
+                        <span className="text-white font-medium text-sm">Partnerships</span>
+                      </div>
+                      <div className="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <ArrowRight className="w-4 h-4 text-white/70" />
+                      </div>
                     </Link>
                     <Link 
                       href="/programs/faq"
-                      className="flex flex-col items-center justify-center aspect-square bg-white/10 hover:bg-white/20 rounded-lg border border-white/20 transition-all duration-300 group"
+                      className="group relative aspect-square rounded-xl border border-white/15 bg-white/5 hover:bg-white/10 transition-all duration-300 overflow-hidden"
+                      aria-label="Read program FAQs"
                     >
-                      <HelpCircle className="w-6 h-6 text-white mb-2" />
-                      <span className="text-white font-medium text-sm text-center">FAQ</span>
+                      <div className="absolute inset-px rounded-[10px] bg-gradient-to-b from-white/5 to-transparent pointer-events-none" />
+                      <div className="flex h-full flex-col items-center justify-center gap-2">
+                        <div className="w-12 h-12 rounded-full border border-white/30 bg-white/5 flex items-center justify-center shadow-sm">
+                          <HelpCircle className="w-7 h-7 text-white/90" strokeWidth={1.5} />
+                        </div>
+                        <span className="text-white font-medium text-sm">FAQ</span>
+                      </div>
+                      <div className="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <ArrowRight className="w-4 h-4 text-white/70" />
+                      </div>
                     </Link>
                   </div>
 
