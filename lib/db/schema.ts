@@ -149,6 +149,7 @@ export const events = pgTable("event", {
   // Event details
   title: text("title").notNull(),
   description: text("description"),
+  images: jsonb("images").$type<string[]>().default([]), // Event-specific images array
   status: text("status").$type<EventStatus>().notNull().default("scheduled"),
   
   // Date & Time

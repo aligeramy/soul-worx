@@ -8,6 +8,7 @@ import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { SubscribeButton } from "@/components/community/subscribe-button"
+import { ChannelCard } from "@/components/community/channel-card"
 
 async function getUserMembership(userId: string | undefined) {
   if (!userId) return null
@@ -77,7 +78,7 @@ export default async function CommunityPage({
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
               <div>
-                <p className="text-green-900 font-semibold">Payment successful! 🎉</p>
+                <p className="text-green-900 font-semibold">Payment successful!</p>
                 <p className="text-green-700 text-sm">Your membership is now active. Enjoy your content!</p>
               </div>
             </div>
@@ -129,56 +130,19 @@ export default async function CommunityPage({
         
         <Suspense fallback={<div>Loading channels...</div>}>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {channels.map((channel) => {
-              const hasFullAccess = userTierLevel >= channel.requiredTierLevel
-              const isLocked = !hasFullAccess
-
-              return (
-                <Card key={channel.id} className="overflow-hidden">
-                  {channel.coverImage && (
-                    <div className="relative h-48">
-                      <Image
-                        src={channel.coverImage}
-                        alt={channel.title}
-                        width={400}
-                        height={192}
-                        className="w-full h-full object-cover"
-                      />
-                      {isLocked && (
-                        <div className="absolute top-2 right-2">
-                          <span className="text-xs px-3 py-1.5 bg-neutral-900 text-white rounded-full font-medium shadow-lg">
-                            Tier {channel.requiredTierLevel}+ for All
-                          </span>
-                        </div>
-                      )}
-                    </div>
-                  )}
-                  
-                  <div className="p-6">
-                    <div className="flex items-center justify-between mb-2">
-                      <h3 className="text-xl font-semibold">{channel.title}</h3>
-                    </div>
-                    
-                    <p className="text-neutral-600 mb-4">{channel.description}</p>
-                    
-                    <div className="text-sm text-neutral-500 mb-4">
-                      {channel.videoCount} videos
-                      {!hasFullAccess && (
-                        <span className="ml-2 text-green-600 font-medium">
-                          • 1st episode FREE
-                        </span>
-                      )}
-                    </div>
-
-                    <Link href={`/programs/community/${channel.slug}`}>
-                      <Button className="w-full" variant={hasFullAccess ? "default" : "outline"}>
-                        {hasFullAccess ? "Watch All Videos" : "Watch Free Episode"}
-                      </Button>
-                    </Link>
-                  </div>
-                </Card>
-              )
-            })}
+            {channels.map((channel) => (
+              <ChannelCard
+                key={channel.id}
+                id={channel.id}
+                slug={channel.slug}
+                title={channel.title}
+                description={channel.description}
+                coverImage={channel.coverImage}
+                videoCount={channel.videoCount}
+                requiredTierLevel={channel.requiredTierLevel}
+                userTierLevel={userTierLevel}
+              />
+            ))}
           </div>
         </Suspense>
       </section>
