@@ -5,7 +5,7 @@ import type { PostCategory } from "./db/schema"
  */
 export const categoryDisplayNames: Record<PostCategory, string> = {
   poetry: "Poetry Drops",
-  stories: "Community Highlights",
+  blog: "Blog",
   news: "Event Recaps",
   announcements: "Press & Media",
   tutorials: "Tutorials"
@@ -16,7 +16,7 @@ export const categoryDisplayNames: Record<PostCategory, string> = {
  */
 export const categoryPaths: Record<PostCategory, string> = {
   poetry: "poetry",
-  stories: "community",
+  blog: "blog",
   news: "events",
   announcements: "press",
   tutorials: "tutorials"
@@ -27,7 +27,7 @@ export const categoryPaths: Record<PostCategory, string> = {
  */
 export const pathToCategory: Record<string, PostCategory> = {
   poetry: "poetry",
-  community: "stories",
+  blog: "blog",
   events: "news",
   press: "announcements",
   tutorials: "tutorials"
@@ -98,7 +98,7 @@ export function generateExcerpt(content: string, maxLength: number = 150): strin
 export function getStoryVariant(category: PostCategory): "poetry" | "community" | "event" | "press" {
   const variantMap: Record<PostCategory, "poetry" | "community" | "event" | "press"> = {
     poetry: "poetry",
-    stories: "community",
+    blog: "community",
     news: "event",
     announcements: "press",
     tutorials: "community"
@@ -119,7 +119,7 @@ export function getStoryColorClasses(category: PostCategory) {
       badge: "bg-blue-100 text-blue-700",
       border: "border-blue-200"
     },
-    stories: {
+    blog: {
       bg: "from-purple-50 to-pink-50",
       gradient: "from-purple-600 to-pink-600",
       text: "text-purple-600",

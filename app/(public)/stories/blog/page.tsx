@@ -1,11 +1,11 @@
 import { getPublishedPosts } from "@/lib/db/queries"
 import Link from "next/link"
 import Image from "next/image"
-import { ArrowLeft, Users } from "lucide-react"
+import { ArrowLeft, FileText } from "lucide-react"
 
-export default async function CommunityHighlightsPage() {
+export default async function BlogPage() {
   const posts = await getPublishedPosts()
-  const communityPosts = posts.filter(p => p.category === "blog")
+  const blogPosts = posts.filter(p => p.category === "blog")
 
   return (
     <div className="min-h-screen bg-white">
@@ -13,7 +13,7 @@ export default async function CommunityHighlightsPage() {
       <section className="relative h-[50vh] overflow-hidden">
         <Image
           src="/optimized/0K0A3966 (2).jpg"
-          alt="Community Highlights"
+          alt="Blog"
           fill
           className="object-cover"
         />
@@ -30,32 +30,32 @@ export default async function CommunityHighlightsPage() {
             </Link>
             
             <div className="text-white/80 mb-2 text-sm font-bold uppercase tracking-wider">
-              COMMUNITY HIGHLIGHTS
+              BLOG
             </div>
             <h1 className="text-4xl md:text-6xl font-crimson font-normal tracking-tighter text-white mb-4">
-              Our People
+              Latest Insights
             </h1>
             <p className="text-xl text-white/90 max-w-2xl">
-              Stories from the heart of our community - celebrating voices, journeys, and connections
+              Stories, thoughts, and reflections from our journey
             </p>
           </div>
         </div>
       </section>
 
-      {/* Community Cards Grid */}
+      {/* Blog Cards Grid */}
       <section className="relative z-0 pb-32 px-6 pt-16 bg-white">
         <div className="max-w-7xl mx-auto">
-          {communityPosts.length === 0 ? (
+          {blogPosts.length === 0 ? (
             <div className="text-center py-24 bg-white rounded-3xl border border-neutral-200">
               <div className="w-20 h-20 bg-neutral-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                <Users className="w-10 h-10 text-neutral-400" />
+                <FileText className="w-10 h-10 text-neutral-400" />
               </div>
-              <h3 className="text-2xl font-crimson font-normal mb-2">No community stories yet</h3>
-              <p className="text-neutral-500">Check back soon for highlights from our community</p>
+              <h3 className="text-2xl font-crimson font-normal mb-2">No blog posts yet</h3>
+              <p className="text-neutral-500">Check back soon for latest insights and stories</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {communityPosts.map((post) => {
+              {blogPosts.map((post) => {
                 const safePost = { ...post, tags: post.tags || [] }
                 return (
                 <Link
@@ -79,13 +79,13 @@ export default async function CommunityHighlightsPage() {
                         </>
                       ) : (
                         <div className="w-full h-full bg-gradient-to-br from-neutral-100 to-neutral-200 flex items-center justify-center">
-                          <div className="text-6xl">👥</div>
+                          <FileText className="w-16 h-16 text-neutral-300" />
                         </div>
                       )}
 
                       {/* Overlay badge */}
                       <div className="absolute bottom-4 left-4 bg-white px-3 py-1 rounded-full">
-                        <div className="text-xs font-bold text-neutral-900">COMMUNITY</div>
+                        <div className="text-xs font-bold text-neutral-900">BLOG</div>
                       </div>
                     </div>
 

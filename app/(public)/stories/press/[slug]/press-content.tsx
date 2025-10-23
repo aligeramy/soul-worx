@@ -136,30 +136,43 @@ export function PressContent({ post, relatedPosts }: PressContentProps) {
       </section>
 
       {/* Media Contact Section */}
-      <section className="pb-20 px-6 border-t border-neutral-200 pt-12 bg-white">
-        <div className="max-w-3xl mx-auto">
-          <div className="bg-neutral-50 rounded-2xl p-8 border border-neutral-200">
-            <div className="flex items-start gap-4 mb-6">
-              <div className="p-3 bg-neutral-900 rounded-lg">
-                <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                </svg>
-              </div>
+      <section className="pb-24 px-6 border-t border-neutral-200 pt-16">
+        <div className="max-w-4xl mx-auto">
+          <div className="bg-gradient-to-br from-neutral-900 to-neutral-800 rounded-3xl p-10 md:p-12 text-white shadow-2xl border-2 border-neutral-700">
+            <div className="flex items-start gap-6 mb-8">
+             
               <div className="flex-1">
-                <h3 className="text-xl font-crimson font-normal mb-4">Media Contact</h3>
-                <div className="space-y-2 text-neutral-700">
-                  <p><strong>Organization:</strong> Soulworx</p>
-                  <p><strong>Email:</strong> <a href="mailto:press@soulworx.com" className="text-neutral-900 hover:underline">press@soulworx.com</a></p>
-                  <p><strong>Phone:</strong> (555) 123-4567</p>
-                  <p><strong>Website:</strong> <a href="https://www.soulworx.com" className="text-neutral-900 hover:underline">www.soulworx.com</a></p>
+                <div className="space-y-4 text-white/90">
+                  <div className="flex items-start gap-3">
+                    <span className="font-semibold text-white min-w-[100px]">Organization:</span>
+                    <span>Soulworx</span>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <span className="font-semibold text-white min-w-[100px]">Email:</span>
+                    <a href="mailto:press@soulworx.com" className="text-white hover:text-white/80 underline transition-colors">
+                      press@soulworx.com
+                    </a>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <span className="font-semibold text-white min-w-[100px]">Phone:</span>
+                    <a href="tel:+16474531223" className="text-white hover:text-white/80 underline transition-colors">
+                      +1 (647) 453-1223
+                    </a>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <span className="font-semibold text-white min-w-[100px]">Website:</span>
+                    <a href="https://www.soulworx.ca" target="_blank" rel="noopener noreferrer" className="text-white hover:text-white/80 underline transition-colors">
+                      www.soulworx.ca
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
             
-            <div className="pt-6 border-t border-neutral-200">
+            <div className="pt-8 border-t border-white/20">
               <Link 
-                href="/contact"
-                className="inline-flex items-center gap-2 text-neutral-900 font-bold hover:text-neutral-600"
+                href="/contact/press"
+                className="inline-flex items-center gap-3 px-8 py-4 bg-white text-neutral-900 rounded-full font-bold text-lg hover:bg-neutral-100 transition-all shadow-lg hover:shadow-xl"
               >
                 Request Press Kit
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">

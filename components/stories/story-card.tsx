@@ -14,7 +14,7 @@ interface StoryCardProps {
 export function StoryCard({ post, variant = "community" }: StoryCardProps) {
   const categoryPath = 
     post.category === "poetry" ? "poetry" :
-    post.category === "stories" ? "community" :
+    post.category === "blog" ? "blog" :
     post.category === "news" ? "events" :
     "press"
 

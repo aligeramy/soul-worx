@@ -1,6 +1,6 @@
 import { getPostBySlug, getPublishedPosts } from "@/lib/db/queries"
 import { notFound } from "next/navigation"
-import { CommunityContent } from "./community-content"
+import { BlogContent } from "./blog-content"
 
 interface PageProps {
   params: {
@@ -8,7 +8,7 @@ interface PageProps {
   }
 }
 
-export default async function CommunityDetailPage({ params }: PageProps) {
+export default async function BlogDetailPage({ params }: PageProps) {
   const post = await getPostBySlug(params.slug)
   
   if (!post || post.category !== "blog" || post.status !== "published") {
@@ -23,9 +23,10 @@ export default async function CommunityDetailPage({ params }: PageProps) {
     .map(p => ({ ...p, tags: p.tags || [] }))
 
   return (
-    <CommunityContent post={{
+    <BlogContent post={{
       ...post,
       tags: post.tags || []
     }} relatedPosts={relatedPosts} />
   )
 }
+

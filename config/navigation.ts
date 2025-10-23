@@ -114,9 +114,9 @@ export const navigationConfig: NavigationConfig = {
           icon: "Feather"
         },
         {
-          label: "Community Highlights",
-          href: "/stories/community",
-          icon: "Heart"
+          label: "Blog",
+          href: "/stories/blog",
+          icon: "FileText"
         },
         {
           label: "Event Recaps",
@@ -175,8 +175,7 @@ export const footerLinks = {
   ],
   social: [
     { label: "Instagram", href: "https://www.instagram.com/soul.worx/?hl=en" },
-    { label: "Twitter", href: "https://twitter.com/soulworx" },
-    { label: "Facebook", href: "https://facebook.com/soulworx" }
+    { label: "LinkedIn", href: "https://ca.linkedin.com/in/indiana-rotondo-471b01194" }
   ]
 }
 
