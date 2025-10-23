@@ -9,6 +9,7 @@ import { MegaMenu } from "@/components/navigation/mega-menu"
 import { MobileMenu } from "@/components/navigation/mobile-menu"
 import { usePathname } from "next/navigation"
 import { navigationConfig, type NavigationItem } from "@/config/navigation"
+import { Logo } from "@/components/logo"
 
 export function Navigation() {
   const pathname = usePathname()
@@ -83,18 +84,14 @@ export function Navigation() {
                 </div>
 
                 {/* Center Logo */}
-                <Link href="/" className="absolute left-1/2 -translate-x-1/2">
-                  <Image
-                    src="/logo/svg/logo.svg"
-                    alt="SoulWorx Logo"
-                    width={50}
-                    height={75}
-                    className={`h-16 w-auto transition-transform duration-200 hover:scale-105 ${
-                      isTransparent ? "invert brightness-0 contrast-200" : ""
-                    }`}
+                <div className="absolute left-1/2 -translate-x-1/2">
+                  <Logo 
+                    href="/" 
+                    size="md" 
+                    variant={isTransparent ? "light" : "dark"}
                     priority
                   />
-                </Link>
+                </div>
 
                 {/* Right Menu Items */}
                 <div className="flex items-center gap-8">
@@ -115,18 +112,14 @@ export function Navigation() {
                 <MobileMenu isLight={isTransparent} />
                 
                 {/* Mobile Logo */}
-                <Link href="/" className="absolute left-1/2 -translate-x-1/2">
-                  <Image
-                    src="/logo/svg/logo.svg"
-                    alt="SoulWorx Logo"
-                    width={40}
-                    height={60}
-                    className={`h-12 w-auto ${
-                      isTransparent ? "invert brightness-0 contrast-200" : ""
-                    }`}
+                <div className="absolute left-1/2 -translate-x-1/2">
+                  <Logo 
+                    href="/" 
+                    size="sm" 
+                    variant={isTransparent ? "light" : "dark"}
                     priority
                   />
-                </Link>
+                </div>
                 
                 <div className="w-10" />
               </div>

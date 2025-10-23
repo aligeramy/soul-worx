@@ -8,6 +8,7 @@ import { LayoutDashboard, Calendar, LogOut, Shield } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Logo } from "@/components/logo"
 
 export default function DashboardShell({
   children,
@@ -42,15 +43,7 @@ export default function DashboardShell({
           <div className="flex items-center justify-between">
             {/* Left - Logo & Navigation */}
             <div className="flex items-center gap-8">
-              <Link href="/" className="flex items-center hover:opacity-80 transition-opacity">
-                <Image
-                  src="/logo/svg/logo.svg"
-                  alt="Soulworx Logo"
-                  width={32}
-                  height={48}
-                  className="h-10 w-auto invert"
-                />
-              </Link>
+              <Logo href="/" size="sm" variant="light" />
 
               <nav className="hidden md:flex items-center gap-1">
                 <Link href="/dashboard">

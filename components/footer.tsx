@@ -1,5 +1,6 @@
 import Link from "next/link"
 import Image from "next/image"
+import { Logo } from "@/components/logo"
 
 export function Footer() {
   return (
@@ -47,16 +48,7 @@ export function Footer() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 lg:gap-8">
             {/* Brand Column */}
             <div className="lg:col-span-2 space-y-6">
-              <Link href="/" className="inline-block">
-                <div className="relative w-16 h-16 mb-4">
-                  <Image
-                    src="/logo/app-icon.png"
-                    alt="Soulworx"
-                    fill
-                    className="object-contain"
-                  />
-                </div>
-              </Link>
+              <Logo href="/" variant="app-icon" className="mb-4" />
               <h4 className="text-2xl font-bold">Soulworx</h4>
               <p className="text-white/70 font-light leading-relaxed max-w-sm">
                 Words that walk through souls. Empowering youth through the transformative power of poetry and creative expression.
