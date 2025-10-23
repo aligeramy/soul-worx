@@ -167,6 +167,17 @@ export default async function ProgramDetailPage({
         </div>
       </section>
 
+      {/* Parent/Guardian Consent Banner */}
+      <section className="py-3 px-6 bg-amber-50 border-y border-amber-200">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex items-center justify-center gap-2 text-sm text-amber-900">
+            <span className="font-bold">⚠️ Parent/Guardian Consent Required</span>
+            <span className="text-amber-700">—</span>
+            <span className="text-amber-800">Participants under 18 must have parent or guardian consent to register</span>
+          </div>
+        </div>
+      </section>
+
       {/* FAQs */}
       {program.faqs && program.faqs.length > 0 && (
         <section className="py-16 px-6 bg-neutral-50">
@@ -184,22 +195,6 @@ export default async function ProgramDetailPage({
         </section>
       )}
 
-      {/* Parent Consent Notice */}
-      {program.requiresParentConsent && (
-        <section className="py-12 px-6 bg-amber-50">
-          <div className="max-w-7xl mx-auto">
-            <div className="bg-white rounded-2xl p-8 flex items-start space-x-4 shadow-sm">
-              <div className="text-3xl">⚠️</div>
-              <div>
-                <h3 className="font-crimson font-normal tracking-tighter text-xl mt-4 mb-2">Parent/Guardian Consent Required</h3>
-                <p className="text-neutral-700 leading-relaxed">
-                  Participants under 18 must have parent or guardian consent to register for this program.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-      )}
     </div>
   )
 }

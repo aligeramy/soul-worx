@@ -174,7 +174,7 @@ export const footerLinks = {
     { label: "Cookie Policy", href: "/cookies" }
   ],
   social: [
-    { label: "Instagram", href: "https://instagram.com/soulworx" },
+    { label: "Instagram", href: "https://www.instagram.com/soul.worx/?hl=en" },
     { label: "Twitter", href: "https://twitter.com/soulworx" },
     { label: "Facebook", href: "https://facebook.com/soulworx" }
   ]

@@ -25,7 +25,7 @@ export function TopBar({ hasSession }: TopBarProps) {
           {/* Left - Social Icons */}
           <div className="flex items-center gap-4">
             <Link
-              href="https://instagram.com/soulworx"
+              href="https://www.instagram.com/soul.worx/?hl=en"
               target="_blank"
               rel="noopener noreferrer"
               className={`transition-colors ${textColor}`}
