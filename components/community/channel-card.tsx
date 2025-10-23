@@ -19,7 +19,6 @@ interface ChannelCardProps {
 }
 
 export function ChannelCard({
-  id,
   slug,
   title,
   description,
