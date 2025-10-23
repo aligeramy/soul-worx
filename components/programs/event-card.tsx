@@ -4,7 +4,6 @@ import Image from "next/image"
 import Link from "next/link"
 import { Clock, MapPin, Users, ArrowRight } from "lucide-react"
 import { format } from "date-fns"
-import { cn } from "@/lib/utils"
 
 interface EventCardProps {
   event: {

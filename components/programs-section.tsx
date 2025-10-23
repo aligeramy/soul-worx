@@ -48,7 +48,7 @@ interface ProgramsSectionProps {
   events?: Event[]
 }
 
-export function ProgramsSection({ programs, upcomingPrograms = [], events = [] }: ProgramsSectionProps) {
+export function ProgramsSection({ events = [] }: ProgramsSectionProps) {
   const sectionRef = useRef<HTMLDivElement>(null)
   const [scrollProgress, setScrollProgress] = useState(0)
   const [currentSlide, setCurrentSlide] = useState(0)
@@ -89,10 +89,10 @@ export function ProgramsSection({ programs, upcomingPrograms = [], events = [] }
   // Carousel gets all remaining events (not in second column), excluding special events, max 5
   const carouselEvents = events.filter(e => !seenIds.has(e.id) && e.program?.category !== "special").slice(0, 5)
   
-  // Find the earliest event for highlighting
+  // Find the earliest event for highlighting (currently unused but kept for future features)
   const allEvents = [...secondColumnEvents, ...carouselEvents]
-  const nextUpcomingEventId = allEvents
-    .sort((a, b) => new Date(a.startTime).getTime() - new Date(b.startTime).getTime())[0]?.id
+  // const nextUpcomingEventId = allEvents
+  //   .sort((a, b) => new Date(a.startTime).getTime() - new Date(b.startTime).getTime())[0]?.id
   
   // Mobile slideshow: all events, excluding special events
   const mobileEvents = events

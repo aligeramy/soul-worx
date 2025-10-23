@@ -1,8 +1,6 @@
 "use client"
 
 import { useState, useRef } from "react"
-import Link from "next/link"
-import Image from "next/image"
 import { AnimatePresence } from "framer-motion"
 import { NavigationMenu } from "@/components/navigation/navigation-menu"
 import { MegaMenu } from "@/components/navigation/mega-menu"
