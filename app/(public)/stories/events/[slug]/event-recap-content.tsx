@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import Image from "next/image"
-import { ArrowLeft } from "lucide-react"
+import { ArrowLeft, Calendar, Clock, User, Eye } from "lucide-react"
 
 interface Post {
   id: string
@@ -31,25 +31,49 @@ interface EventRecapContentProps {
 
 export function EventRecapContent({ post, relatedPosts }: EventRecapContentProps) {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-gradient-to-b from-neutral-50 to-white">
+      {/* Top Navigation Bar */}
+      <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-neutral-200">
+        <div className="max-w-7xl mx-auto px-6 py-4">
+          <div className="flex items-center justify-between">
+            <Link 
+              href="/stories/events" 
+              className="inline-flex items-center gap-2 text-neutral-600 hover:text-neutral-900 group transition-colors"
+            >
+              <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
+              <span className="font-medium">Back to Events</span>
+            </Link>
+            
+            <div className="flex items-center gap-6">
+              <Link href="/stories/poetry" className="text-sm text-neutral-600 hover:text-neutral-900 transition-colors">
+                Poetry
+              </Link>
+              <Link href="/stories/blog" className="text-sm text-neutral-600 hover:text-neutral-900 transition-colors">
+                Blog
+              </Link>
+              <Link href="/stories/events" className="text-sm font-semibold text-neutral-900">
+                Events
+              </Link>
+              <Link href="/stories/press" className="text-sm text-neutral-600 hover:text-neutral-900 transition-colors">
+                Press
+              </Link>
+            </div>
+          </div>
+        </div>
+      </nav>
+
       {/* Hero Section */}
-      <section className="pt-32 pb-16 px-6">
-        <div className="max-w-4xl mx-auto">
-          <Link 
-            href="/stories/events" 
-            className="inline-flex items-center gap-2 text-neutral-600 hover:text-neutral-900 mb-8 group"
-          >
-            <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
-            Back to Event Recaps
-          </Link>
-          
-          <div className="flex items-center gap-4 mb-6">
-            <span className="px-4 py-2 bg-neutral-900 text-white text-sm font-bold rounded-full uppercase tracking-wider">
-              EVENT RECAP
+      <section className="pt-16 pb-12 px-6">
+        <div className="max-w-5xl mx-auto">
+          {/* Badges */}
+          <div className="flex items-center gap-4 mb-8">
+            <span className="px-5 py-2.5 bg-neutral-900 text-white text-sm font-bold rounded-full uppercase tracking-wider">
+              Event Recap
             </span>
             
             {post.publishedAt && (
-              <div className="px-4 py-2 bg-neutral-100 rounded-full border border-neutral-200">
+              <div className="flex items-center gap-2 px-5 py-2.5 bg-neutral-100 rounded-full border border-neutral-200">
+                <Calendar className="w-4 h-4 text-neutral-600" />
                 <div className="text-sm font-bold text-neutral-900">
                   {new Date(post.publishedAt).toLocaleDateString('en-US', { 
                     month: 'short', 
@@ -61,17 +85,20 @@ export function EventRecapContent({ post, relatedPosts }: EventRecapContentProps
             )}
           </div>
           
-          <h1 className="mt-4 text-2xl font-crimson font-normal tracking-tighter mb-8 leading-tight text-neutral-900">
+          {/* Title */}
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-crimson font-normal tracking-tighter mb-6 leading-[1.1] text-neutral-900">
             {post.title}
           </h1>
           
+          {/* Excerpt */}
           {post.excerpt && (
-            <p className="text-xl text-neutral-600 leading-relaxed mb-8">
+            <p className="text-xl md:text-2xl text-neutral-600 leading-relaxed mb-10 max-w-3xl">
               {post.excerpt}
             </p>
           )}
           
-          <div className="flex items-center gap-6 pb-8 border-b border-neutral-200">
+          {/* Meta Info */}
+          <div className="flex flex-wrap items-center gap-6 pb-8 border-b border-neutral-200">
             <div className="flex items-center gap-3">
               {post.author.image && (
                 <Image
@@ -79,79 +106,89 @@ export function EventRecapContent({ post, relatedPosts }: EventRecapContentProps
                   alt={post.author.name || "Author"}
                   width={56}
                   height={56}
-                  className="w-14 h-14 rounded-full"
+                  className="w-14 h-14 rounded-full ring-2 ring-neutral-200"
                 />
               )}
               <div>
                 <div className="font-bold text-neutral-900 text-lg">
                   {post.author.name || "Anonymous"}
                 </div>
-                <div className="text-neutral-600 text-sm">
+                <div className="text-neutral-500 text-sm flex items-center gap-1">
+                  <User className="w-3 h-3" />
                   Event Organizer
                 </div>
               </div>
             </div>
             
             {post.readTime && (
-              <div className="flex items-center gap-2 text-neutral-600">
-                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                {post.readTime} min read
+              <div className="flex items-center gap-2 text-neutral-600 px-4 py-2 bg-neutral-50 rounded-full">
+                <Clock className="w-4 h-4" />
+                <span className="text-sm font-medium">{post.readTime} min read</span>
               </div>
             )}
+            
+            <div className="flex items-center gap-2 text-neutral-600 px-4 py-2 bg-neutral-50 rounded-full">
+              <Eye className="w-4 h-4" />
+              <span className="text-sm font-medium">{post.viewCount} views</span>
+            </div>
           </div>
         </div>
       </section>
 
       {/* Cover Image */}
       {post.coverImage && (
-        <section className="pb-16 px-6">
-          <div className="max-w-6xl mx-auto">
-            <div className="relative aspect-[21/9] rounded-3xl overflow-hidden shadow-xl">
+        <section className="pb-20 px-6">
+          <div className="max-w-7xl mx-auto">
+            <div className="relative aspect-[21/9] rounded-3xl overflow-hidden shadow-2xl border-2 border-neutral-200">
               <Image
                 src={post.coverImage}
                 alt={post.title}
                 width={1400}
                 height={600}
                 className="w-full h-full object-cover"
+                priority
               />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
             </div>
           </div>
         </section>
       )}
 
       {/* Content */}
-      <section className="pb-20 px-6">
-        <div className="max-w-3xl mx-auto">
+      <section className="pb-24 px-6">
+        <div className="max-w-4xl mx-auto">
           <article 
-            className="prose prose-lg max-w-none
+            className="prose prose-xl max-w-none
               prose-headings:font-crimson prose-headings:font-normal prose-headings:tracking-tighter prose-headings:text-neutral-900
-              prose-p:text-neutral-700 prose-p:leading-relaxed
+              prose-p:text-neutral-700 prose-p:leading-relaxed prose-p:text-lg
               prose-a:text-neutral-900 prose-a:underline hover:prose-a:text-neutral-600
-              prose-blockquote:border-l-4 prose-blockquote:border-neutral-900 prose-blockquote:bg-neutral-50 prose-blockquote:py-4
-              prose-strong:text-neutral-900
-              prose-ul:text-neutral-700
-              prose-ol:text-neutral-700
-              prose-img:rounded-2xl prose-img:shadow-lg"
+              prose-blockquote:border-l-4 prose-blockquote:border-neutral-900 prose-blockquote:bg-neutral-50 prose-blockquote:py-6 prose-blockquote:px-6 prose-blockquote:rounded-r-2xl prose-blockquote:text-lg
+              prose-strong:text-neutral-900 prose-strong:font-semibold
+              prose-ul:text-neutral-700 prose-ul:text-lg
+              prose-ol:text-neutral-700 prose-ol:text-lg
+              prose-img:rounded-2xl prose-img:shadow-xl prose-img:border-2 prose-img:border-neutral-200
+              prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-6
+              prose-h3:text-2xl prose-h3:mt-8 prose-h3:mb-4"
             dangerouslySetInnerHTML={{ __html: post.content }}
           />
         </div>
       </section>
 
       {/* Next Event CTA */}
-      <section className="pb-20 px-6 border-t border-neutral-200 pt-12">
-        <div className="max-w-3xl mx-auto">
-          <div className="bg-neutral-900 rounded-3xl p-12 text-center text-white shadow-xl">
-            <h3 className="text-3xl font-crimson font-normal mb-4">Don&apos;t Miss Our Next Event</h3>
-            <p className="text-neutral-300 mb-8 text-lg">
-              Join us for upcoming workshops, performances, and community gatherings
+      <section className="pb-24 px-6 border-t border-neutral-200 pt-16">
+        <div className="max-w-4xl mx-auto">
+          <div className="bg-gradient-to-br from-neutral-900 to-neutral-800 rounded-3xl p-12 md:p-16 text-center text-white shadow-2xl border-2 border-neutral-700">
+            <Calendar className="w-16 h-16 mx-auto mb-6 text-white/20" />
+            <h3 className="text-3xl md:text-4xl font-crimson font-normal mb-4">Don&apos;t Miss Our Next Event</h3>
+            <p className="text-neutral-300 mb-10 text-lg max-w-2xl mx-auto">
+              Join us for upcoming workshops, performances, and community gatherings. Connect with like-minded creatives and be part of the movement.
             </p>
             <Link 
               href="/programs/calendar"
-              className="inline-block px-8 py-4 bg-white text-neutral-900 rounded-full font-bold hover:bg-neutral-100 transition-colors"
+              className="inline-flex items-center gap-2 px-10 py-5 bg-white text-neutral-900 rounded-full font-bold text-lg hover:bg-neutral-100 transition-all shadow-lg hover:shadow-xl"
             >
               View Event Calendar
+              <ArrowLeft className="w-5 h-5 rotate-180" />
             </Link>
           </div>
         </div>
@@ -159,11 +196,20 @@ export function EventRecapContent({ post, relatedPosts }: EventRecapContentProps
 
       {/* Related Posts */}
       {relatedPosts.length > 0 && (
-        <section className="pb-32 px-6 border-t border-neutral-200 pt-20">
-          <div className="max-w-6xl mx-auto">
-            <h2 className="text-3xl font-crimson font-normal tracking-tighter mb-12">
-              More Event Recaps
-            </h2>
+        <section className="pb-32 px-6 border-t border-neutral-200 pt-24">
+          <div className="max-w-7xl mx-auto">
+            <div className="flex items-center justify-between mb-14">
+              <h2 className="text-4xl font-crimson font-normal tracking-tighter">
+                More Event Recaps
+              </h2>
+              <Link 
+                href="/stories/events"
+                className="text-neutral-600 hover:text-neutral-900 flex items-center gap-2 transition-colors"
+              >
+                View All
+                <ArrowLeft className="w-4 h-4 rotate-180" />
+              </Link>
+            </div>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {relatedPosts.map((relatedPost) => (
@@ -172,32 +218,35 @@ export function EventRecapContent({ post, relatedPosts }: EventRecapContentProps
                   href={`/stories/events/${relatedPost.slug}`}
                   className="group block"
                 >
-                  <article className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all h-full border border-neutral-100">
+                  <article className="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 h-full border border-neutral-200 hover:border-neutral-300">
                     {relatedPost.coverImage && (
-                      <div className="relative aspect-[16/9] overflow-hidden">
+                      <div className="relative aspect-[16/9] overflow-hidden bg-gradient-to-br from-neutral-100 to-neutral-200">
                         <Image
                           src={relatedPost.coverImage}
                           alt={relatedPost.title}
                           width={400}
                           height={225}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                         />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                        
+                        {relatedPost.publishedAt && (
+                          <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-xl">
+                            <div className="text-xs font-bold text-neutral-900">
+                              {new Date(relatedPost.publishedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                            </div>
+                          </div>
+                        )}
                       </div>
                     )}
                     
-                    <div className="p-6">
-                      {relatedPost.publishedAt && (
-                        <div className="text-xs font-bold text-neutral-600 mb-2">
-                          {new Date(relatedPost.publishedAt).toLocaleDateString()}
-                        </div>
-                      )}
-                      
-                      <h3 className="text-xl font-crimson font-normal tracking-tighter mb-2 group-hover:text-neutral-600 transition-colors line-clamp-2">
+                    <div className="p-7">
+                      <h3 className="text-xl font-crimson font-normal tracking-tighter mb-3 group-hover:text-neutral-600 transition-colors line-clamp-2 leading-tight">
                         {relatedPost.title}
                       </h3>
                       
                       {relatedPost.excerpt && (
-                        <p className="text-neutral-600 line-clamp-2 text-sm">
+                        <p className="text-neutral-600 line-clamp-2 text-sm leading-relaxed">
                           {relatedPost.excerpt}
                         </p>
                       )}

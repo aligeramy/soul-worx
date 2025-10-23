@@ -202,7 +202,7 @@ async function seed() {
       emailVerified: new Date(),
     }).returning()
     adminUser = newAdmin
-    console.log("✅ Created admin user")
+    console.log("Created admin user")
   }
 
   console.log(`Using user ID: ${adminUser.id}`)
@@ -215,7 +215,7 @@ async function seed() {
     }))
   ).returning()
 
-  console.log(`✅ Created ${createdPrograms.length} programs`)
+  console.log(`Created ${createdPrograms.length} programs`)
 
   // Sample Events
   const eventsData = [
@@ -383,7 +383,7 @@ async function seed() {
   console.log("Creating events...")
   const createdEvents = await db.insert(events).values(eventsData).returning()
 
-  console.log(`✅ Created ${createdEvents.length} events`)
+  console.log(`Created ${createdEvents.length} events`)
 
   // Sample Stories/Posts - Multiple for each category
   const postsData = [
@@ -926,7 +926,7 @@ async function seed() {
 
   console.log("Creating stories/posts...")
   const createdPosts = await db.insert(posts).values(postsData).returning()
-  console.log(`✅ Created ${createdPosts.length} stories`)
+  console.log(`Created ${createdPosts.length} stories`)
 
   // Sample Products for Shop
   const productsData = [
@@ -1092,26 +1092,26 @@ async function seed() {
   console.log("Creating shop products...")
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const createdProducts = await db.insert(products).values(productsData as any).returning()
-  console.log(`✅ Created ${createdProducts.length} products`)
+  console.log(`Created ${createdProducts.length} products`)
 
-  console.log("\n🎉 Seeding complete!")
-  console.log("\n📊 Summary:")
+  console.log("\nSeeding complete!")
+  console.log("\nSummary:")
   console.log(`   - ${createdPrograms.length} programs`)
   console.log(`   - ${createdEvents.length} events`)
   console.log(`   - ${createdPosts.length} stories (3 Poetry, 3 Community, 3 Events, 3 Press)`)
   console.log(`   - ${createdProducts.length} products`)
-  console.log("\n✨ Story Categories:")
-  console.log("   📝 Poetry Drops: Beautiful verse-by-verse animations")
-  console.log("   ❤️  Community Highlights: Parallax scrolling & heart animations")
-  console.log("   🎉 Event Recaps: Animated stats & photo galleries")
-  console.log("   📰 Press & Media: Professional news layouts")
-  console.log("\n📝 Next steps:")
+  console.log("\nStory Categories:")
+  console.log("   Poetry Drops: Beautiful verse-by-verse animations")
+  console.log("   Blog: Latest insights and stories")
+  console.log("   Event Recaps: Animated stats & photo galleries")
+  console.log("   Press & Media: Professional news layouts")
+  console.log("\nNext steps:")
   console.log("1. Sign in with OAuth (Google, Discord, or Apple)")
   console.log("2. Run this SQL to make yourself admin:")
   console.log("   UPDATE \"user\" SET role = 'admin' WHERE email = 'your-email@example.com';")
-  console.log("3. Visit /stories/poetry, /stories/community, /stories/events, or /stories/press")
+  console.log("3. Visit /stories/poetry, /stories/blog, /stories/events, or /stories/press")
   console.log("4. Visit /dashboard/admin/stories to create new stories with category-specific guidance!")
-  console.log("5. Each story type has unique animations powered by Framer Motion ✨")
+  console.log("5. Each story type has unique animations powered by Framer Motion")
   
   process.exit(0)
 }

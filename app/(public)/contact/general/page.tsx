@@ -97,10 +97,10 @@ export default function GeneralInquiryPage() {
                     <div>
                       <p className="font-semibold text-sm mb-1">Email</p>
                       <a 
-                        href="mailto:info@soulworx.org" 
+                        href="mailto:info@soulworx.com" 
                         className="text-brand-bg-darker hover:underline"
                       >
-                        info@soulworx.org
+                        info@soulworx.com
                       </a>
                     </div>
                   </div>
@@ -109,10 +109,10 @@ export default function GeneralInquiryPage() {
                     <div>
                       <p className="font-semibold text-sm mb-1">Phone</p>
                       <a 
-                        href="tel:+1234567890" 
+                        href="tel:+16474531223" 
                         className="text-brand-bg-darker hover:underline"
                       >
-                        (123) 456-7890
+                        +1 (647) 453-1223
                       </a>
                     </div>
                   </div>
@@ -121,7 +121,7 @@ export default function GeneralInquiryPage() {
                     <div>
                       <p className="font-semibold text-sm mb-1">Location</p>
                       <p className="text-sm text-neutral-600">
-                        Los Angeles, CA
+                        Toronto, ON
                       </p>
                     </div>
                   </div>

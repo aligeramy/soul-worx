@@ -44,7 +44,7 @@ export default async function AdminStoriesPage() {
   const storyTypes = {
     poetry: allStories.filter(s => s.category === "poetry"),
     news: allStories.filter(s => s.category === "news"),
-    stories: allStories.filter(s => s.category === "stories"),
+    blog: allStories.filter(s => s.category === "blog"),
     announcements: allStories.filter(s => s.category === "announcements"),
   }
 
@@ -80,10 +80,10 @@ export default async function AdminStoriesPage() {
         
         <Card className="bg-[#1c1c1e] border-purple-500/20">
           <CardContent className="p-4">
-            <div className="text-xs font-semibold text-purple-400 mb-1 uppercase tracking-wider">Community</div>
-            <div className="text-3xl font-bold text-white">{storyTypes.stories.length}</div>
+            <div className="text-xs font-semibold text-purple-400 mb-1 uppercase tracking-wider">Blog</div>
+            <div className="text-3xl font-bold text-white">{storyTypes.blog.length}</div>
             <div className="text-xs text-purple-400/70 mt-1">
-              {storyTypes.stories.filter(s => s.status === "published").length} published
+              {storyTypes.blog.filter(s => s.status === "published").length} published
             </div>
           </CardContent>
         </Card>

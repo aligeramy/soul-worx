@@ -31,25 +31,25 @@ export function Logo({
     switch (variant) {
       case "app-icon":
         return {
-          src: "/logo/app-icon.png",
+          src: "/logo-v2/b.png",
           alt: "Soulworx",
           classes: ""
         }
       case "light":
         return {
-          src: "/logo/svg/logo.svg",
+          src: "/logo-v2/w.png",
           alt: "SoulWorx Logo",
-          classes: "invert brightness-0 contrast-200"
+          classes: ""
         }
       case "dark":
         return {
-          src: "/logo/svg/logo.svg",
+          src: "/logo-v2/b.png",
           alt: "SoulWorx Logo",
           classes: ""
         }
       default:
         return {
-          src: "/logo/svg/logo.svg",
+          src: "/logo-v2/b.png",
           alt: "SoulWorx Logo",
           classes: ""
         }

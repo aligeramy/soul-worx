@@ -1,7 +1,7 @@
 import { getPublishedPosts } from "@/lib/db/queries"
 import Link from "next/link"
 import Image from "next/image"
-import { ArrowLeft } from "lucide-react"
+import { ArrowLeft, Newspaper } from "lucide-react"
 
 export default async function PressMediaPage() {
   const posts = await getPublishedPosts()
@@ -48,7 +48,7 @@ export default async function PressMediaPage() {
           {pressPosts.length === 0 ? (
             <div className="text-center py-24 bg-white rounded-3xl border border-neutral-200">
               <div className="w-20 h-20 bg-neutral-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                <div className="text-4xl">📰</div>
+                <Newspaper className="w-10 h-10 text-neutral-400" />
               </div>
               <h3 className="text-2xl font-crimson font-normal mb-2">No press releases yet</h3>
               <p className="text-neutral-500">Check back for news and announcements</p>

@@ -248,7 +248,7 @@ export const calendarSyncs = pgTable("calendar_sync", {
 
 // ==================== BLOG POSTS ====================
 export type PostStatus = "draft" | "published" | "archived"
-export type PostCategory = "poetry" | "news" | "stories" | "tutorials" | "announcements"
+export type PostCategory = "poetry" | "news" | "blog" | "tutorials" | "announcements"
 
 export const posts = pgTable("post", {
   id: text("id")

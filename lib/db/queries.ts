@@ -154,7 +154,7 @@ export async function getPostsByCategory(category: string) {
   return db.query.posts.findMany({
     where: and(
       eq(posts.status, "published"),
-      eq(posts.category, category as "poetry" | "news" | "stories" | "tutorials" | "announcements")
+      eq(posts.category, category as "poetry" | "news" | "blog" | "tutorials" | "announcements")
     ),
     with: {
       author: true,

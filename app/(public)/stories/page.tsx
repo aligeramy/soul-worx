@@ -10,9 +10,9 @@ export default function StoriesPage() {
       image: "/optimized/0K0A2885.jpg"
     },
     {
-      title: "Community Highlights",
-      description: "Stories from our creative community",
-      href: "/stories/community",
+      title: "Blog",
+      description: "Latest insights and stories",
+      href: "/stories/blog",
       image: "/optimized/0K0A3966 (2).jpg"
     },
     {

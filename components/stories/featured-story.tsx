@@ -14,7 +14,7 @@ interface FeaturedStoryProps {
 export function FeaturedStory({ post, variant = "poetry" }: FeaturedStoryProps) {
   const categoryPath = 
     post.category === "poetry" ? "poetry" :
-    post.category === "stories" ? "community" :
+    post.category === "blog" ? "blog" :
     post.category === "news" ? "events" :
     "press"
 

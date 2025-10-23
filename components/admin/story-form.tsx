@@ -262,7 +262,7 @@ export function StoryForm({ story }: StoryFormProps) {
               required
             >
               <option value="poetry">Poetry Drop</option>
-              <option value="stories">Community Highlight</option>
+              <option value="blog">Blog</option>
               <option value="news">Event Recap</option>
               <option value="announcements">Press & Media</option>
               <option value="tutorials">Tutorial</option>

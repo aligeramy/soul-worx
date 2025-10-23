@@ -14,7 +14,7 @@ interface StoryListItemProps {
 export function StoryListItem({ post, variant = "poetry" }: StoryListItemProps) {
   const categoryPath = 
     post.category === "poetry" ? "poetry" :
-    post.category === "stories" ? "community" :
+    post.category === "blog" ? "blog" :
     post.category === "news" ? "events" :
     "press"
 

@@ -134,7 +134,7 @@
   body {
     @apply bg-background text-foreground;
   }
-  h1, h2 {
+  h1 {
     @apply font-exodus-sharp;
    
   }
@@ -142,10 +142,10 @@
  
 }
 
-h3 {
+h2, h3 {
   margin:20px 0 5px 0;
   font-weight: 600;
-  font-size: 1.25rem;
+  font-size: 1.125rem;
 }
 
 

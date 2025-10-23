@@ -43,7 +43,7 @@ export default async function UserCalendarPage() {
       endTime: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000 + 2 * 60 * 60 * 1000), // 2 hours duration
       timezone: "America/New_York",
       locationType: "in_person" as const,
-      venueName: "Soul Worx Community Center",
+      venueName: "Soulworx Community Center",
       venueAddress: "123 Creative Lane",
       venueCity: "Brooklyn",
       venueState: "NY",

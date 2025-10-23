@@ -24,12 +24,12 @@ interface Post {
   }
 }
 
-interface CommunityContentProps {
+interface BlogContentProps {
   post: Post
   relatedPosts: Post[]
 }
 
-export function CommunityContent({ post, relatedPosts }: CommunityContentProps) {
+export function BlogContent({ post, relatedPosts }: BlogContentProps) {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
