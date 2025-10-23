@@ -59,12 +59,12 @@ export default async function Home() {
                 A powerful collection of poetry that explores loss, love, faith, and gratitude. Indiana Rotondo&apos;s diverse free-verse poems offer comfort and inspiration, inviting readers to express themselves and share their journey with others.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Link href="/shop?category=books">
+                <a href="https://www.amazon.ca/Ripple-Effect-Indiana-Rotondo/dp/1039192823" target="_blank" rel="noopener noreferrer">
                   <button className="group relative font-crimson font-normal px-10 py-5 bg-brand-bg-darker text-white  text-2xl rounded-md shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 overflow-hidden">
                     <span className="relative z-10">Get Your Copy</span>
                     <div className="absolute inset-0 bg-black/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
                   </button>
-                </Link>
+                </a>
               </div>
             </div>
           </div>
