@@ -36,7 +36,7 @@ export function TestimonialsStats({
 		{ label: "Youth Served", value: "10K+" },
 		{ label: "Workshops", value: "500+" },
 		{ label: "Cities", value: "50+" },
-		{ label: "Schools", value: "100+" },
+		{ label: "Partnerships", value: "100+" },
 	],
 	testimonials = [
 		{
@@ -122,16 +122,13 @@ export function TestimonialsStats({
 	return (
 		<section 
 			ref={sectionRef}
-			className={cn("relative text-white overflow-hidden", className)}
-			style={{
-				backgroundColor: 'rgb(25, 21, 18)',
-			}}
+			className={cn("relative text-white overflow-hidden bg-brand-bg-darker", className)}
 		>
 			{/* Top gradient fade from programs section */}
 			<div 
 				className="absolute top-0 inset-x-0 h-32 z-10 pointer-events-none"
 				style={{
-					background: 'linear-gradient(to bottom, rgb(25, 21, 18) 0%, transparent 100%)',
+					background: 'linear-gradient(to bottom, rgb(var(--color-brand-bg-darker-r), var(--color-brand-bg-darker-g), var(--color-brand-bg-darker-b)) 0%, transparent 100%)',
 				}}
 			/>
 
@@ -149,10 +146,7 @@ export function TestimonialsStats({
 			<div className="relative max-w-7xl mx-auto px-6 py-24">
 				{/* Framed container to emulate the reference */}
 				<div 
-					className="relative rounded-[28px] border border-white/10 overflow-hidden min-h-[600px]"
-					style={{
-						backgroundColor: 'rgb(25, 21, 18)',
-					}}
+					className="relative rounded-[28px] border border-white/10 overflow-hidden min-h-[600px] bg-brand-bg-darker"
 				>
 					{/* Inner vignette */}
 					<div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.06),transparent_60%)]" />

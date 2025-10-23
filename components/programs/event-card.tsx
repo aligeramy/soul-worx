@@ -7,6 +7,7 @@ interface EventCardProps {
   event: {
     id: string
     title: string
+    description: string | null
     startTime: Date
     endTime: Date
     venueName: string | null
@@ -83,11 +84,11 @@ export function EventCard({ event, categoryGradient }: EventCardProps) {
         {/* Content */}
         <div className="p-6 flex flex-col flex-grow">
           <h3 className="text-3xl font-crimson font-normal tracking-tighter group-hover:text-amber-900 transition-colors mb-2 flex items-start">
-            {event.program?.title || 'Event'}
+            {event.title}
           </h3>
-          {event.program?.description && (
+          {event.description && (
             <p className="text-neutral-600 text-sm line-clamp-2 mb-4 leading-relaxed min-h-[40px]">
-              {event.program.description}
+              {event.description}
             </p>
           )}
 

@@ -228,7 +228,7 @@ export function ProgramForm({ program }: ProgramFormProps) {
               required
             >
               <option value="youth">Youth</option>
-              <option value="schools">Schools</option>
+              <option value="schools">Partnerships</option>
               <option value="community">Community</option>
               <option value="workshops">Workshops</option>
               <option value="special">Special Events</option>

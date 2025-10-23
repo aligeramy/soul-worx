@@ -67,7 +67,7 @@ export default async function ProgramDetailPage({
       {/* Program Details */}
       <section className="py-16 px-6 bg-white">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl font-crimson font-normal tracking-tighter mb-8">Program Details</h2>
+          <h2 className="text-3xl !font-crimson font-normal tracking-tighter mt-4 mb-3">Program Details</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {program.duration && (
               <div className="bg-neutral-50 rounded-2xl p-6">
@@ -118,7 +118,7 @@ export default async function ProgramDetailPage({
       {program.longDescription && (
         <section className="py-16 px-6 bg-neutral-50">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl font-crimson font-normal tracking-tighter mb-8">About This Program</h2>
+            <h2 className="text-3xl font-crimson font-normal tracking-tighter mt-4 mb-3">About This Program</h2>
             <div className="prose prose-lg max-w-none" dangerouslySetInnerHTML={{ __html: program.longDescription }} />
           </div>
         </section>
@@ -127,7 +127,7 @@ export default async function ProgramDetailPage({
       {/* Upcoming Events */}
       <section className="py-16 px-6 bg-white">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl font-crimson font-normal tracking-tighter mb-8">Upcoming Sessions</h2>
+          <h2 className="text-3xl font-crimson font-normal tracking-tighter mt-4 mb-3">Upcoming Sessions</h2>
           
           {upcomingEvents.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -135,6 +135,7 @@ export default async function ProgramDetailPage({
                 const eventWithProgram = {
                   id: event.id,
                   title: event.title,
+                  description: event.description,
                   startTime: event.startTime,
                   endTime: event.endTime,
                   venueName: event.venueName,
@@ -170,11 +171,11 @@ export default async function ProgramDetailPage({
       {program.faqs && program.faqs.length > 0 && (
         <section className="py-16 px-6 bg-neutral-50">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl font-crimson font-normal tracking-tighter mb-8">Frequently Asked Questions</h2>
+            <h2 className="text-3xl font-crimson font-normal tracking-tighter mt-4 mb-3">Frequently Asked Questions</h2>
             <div className="space-y-6">
               {program.faqs.map((faq, index) => (
                 <div key={index} className="bg-white rounded-2xl p-6 shadow-sm">
-                  <h3 className="text-2xl font-crimson font-normal mb-3">{faq.question}</h3>
+                  <h3 className="text-2xl font-crimson font-normal mt-4 mb-3">{faq.question}</h3>
                   <p className="text-neutral-600 leading-relaxed">{faq.answer}</p>
                 </div>
               ))}
@@ -190,7 +191,7 @@ export default async function ProgramDetailPage({
             <div className="bg-white rounded-2xl p-8 flex items-start space-x-4 shadow-sm">
               <div className="text-3xl">⚠️</div>
               <div>
-                <h3 className="font-crimson font-normal tracking-tighter text-xl mb-2">Parent/Guardian Consent Required</h3>
+                <h3 className="font-crimson font-normal tracking-tighter text-xl mt-4 mb-2">Parent/Guardian Consent Required</h3>
                 <p className="text-neutral-700 leading-relaxed">
                   Participants under 18 must have parent or guardian consent to register for this program.
                 </p>

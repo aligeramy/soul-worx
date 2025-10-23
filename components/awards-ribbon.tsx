@@ -49,10 +49,7 @@ export function AwardsRibbon({ className }: { className?: string }) {
 	return (
 		<section 
 			ref={ref} 
-			className={cn("relative overflow-hidden", className)}
-			style={{
-				backgroundColor: 'rgb(25, 21, 18)',
-			}}
+			className={cn("relative overflow-hidden bg-brand-bg-darker", className)}
 		>
 			{/* Noise texture overlay */}
 			<div 
@@ -71,7 +68,7 @@ export function AwardsRibbon({ className }: { className?: string }) {
 					className="absolute top-0 inset-x-0 pointer-events-none" 
 					style={{ 
 						height: '60%',
-						background: 'linear-gradient(to bottom, rgb(25, 21, 18) 0%, rgb(25, 21, 18) 5%, rgba(25, 21, 18, 0.95) 10%, rgba(25, 21, 18, 0.85) 20%, rgba(25, 21, 18, 0.6) 35%, rgba(25, 21, 18, 0.3) 50%, transparent 100%)',
+						background: 'linear-gradient(to bottom, rgb(var(--color-brand-bg-darker-r), var(--color-brand-bg-darker-g), var(--color-brand-bg-darker-b)) 0%, rgb(var(--color-brand-bg-darker-r), var(--color-brand-bg-darker-g), var(--color-brand-bg-darker-b)) 5%, rgba(var(--color-brand-bg-darker-r), var(--color-brand-bg-darker-g), var(--color-brand-bg-darker-b), 0.95) 10%, rgba(var(--color-brand-bg-darker-r), var(--color-brand-bg-darker-g), var(--color-brand-bg-darker-b), 0.85) 20%, rgba(var(--color-brand-bg-darker-r), var(--color-brand-bg-darker-g), var(--color-brand-bg-darker-b), 0.6) 35%, rgba(var(--color-brand-bg-darker-r), var(--color-brand-bg-darker-g), var(--color-brand-bg-darker-b), 0.3) 50%, transparent 100%)',
 					}} 
 				/>
 
@@ -80,7 +77,7 @@ export function AwardsRibbon({ className }: { className?: string }) {
 					className="absolute top-0 inset-x-0 pointer-events-none" 
 					style={{ 
 						height: '60%',
-						background: 'linear-gradient(to bottom, rgb(25, 21, 18), rgba(25, 21, 18, 0.9), rgba(25, 21, 18, 0.7), rgba(25, 21, 18, 0.5), rgba(25, 21, 18, 0.3), rgba(25, 21, 18, 0.15), transparent)',
+						background: 'linear-gradient(to bottom, rgb(var(--color-brand-bg-darker-r), var(--color-brand-bg-darker-g), var(--color-brand-bg-darker-b)), rgba(var(--color-brand-bg-darker-r), var(--color-brand-bg-darker-g), var(--color-brand-bg-darker-b), 0.9), rgba(var(--color-brand-bg-darker-r), var(--color-brand-bg-darker-g), var(--color-brand-bg-darker-b), 0.7), rgba(var(--color-brand-bg-darker-r), var(--color-brand-bg-darker-g), var(--color-brand-bg-darker-b), 0.5), rgba(var(--color-brand-bg-darker-r), var(--color-brand-bg-darker-g), var(--color-brand-bg-darker-b), 0.3), rgba(var(--color-brand-bg-darker-r), var(--color-brand-bg-darker-g), var(--color-brand-bg-darker-b), 0.15), transparent)',
 					}} 
 				>
 					{/* Noise texture overlay */}

@@ -6,10 +6,7 @@ import Link from "next/link"
 export function ExploreSection() {
   return (
     <section 
-      className="relative text-white pt-4 pb-4 px-6"
-      style={{
-        backgroundColor: 'rgb(25, 21, 18)',
-      }}
+      className="relative text-white pt-4 pb-4 px-6 bg-brand-bg-darker"
     >
       {/* Noise texture overlay */}
       <div 

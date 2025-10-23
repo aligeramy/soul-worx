@@ -87,9 +87,9 @@ export function ProgramCard({ program, categoryGradient, fullHeight = false }: P
 
         {/* Content */}
         <div className={contentClasses}>
-          <h3 className={titleClasses}>
+          <h2 className={titleClasses}>
             {program.title}
-          </h3>
+          </h2>
           <p className={descriptionClasses}>
             {program.description}
           </p>

@@ -21,7 +21,7 @@ export default async function AdminLayout({
   return (
     <SessionProvider>
       {/* Force dark theme for the admin area and use design tokens */}
-      <div className="min-h-screen dark bg-brand-bg-darker relative">
+      <div className="min-h-screen dark" style={{ backgroundColor: 'rgb(25, 21, 18)' }}>
         {/* Noise texture overlay */}
         <div 
           className="fixed inset-0 pointer-events-none opacity-30 z-0"

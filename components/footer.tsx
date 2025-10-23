@@ -4,10 +4,7 @@ import Image from "next/image"
 export function Footer() {
   return (
     <footer 
-      className="relative text-white"
-      style={{
-        backgroundColor: 'rgb(25, 21, 18)',
-      }}
+      className="relative text-white bg-brand-bg-darker"
     >
       {/* Noise texture overlay */}
       <div 
@@ -137,8 +134,8 @@ export function Footer() {
                   </Link>
                 </li>
                 <li>
-                  <Link href="/programs/schools" className="text-white/70 hover:text-white transition-colors font-light">
-                    School Partnerships
+                  <Link href="/programs/partnerships" className="text-white/70 hover:text-white transition-colors font-light">
+                    Partnerships
                   </Link>
                 </li>
               </ul>

@@ -65,8 +65,8 @@ export function AdminSidebar({ user }: AdminSidebarProps) {
   const pathname = usePathname()
 
   return (
-    <Sidebar collapsible="icon" className="bg-brand-bg-darker border-r border-white/10">
-      <SidebarHeader className="border-b border-white/10 bg-brand-bg-darker">
+    <Sidebar collapsible="icon" className="border-r border-white/10" style={{ backgroundColor: 'rgb(25, 21, 18)' }}>
+      <SidebarHeader className="border-b border-white/10" style={{ backgroundColor: 'rgb(25, 21, 18)' }}>
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton size="lg">
@@ -82,7 +82,7 @@ export function AdminSidebar({ user }: AdminSidebarProps) {
         </SidebarMenu>
       </SidebarHeader>
       
-      <SidebarContent className="bg-brand-bg-darker">
+      <SidebarContent style={{ backgroundColor: 'rgb(25, 21, 18)' }}>
         <SidebarGroup>
           <SidebarGroupLabel className="text-white/60 text-xs font-semibold tracking-wider uppercase">
             Management
@@ -113,7 +113,7 @@ export function AdminSidebar({ user }: AdminSidebarProps) {
         </SidebarGroup>
       </SidebarContent>
 
-      <SidebarFooter className="border-t border-white/10 bg-brand-bg-darker">
+      <SidebarFooter className="border-t border-white/10" style={{ backgroundColor: 'rgb(25, 21, 18)' }}>
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton asChild className="text-white/70 hover:text-white hover:bg-white/5">

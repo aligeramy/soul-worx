@@ -89,9 +89,16 @@ export default async function ChannelPage({
               <h1 className="text-4xl md:text-6xl font-crimson font-normal tracking-tighter text-white mb-4">
                 {channel.title}
               </h1>
-              <p className="text-xl text-white/90 mb-6 max-w-3xl">
-                {channel.longDescription || channel.description}
-              </p>
+              {channel.longDescription ? (
+                <div 
+                  className="text-sm text-white/90 mb-6 max-w-3xl prose prose-invert prose-lg prose-headings:text-white prose-p:text-white/90 prose-li:text-white/90"
+                  dangerouslySetInnerHTML={{ __html: channel.longDescription }}
+                />
+              ) : (
+                <p className="text-md text-white/90 mb-6 max-w-3xl">
+                  {channel.description}
+                </p>
+              )}
               
               <div className="flex items-center gap-3 text-sm">
                 <span className="px-3 py-1.5 bg-white/90 backdrop-blur-sm text-black font-bold rounded-full uppercase tracking-wide">

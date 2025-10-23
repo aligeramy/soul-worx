@@ -73,10 +73,7 @@ export default async function Home() {
 
       {/* Community Section */}
       <section 
-        className="relative text-white py-32 px-6"
-        style={{
-          backgroundColor: 'rgb(25, 21, 18)',
-        }}
+        className="relative text-white py-32 px-6 bg-brand-bg-darker"
       >
         {/* Noise texture overlay */}
         <div 
