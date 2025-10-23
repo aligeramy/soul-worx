@@ -97,10 +97,10 @@ export default function GeneralInquiryPage() {
                     <div>
                       <p className="font-semibold text-sm mb-1">Email</p>
                       <a 
-                        href="mailto:info@soulworx.com" 
+                        href="mailto:Indianarotondo@soulworx.ca" 
                         className="text-brand-bg-darker hover:underline"
                       >
-                        info@soulworx.com
+                        Indianarotondo@soulworx.ca
                       </a>
                     </div>
                   </div>

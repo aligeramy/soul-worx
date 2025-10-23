@@ -342,7 +342,7 @@ export default function PressPage() {
               </Button>
 
               <p className="text-sm text-center text-neutral-500">
-                General press contact: <a href="mailto:press@soulworx.com" className="text-brand-bg-darker hover:underline">press@soulworx.com</a>
+                General press contact: <a href="mailto:Indianarotondo@soulworx.ca" className="text-brand-bg-darker hover:underline">Indianarotondo@soulworx.ca</a>
               </p>
             </form>
           )}

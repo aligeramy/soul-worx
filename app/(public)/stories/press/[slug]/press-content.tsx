@@ -189,8 +189,8 @@ export function PressContent({ post, relatedPosts }: PressContentProps) {
                   </div>
                   <div className="flex items-start gap-3">
                     <span className="font-semibold text-white min-w-[100px]">Email:</span>
-                    <a href="mailto:press@soulworx.com" className="text-white hover:text-white/80 underline transition-colors">
-                      press@soulworx.com
+                    <a href="mailto:Indianarotondo@soulworx.ca" className="text-white hover:text-white/80 underline transition-colors">
+                      Indianarotondo@soulworx.ca
                     </a>
                   </div>
                   <div className="flex items-start gap-3">
