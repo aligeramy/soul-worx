@@ -5,6 +5,8 @@ import Image from "next/image"
 import Link from "next/link"
 import { cn } from "@/lib/utils"
 import { Calendar, Users, School, HelpCircle, ArrowRight } from "lucide-react"
+import { getCategoryGradient } from "@/lib/constants/programs"
+import { format } from "date-fns"
 
 interface Program {
   id: string
@@ -21,10 +23,19 @@ interface Event {
   id: string
   programId: string
   title: string
+  description: string | null
+  images: string[] | null
   startTime: Date
   endTime: Date
   venueName: string | null
   venueCity: string | null
+  program: {
+    title: string
+    slug: string
+    coverImage: string | null
+    category: string
+    description: string | null
+  } | null
 }
 
 interface ProgramWithEvent extends Program {
@@ -34,12 +45,59 @@ interface ProgramWithEvent extends Program {
 interface ProgramsSectionProps {
   programs: Program[]
   upcomingPrograms?: ProgramWithEvent[]
+  events?: Event[]
 }
 
-export function ProgramsSection({ programs, upcomingPrograms = [] }: ProgramsSectionProps) {
+export function ProgramsSection({ programs, upcomingPrograms = [], events = [] }: ProgramsSectionProps) {
   const sectionRef = useRef<HTMLDivElement>(null)
   const [scrollProgress, setScrollProgress] = useState(0)
   const [currentSlide, setCurrentSlide] = useState(0)
+
+  // Helper function to extract image string from images array
+  const getImageSrc = (images: string[] | null | undefined, fallback: string | null | undefined): string | null => {
+    if (images && images.length > 0) {
+      return images[0]
+    }
+    return fallback || null
+  }
+
+  // Strategy: Allocate 2 special events to left column, then carousel gets latest regular events
+  const seenIds = new Set<string>()
+  const secondColumnEvents: Event[] = []
+  
+  // Filter special events (events from programs with category "special")
+  const specialEvents = events.filter(e => e.program?.category === "special")
+  
+  // Add up to 2 special events for left column
+  for (const event of specialEvents) {
+    if (!seenIds.has(event.id) && secondColumnEvents.length < 2) {
+      secondColumnEvents.push(event)
+      seenIds.add(event.id)
+    }
+  }
+  
+  // If we need more for left column, add other events
+  if (secondColumnEvents.length < 2) {
+    for (const event of events) {
+      if (!seenIds.has(event.id) && secondColumnEvents.length < 2) {
+        secondColumnEvents.push(event)
+        seenIds.add(event.id)
+      }
+    }
+  }
+  
+  // Carousel gets all remaining events (not in second column), excluding special events, max 5
+  const carouselEvents = events.filter(e => !seenIds.has(e.id) && e.program?.category !== "special").slice(0, 5)
+  
+  // Find the earliest event for highlighting
+  const allEvents = [...secondColumnEvents, ...carouselEvents]
+  const nextUpcomingEventId = allEvents
+    .sort((a, b) => new Date(a.startTime).getTime() - new Date(b.startTime).getTime())[0]?.id
+  
+  // Mobile slideshow: all events, excluding special events
+  const mobileEvents = events
+    .filter(e => e.program?.category !== "special")
+    .slice(0, 10)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -65,30 +123,8 @@ export function ProgramsSection({ programs, upcomingPrograms = [] }: ProgramsSec
     const isMobile = typeof window !== 'undefined' && window.innerWidth < 768
     
     const carouselLength = isMobile 
-      ? Math.min(programs.length, 10)
-      : programs.filter(p => {
-          // Calculate carousel length based on second column allocation
-          const secondColIds = new Set<string>()
-          const tempSecondCol: Program[] = []
-          
-          for (const prog of upcomingPrograms) {
-            if (!secondColIds.has(prog.id) && tempSecondCol.length < 2) {
-              tempSecondCol.push(prog)
-              secondColIds.add(prog.id)
-            }
-          }
-          
-          if (tempSecondCol.length < 2) {
-            for (const prog of programs) {
-              if (!secondColIds.has(prog.id) && tempSecondCol.length < 2) {
-                tempSecondCol.push(prog)
-                secondColIds.add(prog.id)
-              }
-            }
-          }
-          
-          return !secondColIds.has(p.id)
-        }).length
+      ? Math.min(mobileEvents.length, 10)
+      : carouselEvents.length
     
     if (carouselLength === 0) return
     
@@ -106,7 +142,7 @@ export function ProgramsSection({ programs, upcomingPrograms = [] }: ProgramsSec
       clearInterval(interval)
       window.removeEventListener('resize', handleResize)
     }
-  }, [programs, upcomingPrograms])
+  }, [carouselEvents.length, mobileEvents.length])
 
   // Calculate transformations based on scroll progress
   const bgScale = 1 + scrollProgress * 0.2 // Scale from 1 to 1.2 for Ken Burns effect
@@ -115,47 +151,6 @@ export function ProgramsSection({ programs, upcomingPrograms = [] }: ProgramsSec
   const opacity = Math.min(scrollProgress * 1.5, 1) // Fade in
   const contentTranslateY = (1 - scrollProgress) * 40 // Content rises into view
   const topGradientOpacity = Math.max(1 - scrollProgress * 1.2, 0) // Fade out as we scroll
-
-  // Strategy: Allocate 2 programs to second column first, then carousel gets the rest
-  const seenIds = new Set<string>()
-  const secondColumnPrograms: (Program | ProgramWithEvent)[] = []
-  
-  // First, add up to 2 upcoming programs for second column
-  for (const program of upcomingPrograms) {
-    if (!seenIds.has(program.id) && secondColumnPrograms.length < 2) {
-      secondColumnPrograms.push(program)
-      seenIds.add(program.id)
-    }
-  }
-  
-  // If we need more for second column, add regular programs
-  if (secondColumnPrograms.length < 2) {
-    for (const program of programs) {
-      if (!seenIds.has(program.id) && secondColumnPrograms.length < 2) {
-        secondColumnPrograms.push(program)
-        seenIds.add(program.id)
-      }
-    }
-  }
-  
-  // Carousel gets all remaining programs (not in second column), max 5
-  const carouselPrograms = programs.filter(p => !seenIds.has(p.id)).slice(0, 5)
-  
-  // Find the program with the next (earliest) upcoming event (for all programs)
-  const allProgramsWithEvents = [...secondColumnPrograms, ...carouselPrograms]
-  const nextUpcomingProgramId = allProgramsWithEvents
-    .filter(p => 'upcomingEvent' in p && p.upcomingEvent)
-    .sort((a, b) => {
-      const aDate = (a as ProgramWithEvent).upcomingEvent!.startTime
-      const bDate = (b as ProgramWithEvent).upcomingEvent!.startTime
-      return new Date(aDate).getTime() - new Date(bDate).getTime()
-    })[0]?.id
-  
-  // Mobile slideshow: all programs with events mapped
-  const mobilePrograms: (Program | ProgramWithEvent)[] = programs.slice(0, 10).map(program => {
-    const upcomingEvent = upcomingPrograms.find(up => up.id === program.id)
-    return upcomingEvent || program
-  })
 
   return (
     <div ref={sectionRef} className="relative min-h-screen w-full overflow-hidden bg-brand-bg-darker">
@@ -357,8 +352,8 @@ export function ProgramsSection({ programs, upcomingPrograms = [] }: ProgramsSec
                 </div>
               </div>
 
-              {/* Latest Programs - 2 Column Layout */}
-              {(carouselPrograms.length > 0 || secondColumnPrograms.length > 0) && (
+              {/* Latest Events - 2 Column Layout */}
+              {(carouselEvents.length > 0 || secondColumnEvents.length > 0) && (
                 <div className="bg-brand-bg-darker/80 rounded-xl p-5 shadow-2xl">
                   <div className="space-y-3">
                    
@@ -372,63 +367,41 @@ export function ProgramsSection({ programs, upcomingPrograms = [] }: ProgramsSec
                             transform: `translateX(-${currentSlide * 100}%)` 
                           }}
                         >
-                          {mobilePrograms.map((program) => {
-                            const hasUpcomingEvent = 'upcomingEvent' in program && program.upcomingEvent
-                            const isNextUpcoming = program.id === nextUpcomingProgramId
+                          {mobileEvents.map((event) => {
+                            const gradient = event.program ? getCategoryGradient(event.program.category) : "from-neutral-500 to-neutral-600"
+                            const imageSrc = getImageSrc(event.images, event.program?.coverImage)
                             return (
                               <Link 
-                                key={program.id} 
-                                href={`/programs/${program.slug}`}
+                                key={event.id} 
+                                href={event.program ? `/programs/${event.program.slug}/events/${event.id}` : '#'}
                                 className="min-w-full group cursor-pointer"
                               >
                                 <div className="relative aspect-[3/4] overflow-hidden rounded-xl">
-                                  {program.coverImage && (
+                                  {imageSrc ? (
                                     <Image
-                                      src={program.coverImage}
-                                      alt={program.title}
+                                      src={imageSrc}
+                                      alt={event.title}
                                       fill
                                       className="object-cover transition-transform duration-700 group-hover:scale-105"
                                     />
+                                  ) : (
+                                    <div className={`w-full h-full bg-gradient-to-br ${gradient}`} />
                                   )}
                                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
                                   
-                                  {/* Upcoming Badge */}
-                                  {isNextUpcoming && (
-                                    <div className="absolute top-3 right-3">
-                                      <span className="px-2 py-1 border border-white text-white text-xs font-bold rounded-full backdrop-blur-sm">
-                                        UPCOMING
-                                      </span>
-                                    </div>
-                                  )}
-                                  
                                   <div className="absolute bottom-0 left-0 right-0 p-4 space-y-2">
-                                    <div className="flex items-center gap-2 text-xs text-white/80">
-                                      {program.category && (
-                                        <span className="px-2 py-1 bg-white/20 backdrop-blur-sm rounded-full">
-                                          {program.category}
-                                        </span>
-                                      )}
-                                      {program.duration && (
-                                        <span className="px-2 py-1 bg-white/20 backdrop-blur-sm rounded-full">
-                                          {program.duration}
-                                        </span>
-                                      )}
+                                    <div className="text-xs text-white/90 font-medium">
+                                      {format(new Date(event.startTime), 'MMM d')}
+                                      {event.venueCity && ` • ${event.venueCity}`}
                                     </div>
-                                    {hasUpcomingEvent ? (
-                                      <div className="text-xs text-white/90 font-medium">
-                                        {new Date(program.upcomingEvent!.startTime).toLocaleDateString('en-US', { 
-                                          month: 'short', 
-                                          day: 'numeric' 
-                                        })}
-                                        {program.upcomingEvent!.venueCity && ` • ${program.upcomingEvent!.venueCity}`}
-                                      </div>
-                                    ) : null}
                                     <h4 className="text-3xl font-crimson font-normal tracking-tighter text-white">
-                                      {program.title}
+                                      {event.title}
                                     </h4>
-                                    <p className="text-xs text-white/90 line-clamp-2">
-                                      {program.description}
-                                    </p>
+                                    {event.description && (
+                                      <p className="text-xs text-white/90 line-clamp-2">
+                                        {event.description}
+                                      </p>
+                                    )}
                                   </div>
                                 </div>
                               </Link>
@@ -437,9 +410,9 @@ export function ProgramsSection({ programs, upcomingPrograms = [] }: ProgramsSec
                         </div>
                         
                         {/* Carousel Dots */}
-                        {mobilePrograms.length > 1 && (
+                        {mobileEvents.length > 1 && (
                           <div className="absolute bottom-2 left-0 right-0 flex justify-center items-center gap-2">
-                            {mobilePrograms.map((_, index) => (
+                            {mobileEvents.map((_, index) => (
                               <button
                                 key={index}
                                 onClick={() => setCurrentSlide(index)}
@@ -459,49 +432,37 @@ export function ProgramsSection({ programs, upcomingPrograms = [] }: ProgramsSec
 
                     {/* Desktop: 2 Column Grid */}
                     <div className="hidden md:grid grid-cols-2 gap-3">
-                      {/* Column 1: Static Programs (2 stacked) */}
+                      {/* Column 1: Static Events (2 stacked) */}
                       <div className="flex flex-col gap-3">
-                        {secondColumnPrograms.map((program, index) => {
-                          const hasUpcomingEvent = 'upcomingEvent' in program && program.upcomingEvent
-                          const isNextUpcoming = program.id === nextUpcomingProgramId
+                        {secondColumnEvents.map((event, index) => {
+                          const gradient = event.program ? getCategoryGradient(event.program.category) : "from-neutral-500 to-neutral-600"
+                          const imageSrc = getImageSrc(event.images, event.program?.coverImage)
                           return (
                             <Link 
-                              key={`${program.id}-${index}`}
-                              href={`/programs/${program.slug}`}
+                              key={`${event.id}-${index}`}
+                              href={event.program ? `/programs/${event.program.slug}/events/${event.id}` : '#'}
                               className="group cursor-pointer flex-1"
                             >
                               <div className="relative h-full overflow-hidden rounded-xl min-h-[140px]">
-                                {program.coverImage && (
+                                {imageSrc ? (
                                   <Image
-                                    src={program.coverImage}
-                                    alt={program.title}
+                                    src={imageSrc}
+                                    alt={event.title}
                                     fill
                                     className="object-cover transition-transform duration-700 group-hover:scale-105"
                                   />
+                                ) : (
+                                  <div className={`w-full h-full bg-gradient-to-br ${gradient}`} />
                                 )}
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent" />
                                 
-                                {/* Upcoming Badge - only on next upcoming event */}
-                                {isNextUpcoming && (
-                                  <div className="absolute top-2 right-2">
-                                    <span className="px-2 py-1 border border-white text-white text-xs font-bold rounded-full backdrop-blur-sm">
-                                      UPCOMING
-                                    </span>
-                                  </div>
-                                )}
-                                
                                 <div className="absolute bottom-0 left-0 right-0 p-3 space-y-1">
-                                  {hasUpcomingEvent && (
-                                    <div className="text-xs text-white/90 font-medium">
-                                      {new Date(program.upcomingEvent!.startTime).toLocaleDateString('en-US', { 
-                                        month: 'short', 
-                                        day: 'numeric' 
-                                      })}
-                                      {program.upcomingEvent!.venueCity && ` • ${program.upcomingEvent!.venueCity}`}
-                                    </div>
-                                  )}
+                                  <div className="text-xs text-white/90 font-medium">
+                                    {format(new Date(event.startTime), 'MMM d')}
+                                    {event.venueCity && ` • ${event.venueCity}`}
+                                  </div>
                                   <h4 className="text-2xl font-crimson font-normal tracking-tighter text-white line-clamp-2">
-                                    {program.title}
+                                    {event.title}
                                   </h4>
                                 </div>
                               </div>
@@ -511,7 +472,7 @@ export function ProgramsSection({ programs, upcomingPrograms = [] }: ProgramsSec
                       </div>
 
                       {/* Column 2: Portrait Carousel */}
-                      {carouselPrograms.length > 0 && (
+                      {carouselEvents.length > 0 && (
                         <div className="relative overflow-hidden rounded-xl">
                           <div 
                             className="flex transition-transform duration-700 ease-out"
@@ -519,51 +480,50 @@ export function ProgramsSection({ programs, upcomingPrograms = [] }: ProgramsSec
                               transform: `translateX(-${currentSlide * 100}%)` 
                             }}
                           >
-                            {carouselPrograms.map((program) => (
+                            {carouselEvents.map((event) => {
+                              const gradient = event.program ? getCategoryGradient(event.program.category) : "from-neutral-500 to-neutral-600"
+                              const imageSrc = getImageSrc(event.images, event.program?.coverImage)
+                              return (
                               <Link 
-                                key={program.id} 
-                                href={`/programs/${program.slug}`}
+                                key={event.id} 
+                                href={event.program ? `/programs/${event.program.slug}/events/${event.id}` : '#'}
                                 className="min-w-full group cursor-pointer"
                               >
-                              <div className="relative aspect-[3/4] overflow-hidden rounded-xl">
-                                {program.coverImage && (
-                                  <Image
-                                    src={program.coverImage}
-                                    alt={program.title}
-                                    fill
-                                    className="object-cover transition-transform duration-700 group-hover:scale-105"
-                                  />
-                                )}
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
-                                <div className="absolute bottom-0 left-0 right-0 p-4 space-y-2">
-                                  <div className="flex items-center gap-2 text-xs text-white/80">
-                                    {program.category && (
-                                      <span className="px-2 py-1 capitalize bg-white/20 backdrop-blur-sm rounded-full">
-                                        {program.category}
-                                      </span>
-                                    )}
-                                    {program.duration && (
-                                      <span className="px-2 py-1 bg-white/20 backdrop-blur-sm rounded-full">
-                                        {program.duration}
-                                      </span>
+                                <div className="relative aspect-[3/4] overflow-hidden rounded-xl">
+                                  {imageSrc ? (
+                                    <Image
+                                      src={imageSrc}
+                                      alt={event.title}
+                                      fill
+                                      className="object-cover transition-transform duration-700 group-hover:scale-105"
+                                    />
+                                  ) : (
+                                    <div className={`w-full h-full bg-gradient-to-br ${gradient}`} />
+                                  )}
+                                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+                                  <div className="absolute bottom-0 left-0 right-0 p-4 space-y-2">
+                                    <div className="text-xs text-white/90 font-medium">
+                                      {format(new Date(event.startTime), 'MMM d')}
+                                      {event.venueCity && ` • ${event.venueCity}`}
+                                    </div>
+                                    <h4 className="text-3xl font-crimson font-normal tracking-tighter text-white">
+                                      {event.title}
+                                    </h4>
+                                    {event.description && (
+                                      <p className="text-xs text-white/90 line-clamp-2">
+                                        {event.description}
+                                      </p>
                                     )}
                                   </div>
-                                  <h4 className="text-3xl font-crimson font-normal tracking-tighter text-white">
-                                    {program.title}
-                                  </h4>
-                                  <p className="text-xs text-white/90 line-clamp-2">
-                                    {program.description}
-                                  </p>
                                 </div>
-                              </div>
                               </Link>
-                            ))}
+                            )})}
                           </div>
                           
                           {/* Carousel Dots */}
-                          {carouselPrograms.length > 1 && (
+                          {carouselEvents.length > 1 && (
                             <div className="absolute bottom-2 left-0 right-0 flex justify-center items-center gap-2">
-                              {carouselPrograms.map((_, index) => (
+                              {carouselEvents.map((_, index) => (
                                 <button
                                   key={index}
                                   onClick={() => setCurrentSlide(index)}

@@ -136,6 +136,7 @@ export default async function ProgramDetailPage({
                   id: event.id,
                   title: event.title,
                   description: event.description,
+                  images: event.images,
                   startTime: event.startTime,
                   endTime: event.endTime,
                   venueName: event.venueName,

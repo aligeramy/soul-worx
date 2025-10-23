@@ -36,13 +36,18 @@ export default async function EventRsvpPage({
   const endDate = new Date(event.endTime)
   const isFull = stats.capacity && stats.confirmedCount >= stats.capacity
 
+  // Get event image with fallback to program cover image
+  const heroImage = (event.images && event.images.length > 0) 
+    ? event.images[0] 
+    : event.program?.coverImage
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-neutral-50 to-white">
       {/* Hero Section */}
       <section className="relative h-[60vh] overflow-hidden">
-        {event.program?.coverImage ? (
+        {heroImage ? (
           <Image
-            src={event.program.coverImage}
+            src={heroImage}
             alt={event.title}
             fill
             className="object-cover"

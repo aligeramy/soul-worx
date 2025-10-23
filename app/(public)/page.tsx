@@ -31,6 +31,7 @@ export default async function Home() {
       <ProgramsSection 
         programs={programs} 
         upcomingPrograms={upcomingPrograms}
+        events={upcomingEvents}
       />
 
       {/* Combined Testimonials + Stats */}
