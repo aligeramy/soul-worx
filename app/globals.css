@@ -7,7 +7,14 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-brand-bg: rgb(121, 79, 65);
-  --color-brand-bg-darker: rgb(25, 21, 18);
+  --color-brand-bg-darker:  rgb(121, 79, 65);
+  --color-brand-bg-darker-r: 121;
+  --color-brand-bg-darker-g: 79;
+  --color-brand-bg-darker-b: 65;
+  --color-admin-dark-brown: rgb(25, 21, 18);
+  --color-admin-dark-brown-r: 25;
+  --color-admin-dark-brown-g: 21;
+  --color-admin-dark-brown-b: 18;
   --color-gold: oklch(0.75 0.15 60);
   --font-sans: var(--font-geist);
   --font-mono: var(--font-geist-mono);
@@ -127,11 +134,18 @@
   body {
     @apply bg-background text-foreground;
   }
-  h1, h2, h3, h4, h5, h6 {
+  h1, h2 {
     @apply font-exodus-sharp;
    
   }
+
  
+}
+
+h3 {
+  margin:20px 0 5px 0;
+  font-weight: 600;
+  font-size: 1.25rem;
 }
 
 

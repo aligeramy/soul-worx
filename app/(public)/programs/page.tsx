@@ -22,9 +22,9 @@ export default async function ProgramsPage() {
       image: "/optimized/0K0A4923.jpg"
     },
     {
-      title: "School Partnerships",
+      title: "Partnerships",
       description: "Collaborative programs with educational institutions",
-      href: "/programs/schools",
+      href: "/programs/partnerships",
       image: "/optimized/0K0A3921.jpg"
     },
     {
@@ -56,7 +56,9 @@ export default async function ProgramsPage() {
               Find Your Voice
             </h1>
             <p className="text-xl text-white/90 max-w-2xl">
-              Transformative programs designed to empower, inspire, and elevate through the art of spoken word
+              Soulworx exists for the youth who've been overlooked, under-resourced, or underestimated.
+              Every program is built to open doors, nurture character, and show kids that they are capable of more than they've been told.
+              We don't just develop skills — we build purpose, passion, and people.
             </p>
           </div>
         </div>

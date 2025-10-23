@@ -49,10 +49,13 @@ export async function isUserAdmin(userId: string) {
 
 // ==================== PROGRAMS ====================
 export async function getPrograms() {
-  return db.query.programs.findMany({
+  const allPrograms = await db.query.programs.findMany({
     where: eq(programs.status, "published"),
     orderBy: [desc(programs.createdAt)],
   })
+  
+  // Filter out special-events program
+  return allPrograms.filter(p => p.slug !== "special-events")
 }
 
 export async function getProgramBySlug(slug: string) {
@@ -221,13 +224,16 @@ export async function getAllPosts() {
 // ==================== COMPREHENSIVE QUERIES ====================
 
 /**
- * Get all published programs
+ * Get all published programs (excluding special events)
  */
 export async function getPublishedPrograms() {
-  return await db.query.programs.findMany({
+  const allPrograms = await db.query.programs.findMany({
     where: eq(programs.status, "published"),
     orderBy: desc(programs.publishedAt),
   })
+  
+  // Filter out special-events program
+  return allPrograms.filter(p => p.slug !== "special-events")
 }
 
 /**

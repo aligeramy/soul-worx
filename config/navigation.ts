@@ -70,8 +70,8 @@ export const navigationConfig: NavigationConfig = {
           icon: "Sparkles"
         },
         {
-          label: "School Partnerships",
-          href: "/programs/schools",
+          label: "Partnerships",
+          href: "/programs/partnerships",
           icon: "GraduationCap"
         }
       ]

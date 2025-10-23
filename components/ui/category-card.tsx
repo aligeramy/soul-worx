@@ -50,25 +50,26 @@ export function CategoryCard({ title, description, href, image, index }: Categor
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 + 0.2 }}
             >
-              <h3 className="text-3xl md:text-4xl text-shadow-lg font-crimson tracking-tighter font-medium text-white mb-3 group-hover:text-white/90 transition-colors">
+              <h1 className="text-3xl text-shadow-lg tracking-tight font-geist font-medium text-white mb-3 group-hover:text-white/90 transition-colors">
                 {title}
-              </h3>
+              </h1>
               <p className="text-white/80 text-base leading-relaxed mb-6 max-w-md">
                 {description}
               </p>
               
               {/* CTA */}
-              <div className="flex items-center gap-2 text-white">
-                <span className="text-sm font-semibold tracking-wide">
-                  EXPLORE
-                </span>
-                <motion.div
+              <div className="flex items-center gap-2 justify-end text-white">
+                <div className="p-2 bg-white/10 backdrop-blur-sm rounded-full flex items-center gap-2">
+                  <span className="text-sm font-semibold tracking-wide px-4 py-1">
+                    EXPLORE
+                  </span>
+                  <motion.div
                   animate={{ x: 0 }}
                   whileHover={{ x: 5 }}
                   transition={{ duration: 0.3 }}
                 >
                   <ArrowRight className="w-5 h-5" />
-                </motion.div>
+                </motion.div>                </div>
               </div>
             </motion.div>
           </div>

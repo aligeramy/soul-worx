@@ -5,6 +5,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { CTAButton } from "@/components/ui/cta-button"
 import { cn } from "@/lib/utils"
+import { Calendar, Users, School, HelpCircle, ArrowRight } from "lucide-react"
 
 interface Program {
   id: string
@@ -221,7 +222,7 @@ export function ProgramsSection({ programs, upcomingPrograms = [] }: ProgramsSec
           className="absolute top-0 inset-x-0 pointer-events-none" 
           style={{ 
             height: '60%',
-            background: 'linear-gradient(to bottom, rgb(25, 21, 18) 0%, rgb(25, 21, 18) 5%, rgba(25, 21, 18, 0.95) 10%, rgba(25, 21, 18, 0.85) 20%, rgba(25, 21, 18, 0.6) 35%, rgba(25, 21, 18, 0.3) 50%, transparent 100%)',
+            background: 'linear-gradient(to bottom, rgb(var(--color-brand-bg-darker-r), var(--color-brand-bg-darker-g), var(--color-brand-bg-darker-b)) 0%, rgb(var(--color-brand-bg-darker-r), var(--color-brand-bg-darker-g), var(--color-brand-bg-darker-b)) 5%, rgba(var(--color-brand-bg-darker-r), var(--color-brand-bg-darker-g), var(--color-brand-bg-darker-b), 0.95) 10%, rgba(var(--color-brand-bg-darker-r), var(--color-brand-bg-darker-g), var(--color-brand-bg-darker-b), 0.85) 20%, rgba(var(--color-brand-bg-darker-r), var(--color-brand-bg-darker-g), var(--color-brand-bg-darker-b), 0.6) 35%, rgba(var(--color-brand-bg-darker-r), var(--color-brand-bg-darker-g), var(--color-brand-bg-darker-b), 0.3) 50%, transparent 100%)',
           }} 
         />
 
@@ -230,7 +231,7 @@ export function ProgramsSection({ programs, upcomingPrograms = [] }: ProgramsSec
           className="absolute top-0 inset-x-0 pointer-events-none" 
           style={{ 
             height: '60%',
-            background: 'linear-gradient(to bottom, rgb(25, 21, 18), rgba(25, 21, 18, 0.9), rgba(25, 21, 18, 0.7), rgba(25, 21, 18, 0.5), rgba(25, 21, 18, 0.3), rgba(25, 21, 18, 0.15), transparent)',
+            background: 'linear-gradient(to bottom, rgb(var(--color-brand-bg-darker-r), var(--color-brand-bg-darker-g), var(--color-brand-bg-darker-b)), rgba(var(--color-brand-bg-darker-r), var(--color-brand-bg-darker-g), var(--color-brand-bg-darker-b), 0.9), rgba(var(--color-brand-bg-darker-r), var(--color-brand-bg-darker-g), var(--color-brand-bg-darker-b), 0.7), rgba(var(--color-brand-bg-darker-r), var(--color-brand-bg-darker-g), var(--color-brand-bg-darker-b), 0.5), rgba(var(--color-brand-bg-darker-r), var(--color-brand-bg-darker-g), var(--color-brand-bg-darker-b), 0.3), rgba(var(--color-brand-bg-darker-r), var(--color-brand-bg-darker-g), var(--color-brand-bg-darker-b), 0.15), transparent)',
           }} 
         >
           {/* Noise texture overlay */}
@@ -248,7 +249,7 @@ export function ProgramsSection({ programs, upcomingPrograms = [] }: ProgramsSec
           className="absolute top-0 inset-x-0 pointer-events-none" 
           style={{ 
             height: '50%',
-            background: 'linear-gradient(to bottom, rgba(25, 21, 18, 0.6), rgba(25, 21, 18, 0.4), rgba(25, 21, 18, 0.2), transparent)',
+            background: 'linear-gradient(to bottom, rgba(var(--color-brand-bg-darker-r), var(--color-brand-bg-darker-g), var(--color-brand-bg-darker-b), 0.6), rgba(var(--color-brand-bg-darker-r), var(--color-brand-bg-darker-g), var(--color-brand-bg-darker-b), 0.4), rgba(var(--color-brand-bg-darker-r), var(--color-brand-bg-darker-g), var(--color-brand-bg-darker-b), 0.2), transparent)',
             opacity: topGradientOpacity,
           }} 
         >
@@ -300,27 +301,59 @@ export function ProgramsSection({ programs, upcomingPrograms = [] }: ProgramsSec
               }}
             >
               {/* Main Content Card */}
-              <div className=" rounded-3xl p-4 ransition-shadow duration-500">
+              <div className=" rounded-3xl p-4 ransition-shadow duration-500 backdrop-blur-sm">
                 <div className="space-y-2">
                   <h2 className="text-5xl font-crimson font-medium tracking-tighter text-white   leading-tight">
                     Discover Our Programs
                   </h2>
 
-                  <p className="text-base font-crimson text-neutral-200 font-light leading-relaxed">
-                    Empowering youth through spoken word, creative expression, and community building. 
-                    Join us in transforming lives through the power of words.
+                  <p className="text-xl font-crimson text-shadow-lg text-neutral-200 font-light leading-tight">
+                    Soulworx exists for the youth who've been overlooked, under-resourced, or underestimated.
+                    Every program is built to open doors, nurture character, and show kids that they are capable of more than they've been told.
+                    We don't just develop skills — we build purpose, passion, and people.
                   </p>
 
-                  {/* CTA Button */}
-                  <div className="flex mt-2">
-                    <CTAButton
-                      href="/programs"
-                      variant="secondary"
-                      className="w-full"
-                      showArrow={false}
+                  {/* Program Categories */}
+                  <div className="grid grid-cols-4 gap-3 mt-6">
+                    <Link 
+                      href="/programs/calendar"
+                      className="flex flex-col items-center justify-center aspect-square bg-white/10 hover:bg-white/20 rounded-lg border border-white/20 transition-all duration-300 group"
                     >
-                      Explore All Programs
-                    </CTAButton>
+                      <Calendar className="w-6 h-6 text-white mb-2" />
+                      <span className="text-white font-medium text-sm text-center">Calendar</span>
+                    </Link>
+                    <Link 
+                      href="/programs/youth"
+                      className="flex flex-col items-center justify-center aspect-square bg-white/10 hover:bg-white/20 rounded-lg border border-white/20 transition-all duration-300 group"
+                    >
+                      <Users className="w-6 h-6 text-white mb-2" />
+                      <span className="text-white font-medium text-sm text-center">Youth</span>
+                    </Link>
+                    <Link 
+                      href="/programs/partnerships"
+                      className="flex flex-col items-center justify-center aspect-square bg-white/10 hover:bg-white/20 rounded-lg border border-white/20 transition-all duration-300 group"
+                    >
+                      <School className="w-6 h-6 text-white mb-2" />
+                      <span className="text-white font-medium text-sm text-center">Partnerships</span>
+                    </Link>
+                    <Link 
+                      href="/programs/faq"
+                      className="flex flex-col items-center justify-center aspect-square bg-white/10 hover:bg-white/20 rounded-lg border border-white/20 transition-all duration-300 group"
+                    >
+                      <HelpCircle className="w-6 h-6 text-white mb-2" />
+                      <span className="text-white font-medium text-sm text-center">FAQ</span>
+                    </Link>
+                  </div>
+
+                  {/* View All Link */}
+                  <div className="mt-4">
+                    <Link 
+                      href="/programs"
+                      className="flex justify-center items-center gap-2 text-white/80 hover:text-white transition-colors group"
+                    >
+                      <span className="font-medium text-sm ">View All Programs</span>
+                      <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -561,7 +594,7 @@ export function ProgramsSection({ programs, upcomingPrograms = [] }: ProgramsSec
       <div 
         className="absolute bottom-0 inset-x-0 h-40 z-30 pointer-events-none"
         style={{
-          background: 'linear-gradient(to bottom, transparent 0%, rgba(25, 21, 18, 0.3) 30%, rgba(25, 21, 18, 0.7) 70%, rgb(25, 21, 18) 100%)',
+          background: 'linear-gradient(to bottom, transparent 0%, rgba(var(--color-brand-bg-darker-r), var(--color-brand-bg-darker-g), var(--color-brand-bg-darker-b), 0.3) 30%, rgba(var(--color-brand-bg-darker-r), var(--color-brand-bg-darker-g), var(--color-brand-bg-darker-b), 0.7) 70%, rgb(var(--color-brand-bg-darker-r), var(--color-brand-bg-darker-g), var(--color-brand-bg-darker-b)) 100%)',
         }}
       >
         {/* Noise texture for gradient */}
