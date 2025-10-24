@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { cn } from "@/lib/utils"
-import { Calendar, Users, School, HelpCircle, ArrowRight } from "lucide-react"
+import { Calendar, Users, Monitor, ArrowRight } from "lucide-react"
 import { getCategoryGradient } from "@/lib/constants/programs"
 import { format } from "date-fns"
 
@@ -348,7 +348,23 @@ export function ProgramsSection({ events = [] }: ProgramsSectionProps) {
                         <div className="w-12 h-12 rounded-full border border-white/30 bg-white/5 flex items-center justify-center shadow-sm">
                           <Calendar className="w-7 h-7 text-white/90" strokeWidth={1.5} />
                         </div>
-                        <span className="text-white font-medium text-sm">Calendar</span>
+                        <span className="text-white font-medium text-sm">Program Calendar</span>
+                      </div>
+                      <div className="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <ArrowRight className="w-4 h-4 text-white/70" />
+                      </div>
+                    </Link>
+                    <Link 
+                      href="/programs/community"
+                      className="group relative aspect-square rounded-xl border border-white/15 bg-white/5 hover:bg-white/10 transition-all duration-300 overflow-hidden"
+                      aria-label="Explore online programs"
+                    >
+                      <div className="absolute inset-px rounded-[10px] bg-gradient-to-b from-white/5 to-transparent pointer-events-none" />
+                      <div className="flex h-full flex-col items-center justify-center gap-2">
+                        <div className="w-12 h-12 rounded-full border border-white/30 bg-white/5 flex items-center justify-center shadow-sm">
+                          <Monitor className="w-7 h-7 text-white/90" strokeWidth={1.5} />
+                        </div>
+                        <span className="text-white font-medium text-sm">Online Programs</span>
                       </div>
                       <div className="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
                         <ArrowRight className="w-4 h-4 text-white/70" />
@@ -364,54 +380,27 @@ export function ProgramsSection({ events = [] }: ProgramsSectionProps) {
                         <div className="w-12 h-12 rounded-full border border-white/30 bg-white/5 flex items-center justify-center shadow-sm">
                           <Users className="w-7 h-7 text-white/90" strokeWidth={1.5} />
                         </div>
-                        <span className="text-white font-medium text-sm">Youth</span>
+                        <span className="text-white font-medium text-sm">Youth Programs</span>
                       </div>
                       <div className="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
                         <ArrowRight className="w-4 h-4 text-white/70" />
                       </div>
                     </Link>
-                    <Link 
-                      href="/programs/partnerships"
-                      className="group relative aspect-square rounded-xl border border-white/15 bg-white/5 hover:bg-white/10 transition-all duration-300 overflow-hidden"
-                      aria-label="Learn about partnerships"
-                    >
-                      <div className="absolute inset-px rounded-[10px] bg-gradient-to-b from-white/5 to-transparent pointer-events-none" />
-                      <div className="flex h-full flex-col items-center justify-center gap-2">
-                        <div className="w-12 h-12 rounded-full border border-white/30 bg-white/5 flex items-center justify-center shadow-sm">
-                          <School className="w-7 h-7 text-white/90" strokeWidth={1.5} />
-                        </div>
-                        <span className="text-white font-medium text-sm">Partnerships</span>
-                      </div>
-                      <div className="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
-                        <ArrowRight className="w-4 h-4 text-white/70" />
-                      </div>
-                    </Link>
-                    <Link 
-                      href="/programs/faq"
-                      className="group relative aspect-square rounded-xl border border-white/15 bg-white/5 hover:bg-white/10 transition-all duration-300 overflow-hidden"
-                      aria-label="Read program FAQs"
-                    >
-                      <div className="absolute inset-px rounded-[10px] bg-gradient-to-b from-white/5 to-transparent pointer-events-none" />
-                      <div className="flex h-full flex-col items-center justify-center gap-2">
-                        <div className="w-12 h-12 rounded-full border border-white/30 bg-white/5 flex items-center justify-center shadow-sm">
-                          <HelpCircle className="w-7 h-7 text-white/90" strokeWidth={1.5} />
-                        </div>
-                        <span className="text-white font-medium text-sm">FAQ</span>
-                      </div>
-                      <div className="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
-                        <ArrowRight className="w-4 h-4 text-white/70" />
-                      </div>
-                    </Link>
-                  </div>
-
-                  {/* View All Link */}
-                  <div className="mt-4">
                     <Link 
                       href="/programs"
-                      className="flex justify-center items-center gap-2 text-white/80 hover:text-white transition-colors group"
+                      className="group relative aspect-square rounded-xl border border-white/15 bg-white/5 hover:bg-white/10 transition-all duration-300 overflow-hidden"
+                      aria-label="View all programs"
                     >
-                      <span className="font-medium text-sm ">View All Programs</span>
-                      <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                      <div className="absolute inset-px rounded-[10px] bg-gradient-to-b from-white/5 to-transparent pointer-events-none" />
+                      <div className="flex h-full flex-col items-center justify-center gap-2">
+                        <div className="w-12 h-12 rounded-full border border-white/30 bg-white/5 flex items-center justify-center shadow-sm">
+                          <ArrowRight className="w-7 h-7 text-white/90" strokeWidth={1.5} />
+                        </div>
+                        <span className="text-white font-medium text-sm">View All</span>
+                      </div>
+                      <div className="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <ArrowRight className="w-4 h-4 text-white/70" />
+                      </div>
                     </Link>
                   </div>
                 </div>
