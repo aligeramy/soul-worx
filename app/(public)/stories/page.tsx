@@ -4,16 +4,16 @@ import Image from "next/image"
 export default function StoriesPage() {
   const categories = [
     {
-      title: "Poetry Drops",
-      description: "Latest poetic expressions and releases",
-      href: "/stories/poetry",
-      image: "/optimized/0K0A2885.jpg"
-    },
-    {
       title: "Blog",
       description: "Latest insights and stories",
       href: "/stories/blog",
       image: "/optimized/0K0A3966 (2).jpg"
+    },
+    {
+      title: "Poetry Drops",
+      description: "Latest poetic expressions and releases",
+      href: "/stories/poetry",
+      image: "/optimized/0K0A2885.jpg"
     },
     {
       title: "Event Recaps",

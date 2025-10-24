@@ -32,38 +32,8 @@ interface EventRecapContentProps {
 export function EventRecapContent({ post, relatedPosts }: EventRecapContentProps) {
   return (
     <div className="min-h-screen bg-gradient-to-b from-neutral-50 to-white">
-      {/* Top Navigation Bar */}
-      <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-neutral-200">
-        <div className="max-w-7xl mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <Link 
-              href="/stories/events" 
-              className="inline-flex items-center gap-2 text-neutral-600 hover:text-neutral-900 group transition-colors"
-            >
-              <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
-              <span className="font-medium">Back to Events</span>
-            </Link>
-            
-            <div className="flex items-center gap-6">
-              <Link href="/stories/poetry" className="text-sm text-neutral-600 hover:text-neutral-900 transition-colors">
-                Poetry
-              </Link>
-              <Link href="/stories/blog" className="text-sm text-neutral-600 hover:text-neutral-900 transition-colors">
-                Blog
-              </Link>
-              <Link href="/stories/events" className="text-sm font-semibold text-neutral-900">
-                Events
-              </Link>
-              <Link href="/stories/press" className="text-sm text-neutral-600 hover:text-neutral-900 transition-colors">
-                Press
-              </Link>
-            </div>
-          </div>
-        </div>
-      </nav>
-
       {/* Hero Section */}
-      <section className="pt-16 pb-12 px-6">
+      <section className="pb-12 px-6 pt-37">
         <div className="max-w-5xl mx-auto">
           {/* Badges */}
           <div className="flex items-center gap-4 mb-8">

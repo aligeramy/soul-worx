@@ -140,7 +140,7 @@ export default async function EventRecapsPage() {
                     
                     {/* Content */}
                     <div className="p-10 flex-1 flex flex-col">
-                      <h2 className="text-3xl font-crimson font-normal tracking-tighter mb-5 group-hover:text-neutral-600 transition-colors leading-tight">
+                      <h2 className="!text-4xl font-crimson font-normal tracking-tighter mb-5 group-hover:text-neutral-600 transition-colors leading-tight">
                         {post.title}
                       </h2>
                       
