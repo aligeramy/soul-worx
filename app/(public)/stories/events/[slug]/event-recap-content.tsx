@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import Image from "next/image"
-import { ArrowLeft, Calendar, Clock, User, Eye } from "lucide-react"
+import { ArrowLeft, Calendar, User } from "lucide-react"
 import { HeroSection } from "@/components/stories/hero-section"
 
 interface Post {

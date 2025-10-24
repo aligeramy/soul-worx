@@ -128,7 +128,7 @@ export function PricingCarousel() {
               transform: `translateX(-${currentSlide * 100}%)` 
             }}
           >
-            {tiers.map((tier, index) => (
+            {tiers.map((tier) => (
               <div key={tier.name} className="min-w-full px-4 pt-8 pb-6">
                 <div className={cn(
                   "rounded-3xl p-8 border transition-all duration-300 relative",

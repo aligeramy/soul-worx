@@ -52,7 +52,7 @@ function ShareButton({ post }: { post: Post }) {
         setCopied(true)
         setTimeout(() => setCopied(false), 2000)
       }
-    } catch (err) {
+    } catch {
       // User cancelled or error - try clipboard fallback
       try {
         await navigator.clipboard.writeText(url)

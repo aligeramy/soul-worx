@@ -68,8 +68,8 @@ export function TestimonialsStats({
 			location: "32nd Annual Writer's Digest Self-Published Book Awards",
 		},
 	],
-	intervalMs = 5000,
 }: TestimonialsStatsProps) {
+	const intervalMs = 5000
 	const [active, setActive] = useState(0)
 	const [titleIndex, setTitleIndex] = useState(0)
 	const [displayedTitle, setDisplayedTitle] = useState("")
