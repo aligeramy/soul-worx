@@ -1,5 +1,6 @@
 import { auth } from "@/auth"
 import { Card, CardContent } from "@/components/ui/card"
+import { DashboardCard } from "@/components/dashboard-card"
 import { getUpcomingUserRsvps } from "@/lib/db/queries"
 import Link from "next/link"
 import Image from "next/image"
@@ -94,71 +95,26 @@ export default async function DashboardPage() {
   return (
     <div className="space-y-8">
       {/* Stats Overview */}
-      <div className="grid gap-4 md:grid-cols-3">
-        <Card className="border border-white/10 bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-all duration-300">
-          <CardContent className="p-4">
-            <div className="flex items-center justify-between gap-3">
-              <div className="flex items-center gap-3 flex-1 min-w-0">
-                <div className="p-2 bg-white/10 rounded-lg flex-shrink-0">
-                  <Calendar className="h-5 w-5 text-white" />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-2xl font-crimson font-normal text-white leading-none mb-1">
-                    {allRsvps.length}
-                  </p>
-                  <p className="text-xs text-white/60 font-medium">Upcoming Events</p>
-                </div>
-              </div>
-              <Link href="/dashboard/calendar">
-                <Button variant="ghost" size="sm" className="text-white/80 hover:text-white hover:bg-white/10 px-2">
-                  <ArrowRight className="h-4 w-4" />
-                </Button>
-              </Link>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="border border-white/10 bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-all duration-300">
-          <CardContent className="p-4">
-            <div className="flex items-center justify-between gap-3">
-              <div className="flex items-center gap-3 flex-1 min-w-0">
-                <div className="p-2 bg-white/10 rounded-lg flex-shrink-0">
-                  <Sparkles className="h-5 w-5 text-white" />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-2xl font-crimson font-normal text-white leading-none mb-1">Browse</p>
-                  <p className="text-xs text-white/60 font-medium">Programs & Workshops</p>
-                </div>
-              </div>
-              <Link href="/programs">
-                <Button variant="ghost" size="sm" className="text-white/80 hover:text-white hover:bg-white/10 px-2">
-                  <ArrowRight className="h-4 w-4" />
-                </Button>
-              </Link>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="border border-white/10 bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-all duration-300">
-          <CardContent className="p-4">
-            <div className="flex items-center justify-between gap-3">
-              <div className="flex items-center gap-3 flex-1 min-w-0">
-                <div className="p-2 bg-white/10 rounded-lg flex-shrink-0">
-                  <Plus className="h-5 w-5 text-white" />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-2xl font-crimson font-normal text-white leading-none mb-1">Discover</p>
-                  <p className="text-xs text-white/60 font-medium">Latest Stories</p>
-                </div>
-              </div>
-              <Link href="/stories">
-                <Button variant="ghost" size="sm" className="text-white/80 hover:text-white hover:bg-white/10 px-2">
-                  <ArrowRight className="h-4 w-4" />
-                </Button>
-              </Link>
-            </div>
-          </CardContent>
-        </Card>
+      <div className="grid grid-cols-3 gap-2 sm:gap-4">
+        <DashboardCard
+          href="/dashboard/calendar"
+          icon={Calendar}
+          title="Events"
+          subtitle="Upcoming"
+          value={allRsvps.length}
+        />
+        <DashboardCard
+          href="/programs"
+          icon={Sparkles}
+          title="Browse"
+          subtitle="Programs"
+        />
+        <DashboardCard
+          href="/stories"
+          icon={Plus}
+          title="Discover"
+          subtitle="Stories"
+        />
       </div>
 
       {/* Upcoming Events */}
@@ -166,8 +122,8 @@ export default async function DashboardPage() {
         <div>
           <div className="flex items-center justify-between mb-6">
             <div>
-              <h2 className="text-2xl font-crimson font-normal text-white">Your Upcoming Events</h2>
-              <p className="text-white/60 mt-1">Events you&apos;ve registered for</p>
+              <h2 className="text-3xl font-crimson font-normal tracking-tight text-white">Your Upcoming Events</h2>
+              <p className="text-white/60 -mt-2">Events you&apos;ve registered for</p>
             </div>
             <Link href="/dashboard/calendar">
               <Button variant="outline" className="rounded-xl border-white/20 text-white hover:bg-white/10 hover:border-white/40 bg-white/5">
@@ -201,11 +157,11 @@ export default async function DashboardPage() {
                     
                     {/* Date Badge */}
                     <div className="absolute top-3 left-3">
-                      <div className="bg-white/95 backdrop-blur-sm rounded-xl px-3 py-2 text-center">
-                        <div className="text-xl font-bold text-black">
+                      <div className="bg-black/35 backdrop-blur-sm rounded-md px-3 py-2 text-center">
+                        <div className="text-xl font-bold text-white">
                           {format(new Date(rsvp.event.startTime), "d")}
                         </div>
-                        <div className="text-xs font-semibold text-neutral-600 uppercase">
+                        <div className="text-xs font-semibold text-white uppercase">
                           {format(new Date(rsvp.event.startTime), "MMM")}
                         </div>
                       </div>
@@ -220,21 +176,23 @@ export default async function DashboardPage() {
 
                     {/* Time on Image */}
                     <div className="absolute bottom-3 left-3 right-3">
-                      <div className="flex items-center gap-2 text-xs text-white text-shadow-md">
+                      <div className="flex items-center gap-2  text-xs text-white text-shadow-md">
+                        <div className="flex items-center gap-2 bg-black/35 backdrop-blur-sm rounded-md px-3 py-2">
                         <Clock className="h-4 w-4 flex-shrink-0" />
                         <span className="font-medium">
                           {format(new Date(rsvp.event.startTime), "h:mm a")}
                         </span>
                       </div>
+                        </div>
                     </div>
                   </div>
 
                   {/* Event Content */}
-                  <CardContent className="p-5 flex flex-col flex-grow">
-                    <Badge variant="outline" className="mb-2 border-white/30 text-white/90 w-fit">
+                  <CardContent className="p-5 -mt-3 flex flex-col flex-grow">
+                    <Badge variant="outline" className="mb-0 border-white/30 text-white/90 w-fit">
                       {rsvp.program.title}
                     </Badge>
-                    <h3 className="text-lg font-crimson font-normal text-white group-hover:text-white/80 transition-colors mb-3 line-clamp-2">
+                    <h3 className="text-2xl tracking-tight font-crimson font-normal text-white group-hover:text-white/80 transition-colors mb-2 line-clamp-2">
                       {rsvp.event.title}
                     </h3>
                     
