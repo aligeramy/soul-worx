@@ -49,15 +49,21 @@ function generateClientSecret(): string {
   const encodedPayload = base64UrlEncode(Buffer.from(JSON.stringify(payload)));
   const signatureInput = `${encodedHeader}.${encodedPayload}`;
 
-  // Sign with ES256
-  const sign = crypto.createSign('SHA256');
+  // Sign with ES256 (ECDSA with P-256 and SHA-256)
+  // Apple requires ES256 algorithm specifically
+  const sign = crypto.createSign('sha256');
   sign.update(signatureInput);
   sign.end();
   
-  const signature = sign.sign(privateKey);
+  // Sign with the EC private key
+  const signature = sign.sign({
+    key: privateKey,
+    format: 'pem',
+    type: 'pkcs8'
+  });
   const encodedSignature = base64UrlEncode(signature);
 
-  // Combine to create JWT
+  // Combine to create JWT (header.payload.signature)
   const jwt = `${signatureInput}.${encodedSignature}`;
 
   return jwt;

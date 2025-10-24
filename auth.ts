@@ -9,6 +9,7 @@ import { getUserById } from "@/lib/db/queries"
 import type { UserRole } from "@/lib/db/schema"
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
+  trustHost: true,
   adapter: DrizzleAdapter(db, {
     usersTable: schema.users,
     accountsTable: schema.accounts,
