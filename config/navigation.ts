@@ -109,14 +109,14 @@ export const navigationConfig: NavigationConfig = {
       href: "/stories",
       submenu: [
         {
-          label: "Poetry Drops",
-          href: "/stories/poetry",
-          icon: "Feather"
-        },
-        {
           label: "Blog",
           href: "/stories/blog",
           icon: "FileText"
+        },
+        {
+          label: "Poetry Drops",
+          href: "/stories/poetry",
+          icon: "Feather"
         },
         {
           label: "Event Recaps",

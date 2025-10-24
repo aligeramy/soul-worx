@@ -34,11 +34,11 @@ export function PressContent({ post, relatedPosts }: PressContentProps) {
     <div className="min-h-screen bg-gradient-to-b from-neutral-50 to-white">
       {/* Top Navigation Bar */}
       <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-neutral-200">
-        <div className="max-w-7xl mx-auto px-6 py-4">
+        <div className="max-w-7xl mx-auto px-6 py-5">
           <div className="flex items-center justify-between">
             <Link 
               href="/stories/press" 
-              className="inline-flex items-center gap-2 text-neutral-600 hover:text-neutral-900 group transition-colors"
+              className="inline-flex items-center gap-2 text-neutral-600 hover:text-neutral-900 group transition-colors px-2 py-1"
             >
               <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
               <span className="font-medium">Back to Press</span>
@@ -63,7 +63,7 @@ export function PressContent({ post, relatedPosts }: PressContentProps) {
       </nav>
 
       {/* Hero Section */}
-      <section className="pt-16 pb-12 px-6">
+      <section className="pt-20 pb-12 px-6">
         <div className="max-w-5xl mx-auto">
           {/* Badges */}
           <div className="flex items-center gap-4 mb-8">
