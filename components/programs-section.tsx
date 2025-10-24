@@ -52,6 +52,34 @@ export function ProgramsSection({ events = [] }: ProgramsSectionProps) {
   const sectionRef = useRef<HTMLDivElement>(null)
   const [scrollProgress, setScrollProgress] = useState(0)
   const [currentSlide, setCurrentSlide] = useState(0)
+  
+  // Touch gesture state
+  const [touchStart, setTouchStart] = useState(0)
+  const [touchEnd, setTouchEnd] = useState(0)
+
+  // Touch gesture handlers
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStart(e.targetTouches[0].clientX)
+  }
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX)
+  }
+
+  const handleTouchEnd = () => {
+    if (!touchStart || !touchEnd) return
+    
+    const distance = touchStart - touchEnd
+    const isLeftSwipe = distance > 50
+    const isRightSwipe = distance < -50
+    
+    if (isLeftSwipe && currentSlide < mobileEvents.length - 1) {
+      setCurrentSlide(currentSlide + 1)
+    }
+    if (isRightSwipe && currentSlide > 0) {
+      setCurrentSlide(currentSlide - 1)
+    }
+  }
 
   // Helper function to extract image string from images array
   const getImageSrc = (images: string[] | null | undefined, fallback: string | null | undefined): string | null => {
@@ -397,7 +425,13 @@ export function ProgramsSection({ events = [] }: ProgramsSectionProps) {
 
                     {/* Mobile: Single Slideshow */}
                     <div className="md:hidden">
-                      <div className="relative overflow-hidden rounded-xl">
+                      <div 
+                        className="relative overflow-hidden rounded-xl"
+                        onTouchStart={handleTouchStart}
+                        onTouchMove={handleTouchMove}
+                        onTouchEnd={handleTouchEnd}
+                        style={{ touchAction: 'pan-x' }}
+                      >
                         <div 
                           className="flex transition-transform duration-700 ease-out"
                           style={{ 
@@ -412,6 +446,12 @@ export function ProgramsSection({ events = [] }: ProgramsSectionProps) {
                                 key={event.id} 
                                 href={event.program ? `/programs/${event.program.slug}/events/${event.id}` : '#'}
                                 className="min-w-full group cursor-pointer"
+                                onClick={(e) => {
+                                  // Prevent navigation if user was swiping
+                                  if (Math.abs(touchStart - touchEnd) > 50) {
+                                    e.preventDefault()
+                                  }
+                                }}
                               >
                                 <div className="relative aspect-[3/4] overflow-hidden rounded-xl">
                                   {imageSrc ? (
