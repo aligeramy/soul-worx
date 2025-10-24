@@ -42,30 +42,30 @@ export function TestimonialsStats({
 		{
 			id: "01",
 			quote:
-				"Before Soulworx, I was terrified to speak. Now I perform at open mics and share my story with confidence. This program changed my life.",
-			author: "Maya Rodriguez",
-			location: "Regent Park Community Centre",
+				"Gorgeous sensory details in the poems, like 'craters of the heart' and 'Path,' rich in experiential detail and brave change in format. Nice variation of sentence structure to give the poems a sense of movement. Again, 'I would know you in different lives' achieves a rare honor in my own judging: praising it twice. It's quite beautiful.",
+			author: "Judge",
+			location: "32nd Annual Writer's Digest Self-Published Book Awards",
 		},
 		{
 			id: "02",
 			quote:
-				"After 15 years of teaching, I've never seen anything like the transformation Soulworx brought to my classroom. It's not just poetry—it's healing.",
-			author: "Dr. Sarah Chen",
-			location: "Central Technical School",
+				"Loss is a universal pain, although sometimes loss is a goal. Author walks the circles of this topic very mindfully. We find ourselves as if dropped into a photo the moment the shutter clicks, and all we can do it look around, feeling the emotions of it. 'Me N Mine' was captivating: 'I would know you in different lives.' We all feel like a great love transports you to another time, and love outdoes the laws of science. Each poem gives us a new experience, and we feel the different bumps and sharp edges of loss. Author has traversed the experiences well.",
+			author: "Judge",
+			location: "32nd Annual Writer's Digest Self-Published Book Awards",
 		},
 		{
 			id: "03",
 			quote:
-				"My son found his voice through Soulworx. From anxiety to mentor—this program changed everything.",
-			author: "Marcus Thompson",
-			location: "Jane & Finch Community Centre",
+				"This book is exemplary in its structure, organization, and pacing. The structure of the chapters/parts aid in a compelling organization of the story or information. The pacing is even throughout and matches the tone/genre of the book.",
+			author: "Judge",
+			location: "32nd Annual Writer's Digest Self-Published Book Awards",
 		},
 		{
 			id: "04",
 			quote:
-				"Soulworx became my family when I had none. Through poetry, I found my voice and now I'm in college studying social work to help others.",
-			author: "Jasmine Williams",
-			location: "Scarborough Youth Centre",
+				"I'm entranced by the cover image, the glowing green, sundown teal and the use of gold in the lettering. This looks like an upscale comic book with characters who belong there, but we get the essence of character in the author's writing.",
+			author: "Judge",
+			location: "32nd Annual Writer's Digest Self-Published Book Awards",
 		},
 	],
 	intervalMs = 5000,
@@ -76,8 +76,8 @@ export function TestimonialsStats({
 	const [isFadingOut, setIsFadingOut] = useState(false)
 	const sectionRef = useRef<HTMLElement>(null)
 
-	// Filter out the static testimonial (Marcus Thompson) from slideshow
-	const slideshowTestimonials = testimonials.filter((_, index) => index !== 2) // Remove index 2 (Marcus Thompson)
+	// Filter out the static testimonial from slideshow
+	const slideshowTestimonials = testimonials.filter((_, index) => index !== 2) // Remove index 2 to avoid duplication
 	const total = slideshowTestimonials.length
 	useEffect(() => {
 		const id = setInterval(() => setActive((i) => (i + 1) % total), Math.max(2500, intervalMs))
@@ -200,7 +200,7 @@ export function TestimonialsStats({
 					{/* Bottom-left review (static second) - BIGGER and more heartfelt */}
 					{testimonials[1] && (
 						<figure className="absolute left-10 bottom-20 w-[min(580px,52%)] rounded-2xl border border-white/15 bg-brand-bg-darker/30 backdrop-blur-sm p-6 shadow-2xl">
-							<p className="text-white/90 font-crimson text-2xl leading-relaxed">
+							<p className="text-white/90 font-crimson text-xl leading-relaxed">
 								{testimonials[1].quote}
 							</p>
 							<figcaption className="mt-4 text-right">

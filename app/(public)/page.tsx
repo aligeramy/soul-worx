@@ -88,11 +88,11 @@ export default async function Home() {
               <div className="w-20 h-20 border border-white text-white 
                rounded-2xl flex flex-col items-center justify-center space-y-1">
                 <Image
-                  src="/logo/svg/logo.svg"
+                  src="/logo-v2/w.png"
                   alt="SoulWorx Logo"
                   width={48}
                   height={48}
-                  className="w-10 h-10 invert"
+                  className="w-10 h-10"
                 />
                 <p className="text-white text-[9px] font-geist font-bold tracking-tight uppercase">Community</p>
               </div>
@@ -133,7 +133,7 @@ export default async function Home() {
               </div>
               <div className="space-y-6 text-center">
                 <div className="space-y-2">
-                  <h3 className="text-2xl font-crimson">Soulmate</h3>
+                  <h3 className="text-2xl font-crimson">Pro</h3>
                   <div className="text-xs text-neutral-500 uppercase tracking-wide">Membership</div>
                   <div className="text-3xl font-crimson font-normal">$9<span className="text-lg font-normal">/mo</span></div>
                 </div>
@@ -149,7 +149,7 @@ export default async function Home() {
             <div className="bg-white/5 backdrop-blur-sm rounded-3xl p-8 border border-white/10 hover:bg-white/10 transition-all duration-300 hover:scale-105">
               <div className="space-y-6 text-center">
                 <div className="space-y-2">
-                  <h3 className="text-2xl font-crimson text-white">Elite</h3>
+                  <h3 className="text-2xl font-crimson text-white">Hall of Fame</h3>
                   <div className="text-xs text-white/60 uppercase tracking-wide">Membership</div>
                   <div className="text-3xl font-crimson font-normal text-white">$29<span className="text-lg font-normal">/mo</span></div>
                 </div>
