@@ -60,48 +60,48 @@ export function ChannelCard({
               )}
               
               {hasFullAccess && (
-                <div className="px-3 py-1.5 bg-green-500/90 backdrop-blur-sm text-white rounded-full text-xs font-medium">
-                  Unlocked
+                <div className="px-3 py-1.5 bg-green-500/60 backdrop-blur-sm text-white rounded-full text-xs font-medium">
+                  Full Access
                 </div>
               )}
             </div>
 
-            {/* Bottom content */}
-            <div className="space-y-3">
-              <div>
-                <h3 className="text-2xl font-crimson font-normal text-white mb-2 line-clamp-2">
-                  {title}
-                </h3>
-                <p className="text-sm text-white/80 line-clamp-2">
-                  {description}
-                </p>
-              </div>
-
-              <div className="flex items-center justify-between pt-2 border-t border-white/20">
-                <div className="flex items-center gap-2 text-white/70 text-sm">
-                  <PlayCircle className="w-4 h-4" />
-                  <span>{videoCount} videos</span>
-                </div>
-                
-                {!hasFullAccess && (
-                  <span className="text-xs text-green-400 font-medium">
-                    First episode free
-                  </span>
-                )}
-              </div>
-
-              <Button 
-                className={cn(
-                  "w-full",
-                  hasFullAccess 
-                    ? "bg-white text-black hover:bg-white/90" 
-                    : "bg-white/10 text-white hover:bg-white/20 border border-white/30"
-                )}
-                variant={hasFullAccess ? "default" : "outline"}
-              >
-                {hasFullAccess ? "Watch All Videos" : "Watch Free Episode"}
-              </Button>
+          {/* Bottom content */}
+          <div className="space-y-3">
+            <div>
+              <h3 className="text-2xl font-crimson font-normal text-white mb-2 line-clamp-2">
+                {title}
+              </h3>
+              <p className="text-sm text-white/80 line-clamp-2">
+                {description}
+              </p>
             </div>
+
+            <div className="flex items-center justify-between pt-2 border-t border-white/20">
+              <div className="flex items-center gap-2 text-white/70 text-sm">
+                <PlayCircle className="w-4 h-4" />
+                <span>{videoCount} {videoCount === 1 ? 'program' : 'programs'}</span>
+              </div>
+              
+              {!hasFullAccess && (
+                <span className="text-xs text-green-400 font-medium">
+                  First program free
+                </span>
+              )}
+            </div>
+
+            <Button 
+              className={cn(
+                "w-full",
+                hasFullAccess 
+                  ? "bg-white text-black hover:bg-white/90" 
+                  : "bg-white/10 text-white hover:bg-white/20 border border-white/30"
+              )}
+              variant={hasFullAccess ? "default" : "outline"}
+            >
+              {hasFullAccess ? "Watch All Programs" : "Watch Free Program"}
+            </Button>
+          </div>
           </div>
         </div>
       </Card>

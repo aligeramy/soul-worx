@@ -87,6 +87,7 @@ export default async function ShopPage({
                   status={product.status}
                   stock={product.stock}
                   category={product.category}
+                  tags={product.tags || []}
                 />
               ))}
             </div>

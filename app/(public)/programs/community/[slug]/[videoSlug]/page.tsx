@@ -99,7 +99,7 @@ export default async function VideoPage({
         {/* Breadcrumb */}
         <div className="mb-6 text-sm">
           <Link href="/programs/community" className="text-neutral-600 hover:text-neutral-900">
-            Community
+            Online Programs
           </Link>
           <span className="mx-2 text-neutral-400">/</span>
           <Link

@@ -19,6 +19,7 @@ interface ProductDetailsProps {
     stock: number
     tags: string[]
     specifications: Record<string, string>
+    category?: string
     variants: {
       id: string
       name: string
@@ -130,9 +131,16 @@ export function ProductDetails({ product }: ProductDetailsProps) {
           {/* Product Info */}
           <div className="space-y-8">
             <div>
-              <h1 className="text-5xl font-crimson font-normal tracking-tighter mb-4 text-black">{product.name}</h1>
+              <div className="mb-4">
+                {product.tags?.some(tag => tag.toLowerCase() === "signed copy") && (
+                  <span className="inline-block px-3 py-1 bg-[#5c4033] text-white text-xs font-bold rounded-md mb-3">
+                    SIGNED COPY
+                  </span>
+                )}
+                <h1 className="text-5xl font-crimson font-normal tracking-tighter text-black">{product.name}</h1>
+              </div>
               <div className="flex items-center gap-4 mb-6">
-                <span className="text-4xl font-geist font-bold text-black">
+                <span className="text-2xl font-geist font-medium tracking-tight text-black">
                   ${displayPrice.toFixed(2)}
                 </span>
                 {product.compareAtPrice &&
@@ -214,7 +222,7 @@ export function ProductDetails({ product }: ProductDetailsProps) {
             {/* Tags */}
             {product.tags && product.tags.length > 0 && (
               <div className="pt-6 border-t">
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-2 capitalize">
                   {product.tags.map((tag) => (
                     <span
                       key={tag}

@@ -60,9 +60,9 @@ export const navigationConfig: NavigationConfig = {
           icon: "Calendar"
         },
         {
-          label: "Community",
+          label: "Online Programs",
           href: "/programs/community",
-          icon: "Users"
+          icon: "PlayCircle"
         },
         {
           label: "Youth Workshops",

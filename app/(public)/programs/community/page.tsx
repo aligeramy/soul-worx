@@ -99,10 +99,10 @@ export default async function CommunityPage({
         <div className="absolute bottom-0 left-0 right-0 px-6 pb-12">
           <div className="max-w-7xl mx-auto">
             <h1 className="text-4xl md:text-6xl font-crimson font-normal tracking-tighter text-white mb-4">
-              Join Our Community
+              Online Programs
             </h1>
             <p className="text-xl text-white/90 max-w-3xl mb-8">
-              Access exclusive video content, tutorials, and resources to help you excel
+              Access exclusive online programs, tutorials, and resources to help you excel
               in basketball, career development, and more.
             </p>
             {!membership && (
@@ -126,9 +126,9 @@ export default async function CommunityPage({
 
       {/* Channels Section */}
       <section className="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-3xl font-crimson font-normal tracking-tighter mb-8">Community Channels</h2>
+        <h2 className="text-3xl font-crimson font-normal tracking-tighter mb-8">Available Channels</h2>
         
-        <Suspense fallback={<div>Loading channels...</div>}>
+        <Suspense fallback={<div>Loading programs...</div>}>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {channels.map((channel) => (
               <ChannelCard

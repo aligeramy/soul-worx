@@ -131,18 +131,18 @@ export default async function Home() {
                   alt="SoulWorx Logo"
                   width={48}
                   height={48}
-                  className="w-10 h-10"
+                  className="w-auto h-9 mb-2"
                 />
                 <p className="text-white text-[9px] font-geist font-bold tracking-tight uppercase">Community</p>
               </div>
             </div>
             
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-crimson font-normal tracking-tight leading-tight">
-             Join the Community
+             Online Community
             </h2>
             <p className="text-xl font-crimson text-white/80 max-w-2xl mx-auto">
               Connect with poets, creators, and changemakers. Get exclusive access to workshops, 
-              video content, and live sessions.
+              online programs, and live sessions.
             </p>
           </div>
 

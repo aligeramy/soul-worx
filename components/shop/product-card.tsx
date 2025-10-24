@@ -17,6 +17,7 @@ interface ProductCardProps {
   status: string
   stock: number
   category?: string
+  tags?: string[]
 }
 
 export function ProductCard({
@@ -29,6 +30,7 @@ export function ProductCard({
   status,
   stock,
   category,
+  tags,
 }: ProductCardProps) {
   const { addItem } = useCart()
   const [isAdding, setIsAdding] = useState(false)
@@ -46,6 +48,9 @@ export function ProductCard({
   }
 
   const isOutOfStock = status === "sold_out" || stock === 0
+  
+  // Check if product has signed copy tag
+  const isSignedCopy = tags?.some(tag => tag.toLowerCase() === "signed copy") || false
 
   // Format category for display
   const displayCategory = category 
@@ -57,7 +62,7 @@ export function ProductCard({
     : "SHOP COLLECTION"
 
   return (
-    <div className="group relative transition-all duration-300 bg-neutral-100 rounded-lg p-3">
+    <div className="group relative transition-all duration-300 bg-neutral-100 rounded-none p-5">
       <Link href={`/shop/${slug}`} className="block">
         {/* Image Container */}
         <div className="relative aspect-[3/4] overflow-hidden mb-4">
@@ -76,11 +81,20 @@ export function ProductCard({
               </span>
             )}
             {isOutOfStock && (
-              <span className="px-3 py-1.5 bg-black text-white text-xs font-bold rounded-full shadow-lg">
+              <span className="px-3 py-1st bg-black text-white text-xs font-bold rounded-full shadow-lg">
                 SOLD OUT
               </span>
             )}
           </div>
+          
+          {/* Signed Copy Badge - Top Right */}
+          {isSignedCopy && (
+            <div className="absolute top-4 left-4 z-10">
+              <span className="px-3 py-1.5 bg-brand-bg-darker/90 backdrop-blur-sm text-white text-xs font-bold rounded-full shadow-lg">
+                SIGNED COPY
+              </span>
+            </div>
+          )}
 
           {/* Quick Add Button */}
           {!isOutOfStock && (
@@ -107,19 +121,19 @@ export function ProductCard({
         </div>
 
         {/* Product Info Below Image */}
-        <div className="space-y-1 p-3">
+        <div className="space-y-0 p-3">
           {/* Category */}
-          <div className="text-neutral-500 text-xs font-medium uppercase tracking-wider">
-            {displayCategory}
+          <div className="text-neutral-500 text-xs font-medium uppercase tracking-wider !-mb-2">
+           <span className="border-b-2 border-neutral-500">{displayCategory}</span>
           </div>
           
           {/* Title */}
-          <h3 className="font-crimson font-normal text-2xl  tracking-tight text-black group-hover:text-neutral-600 transition-colors duration-300">
+          <h3 className="font-crimson font-normal text-2xl  tracking-tight text-black group-hover:text-neutral-600 transition-colors duration-300 !-mb-0">
             {name}
           </h3>
           
           {/* Price */}
-          <div className="flex items-center gap-2 pt-1">
+          <div className="flex items-center gap-2">
             <span className="font-medium text-sm text-black">
               {parseFloat(price).toFixed(2)} CAD
             </span>
