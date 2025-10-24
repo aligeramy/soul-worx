@@ -1,6 +1,6 @@
 import { readFileSync } from 'fs';
 import { join } from 'path';
-import * as crypto from 'crypto';
+import jwt from 'jsonwebtoken';
 
 /**
  * Generate Apple Client Secret JWT
@@ -13,60 +13,35 @@ const KEY_ID = 'W838JBXCVM';
 const CLIENT_ID = 'com.softx.soulworx';
 const PRIVATE_KEY_PATH = join(process.cwd(), 'AuthKey_W838JBXCVM.p8');
 
-function base64UrlEncode(str: Buffer): string {
-  return str
-    .toString('base64')
-    .replace(/\+/g, '-')
-    .replace(/\//g, '_')
-    .replace(/=/g, '');
-}
-
 function generateClientSecret(): string {
   // Read private key
   const privateKey = readFileSync(PRIVATE_KEY_PATH, 'utf8');
-
-  // JWT Header
-  const header = {
-    alg: 'ES256',
-    kid: KEY_ID,
-    typ: 'JWT'
-  };
 
   // JWT Payload
   const now = Math.floor(Date.now() / 1000);
   const expiration = now + (86400 * 180); // 180 days (6 months - Apple's maximum)
 
-  const payload = {
-    iss: TEAM_ID,
-    iat: now,
-    exp: expiration,
-    aud: 'https://appleid.apple.com',
-    sub: CLIENT_ID
-  };
+  // Generate the JWT token using jsonwebtoken library
+  // This properly handles ES256 signing which Apple requires
+  const token = jwt.sign(
+    {
+      iss: TEAM_ID,
+      iat: now,
+      exp: expiration,
+      aud: 'https://appleid.apple.com',
+      sub: CLIENT_ID,
+    },
+    privateKey,
+    {
+      algorithm: 'ES256',
+      header: {
+        alg: 'ES256',
+        kid: KEY_ID,
+      },
+    }
+  );
 
-  // Encode header and payload
-  const encodedHeader = base64UrlEncode(Buffer.from(JSON.stringify(header)));
-  const encodedPayload = base64UrlEncode(Buffer.from(JSON.stringify(payload)));
-  const signatureInput = `${encodedHeader}.${encodedPayload}`;
-
-  // Sign with ES256 (ECDSA with P-256 and SHA-256)
-  // Apple requires ES256 algorithm specifically
-  const sign = crypto.createSign('sha256');
-  sign.update(signatureInput);
-  sign.end();
-  
-  // Sign with the EC private key
-  const signature = sign.sign({
-    key: privateKey,
-    format: 'pem',
-    type: 'pkcs8'
-  });
-  const encodedSignature = base64UrlEncode(signature);
-
-  // Combine to create JWT (header.payload.signature)
-  const jwt = `${signatureInput}.${encodedSignature}`;
-
-  return jwt;
+  return token;
 }
 
 // Generate and display
