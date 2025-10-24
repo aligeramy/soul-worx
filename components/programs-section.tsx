@@ -301,7 +301,8 @@ export function ProgramsSection({ events = [] }: ProgramsSectionProps) {
                     Discover Our Programs
                   </h2>
 
-                  <p className="text-xl font-crimson text-shadow-lg text-neutral-200 font-light leading-tight">
+                  {/* Program Description - Hidden */}
+                  <p className="text-xl font-crimson text-shadow-lg text-neutral-200 font-light leading-tight hidden md:block">
                     Soulworx exists for the youth who&apos;ve been overlooked, under-resourced, or underestimated.
                     Every program is built to open doors, nurture character, and show kids that they are capable of more than they&apos;ve been told.
                     We don&apos;t just develop skills — we build purpose, passion, and people.
