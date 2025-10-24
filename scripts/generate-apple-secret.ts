@@ -10,7 +10,7 @@ import * as crypto from 'crypto';
 // Configuration
 const TEAM_ID = '23MN72U7PA';
 const KEY_ID = 'J79344U4JN';
-const CLIENT_ID = 'com.softx.soulworx';
+const CLIENT_ID = 'com.softx.soulworx.web';
 const PRIVATE_KEY_PATH = join(process.cwd(), 'AuthKey_J79344U4JN.p8');
 
 function base64UrlEncode(str: Buffer): string {
