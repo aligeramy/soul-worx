@@ -75,6 +75,10 @@ export function TestimonialsStats({
 	const [displayedTitle, setDisplayedTitle] = useState("")
 	const [isFadingOut, setIsFadingOut] = useState(false)
 	const sectionRef = useRef<HTMLElement>(null)
+	
+	// Touch gesture state for mobile slider
+	const [touchStart, setTouchStart] = useState(0)
+	const [touchEnd, setTouchEnd] = useState(0)
 
 	// Filter out the static testimonial from slideshow
 	const slideshowTestimonials = testimonials.filter((_, index) => index !== 2) // Remove index 2 to avoid duplication
@@ -119,6 +123,30 @@ export function TestimonialsStats({
 
 	const activeTestimonial = useMemo(() => slideshowTestimonials[active], [active, slideshowTestimonials])
 
+	// Touch gesture handlers for mobile
+	const handleTouchStart = (e: React.TouchEvent) => {
+		setTouchStart(e.targetTouches[0].clientX)
+	}
+
+	const handleTouchMove = (e: React.TouchEvent) => {
+		setTouchEnd(e.targetTouches[0].clientX)
+	}
+
+	const handleTouchEnd = () => {
+		if (!touchStart || !touchEnd) return
+		
+		const distance = touchStart - touchEnd
+		const isLeftSwipe = distance > 50
+		const isRightSwipe = distance < -50
+		
+		if (isLeftSwipe && active < total - 1) {
+			setActive(active + 1)
+		}
+		if (isRightSwipe && active > 0) {
+			setActive(active - 1)
+		}
+	}
+
 	return (
 		<section 
 			ref={sectionRef}
@@ -144,28 +172,17 @@ export function TestimonialsStats({
 
 
 			<div className="relative max-w-7xl mx-auto px-6 py-24">
-				{/* Framed container to emulate the reference */}
-				<div 
-					className="relative rounded-[28px] border border-white/10 overflow-hidden min-h-[600px] bg-brand-bg-darker"
-				>
-					{/* Inner vignette */}
-					<div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.06),transparent_60%)]" />
-
-					{/* Huge centered title - ANIMATED */}
-					<h2
-						aria-hidden
-						className={cn(
-							"absolute inset-0 flex items-center justify-center text-center text-[12vw] leading-none font-crimson font-light tracking-tight text-white/10 select-none pointer-events-none transition-opacity duration-700",
-							isFadingOut ? "opacity-0" : "opacity-100"
-						)}
+				{/* Mobile Layout */}
+				<div className="md:hidden space-y-12">
+					{/* Testimonial Slider */}
+					<div 
+						className="rounded-2xl border border-white/15 bg-brand-bg-darker/30 backdrop-blur-sm p-6 shadow-2xl"
+						onTouchStart={handleTouchStart}
+						onTouchMove={handleTouchMove}
+						onTouchEnd={handleTouchEnd}
+						style={{ touchAction: 'pan-x' }}
 					>
-						{displayedTitle}
-					</h2>
-
-					{/* Top-right review (slides) - smaller */}
-					<figure className="absolute top-12 right-10 w-[min(420px,38%)] rounded-2xl border border-white/15 bg-brand-bg-darker/30 backdrop-blur-sm p-6 shadow-2xl">
-						<div className="flex items-center justify-end mb-3">
-							{/* Pager dots inside card */}
+						<div className="flex items-center justify-end mb-4">
 							<div className="flex gap-2">
 								{slideshowTestimonials.map((_, i) => (
 									<button
@@ -173,7 +190,7 @@ export function TestimonialsStats({
 										onClick={() => setActive(i)}
 										className={cn(
 											"h-1.5 rounded-full transition-all",
-											i === active ? "w-6 bg-white" : "w-1.5 bg-white/40 hover:bg-white/60"
+											i === active ? "w-6 bg-white" : "w-1.5 bg-white/40"
 										)}
 										aria-label={`Go to testimonial ${i + 1}`}
 									/>
@@ -181,56 +198,130 @@ export function TestimonialsStats({
 							</div>
 						</div>
 						<div key={active} className="animate-fade-in-up">
-							<p className="text-white/90 font-crimson text-sm md:text-base leading-relaxed">
+							<p className="text-white/90 font-crimson text-base leading-relaxed">
 								{activeTestimonial.quote}
 							</p>
-							<figcaption className="mt-3 text-right">
-								<div className="flex items-center justify-end gap-2">
-									<span className="text-xs font-crimson text-white/70">— {activeTestimonial.author}</span>
+							<figcaption className="mt-4 text-right">
+								<div className="flex flex-col items-end gap-2">
+									<span className="text-sm font-crimson text-white/70">— {activeTestimonial.author}</span>
 									{activeTestimonial.location && (
-										<span className="px-2 py-1 text-xs font-crimson text-white/60 border border-white/20 rounded-full">
+										<span className="px-3 py-1 text-xs font-crimson text-white/60 border border-white/20 rounded-full">
 											{activeTestimonial.location}
 										</span>
 									)}
 								</div>
 							</figcaption>
 						</div>
-					</figure>
+					</div>
 
-					{/* Bottom-left review (static second) - BIGGER and more heartfelt */}
-					{testimonials[1] && (
-						<figure className="absolute left-10 bottom-20 w-[min(580px,52%)] rounded-2xl border border-white/15 bg-brand-bg-darker/30 backdrop-blur-sm p-6 shadow-2xl">
-							<p className="text-white/90 font-crimson text-xl leading-relaxed">
-								{testimonials[1].quote}
-							</p>
-							<figcaption className="mt-4 text-right">
-								<div className="flex items-center justify-end gap-2">
-									<span className="text-sm font-crimson text-white/75">— {testimonials[1].author}</span>
-									{testimonials[1].location && (
-										<span className="px-3 py-1 text-sm font-crimson text-white/60 border border-white/20 rounded-full">
-											{testimonials[1].location}
-										</span>
-									)}
-								</div>
-							</figcaption>
-						</figure>
-					)}
-
-					{/* Bottom right stats row (2 items) - moved to far right */}
-					<div className="absolute bottom-10 right-12 grid grid-cols-2 gap-12 text-center">
+					{/* Stats - 2 items */}
+					<div className="grid grid-cols-2 gap-8 text-center">
 						{(stats.length ? stats.slice(0, 2) : [
 							{ value: '1200+', label: 'Reviews' },
 							{ value: '10,000+', label: 'Happy Clients' },
 						]).map((s, i) => (
 							<div key={i}>
-								<div className="text-8xl lg:text-7xl font-crimson tracking-tighter bg-gradient-to-r from-white/70 via-white/50 to-white/20 bg-clip-text text-transparent">
+								<div className="text-5xl font-crimson tracking-tighter bg-gradient-to-r from-white/70 via-white/50 to-white/20 bg-clip-text text-transparent">
 									{s.value}
 								</div>
-								<div className="text-white/70 font-monteci text-2xl tracking-tight">
+								<div className="text-white/70 font-monteci text-lg tracking-tight mt-2">
 									{s.label}
 								</div>
 							</div>
 						))}
+					</div>
+				</div>
+
+				{/* Desktop Layout */}
+				<div className="hidden md:block">
+					{/* Framed container to emulate the reference */}
+					<div 
+						className="relative rounded-[28px] border border-white/10 overflow-hidden min-h-[600px] bg-brand-bg-darker"
+					>
+						{/* Inner vignette */}
+						<div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.06),transparent_60%)]" />
+
+						{/* Huge centered title - ANIMATED */}
+						<h2
+							aria-hidden
+							className={cn(
+								"absolute inset-0 flex items-center justify-center text-center text-[12vw] leading-none font-crimson font-light tracking-tight text-white/10 select-none pointer-events-none transition-opacity duration-700",
+								isFadingOut ? "opacity-0" : "opacity-100"
+							)}
+						>
+							{displayedTitle}
+						</h2>
+
+						{/* Top-right review (slides) - smaller */}
+						<figure className="absolute top-12 right-10 w-[min(420px,38%)] rounded-2xl border border-white/15 bg-brand-bg-darker/30 backdrop-blur-sm p-6 shadow-2xl">
+							<div className="flex items-center justify-end mb-3">
+								{/* Pager dots inside card */}
+								<div className="flex gap-2">
+									{slideshowTestimonials.map((_, i) => (
+										<button
+											key={i}
+											onClick={() => setActive(i)}
+											className={cn(
+												"h-1.5 rounded-full transition-all",
+												i === active ? "w-6 bg-white" : "w-1.5 bg-white/40 hover:bg-white/60"
+											)}
+											aria-label={`Go to testimonial ${i + 1}`}
+										/>
+									))}
+								</div>
+							</div>
+							<div key={active} className="animate-fade-in-up">
+								<p className="text-white/90 font-crimson text-sm md:text-base leading-relaxed">
+									{activeTestimonial.quote}
+								</p>
+								<figcaption className="mt-3 text-right">
+									<div className="flex items-center justify-end gap-2">
+										<span className="text-xs font-crimson text-white/70">— {activeTestimonial.author}</span>
+										{activeTestimonial.location && (
+											<span className="px-2 py-1 text-xs font-crimson text-white/60 border border-white/20 rounded-full">
+												{activeTestimonial.location}
+											</span>
+										)}
+									</div>
+								</figcaption>
+							</div>
+						</figure>
+
+						{/* Bottom-left review (static second) - BIGGER and more heartfelt */}
+						{testimonials[1] && (
+							<figure className="absolute left-10 bottom-20 w-[min(580px,52%)] rounded-2xl border border-white/15 bg-brand-bg-darker/30 backdrop-blur-sm p-6 shadow-2xl">
+								<p className="text-white/90 font-crimson text-mxl leading-relaxed">
+									{testimonials[1].quote}
+								</p>
+								<figcaption className="mt-4 text-right">
+									<div className="flex items-center justify-end gap-2">
+										<span className="text-sm font-crimson text-white/75">— {testimonials[1].author}</span>
+										{testimonials[1].location && (
+											<span className="px-3 py-1 text-sm font-crimson text-white/60 border border-white/20 rounded-full">
+												{testimonials[1].location}
+											</span>
+										)}
+									</div>
+								</figcaption>
+							</figure>
+						)}
+
+						{/* Bottom right stats row (2 items) - moved to far right */}
+						<div className="absolute bottom-10 right-12 grid grid-cols-2 gap-12 text-center">
+							{(stats.length ? stats.slice(0, 2) : [
+								{ value: '1200+', label: 'Reviews' },
+								{ value: '10,000+', label: 'Happy Clients' },
+							]).map((s, i) => (
+								<div key={i}>
+									<div className="text-8xl lg:text-7xl font-crimson tracking-tighter bg-gradient-to-r from-white/70 via-white/50 to-white/20 bg-clip-text text-transparent">
+										{s.value}
+									</div>
+									<div className="text-white/70 font-monteci text-2xl tracking-tight">
+										{s.label}
+									</div>
+								</div>
+							))}
+						</div>
 					</div>
 				</div>
 			</div>
