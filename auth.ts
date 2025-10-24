@@ -49,33 +49,20 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     async session({ session, token }) {
       if (session.user && token.sub) {
         session.user.id = token.sub
+        session.user.name = token.name as string
+        session.user.email = token.email as string
         session.user.role = token.role as UserRole
-        session.user.needsOnboarding = !session.user.name || session.user.name === session.user.email
+        session.user.needsOnboarding = !token.name || token.name === token.email
       }
       return session
     },
-    async jwt({ token, user, trigger, session }) {
-      // On initial sign-in, store user data in token
-      if (user && user.id) {
+    async jwt({ token, user }) {
+      // On initial sign-in or when user object is provided, update token
+      if (user) {
         token.sub = user.id
         token.name = user.name
         token.email = user.email
         token.role = user.role || "user"
-      }
-      
-      // Only refresh on explicit update trigger (after profile changes)
-      // This avoids database queries on every request
-      if (trigger === "update" && token.sub) {
-        try {
-          const dbUser = await getUserById(token.sub)
-          if (dbUser) {
-            token.role = dbUser.role
-            token.name = dbUser.name
-            token.email = dbUser.email
-          }
-        } catch (error) {
-          console.error("Error refreshing user data:", error)
-        }
       }
       
       return token
