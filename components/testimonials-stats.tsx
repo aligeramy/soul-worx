@@ -69,7 +69,6 @@ export function TestimonialsStats({
 		},
 	],
 }: TestimonialsStatsProps) {
-	const intervalMs = 5000
 	const [active, setActive] = useState(0)
 	const [titleIndex, setTitleIndex] = useState(0)
 	const [displayedTitle, setDisplayedTitle] = useState("")
