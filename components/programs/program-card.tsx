@@ -29,7 +29,7 @@ export function ProgramCard({ program, categoryGradient, fullHeight = false }: P
       className={cn("block group", fullHeight && "h-full")}
     >
       <div className={cn(
-        "relative overflow-hidden rounded-3xl shadow-sm hover:shadow-2xl transition-all duration-300 hover:scale-[1.02] border border-neutral-200 h-full",
+        "relative overflow-hidden rounded-3xl shadow-sm hover:shadow-2xl transition-all duration-300 hover:scale-[1.02] border border-white/15 ring-1 ring-black/15 h-full",
         fullHeight && "h-full"
       )}>
         <div className="relative aspect-[4/5] overflow-hidden">
