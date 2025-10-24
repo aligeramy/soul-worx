@@ -16,7 +16,7 @@ export function TopBar({ hasSession }: TopBarProps) {
   const isTransparent = isHomepage || pathname.includes('/events/')
   const textColor = isTransparent ? "text-white hover:text-white/80" : "text-foreground hover:text-primary"
   const borderColor = isTransparent ? "border-white/10" : "border-border"
-  const bgColor = isTransparent ? "bg-black/20" : "bg-background/95"
+  const bgColor = isTransparent ? "bg-black/50 supports-[backdrop-filter]:bg-black/20" : "bg-background/95"
 
   return (
     <div className={`w-full backdrop-blur-md border-b transition-colors ${bgColor} ${borderColor}`}>

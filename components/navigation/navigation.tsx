@@ -60,7 +60,7 @@ export function Navigation() {
         <nav 
           className={`relative w-full border-t border-b transition-colors duration-300 ${
             isTransparent 
-              ? "bg-black/20 backdrop-blur-md border-white/10" 
+              ? "bg-black/50 supports-[backdrop-filter]:bg-black/20 backdrop-blur-md border-white/10" 
               : "bg-background/95 backdrop-blur-md border-border"
           }`}
         >

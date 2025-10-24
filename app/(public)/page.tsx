@@ -2,7 +2,6 @@ import Image from "next/image"
 import Link from "next/link"
 import { HeroSection } from "@/components/hero-section"
 import { TestimonialsStats } from "@/components/testimonials-stats"
-import { AwardsRibbon } from "@/components/awards-ribbon"
 import { ProgramsSection } from "@/components/programs-section"
 import { GallerySlideshow } from "@/components/gallery-slideshow"
 import { getPrograms, getUpcomingEvents } from "@/lib/db/queries"
@@ -23,9 +22,6 @@ export default async function Home() {
   return (
     <div className="bg-brand-bg-darker min-h-screen">
       <HeroSection />
-
-      {/* Awards Ribbon between hero and programs */}
-      <AwardsRibbon />
 
       {/* Programs Section with Parallax */}
       <ProgramsSection 
