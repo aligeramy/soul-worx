@@ -55,27 +55,16 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       return session
     },
     async jwt({ token, user, trigger, session }) {
-      // On initial sign-in, fetch user from database and store data in token
+      // On initial sign-in, store user data in token
       if (user && user.id) {
         token.sub = user.id
         token.name = user.name
         token.email = user.email
-        // Fetch user data on initial sign-in
-        try {
-          const dbUser = await getUserById(user.id)
-          if (dbUser) {
-            token.role = dbUser.role
-            token.name = dbUser.name || user.name
-            token.email = dbUser.email || user.email
-          }
-        } catch (error) {
-          console.error("Error fetching user data:", error)
-          // Default to 'user' role if query fails
-          token.role = "user"
-        }
+        token.role = user.role || "user"
       }
       
-      // Refresh on explicit update trigger (after profile changes)
+      // Only refresh on explicit update trigger (after profile changes)
+      // This avoids database queries on every request
       if (trigger === "update" && token.sub) {
         try {
           const dbUser = await getUserById(token.sub)
@@ -86,21 +75,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           }
         } catch (error) {
           console.error("Error refreshing user data:", error)
-        }
-      }
-      
-      // Also refresh if user is in onboarding state (no name or name equals email)
-      // This ensures the session updates after completing onboarding
-      if (token.sub && (!token.name || token.name === token.email)) {
-        try {
-          const dbUser = await getUserById(token.sub)
-          if (dbUser && dbUser.name && dbUser.name !== dbUser.email) {
-            token.name = dbUser.name
-            token.email = dbUser.email
-            token.role = dbUser.role
-          }
-        } catch (error) {
-          console.error("Error refreshing onboarding user data:", error)
         }
       }
       

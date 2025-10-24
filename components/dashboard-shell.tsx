@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useSession, signOut } from "next-auth/react"
-import { LayoutDashboard, Calendar, LogOut, Shield, User, Settings } from "lucide-react"
+import { LayoutDashboard, Calendar, LogOut, Shield, User, Settings, ChevronDown } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
@@ -25,9 +25,10 @@ export default function DashboardShell({
   const pathname = usePathname()
   const { data } = useSession()
   const isAdminPath = pathname?.startsWith("/dashboard/admin")
+  const isProfilePath = pathname?.startsWith("/profile")
 
-  if (isAdminPath) {
-    // Admin: no top bar, full-width, themed by admin layout
+  if (isAdminPath || isProfilePath) {
+    // Admin and Profile: no top bar, full-width, themed by admin layout
     return <>{children}</>
   }
 
@@ -99,6 +100,7 @@ export default function DashboardShell({
                               {isAdmin ? "Admin" : "Member"}
                             </p>
                           </div>
+                          <ChevronDown className="h-4 w-4 text-white/60" />
                         </button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end" className="w-56">

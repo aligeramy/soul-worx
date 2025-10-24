@@ -1,8 +1,8 @@
 "use client"
 
 import {
+  IconChevronDown,
   IconCreditCard,
-  IconDotsVertical,
   IconLogout,
   IconNotification,
   IconUserCircle,
@@ -59,7 +59,7 @@ export function NavUser({
                   {user.email}
                 </span>
               </div>
-              <IconDotsVertical className="ml-auto size-4" />
+              <IconChevronDown className="ml-auto size-4" />
             </SidebarMenuButton>
           </DropdownMenuTrigger>
           <DropdownMenuContent
