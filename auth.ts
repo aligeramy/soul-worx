@@ -68,6 +68,12 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       return token
     },
     authorized({ auth, request: { nextUrl } }) {
+      // IMPORTANT: Don't intercept API routes or they'll return HTML instead of JSON
+      const isApiRoute = nextUrl.pathname.startsWith("/api/")
+      if (isApiRoute) {
+        return true
+      }
+
       const isLoggedIn = !!auth?.user
       const isAdmin = auth?.user?.role === "admin" || auth?.user?.role === "super_admin"
       const isOnboarding = nextUrl.pathname.startsWith("/onboarding")
