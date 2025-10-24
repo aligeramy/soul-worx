@@ -1,6 +1,7 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { createPortal } from "react-dom"
 import Link from "next/link"
 import { motion, AnimatePresence } from "framer-motion"
 import { Menu, X, ChevronDown } from "lucide-react"
@@ -13,6 +14,24 @@ interface MobileMenuProps {
 export function MobileMenu({ isLight = false }: MobileMenuProps) {
   const [isOpen, setIsOpen] = useState(false)
   const [openSubmenus, setOpenSubmenus] = useState<string[]>([])
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+    return () => setMounted(false)
+  }, [])
+
+  // Prevent body scroll when menu is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [isOpen])
 
   const toggleSubmenu = (label: string) => {
     setOpenSubmenus(prev =>
@@ -29,40 +48,8 @@ export function MobileMenu({ isLight = false }: MobileMenuProps) {
 
   const iconColor = isLight ? "text-white" : "text-foreground"
 
-  return (
+  const menuContent = (
     <>
-      {/* Hamburger Button */}
-      <motion.button
-        onClick={() => setIsOpen(!isOpen)}
-        className={`p-2 ${iconColor}`}
-        aria-label="Toggle menu"
-        whileTap={{ scale: 0.95 }}
-      >
-        <AnimatePresence mode="wait">
-          {isOpen ? (
-            <motion.div
-              key="close"
-              initial={{ rotate: -90, opacity: 0 }}
-              animate={{ rotate: 0, opacity: 1 }}
-              exit={{ rotate: 90, opacity: 0 }}
-              transition={{ duration: 0.2 }}
-            >
-              <X className="h-6 w-6" />
-            </motion.div>
-          ) : (
-            <motion.div
-              key="menu"
-              initial={{ rotate: 90, opacity: 0 }}
-              animate={{ rotate: 0, opacity: 1 }}
-              exit={{ rotate: -90, opacity: 0 }}
-              transition={{ duration: 0.2 }}
-            >
-              <Menu className="h-6 w-6" />
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </motion.button>
-
       {/* Mobile Menu Overlay */}
       <AnimatePresence>
         {isOpen && (
@@ -71,7 +58,7 @@ export function MobileMenu({ isLight = false }: MobileMenuProps) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40"
+            className="fixed inset-0 bg-black/50 supports-[backdrop-filter]:bg-black/30 backdrop-blur-sm z-[9998]"
             onClick={closeMenu}
           />
         )}
@@ -88,20 +75,33 @@ export function MobileMenu({ isLight = false }: MobileMenuProps) {
               duration: 0.3,
               ease: [0.4, 0, 0.2, 1]
             }}
-            className="fixed top-32 left-0 right-0 bottom-0 bg-background z-50 overflow-y-auto"
+            className="fixed top-0 left-0 bottom-0 w-[80%] max-w-sm bg-background z-[9999] shadow-2xl"
           >
-            <motion.div 
-              className="p-6 space-y-6"
-              initial="hidden"
-              animate="visible"
-              variants={{
-                visible: {
-                  transition: {
-                    staggerChildren: 0.05
+            <div className="h-full overflow-y-auto overflow-x-hidden">
+              {/* Menu Header with Close Button */}
+              <div className="sticky top-0 z-10 bg-background border-b border-border px-6 py-4 flex items-center justify-between">
+                <h2 className="text-lg font-semibold">Menu</h2>
+                <button
+                  onClick={closeMenu}
+                  className="p-2 hover:bg-accent rounded-md transition-colors"
+                  aria-label="Close menu"
+                >
+                  <X className="h-5 w-5" />
+                </button>
+              </div>
+
+              <motion.div 
+                className="p-6 space-y-6 pb-20"
+                initial="hidden"
+                animate="visible"
+                variants={{
+                  visible: {
+                    transition: {
+                      staggerChildren: 0.05
+                    }
                   }
-                }
-              }}
-            >
+                }}
+              >
               {/* Left Menu Items */}
               <div className="space-y-4">
                 {navigationConfig.left.map((item) => (
@@ -151,7 +151,7 @@ export function MobileMenu({ isLight = false }: MobileMenuProps) {
                               animate={{ opacity: 1, height: "auto" }}
                               exit={{ opacity: 0, height: 0 }}
                               transition={{ duration: 0.3 }}
-                              className="pl-4 mt-2 space-y-2 overflow-hidden"
+                              className="mt-2 space-y-1 overflow-hidden bg-accent/50 rounded-lg p-3"
                             >
                               {item.submenu.map((subItem) => (
                                 <motion.div
@@ -164,13 +164,13 @@ export function MobileMenu({ isLight = false }: MobileMenuProps) {
                                   <Link
                                     href={subItem.href}
                                     onClick={closeMenu}
-                                    className="block py-2"
+                                    className="block py-3 px-3 hover:bg-background rounded-md transition-colors"
                                   >
                                     <div className="text-sm font-medium">
                                       {subItem.label}
                                     </div>
                                     {subItem.description && (
-                                      <div className="text-xs text-muted-foreground mt-1">
+                                      <div className="text-xs text-muted-foreground mt-1 line-clamp-2">
                                         {subItem.description}
                                       </div>
                                     )}
@@ -255,7 +255,7 @@ export function MobileMenu({ isLight = false }: MobileMenuProps) {
                               animate={{ opacity: 1, height: "auto" }}
                               exit={{ opacity: 0, height: 0 }}
                               transition={{ duration: 0.3 }}
-                              className="pl-4 mt-2 space-y-2 overflow-hidden"
+                              className="mt-2 space-y-1 overflow-hidden bg-accent/50 rounded-lg p-3"
                             >
                               {item.submenu.map((subItem) => (
                                 <motion.div
@@ -268,13 +268,13 @@ export function MobileMenu({ isLight = false }: MobileMenuProps) {
                                   <Link
                                     href={subItem.href}
                                     onClick={closeMenu}
-                                    className="block py-2"
+                                    className="block py-3 px-3 hover:bg-background rounded-md transition-colors"
                                   >
                                     <div className="text-sm font-medium">
                                       {subItem.label}
                                     </div>
                                     {subItem.description && (
-                                      <div className="text-xs text-muted-foreground mt-1">
+                                      <div className="text-xs text-muted-foreground mt-1 line-clamp-2">
                                         {subItem.description}
                                       </div>
                                     )}
@@ -297,10 +297,50 @@ export function MobileMenu({ isLight = false }: MobileMenuProps) {
                   </motion.div>
                 ))}
               </div>
-            </motion.div>
+              </motion.div>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
+    </>
+  )
+
+  return (
+    <>
+      {/* Hamburger Button */}
+      <motion.button
+        onClick={() => setIsOpen(!isOpen)}
+        className={`p-2 ${iconColor}`}
+        aria-label="Toggle menu"
+        whileTap={{ scale: 0.95 }}
+      >
+        <AnimatePresence mode="wait">
+          {isOpen ? (
+            <motion.div
+              key="close"
+              initial={{ rotate: -90, opacity: 0 }}
+              animate={{ rotate: 0, opacity: 1 }}
+              exit={{ rotate: 90, opacity: 0 }}
+              transition={{ duration: 0.2 }}
+            >
+              <X className="h-6 w-6" />
+            </motion.div>
+          ) : (
+            <motion.div
+              key="menu"
+              initial={{ rotate: 90, opacity: 0 }}
+              animate={{ rotate: 0, opacity: 1 }}
+              exit={{ rotate: -90, opacity: 0 }}
+              transition={{ duration: 0.2 }}
+            >
+              <Menu className="h-6 w-6" />
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.button>
+
+      {/* Render menu content via portal to escape any overflow:hidden containers */}
+      {mounted && typeof document !== 'undefined' && createPortal(menuContent, document.body)}
     </>
   )
 }

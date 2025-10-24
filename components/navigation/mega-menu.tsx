@@ -24,7 +24,7 @@ export function MegaMenu({ items, isLight = false, isOpen, onMouseEnter, onMouse
       transition={{ duration: 0.2, ease: "easeOut" }}
       className={`absolute left-0 right-0 top-full border-b shadow-xl z-50 ${
         isLight 
-          ? "bg-black/20 backdrop-blur-md border-white/10" 
+          ? "bg-black/50 supports-[backdrop-filter]:bg-black/20 backdrop-blur-md border-white/10" 
           : "bg-white backdrop-blur-md border-border"
       }`}
       onMouseEnter={onMouseEnter}
