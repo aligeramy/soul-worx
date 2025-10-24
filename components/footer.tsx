@@ -266,7 +266,7 @@ export function Footer() {
               </Link>
             </div>
             <div className="text-sm text-white/50 font-light">
-              Made with <span className="text-red-500">♥</span> for the culture
+              Made with <span className="text-red-500">♥</span> by <Link href="https://soulworx.ca" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors font-light">Soulworx</Link>
             </div>
           </div>
         </div>

@@ -308,7 +308,7 @@ export function ProgramsSection({ events = [] }: ProgramsSectionProps) {
 
       {/* Content Overlay */}
       <div className="relative z-30 min-h-screen flex items-center">
-        <div className="max-w-7xl mx-auto px-6 w-full py-24">
+        <div className="max-w-7xl mx-auto px-6 w-full py-12 md:py-24">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Left side - empty space for the person in the image on desktop */}
             <div className="hidden lg:block" />
@@ -325,7 +325,7 @@ export function ProgramsSection({ events = [] }: ProgramsSectionProps) {
               {/* Main Content Card */}
               <div className=" rounded-3xl p-4 ransition-shadow duration-500 backdrop-blur-sm">
                 <div className="space-y-2">
-                  <h2 className="text-5xl font-crimson font-medium tracking-tighter text-white   leading-tight">
+                  <h2 className="text-4xl text-center md:text-left md:text-5xl font-crimson font-medium tracking-tighter text-white   leading-tight">
                     Discover Our Programs
                   </h2>
 

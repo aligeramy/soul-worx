@@ -20,7 +20,7 @@ const sponsorLogos = [
 
 export function SponsorSlider() {
   return (
-    <section className="relative bg-brand-bg-darker py-16 px-6 overflow-hidden">
+    <section className="relative bg-brand-bg-darker py-16 pb-8 md:pb-16 px-6 overflow-hidden">
       {/* Noise texture overlay */}
       <div 
         className="absolute inset-0 pointer-events-none opacity-30"

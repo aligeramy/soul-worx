@@ -82,7 +82,7 @@ export default async function ChannelPage({
               href="/programs/community"
               className="text-white/80 hover:text-white mb-4 inline-block"
             >
-              ← Back to Community
+              ← Back to Online Programs
             </Link>
             
             <div className="mt-6">
@@ -102,7 +102,7 @@ export default async function ChannelPage({
               
               <div className="flex items-center gap-3 text-sm">
                 <span className="px-3 py-1.5 bg-white/90 backdrop-blur-sm text-black font-bold rounded-full uppercase tracking-wide">
-                  {channel.videoCount} videos
+                  {channel.videoCount} {channel.videoCount === 1 ? 'program' : 'programs'}
                 </span>
                 <span className="px-3 py-1.5 bg-white/90 backdrop-blur-sm text-black font-bold rounded-full uppercase tracking-wide">
                   {channel.category.replace('_', ' ')}
@@ -126,8 +126,8 @@ export default async function ChannelPage({
               Limited Access
             </p>
             <p className="text-yellow-800 mb-4">
-              You can watch the first episode for free. Upgrade your membership to
-              access all videos in this channel.
+              You can watch the first program for free. Upgrade your membership to
+              access all programs in this online program.
             </p>
             <Link href="/programs/community#membership-tiers">
               <Button>View Membership Tiers</Button>
@@ -135,7 +135,7 @@ export default async function ChannelPage({
           </div>
         )}
 
-        <h2 className="text-2xl font-bold mb-6">Videos</h2>
+        <h2 className="text-2xl font-bold mb-6">Programs</h2>
         
         <Suspense fallback={<div>Loading videos...</div>}>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -183,7 +183,7 @@ export default async function ChannelPage({
 
                     {video.isFirstEpisode && (
                       <div className="absolute top-2 left-2 bg-green-500 text-white text-xs px-2 py-1 rounded font-medium">
-                        FREE
+                        FREE PROGRAM
                       </div>
                     )}
                   </div>
@@ -195,8 +195,8 @@ export default async function ChannelPage({
                     
                     {video.episodeNumber && (
                       <p className="text-sm text-neutral-600 mb-2">
-                        Episode {video.episodeNumber}
-                        {video.seasonNumber && video.seasonNumber > 1 && ` • Season ${video.seasonNumber}`}
+                        Program {video.episodeNumber}
+                        {video.seasonNumber && video.seasonNumber > 1 && ` • Series ${video.seasonNumber}`}
                       </p>
                     )}
                     
@@ -215,7 +215,7 @@ export default async function ChannelPage({
         {accessibleVideos.length === 0 && (
           <div className="text-center py-12">
             <p className="text-neutral-600 mb-4">
-              No videos available with your current membership
+              No programs available with your current membership
             </p>
             <Link href="/programs/community#membership-tiers">
               <Button>Upgrade Membership</Button>

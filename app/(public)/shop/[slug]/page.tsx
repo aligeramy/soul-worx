@@ -18,7 +18,8 @@ export default async function ProductPage({
     ...product,
     tags: product.tags || [],
     specifications: product.specifications || {},
-    variants: product.variants || []
+    variants: product.variants || [],
+    category: product.category
   }} />
 }
 
