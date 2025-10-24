@@ -1,8 +1,11 @@
 import { CategoryCard } from "@/components/ui/category-card"
 import Image from "next/image"
 import { getPublishedPosts } from "@/lib/db/queries"
-import Link from "next/link"
-import { Clock, BookOpen, Heart, Calendar, Newspaper } from "lucide-react"
+import { Clock } from "lucide-react"
+import { PoetryCard } from "@/components/stories/poetry-card"
+import { AnnouncementCard } from "@/components/stories/announcement-card"
+import { BlogCard } from "@/components/stories/blog-card"
+import { MasonryGrid } from "@/components/stories/masonry-grid"
 
 export default async function StoriesPage() {
   const posts = await getPublishedPosts()
@@ -97,103 +100,21 @@ export default async function StoriesPage() {
           </div>
           
           {posts.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <MasonryGrid>
               {posts.slice(0, 6).map((post) => {
-                // Get icon based on category
-                const getCategoryIcon = (category: string) => {
-                  switch (category) {
-                    case 'blog':
-                      return <BookOpen className="w-4 h-4" />
-                    case 'poetry':
-                      return <Heart className="w-4 h-4" />
-                    case 'events':
-                      return <Calendar className="w-4 h-4" />
-                    case 'press':
-                      return <Newspaper className="w-4 h-4" />
-                    default:
-                      return <BookOpen className="w-4 h-4" />
-                  }
+                // Render different card types based on category
+                if (post.category === "poetry") {
+                  return <PoetryCard key={post.id} post={post} />
                 }
-
-                return (
-                  <Link 
-                    key={post.id} 
-                    href={`/stories/${post.category}/${post.slug}`}
-                    className="group block"
-                  >
-                    <article className="bg-white rounded-3xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-neutral-100">
-                      {/* Image */}
-                      {post.coverImage && (
-                        <div className="relative aspect-[16/9] overflow-hidden">
-                          <Image
-                            src={post.coverImage}
-                            alt={post.title}
-                            fill
-                            className="object-cover group-hover:scale-110 transition-transform duration-700"
-                          />
-                          {/* Multi-layer gradient for richer effect */}
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-                          <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-black/30" />
-                          
-                          {/* Category Badge with Icon */}
-                          <div className="absolute top-4 left-4">
-                            <span className="flex items-center gap-2 px-4 py-1.5 bg-white/95 backdrop-blur-md text-neutral-900 text-xs font-bold uppercase tracking-wider rounded-full shadow-lg border border-white/50">
-                              {getCategoryIcon(post.category)}
-                              {post.category}
-                            </span>
-                          </div>
-
-                          {/* Shine effect on hover */}
-                          <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shimmer" />
-                          </div>
-                        </div>
-                      )}
-                      
-                      {/* Content */}
-                      <div className="p-6 bg-gradient-to-b from-white to-neutral-50/50">
-                        <h3 className="text-xl font-crimson font-normal tracking-tight text-neutral-900 mb-3 group-hover:text-neutral-700 transition-colors line-clamp-2 leading-snug">
-                          {post.title}
-                        </h3>
-                        {post.excerpt && (
-                          <p className="text-neutral-600 text-sm leading-relaxed line-clamp-2 mb-5">
-                            {post.excerpt}
-                          </p>
-                        )}
-                        
-                        {/* Meta */}
-                        <div className="flex items-center justify-between pt-4 border-t border-neutral-200">
-                          <div className="flex items-center gap-3 text-xs text-neutral-500">
-                            {post.publishedAt && (
-                              <time dateTime={post.publishedAt.toISOString()} className="font-medium">
-                                {new Date(post.publishedAt).toLocaleDateString('en-US', { 
-                                  month: 'short', 
-                                  day: 'numeric', 
-                                  year: 'numeric' 
-                                })}
-                              </time>
-                            )}
-                            {post.author && (
-                              <>
-                                <span className="text-neutral-300">•</span>
-                                <span className="font-medium">{post.author.name}</span>
-                              </>
-                            )}
-                          </div>
-                          
-                          {/* Arrow indicator */}
-                          <div className="text-neutral-400 group-hover:text-neutral-900 transition-colors">
-                            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                            </svg>
-                          </div>
-                        </div>
-                      </div>
-                    </article>
-                  </Link>
-                )
+                
+                if (post.category === "announcements") {
+                  return <AnnouncementCard key={post.id} post={post} />
+                }
+                
+                // Default to blog card for all other categories
+                return <BlogCard key={post.id} post={post} />
               })}
-            </div>
+            </MasonryGrid>
           ) : (
             <div className="text-center py-16 text-neutral-500">
               <p className="text-lg">No stories yet. Check back soon!</p>
