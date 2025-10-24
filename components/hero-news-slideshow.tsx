@@ -131,7 +131,7 @@ export function HeroNewsSlideshow() {
               <Badge
                 variant="outline"
                 className={cn(
-                  "text-[10px] px-2.5 py-0.5 !backdrop-blur-sm capitalize font-medium border whitespace-nowrap shrink-0",
+                  "text-[10px] px-2.5 py-0.5 !backdrop-blur-sm !text-white capitalize font-medium border whitespace-nowrap shrink-0",
                   categoryColors[(currentItem as Post & { type: 'post' }).category]
                 )}
               >
