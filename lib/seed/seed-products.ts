@@ -1,5 +1,5 @@
-import { db } from "./db"
-import { products } from "./db/schema"
+import { db } from "../db"
+import { products } from "../db/schema"
 
 export async function seedProducts(userId: string) {
   const sampleProducts = [

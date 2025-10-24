@@ -3,6 +3,7 @@
 import Link from "next/link"
 import Image from "next/image"
 import { ArrowLeft, Calendar, Clock, User, Eye } from "lucide-react"
+import { HeroSection } from "@/components/stories/hero-section"
 
 interface Post {
   id: string
@@ -31,101 +32,29 @@ interface EventRecapContentProps {
 
 export function EventRecapContent({ post, relatedPosts }: EventRecapContentProps) {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-neutral-50 to-white">
+    <div className="min-h-screen bg-white relative">
       {/* Hero Section */}
-      <section className="pb-12 px-6 pt-37">
-        <div className="max-w-5xl mx-auto">
-          {/* Badges */}
-          <div className="flex items-center gap-4 mb-8">
-            <span className="px-5 py-2.5 bg-neutral-900 text-white text-sm font-bold rounded-full uppercase tracking-wider">
-              Event Recap
-            </span>
-            
-            {post.publishedAt && (
-              <div className="flex items-center gap-2 px-5 py-2.5 bg-neutral-100 rounded-full border border-neutral-200">
-                <Calendar className="w-4 h-4 text-neutral-600" />
-                <div className="text-sm font-bold text-neutral-900">
-                  {new Date(post.publishedAt).toLocaleDateString('en-US', { 
-                    month: 'short', 
-                    day: 'numeric',
-                    year: 'numeric'
-                  })}
-                </div>
-              </div>
-            )}
-          </div>
-          
-          {/* Title */}
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-crimson font-normal tracking-tighter mb-6 leading-[1.1] text-neutral-900">
-            {post.title}
-          </h1>
-          
-          {/* Excerpt */}
-          {post.excerpt && (
-            <p className="text-xl md:text-2xl text-neutral-600 leading-relaxed mb-10 max-w-3xl">
-              {post.excerpt}
-            </p>
-          )}
-          
-          {/* Meta Info */}
-          <div className="flex flex-wrap items-center gap-6 pb-8 border-b border-neutral-200">
-            <div className="flex items-center gap-3">
-              {post.author.image && (
-                <Image
-                  src={post.author.image}
-                  alt={post.author.name || "Author"}
-                  width={56}
-                  height={56}
-                  className="w-14 h-14 rounded-full ring-2 ring-neutral-200"
-                />
-              )}
-              <div>
-                <div className="font-bold text-neutral-900 text-lg">
-                  {post.author.name || "Anonymous"}
-                </div>
-                <div className="text-neutral-500 text-sm flex items-center gap-1">
-                  <User className="w-3 h-3" />
-                  Event Organizer
-                </div>
-              </div>
-            </div>
-            
-            {post.readTime && (
-              <div className="flex items-center gap-2 text-neutral-600 px-4 py-2 bg-neutral-50 rounded-full">
-                <Clock className="w-4 h-4" />
-                <span className="text-sm font-medium">{post.readTime} min read</span>
-              </div>
-            )}
-            
-            <div className="flex items-center gap-2 text-neutral-600 px-4 py-2 bg-neutral-50 rounded-full">
-              <Eye className="w-4 h-4" />
-              <span className="text-sm font-medium">{post.viewCount} views</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Cover Image */}
-      {post.coverImage && (
-        <section className="pb-20 px-6">
-          <div className="max-w-7xl mx-auto">
-            <div className="relative aspect-[21/9] rounded-3xl overflow-hidden shadow-2xl border-2 border-neutral-200">
-              <Image
-                src={post.coverImage}
-                alt={post.title}
-                width={1400}
-                height={600}
-                className="w-full h-full object-cover"
-                priority
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
-            </div>
-          </div>
-        </section>
-      )}
+      <HeroSection
+        coverImage={post.coverImage}
+        title={post.title}
+        excerpt={post.excerpt}
+        author={post.author}
+        publishedAt={post.publishedAt}
+        readTime={post.readTime}
+        viewCount={post.viewCount}
+        category="events"
+        backHref="/stories/events"
+        backLabel="Back to Event Recaps"
+        additionalMeta={
+          <>
+            <User className="w-3 h-3" />
+            Event Organizer
+          </>
+        }
+      />
 
       {/* Content */}
-      <section className="pb-24 px-6">
+      <section className="pb-24 px-6 pt-20 bg-white">
         <div className="max-w-4xl mx-auto">
           <article 
             className="prose prose-xl max-w-none
@@ -148,7 +77,7 @@ export function EventRecapContent({ post, relatedPosts }: EventRecapContentProps
       <section className="pb-24 px-6 border-t border-neutral-200 pt-16">
         <div className="max-w-4xl mx-auto">
           <div className="bg-gradient-to-br from-neutral-900 to-neutral-800 rounded-3xl p-12 md:p-16 text-center text-white shadow-2xl border-2 border-neutral-700">
-            <Calendar className="w-16 h-16 mx-auto mb-6 text-white/20" />
+            <Calendar className="w-16 h-16 mx-auto mb-6 text-white" />
             <h3 className="text-3xl md:text-4xl font-crimson font-normal mb-4">Don&apos;t Miss Our Next Event</h3>
             <p className="text-neutral-300 mb-10 text-lg max-w-2xl mx-auto">
               Join us for upcoming workshops, performances, and community gatherings. Connect with like-minded creatives and be part of the movement.

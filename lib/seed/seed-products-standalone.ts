@@ -2,8 +2,8 @@
 // Usage: tsx lib/seed-products-standalone.ts
 
 import "dotenv/config"
-import { db } from "./db/index"
-import { products, users } from "./db/schema"
+import { db } from "../db/index"
+import { products, users } from "../db/schema"
 
 async function seedProducts() {
   console.log("🛍️  Seeding products...")

@@ -20,7 +20,7 @@ export function NavigationClientWrapper({ topBar, hasSession }: NavigationClient
   const hideNav = shouldHideNavigation(pathname)
   
   // Pages with full-screen hero sections where nav should overlay
-  const isOverlayNav = pathname === "/" || pathname.includes('/events/')
+  const isOverlayNav = pathname === "/" || pathname.includes('/events/') || pathname.includes('/stories/blog/') || pathname.includes('/stories/poetry/') || pathname.includes('/stories/events/')
 
   if (hideNav) {
     return null

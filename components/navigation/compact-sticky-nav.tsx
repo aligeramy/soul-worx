@@ -16,7 +16,7 @@ export function CompactStickyNav({ hasSession }: CompactStickyNavProps) {
   const [isVisible, setIsVisible] = useState(false)
   const pathname = usePathname()
   const isHomepage = pathname === "/"
-  const isTransparent = isHomepage || pathname.includes('/events/')
+  const isTransparent = isHomepage || pathname.includes('/events/') || pathname.includes('/stories/blog/') || pathname.includes('/stories/poetry/') || pathname.includes('/stories/events/')
 
   useEffect(() => {
     const handleScroll = () => {

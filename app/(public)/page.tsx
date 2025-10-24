@@ -1,6 +1,7 @@
 import Image from "next/image"
 import Link from "next/link"
 import { HeroSection } from "@/components/hero-section"
+import { SponsorSlider } from "@/components/sponsor-slider"
 import { TestimonialsStats } from "@/components/testimonials-stats"
 import { ProgramsSection } from "@/components/programs-section"
 import { GallerySlideshow } from "@/components/gallery-slideshow"
@@ -22,6 +23,9 @@ export default async function Home() {
   return (
     <div className="bg-brand-bg-darker min-h-screen">
       <HeroSection />
+
+      {/* Sponsor Slider */}
+      <SponsorSlider />
 
       {/* Programs Section with Parallax */}
       <ProgramsSection 

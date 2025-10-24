@@ -2,7 +2,9 @@
 
 import Link from "next/link"
 import Image from "next/image"
-import { ArrowLeft } from "lucide-react"
+import { Share2, Check } from "lucide-react"
+import { useState } from "react"
+import { HeroSection } from "@/components/stories/hero-section"
 
 interface Post {
   id: string
@@ -29,128 +31,172 @@ interface BlogContentProps {
   relatedPosts: Post[]
 }
 
+function ShareButton({ post }: { post: Post }) {
+  const [copied, setCopied] = useState(false)
+  const url = typeof window !== 'undefined' ? window.location.href : ''
+  
+  const handleShare = async () => {
+    const shareData = {
+      title: post.title,
+      text: post.excerpt || post.title,
+      url: url,
+    }
+
+    try {
+      // Try Web Share API first (mobile)
+      if (navigator.share) {
+        await navigator.share(shareData)
+      } else {
+        // Fallback: copy to clipboard
+        await navigator.clipboard.writeText(url)
+        setCopied(true)
+        setTimeout(() => setCopied(false), 2000)
+      }
+    } catch (err) {
+      // User cancelled or error - try clipboard fallback
+      try {
+        await navigator.clipboard.writeText(url)
+        setCopied(true)
+        setTimeout(() => setCopied(false), 2000)
+      } catch (clipboardErr) {
+        console.error('Failed to copy:', clipboardErr)
+      }
+    }
+  }
+
+  return (
+    <button
+      onClick={handleShare}
+      className="group inline-flex items-center gap-3 px-6 py-3 bg-white hover:bg-neutral-50 border-2 border-neutral-200 hover:border-neutral-300 rounded-full transition-all advance-shadow"
+    >
+      {copied ? (
+        <>
+          <Check className="w-5 h-5 text-green-600" />
+          <span className="text-sm font-medium text-green-600">Copied!</span>
+        </>
+      ) : (
+        <>
+          <Share2 className="w-5 h-5 text-neutral-600 group-hover:text-neutral-900 transition-colors" />
+          <span className="text-sm font-medium text-neutral-700 group-hover:text-neutral-900 transition-colors">
+            Share this post
+          </span>
+        </>
+      )}
+    </button>
+  )
+}
+
 export function BlogContent({ post, relatedPosts }: BlogContentProps) {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white relative">
       {/* Hero Section */}
-      <section className="pt-32 pb-16 px-6">
-        <div className="max-w-4xl mx-auto">
-          <div className="flex items-start justify-between mb-8">
-            <Link 
-              href="/stories/blog" 
-              className="inline-flex items-center gap-2 text-neutral-600 hover:text-neutral-900 group"
-            >
-              <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
-              Back to Blog
-            </Link>
-            
-            <span className="px-4 py-2 bg-neutral-900 text-white text-sm font-bold rounded-full uppercase tracking-wider">
-              BLOG
-            </span>
-          </div>
-          
-          <h1 className="mt-4 text-2xl font-crimson font-normal tracking-tighter mb-8 leading-tight text-neutral-900">
-            {post.title}
-          </h1>
-          
-          {post.excerpt && (
-            <p className="text-xl text-neutral-600 leading-relaxed mb-8">
-              {post.excerpt}
-            </p>
-          )}
-          
-          <div className="flex items-center gap-6 pb-8 border-b border-neutral-200">
-            <div className="flex items-center gap-3">
-              {post.author.image && (
-                <Image
-                  src={post.author.image}
-                  alt={post.author.name || "Author"}
-                  width={56}
-                  height={56}
-                  className="w-14 h-14 rounded-full"
-                />
-              )}
-              <div>
-                <div className="font-bold text-neutral-900 text-lg">
-                  {post.author.name || "Anonymous"}
-                </div>
-                <div className="text-neutral-600">
-                  {post.publishedAt && new Date(post.publishedAt).toLocaleDateString('en-US', { 
-                    year: 'numeric',
-                    month: 'long', 
-                    day: 'numeric'
-                  })}
-                </div>
-              </div>
-            </div>
-            
-            <div className="flex items-center gap-4 text-neutral-600 text-sm">
-              {post.readTime && (
-                <div>{post.readTime} min read</div>
-              )}
-              <div className="flex items-center gap-2">
-                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                </svg>
-                <span>{post.viewCount}</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Cover Image */}
-      {post.coverImage && (
-        <section className="pb-16 px-6">
-          <div className="max-w-5xl mx-auto">
-            <div className="relative aspect-[16/9] rounded-3xl overflow-hidden shadow-xl">
-              <Image
-                src={post.coverImage}
-                alt={post.title}
-                width={1200}
-                height={675}
-                className="w-full h-full object-cover"
-              />
-            </div>
-          </div>
-        </section>
-      )}
+      <HeroSection
+        coverImage={post.coverImage}
+        title={post.title}
+        excerpt={post.excerpt}
+        author={post.author}
+        publishedAt={post.publishedAt}
+        readTime={post.readTime}
+        viewCount={post.viewCount}
+        category="blog"
+        backHref="/stories/blog"
+        backLabel="Back to Blog"
+      />
 
       {/* Content */}
-      <section className="pb-20 px-6">
+      <section className="pb-20 px-6 pt-20 bg-white">
         <div className="max-w-3xl mx-auto">
+          <style dangerouslySetInnerHTML={{__html: `
+            .blog-content blockquote {
+              position: relative;
+              padding: 2rem 2.5rem;
+              margin: 2.5rem 0;
+              background: linear-gradient(to right, rgba(121, 79, 65, 0.08) 0%, rgba(121, 79, 65, 0.04) 100%);
+              border-left: 4px solid rgb(121, 79, 65);
+              border-radius: 0 1rem 1rem 0;
+              font-family: var(--font-crimson);
+              font-size: 1.55rem;
+              line-height: 1.25;
+              color: rgb(121, 79, 65);
+            }
+            .blog-content blockquote::before {
+              content: '"';
+              position: absolute;
+              top: 0rem;
+              left: 1rem;
+              font-size: 4rem;
+              font-family: var(--font-crimson);
+              color: rgb(121, 79, 65);
+              opacity: 0.25;
+              line-height: 1;
+            }
+            .blog-content blockquote cite {
+              display: block;
+              margin-top: 1rem;
+              font-size: 0.875rem;
+              font-style: normal;
+              font-family: var(--font-crimson);
+              color: rgba(121, 79, 65, 0.8);
+              font-weight: 500;
+            }
+            .blog-content blockquote cite::before {
+              content: '— ';
+            }
+            .blog-content blockquote p {
+              margin: 0;
+              padding: 0;
+            }
+            .blog-content blockquote p + p {
+              margin-top: 1rem;
+            }
+          `}} />
           <article 
-            className="prose prose-lg max-w-none
+            className="blog-content prose prose-lg max-w-none
               prose-headings:font-crimson prose-headings:font-normal prose-headings:tracking-tighter prose-headings:text-neutral-900
               prose-p:text-neutral-700 prose-p:leading-relaxed
               prose-a:text-neutral-900 prose-a:underline hover:prose-a:text-neutral-600
-              prose-blockquote:border-l-4 prose-blockquote:border-neutral-900 prose-blockquote:bg-neutral-50 prose-blockquote:py-4
               prose-strong:text-neutral-900
               prose-ul:text-neutral-700
-              prose-ol:text-neutral-700"
+              prose-ol:text-neutral-700
+              prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-6
+              prose-h3:text-2xl prose-h3:mt-8 prose-h3:mb-4"
             dangerouslySetInnerHTML={{ __html: post.content }}
           />
         </div>
       </section>
 
       {/* Share Section */}
-      <section className="pb-20 px-6 border-t border-neutral-200 pt-12">
+      <section className="pb-20 px-6 border-t border-neutral-200 pt-12 bg-white">
         <div className="max-w-3xl mx-auto">
-          <div className="bg-neutral-50 rounded-3xl p-8 text-center border border-neutral-200">
-            <svg className="w-16 h-16 mx-auto mb-4 text-neutral-900" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-            </svg>
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+            {/* Author Info */}
+            <div className="flex items-center gap-4">
+              {post.author.image && (
+                <Image
+                  src={post.author.image}
+                  alt={post.author.name || "Author"}
+                  width={48}
+                  height={48}
+                  className="w-12 h-12 rounded-full"
+                />
+              )}
+              <div>
+                <div className="text-sm text-neutral-500">Written by</div>
+                <div className="font-semibold text-neutral-900">
+                  {post.author.name || "Anonymous"}
+                </div>
+              </div>
+            </div>
             
-            <h3 className="text-2xl font-crimson font-normal mb-4">Share This Post</h3>
-            <p className="text-neutral-600 mb-6">Help spread the word about this story</p>
+            {/* Share Button */}
+            <ShareButton post={post} />
           </div>
         </div>
       </section>
 
       {/* Related Posts */}
       {relatedPosts.length > 0 && (
-        <section className="pb-32 px-6 border-t border-neutral-200 pt-20">
+        <section className="pb-32 px-6 border-t border-neutral-200 pt-20 bg-white">
           <div className="max-w-6xl mx-auto">
             <h2 className="text-3xl font-crimson font-normal tracking-tighter mb-12">
               More Blog Posts

@@ -228,13 +228,13 @@ export default async function AdminStoriesPage() {
 function CategoryBadge({ category }: { category: string }) {
   const variants = {
     poetry: "bg-blue-500/20 text-blue-400 border-blue-500/30",
-    stories: "bg-purple-500/20 text-purple-400 border-purple-500/30",
+    blog: "bg-purple-500/20 text-purple-400 border-purple-500/30",
     news: "bg-amber-500/20 text-amber-400 border-amber-500/30",
     announcements: "bg-emerald-500/20 text-emerald-400 border-emerald-500/30",
   }
 
   return (
-    <Badge variant="outline" className={variants[category as keyof typeof variants]}>
+    <Badge variant="outline" className={variants[category as keyof typeof variants] || "bg-white/10 text-white/70 border-white/20"}>
       {category}
     </Badge>
   )

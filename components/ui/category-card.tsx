@@ -29,7 +29,7 @@ export function CategoryCard({ title, description, href, image, index }: Categor
       }}
     >
       <Link href={href} className="group block">
-        <div className="relative overflow-hidden rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 h-[400px]">
+        <div className="relative overflow-hidden rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 h-[350px]">
           {/* Background Image */}
           <div className="absolute inset-0">
             <Image
@@ -50,10 +50,10 @@ export function CategoryCard({ title, description, href, image, index }: Categor
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 + 0.2 }}
             >
-              <h1 className="text-3xl text-shadow-lg tracking-tight font-geist font-medium text-white mb-3 group-hover:text-white/90 transition-colors">
+              <h1 className="text-2xl text-shadow-lg tracking-tight font-geist font-medium text-white mb-2 group-hover:text-white/90 transition-colors">
                 {title}
               </h1>
-              <p className="text-white/80 text-base leading-relaxed mb-6 max-w-md">
+              <p className="text-white/80 text-sm leading-relaxed mb-4 max-w-md">
                 {description}
               </p>
               

@@ -2,8 +2,8 @@
 // Usage: tsx lib/seed-stories-only.ts
 
 import "dotenv/config"
-import { db } from "./db/index"
-import { posts, type PostCategory, type PostStatus } from "./db/schema"
+import { db } from "../db/index"
+import { posts, type PostCategory, type PostStatus } from "../db/schema"
 
 async function seedStories() {
   console.log("Seeding stories...")

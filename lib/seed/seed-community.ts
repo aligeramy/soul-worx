@@ -1,9 +1,9 @@
 import "dotenv/config"
 import { drizzle } from "drizzle-orm/postgres-js"
 import postgres from "postgres"
-import { membershipTiers, communityChannels, videos, users } from "./db/schema"
+import { membershipTiers, communityChannels, videos, users } from "../db/schema"
 import { eq } from "drizzle-orm"
-import * as schema from "./db/schema"
+import * as schema from "../db/schema"
 
 async function seedCommunity() {
   console.log("🌱 Seeding community data...")
