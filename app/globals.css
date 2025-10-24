@@ -298,5 +298,12 @@ h2, h3 {
 }
 
 .animate-scroll-medium {
-  animation: scroll-medium 45s linear infinite;
+  animation: scroll-medium 20s linear infinite;
+}
+
+/* Faster on mobile */
+@media (max-width: 768px) {
+  .animate-scroll-medium {
+    animation: scroll-medium 15s linear infinite;
+  }
 }
