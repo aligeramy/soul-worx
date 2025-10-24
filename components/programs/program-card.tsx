@@ -65,7 +65,7 @@ export function ProgramCard({ program, categoryGradient, fullHeight = false }: P
             {/* Bottom content */}
             <div className="space-y-3">
               <div>
-                <h2 className="text-2xl font-crimson font-normal text-white mb-2 line-clamp-2">
+                <h2 className="text-3xl font-crimson tracking-tighter font-normal text-white mb-2 line-clamp-2">
                   {program.title}
                 </h2>
                 {program.description && (

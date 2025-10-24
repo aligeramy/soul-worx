@@ -67,7 +67,7 @@ export function Logo({
       className={cn(
         sizeConfig.className,
         logoConfig.classes,
-        "transition-transform duration-200 hover:scale-105 relative top-1",
+        "transition-transform duration-200 hover:scale-105 relative top-1 p-2",
         className
       )}
       priority={priority}
