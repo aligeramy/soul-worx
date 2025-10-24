@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useRef } from "react"
+import { useRouter } from "next/navigation"
 import { updateProfile } from "@/app/actions/profile"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -22,6 +23,7 @@ export function ProfileForm({ userImage, userInitials, userName, userEmail }: Pr
   const [isUploading, setIsUploading] = useState(false)
   const [isSaving, setIsSaving] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
+  const router = useRouter()
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
@@ -68,21 +70,28 @@ export function ProfileForm({ userImage, userInitials, userName, userEmail }: Pr
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     
+    if (!name.trim()) {
+      toast.error("Name cannot be empty")
+      return
+    }
+
     setIsSaving(true)
 
     try {
       const formData = new FormData()
-      formData.append("name", name)
+      formData.append("name", name.trim())
       if (image) {
         formData.append("image", image)
       }
 
       await updateProfile(formData)
-      toast.success("Profile updated successfully")
+      toast.success("Profile updated successfully!")
+      
+      // Refresh the page to show updated profile
+      router.refresh()
     } catch (error) {
       console.error("Error updating profile:", error)
       toast.error("Failed to update profile")
-    } finally {
       setIsSaving(false)
     }
   }
