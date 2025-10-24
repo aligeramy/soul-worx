@@ -118,7 +118,7 @@ export function ProgramsSection({ events = [] }: ProgramsSectionProps) {
   const carouselEvents = events.filter(e => !seenIds.has(e.id) && e.program?.category !== "special").slice(0, 5)
   
   // Find the earliest event for highlighting (currently unused but kept for future features)
-  const allEvents = [...secondColumnEvents, ...carouselEvents]
+  // const allEvents = [...secondColumnEvents, ...carouselEvents]
   // const nextUpcomingEventId = allEvents
   //   .sort((a, b) => new Date(a.startTime).getTime() - new Date(b.startTime).getTime())[0]?.id
   
