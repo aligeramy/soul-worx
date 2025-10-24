@@ -1,6 +1,6 @@
 import "dotenv/config"
-import { db } from "../lib/db"
-import { membershipTiers } from "../lib/db/schema"
+import { db } from "../db"
+import { membershipTiers } from "../db/schema"
 
 async function seedTiers() {
   console.log("🌱 Seeding membership tiers...")

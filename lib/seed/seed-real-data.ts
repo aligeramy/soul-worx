@@ -2,8 +2,8 @@
 // Usage: tsx lib/seed-real-data.ts
 
 import "dotenv/config"
-import { db } from "./db/index"
-import { programs, events, communityChannels, type ProgramCategory, type ProgramStatus, type EventStatus, type ChannelStatus, type ChannelCategory } from "./db/schema"
+import { db } from "../db/index"
+import { programs, events, communityChannels, type ProgramCategory, type ProgramStatus, type EventStatus, type ChannelStatus, type ChannelCategory } from "../db/schema"
 import { sql } from "drizzle-orm"
 
 async function seed() {

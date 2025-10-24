@@ -2,8 +2,8 @@
 // Usage: tsx lib/seed-data.ts
 
 import "dotenv/config"
-import { db } from "./db/index"
-import { programs, events, users, posts, products, type ProgramCategory, type ProgramStatus, type EventStatus, type PostCategory, type PostStatus } from "./db/schema"
+import { db } from "../db/index"
+import { programs, events, users, posts, products, type ProgramCategory, type ProgramStatus, type EventStatus, type PostCategory, type PostStatus } from "../db/schema"
 
 async function seed() {
   console.log("🌱 Seeding database...")

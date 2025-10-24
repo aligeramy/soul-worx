@@ -13,7 +13,7 @@ interface TopBarProps {
 export function TopBar({ hasSession }: TopBarProps) {
   const pathname = usePathname()
   const isHomepage = pathname === "/"
-  const isTransparent = isHomepage || pathname.includes('/events/')
+  const isTransparent = isHomepage || pathname.includes('/events/') || pathname.includes('/stories/blog/') || pathname.includes('/stories/poetry/') || pathname.includes('/stories/events/')
   const textColor = isTransparent ? "text-white hover:text-white/80" : "text-foreground hover:text-primary"
   const borderColor = isTransparent ? "border-white/10" : "border-border"
   const bgColor = isTransparent ? "bg-black/50 supports-[backdrop-filter]:bg-black/20" : "bg-background/95"

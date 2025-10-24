@@ -12,7 +12,7 @@ import { Logo } from "@/components/logo"
 export function Navigation() {
   const pathname = usePathname()
   const isHomepage = pathname === "/"
-  const isTransparent = isHomepage || pathname.includes('/events/')
+  const isTransparent = isHomepage || pathname.includes('/events/') || pathname.includes('/stories/blog/') || pathname.includes('/stories/poetry/') || pathname.includes('/stories/events/')
   
   const [activeSubmenu, setActiveSubmenu] = useState<NavigationItem["submenu"] | undefined>()
   const [isSubmenuVisible, setIsSubmenuVisible] = useState(false)

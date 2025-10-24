@@ -272,3 +272,31 @@ h2, h3 {
     transform: translateY(-30px) translateX(5px);
   }
 }
+
+/* Shimmer animation for card shine effect */
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%) skewX(-15deg);
+  }
+  100% {
+    transform: translateX(200%) skewX(-15deg);
+  }
+}
+
+.animate-shimmer {
+  animation: shimmer 2s ease-in-out infinite;
+}
+
+/* Sponsor Slider Animation */
+@keyframes scroll-medium {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-scroll-medium {
+  animation: scroll-medium 45s linear infinite;
+}
