@@ -20,7 +20,7 @@ export function ExploreSection() {
       <div className="relative max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {/* Poetry Card */}
-          <Link href="/poetry">
+          <Link href="stories/poetry">
             <div className="group cursor-pointer">
               <div className="relative aspect-[3/4] overflow-hidden rounded-3xl mb-6">
                 <Image
