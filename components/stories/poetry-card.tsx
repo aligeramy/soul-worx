@@ -29,10 +29,25 @@ export function PoetryCard({ post }: PoetryCardProps) {
 
   // Parse content into verses (split by double line breaks or paragraphs)
   const verses = useMemo(() => {
-    return post.content
-      .split(/\n\n+/)
-      .filter(v => v.trim().length > 0)
-      .map(v => stripHtml(v).trim()) // Strip HTML tags
+    const html = post.content ?? ""
+    // Try to split by HTML paragraphs first
+    const paragraphMatches = html.match(/<p[\s\S]*?<\/p>/gi)
+    const blocks: string | string[] =
+      paragraphMatches && paragraphMatches.length > 0
+        ? paragraphMatches
+        : html
+            .replace(/<br\s*\/?>(?=\s*<)/gi, '\n') // <br> to newlines when followed by tags
+            .replace(/<br\s*\/?>(?!\s*<)/gi, '\n') // <br> to newlines otherwise
+            .replace(/<\/p>/gi, '\n\n') // end of paragraph to blank line
+            .replace(/<[^>]*>/g, '') // drop remaining tags
+
+    const parts = Array.isArray(blocks)
+      ? blocks
+      : blocks.split(/\n{2,}|\r?\n\s*\r?\n/) // split by blank lines
+
+    return parts
+      .map((v) => stripHtml(v).trim())
+      .filter((v) => v.length > 0)
   }, [post.content])
 
   useEffect(() => {
@@ -106,7 +121,7 @@ export function PoetryCard({ post }: PoetryCardProps) {
                       : 'opacity-0 pointer-events-none'
                   }`}
                 >
-                  <p className="text-base md:text-lg text-white font-crimson leading-relaxed italic drop-shadow-md text-center line-clamp-3">
+                  <p className="text-base md:text-lg text-white font-crimson leading-relaxed italic drop-shadow-md text-center whitespace-pre-line">
                     &ldquo;{verse}&rdquo;
                   </p>
                 </div>

@@ -54,32 +54,53 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       }
       return session
     },
-    async jwt({ token, user, trigger }) {
-      // On initial sign-in, fetch user from database and store role in token
+    async jwt({ token, user, trigger, session }) {
+      // On initial sign-in, fetch user from database and store data in token
       if (user && user.id) {
         token.sub = user.id
-        // Fetch user role only on initial sign-in
+        token.name = user.name
+        token.email = user.email
+        // Fetch user data on initial sign-in
         try {
           const dbUser = await getUserById(user.id)
           if (dbUser) {
             token.role = dbUser.role
+            token.name = dbUser.name || user.name
+            token.email = dbUser.email || user.email
           }
         } catch (error) {
-          console.error("Error fetching user role:", error)
+          console.error("Error fetching user data:", error)
           // Default to 'user' role if query fails
           token.role = "user"
         }
       }
       
-      // Only refresh role on explicit update trigger, not on every request
+      // Refresh on explicit update trigger (after profile changes)
       if (trigger === "update" && token.sub) {
         try {
           const dbUser = await getUserById(token.sub)
           if (dbUser) {
             token.role = dbUser.role
+            token.name = dbUser.name
+            token.email = dbUser.email
           }
         } catch (error) {
-          console.error("Error refreshing user role:", error)
+          console.error("Error refreshing user data:", error)
+        }
+      }
+      
+      // Also refresh if user is in onboarding state (no name or name equals email)
+      // This ensures the session updates after completing onboarding
+      if (token.sub && (!token.name || token.name === token.email)) {
+        try {
+          const dbUser = await getUserById(token.sub)
+          if (dbUser && dbUser.name && dbUser.name !== dbUser.email) {
+            token.name = dbUser.name
+            token.email = dbUser.email
+            token.role = dbUser.role
+          }
+        } catch (error) {
+          console.error("Error refreshing onboarding user data:", error)
         }
       }
       
