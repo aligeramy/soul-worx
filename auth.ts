@@ -46,13 +46,21 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     signIn: "/signin",
   },
   callbacks: {
+    async signIn({ user, account, profile }) {
+      // Ensure user always has a name (use email prefix if not provided)
+      if (!user.name && user.email) {
+        user.name = user.email.split("@")[0]
+      }
+      return true
+    },
     async session({ session, token }) {
       if (session.user && token.sub) {
         session.user.id = token.sub
         session.user.name = token.name as string
         session.user.email = token.email as string
         session.user.role = token.role as UserRole
-        session.user.needsOnboarding = !token.name || token.name === token.email
+        // No onboarding needed - users can update their profile anytime
+        session.user.needsOnboarding = false
       }
       return session
     },
@@ -60,9 +68,11 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       // On initial sign-in or when user object is provided, update token
       if (user) {
         token.sub = user.id
-        token.name = user.name
         token.email = user.email
         token.role = user.role || "user"
+        
+        // If no name provided (Apple privacy), use email prefix as default
+        token.name = user.name || user.email?.split("@")[0] || "User"
       }
       
       return token
@@ -86,22 +96,12 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         return Response.redirect(new URL("/dashboard", nextUrl))
       }
 
-      // Redirect to onboarding if user needs to complete profile
-      if (isLoggedIn && auth.user.needsOnboarding && !isOnboarding) {
-        return Response.redirect(new URL("/onboarding", nextUrl))
-      }
-
-      // Prevent access to onboarding if already completed
-      if (isLoggedIn && !auth.user.needsOnboarding && isOnboarding) {
-        return Response.redirect(new URL("/dashboard", nextUrl))
-      }
-
       // Redirect to dashboard if already logged in and trying to access auth pages
       if (isLoggedIn && isAuth) {
         return Response.redirect(new URL("/dashboard", nextUrl))
       }
 
-      // Protect dashboard routes
+      // Protect dashboard routes (including onboarding, which is now just a settings page)
       if (isDashboard && !isLoggedIn) {
         return Response.redirect(new URL("/signin", nextUrl))
       }
