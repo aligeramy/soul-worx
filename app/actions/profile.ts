@@ -5,7 +5,6 @@ import { revalidatePath } from "next/cache"
 import { db } from "@/lib/db"
 import { users } from "@/lib/db/schema"
 import { eq } from "drizzle-orm"
-import { refreshSession } from "@/lib/actions/session"
 
 export async function updateProfile(formData: FormData) {
   const session = await auth()
@@ -34,9 +33,8 @@ export async function updateProfile(formData: FormData) {
     .set(updateData)
     .where(eq(users.id, session.user.id))
 
-  // Refresh the session to update needsOnboarding flag
-  await refreshSession()
-
+  // Force revalidation to clear cached auth data
+  revalidatePath("/", "layout")
   revalidatePath("/dashboard")
   revalidatePath("/onboarding")
   revalidatePath("/profile")

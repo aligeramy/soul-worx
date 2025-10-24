@@ -14,14 +14,9 @@ export default async function ProfilePage() {
   const userInitials = session.user.email?.charAt(0).toUpperCase() || "U"
 
   return (
-    <div className="min-h-screen p-4">
+    <div className=" p-4">
       <div className="max-w-2xl mx-auto space-y-6">
-        <div>
-          <h1 className="text-3xl font-bold text-white">Profile Settings</h1>
-          <p className="text-white/60 mt-2">
-            Manage your account information and preferences
-          </p>
-        </div>
+       
 
         <Card>
           <CardHeader>
