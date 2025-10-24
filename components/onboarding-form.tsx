@@ -82,12 +82,16 @@ export function OnboardingForm({ userImage, userInitials, userName, userEmail }:
         formData.append("image", image)
       }
 
-      // Save to database (this works!)
+      // Save to database
       await updateProfile(formData)
       
-      toast.success("Profile updated successfully!")
+      toast.success("Profile complete! Loading your dashboard...")
       
-      // Force full page reload to refresh session
+      // Set a flag in session storage to indicate onboarding is complete
+      // This prevents the onboarding loop issue
+      sessionStorage.setItem("onboarding_complete", "true")
+      
+      // Redirect to dashboard - the session will refresh on next page load
       window.location.href = "/dashboard"
     } catch (error) {
       console.error("Error updating profile:", error)
