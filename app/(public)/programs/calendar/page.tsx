@@ -57,9 +57,12 @@ export default async function ProgramsCalendarPage() {
       )}
 
       {/* All Programs */}
-      <section className="pb-32 px-6 pt-16 bg-brand-bg-darker">
+      <section className="pb-2 px-6 pt-16 bg-brand-bg-darker">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl font-crimson font-normal tracking-tighter mb-8 text-white">All Programs</h2>
+          <h2 className="text-5xl font-crimson !font-light tracking-tight text-white text-center">All Programs</h2>
+          <p className="text-lg text-white/80 max-w-2xl mx-auto mt-2 text-center !mb-10">
+            Explore our full collection of programs, workshops, partnerships and more—each built to inspire and empower youth and our creative community.
+          </p>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {programs.map((program) => (
               <ProgramCard
