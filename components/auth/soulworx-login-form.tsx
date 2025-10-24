@@ -15,17 +15,15 @@ export function SoulworxLoginForm() {
         <div className="flex flex-col items-center gap-4 text-center">
           {/* Logo */}
           <Image
-            src="/logo-v2/b.png"
+            src="/logo-v2/w.png"
             alt="Soulworx Logo"
             width={60}
             height={90}
-            className="h-20 w-auto"
+            className="h-15 w-auto border border-black/10 rounded-lg p-3 px-4 scale-70 bg-brand-bg-darker mb-0"
           />
           <div>
-            <h1 className="text-2xl font-bold">Welcome to Soulworx</h1>
-            <p className="text-muted-foreground text-sm text-balance mt-2">
-              Sign in to access your account and continue your journey
-            </p>
+            <h1 className="text-2xl font-medium font-crimson  tracking-tight -mt-2">Welcome to Soulworx</h1>
+           
           </div>
         </div>
 
