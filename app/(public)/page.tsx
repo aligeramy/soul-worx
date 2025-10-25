@@ -120,7 +120,7 @@ export default async function Home() {
             opacity: 0.3,
           }}
         />
-        <div className="relative max-w-5xl mx-auto text-center space-y-12">
+        <div className="relative max-w-5xl mx-auto text-center space-y-2">
           <div className="space-y-8">
             {/* SoulWorx Logo */}
             <div className="flex flex-col items-center space-y-3">
