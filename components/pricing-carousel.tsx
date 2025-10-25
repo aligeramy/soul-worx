@@ -2,21 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { cn } from "@/lib/utils"
-
-interface PricingTier {
-  name: string
-  type: string
-  price: string
-  priceUnit: string
-  features: string[]
-  popular?: boolean
-  styling: {
-    bg: string
-    text: string
-    border: string
-    hover: string
-  }
-}
+import { PricingCard, type PricingTier } from "@/components/ui/pricing-card"
 
 const tiers: PricingTier[] = [
   {
@@ -130,48 +116,7 @@ export function PricingCarousel() {
           >
             {tiers.map((tier) => (
               <div key={tier.name} className="min-w-full px-4 pt-8 pb-6">
-                <div className={cn(
-                  "rounded-3xl p-8 border transition-all duration-300 relative",
-                  tier.styling.bg,
-                  tier.styling.border,
-                  tier.styling.hover,
-                  tier.popular && "transform scale-105"
-                )}>
-                  {tier.popular && (
-                    <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 z-10">
-                      <div className="px-4 py-1 bg-brand-bg-darker border border-white text-white text-xs font-geist font-bold rounded-full whitespace-nowrap">
-                        POPULAR
-                      </div>
-                    </div>
-                  )}
-                  <div className={cn("space-y-6 text-center", tier.styling.text)}>
-                    <div className="space-y-2">
-                      <h3 className={cn("text-3xl font-crimson", tier.styling.text)}>{tier.name}</h3>
-                      <div className={cn("text-xs uppercase tracking-wide", tier.styling.text === "text-white" ? "text-white/60" : "text-neutral-500")}>
-                        {tier.type}
-                      </div>
-                      <div className={cn("text-4xl font-crimson font-normal flex items-center justify-center gap-1", tier.styling.text)}>
-                        {tier.price}
-                        {tier.priceUnit && <span className="text-xl font-normal">{tier.priceUnit}</span>}
-                      </div>
-                    </div>
-                    <div className="space-y-4 pt-4">
-                      {tier.features.map((feature, i) => (
-                        <div 
-                          key={i}
-                          className={cn(
-                            "text-sm py-2",
-                            tier.styling.text === "text-white" 
-                              ? "text-white/80 border-b border-white/10" 
-                              : "text-neutral-700 border-b border-neutral-200"
-                          )}
-                        >
-                          {feature}
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
+                <PricingCard tier={tier} isMobile={true} />
               </div>
             ))}
           </div>
@@ -198,51 +143,7 @@ export function PricingCarousel() {
       {/* Desktop: Grid Layout */}
       <div className="hidden md:grid grid-cols-3 gap-8">
         {tiers.map((tier) => (
-          <div
-            key={tier.name}
-            className={cn(
-              "rounded-3xl p-8 border transition-all duration-300",
-              tier.styling.bg,
-              tier.styling.border,
-              tier.styling.hover,
-              tier.popular && "transform scale-105 shadow-2xl relative"
-            )}
-          >
-            {tier.popular && (
-              <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                <div className="px-4 py-1 bg-brand-bg-darker border border-white text-white text-xs font-geist font-bold rounded-full">
-                  POPULAR
-                </div>
-              </div>
-            )}
-            <div className={cn("space-y-6 text-center", tier.styling.text)}>
-              <div className="space-y-2">
-                <h3 className={cn("text-2xl font-crimson", tier.styling.text)}>{tier.name}</h3>
-                <div className={cn("text-xs uppercase tracking-wide", tier.styling.text === "text-white" ? "text-white/60" : "text-neutral-500")}>
-                  {tier.type}
-                </div>
-                <div className={cn("text-3xl font-crimson font-normal", tier.styling.text)}>
-                  {tier.price}
-                  {tier.priceUnit && <span className="text-lg font-normal">{tier.priceUnit}</span>}
-                </div>
-              </div>
-              <div className="space-y-4">
-                {tier.features.map((feature, i) => (
-                  <div 
-                    key={i}
-                    className={cn(
-                      "text-sm py-2",
-                      tier.styling.text === "text-white" 
-                        ? "text-white/80 border-b border-white/10" 
-                        : "text-neutral-700 border-b border-neutral-200"
-                    )}
-                  >
-                    {feature}
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
+          <PricingCard key={tier.name} tier={tier} isMobile={false} />
         ))}
       </div>
     </div>

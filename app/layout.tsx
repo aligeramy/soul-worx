@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Crimson_Text } from "next/font/google";
 import localFont from "next/font/local";
+import { Analytics } from "@vercel/analytics/react";
 import { SessionProvider } from "@/components/providers/session-provider";
 import { CartProvider } from "@/components/shop/cart-provider";
 import { NavigationServerWrapper } from "@/components/navigation/navigation-server-wrapper";
@@ -61,6 +62,7 @@ export default function RootLayout({
             {children}
           </CartProvider>
         </SessionProvider>
+        <Analytics />
       </body>
     </html>
   );
