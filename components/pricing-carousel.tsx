@@ -25,7 +25,7 @@ const tiers: PricingTier[] = [
   {
     name: "Pro",
     type: "Membership",
-    price: "$9",
+    price: "$10",
     priceUnit: "/mo",
     features: [
       "Video library access",
@@ -43,7 +43,7 @@ const tiers: PricingTier[] = [
   {
     name: "Hall of Fame",
     type: "Membership",
-    price: "$29",
+    price: "$25",
     priceUnit: "/mo",
     features: [
       "Live sessions",
