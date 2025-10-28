@@ -99,7 +99,7 @@ export function ChannelCard({
               )}
               variant={hasFullAccess ? "default" : "outline"}
             >
-              {hasFullAccess ? "Watch All Programs" : "Watch Free Program"}
+              {hasFullAccess ? "Watch All Programs" : "View First Episode"}
             </Button>
           </div>
           </div>
