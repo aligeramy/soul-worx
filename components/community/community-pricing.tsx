@@ -13,7 +13,7 @@ interface CommunityPricingProps {
     name: string
     description: string
     price: string
-    billingPeriod: string
+    billingPeriod: string | null
     features: string[]
     level: string
   }>
