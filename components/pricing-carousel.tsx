@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 import { cn } from "@/lib/utils"
 import { PricingCard, type PricingTier } from "@/components/ui/pricing-card"
 
-const tiers: PricingTier[] = [
+const defaultTiers: PricingTier[] = [
   {
     name: "Free",
     type: "Membership",
@@ -59,7 +59,12 @@ const tiers: PricingTier[] = [
   }
 ]
 
-export function PricingCarousel() {
+interface PricingCarouselProps {
+  tiers?: PricingTier[]
+  variant?: "dark" | "light"
+}
+
+export function PricingCarousel({ tiers = defaultTiers, variant = "dark" }: PricingCarouselProps) {
   const [currentSlide, setCurrentSlide] = useState(0)
   const [touchStart, setTouchStart] = useState(0)
   const [touchEnd, setTouchEnd] = useState(0)

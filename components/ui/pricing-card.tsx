@@ -25,7 +25,7 @@ interface PricingCardProps {
 export function PricingCard({ tier, isMobile = false }: PricingCardProps) {
   return (
     <div className={cn(
-      "rounded-3xl p-8 border transition-all duration-300 relative max-w-md",
+      "rounded-3xl p-10 border transition-all duration-300 relative w-full",
       tier.styling.bg,
       tier.styling.border,
       tier.styling.hover,
