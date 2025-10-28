@@ -46,7 +46,15 @@ export function PoetryCard({ post }: PoetryCardProps) {
       : blocks.split(/\n{2,}|\r?\n\s*\r?\n/) // split by blank lines
 
     return parts
-      .map((v) => stripHtml(v).trim())
+      .map((v) => {
+        const cleanedVerse = stripHtml(v).trim()
+        // Limit to 5 lines
+        const lines = cleanedVerse.split('\n')
+        if (lines.length > 5) {
+          return lines.slice(0, 5).join('\n') + '...'
+        }
+        return cleanedVerse
+      })
       .filter((v) => v.length > 0)
   }, [post.content])
 

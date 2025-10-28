@@ -3,12 +3,10 @@ import { auth } from "@/auth"
 import { db } from "@/lib/db"
 import { communityChannels, membershipTiers, userMemberships } from "@/lib/db/schema"
 import { eq, and } from "drizzle-orm"
-import Link from "next/link"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
-import { Card } from "@/components/ui/card"
-import { SubscribeButton } from "@/components/community/subscribe-button"
 import { ChannelCard } from "@/components/community/channel-card"
+import { CommunityPricing } from "@/components/community/community-pricing"
 
 async function getUserMembership(userId: string | undefined) {
   if (!userId) return null
@@ -157,80 +155,11 @@ export default async function CommunityPage({
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {tiers.map((tier) => {
-              const isCurrent = membership?.tier?.id === tier.id
-              const price = parseFloat(tier.price?.toString() || "0")
-
-              return (
-                <Card
-                  key={tier.id}
-                  className={`p-8 ${
-                    tier.level === "premium"
-                      ? "border-2 border-neutral-900 shadow-lg"
-                      : ""
-                  }`}
-                >
-                  {tier.level === "premium" && (
-                    <div className="text-center mb-4">
-                      <span className="bg-neutral-900 text-white px-3 py-1 rounded-full text-sm font-medium">
-                        Most Popular
-                      </span>
-                    </div>
-                  )}
-
-                  <div className="text-center mb-6">
-                    <h3 className="text-2xl font-crimson font-normal mb-2">{tier.name}</h3>
-                    <div className="text-4xl font-bold mb-2">
-                      {price === 0 ? "Free" : `$${price.toFixed(0)}`}
-                      {price > 0 && (
-                        <span className="text-lg font-normal text-neutral-600">
-                          /{tier.billingPeriod === "yearly" ? "year" : "month"}
-                        </span>
-                      )}
-                    </div>
-                    <p className="text-neutral-600">{tier.description}</p>
-                  </div>
-
-                  <ul className="space-y-3 mb-8">
-                    {tier.features.map((feature, index) => (
-                      <li key={index} className="flex items-start">
-                        <svg
-                          className="w-5 h-5 text-green-500 mr-2 flex-shrink-0 mt-0.5"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M5 13l4 4L19 7"
-                          />
-                        </svg>
-                        <span className="text-neutral-700">{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-
-                  {!session?.user ? (
-                    <Link href="/signin">
-                      <Button className="w-full">
-                        {price === 0 ? "Sign In to Access" : "Sign In to Subscribe"}
-                      </Button>
-                    </Link>
-                  ) : (
-                    <SubscribeButton
-                      tierId={tier.id}
-                      isCurrentPlan={isCurrent}
-                      isFree={price === 0}
-                      hasExistingMembership={!!membership}
-                    />
-                  )}
-                </Card>
-              )
-            })}
-          </div>
+          <CommunityPricing
+            tiers={tiers}
+            currentTierId={membership?.tier?.id}
+            isAuthenticated={!!session?.user}
+          />
         </div>
       </section>
     </div>
