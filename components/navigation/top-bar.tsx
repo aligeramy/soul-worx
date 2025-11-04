@@ -16,11 +16,15 @@ export function TopBar({ hasSession }: TopBarProps) {
   const isTransparent = isHomepage || pathname.includes('/events/') || pathname.includes('/stories/blog/') || pathname.includes('/stories/poetry/') || pathname.includes('/stories/events/')
   const textColor = isTransparent ? "text-white hover:text-white/80" : "text-foreground hover:text-primary"
   const borderColor = isTransparent ? "border-white/10" : "border-border"
-  const bgColor = isTransparent ? "bg-black/50 supports-[backdrop-filter]:bg-black/20" : "bg-background/95"
+  const bgColor = isTransparent ? "supports-[backdrop-filter]:bg-black/20" : "bg-background/95"
 
   return (
-    <div className={`w-full backdrop-blur-md border-b transition-colors ${bgColor} ${borderColor}`}>
-      <div className="container mx-auto px-4">
+    <div className={`relative w-full backdrop-blur-md border-b transition-colors ${bgColor} ${borderColor}`}>
+      {/* Fallback overlay for browsers that don't support backdrop-filter */}
+      {isTransparent && (
+        <div className="absolute inset-0 bg-black/50 supports-[backdrop-filter]:hidden pointer-events-none" />
+      )}
+      <div className="container mx-auto px-4 relative z-10">
         <div className="flex items-center justify-between h-12">
           {/* Left - Social Icons */}
           <div className="flex items-center gap-4">
