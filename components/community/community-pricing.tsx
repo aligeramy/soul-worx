@@ -34,7 +34,7 @@ export function CommunityPricing({ tiers, currentTierId, isAuthenticated }: Comm
     return {
       name: tier.name,
       type: "Membership",
-      price: price === 0 ? "$0" : `$${price.toFixed(0)}`,
+      price: price === 0 ? "Free" : `$${price.toFixed(0)}`,
       priceUnit: price > 0 ? "/mo" : "",
       features: tier.features,
       popular: isPopular,

@@ -80,12 +80,12 @@ export function ChannelCard({
             <div className="flex items-center justify-between pt-2 border-t border-white/20">
               <div className="flex items-center gap-2 text-white/70 text-sm">
                 <PlayCircle className="w-4 h-4" />
-                <span>{videoCount} {videoCount === 1 ? 'program' : 'programs'}</span>
+                <span>{videoCount} {videoCount === 1 ? 'episode' : 'episodes'}</span>
               </div>
               
               {!hasFullAccess && (
                 <span className="text-xs text-green-400 font-medium">
-                  First program free
+                  First episode free
                 </span>
               )}
             </div>
@@ -99,7 +99,7 @@ export function ChannelCard({
               )}
               variant={hasFullAccess ? "default" : "outline"}
             >
-              {hasFullAccess ? "Watch All Programs" : "View First Episode for Free"}
+              {hasFullAccess ? "Watch All Episodes" : "View First Episode for Free"}
             </Button>
           </div>
           </div>

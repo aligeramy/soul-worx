@@ -81,7 +81,7 @@ export default async function VideoPage({
     redirect(`/programs/community/${slug}`)
   }
 
-  const embedUrl = getVideoEmbedUrl(video.videoUrl)
+  const embedUrl = video.videoUrl ? getVideoEmbedUrl(video.videoUrl) : null
 
   // Get related videos (other videos in same channel)
   const relatedVideos = await db.query.videos.findMany({
@@ -117,13 +117,22 @@ export default async function VideoPage({
           <div className="lg:col-span-2">
             {/* Video Player */}
             <div className="bg-black rounded-lg overflow-hidden mb-6" style={{ aspectRatio: "16/9" }}>
-              <iframe
-                src={embedUrl}
-                className="w-full h-full"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              />
+              {embedUrl ? (
+                <iframe
+                  src={embedUrl}
+                  className="w-full h-full"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
+              ) : (
+                <div className="w-full h-full flex items-center justify-center text-white">
+                  <div className="text-center">
+                    <p className="text-lg mb-2">Video Coming Soon</p>
+                    <p className="text-sm text-white/70">This episode will be available soon</p>
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Video Info */}
