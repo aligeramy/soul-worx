@@ -3,11 +3,12 @@ import { auth } from "@/auth"
 import { redirect } from "next/navigation"
 import { db } from "@/lib/db"
 import { communityChannels, videos, userMemberships } from "@/lib/db/schema"
-import { eq, and, desc } from "drizzle-orm"
+import { eq, and, asc } from "drizzle-orm"
 import Link from "next/link"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
+import { Lock } from "lucide-react"
 
 async function getUserMembership(userId: string | undefined) {
   if (!userId) return null
@@ -40,7 +41,7 @@ export default async function ChannelPage({
       with: {
         videos: {
           where: eq(videos.status, "published"),
-          orderBy: [desc(videos.seasonNumber), desc(videos.episodeNumber)],
+          orderBy: [asc(videos.seasonNumber), asc(videos.episodeNumber)],
         },
       },
     }),
@@ -54,10 +55,13 @@ export default async function ChannelPage({
   const userTierLevel = membership?.tier?.accessLevel || 0
   const hasChannelAccess = userTierLevel >= channel.requiredTierLevel
 
-  // Filter videos based on user's tier
-  const accessibleVideos = channel.videos.filter((video) => {
-    if (video.isFirstEpisode) return true // First episodes are always free
-    return userTierLevel >= video.requiredTierLevel
+  // Show all videos, but mark which ones are accessible
+  const allVideos = channel.videos.map((video) => {
+    const hasAccess = video.isFirstEpisode || userTierLevel >= video.requiredTierLevel
+    return {
+      ...video,
+      hasAccess,
+    }
   })
 
   return (
@@ -102,7 +106,7 @@ export default async function ChannelPage({
               
               <div className="flex items-center gap-3 text-sm">
                 <span className="px-3 py-1.5 bg-white/90 backdrop-blur-sm text-black font-bold rounded-full uppercase tracking-wide">
-                  {channel.videoCount} {channel.videoCount === 1 ? 'program' : 'programs'}
+                  {channel.videoCount} {channel.videoCount === 1 ? 'episode' : 'episodes'}
                 </span>
                 <span className="px-3 py-1.5 bg-white/90 backdrop-blur-sm text-black font-bold rounded-full uppercase tracking-wide">
                   {channel.category.replace('_', ' ')}
@@ -126,8 +130,8 @@ export default async function ChannelPage({
               Limited Access
             </p>
             <p className="text-yellow-800 mb-4">
-              You can watch the first program for free. Upgrade your membership to
-              access all programs in this online program.
+              You can watch the first episode for free. Upgrade your membership to
+              access all episodes in this channel.
             </p>
             <Link href="/programs/community#membership-tiers">
               <Button>View Membership Tiers</Button>
@@ -135,24 +139,34 @@ export default async function ChannelPage({
           </div>
         )}
 
-        <h2 className="text-2xl font-bold mb-6">Programs</h2>
+        <h2 className="text-2xl font-bold mb-6">Episodes</h2>
         
         <Suspense fallback={<div>Loading videos...</div>}>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {accessibleVideos.map((video) => (
-              <Card key={video.id} className="overflow-hidden hover:shadow-lg transition-shadow">
-                <Link href={`/programs/community/${slug}/${video.slug}`}>
-                  <div className="relative">
+            {allVideos.map((video) => {
+              const VideoCard = (
+                <Card 
+                  className={`overflow-hidden transition-all h-full flex flex-col ${
+                    video.hasAccess 
+                      ? "hover:shadow-lg cursor-pointer" 
+                      : "opacity-75 cursor-not-allowed"
+                  }`}
+                >
+                  <div className="relative flex-shrink-0">
                     {video.thumbnailUrl ? (
                       <Image
                         src={video.thumbnailUrl}
                         alt={video.title}
                         width={400}
                         height={192}
-                        className="w-full h-48 object-cover"
+                        className={`w-full h-48 object-cover ${
+                          !video.hasAccess ? "grayscale" : ""
+                        }`}
                       />
                     ) : (
-                      <div className="w-full h-48 bg-gradient-to-br from-purple-400 to-blue-400 flex items-center justify-center">
+                      <div className={`w-full h-48 bg-gradient-to-br from-purple-400 to-blue-400 flex items-center justify-center ${
+                        !video.hasAccess ? "grayscale opacity-50" : ""
+                      }`}>
                         <svg
                           className="w-16 h-16 text-white"
                           fill="none"
@@ -175,51 +189,79 @@ export default async function ChannelPage({
                       </div>
                     )}
                     
-                    {video.duration && (
+                    {(video.duration ?? 0) > 0 && (
                       <div className="absolute bottom-2 right-2 bg-black/80 text-white text-xs px-2 py-1 rounded">
-                        {Math.floor(video.duration / 60)}:{String(video.duration % 60).padStart(2, "0")}
+                        {Math.floor(Number(video.duration) / 60)}:{String(Number(video.duration) % 60).padStart(2, "0")}
                       </div>
                     )}
 
                     {video.isFirstEpisode && (
                       <div className="absolute top-2 left-2 bg-green-500 text-white text-xs px-2 py-1 rounded font-medium">
-                        FREE PROGRAM
+                        FREE EPISODE
+                      </div>
+                    )}
+
+                    {!video.hasAccess && (
+                      <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
+                        <div className="flex flex-col items-center gap-2 text-white">
+                          <Lock className="w-8 h-8" />
+                          <span className="text-sm font-medium">
+                            Tier {video.requiredTierLevel}+ Required
+                          </span>
+                        </div>
                       </div>
                     )}
                   </div>
                   
-                  <div className="p-4">
+                  <div className="p-4 flex flex-col flex-grow">
                     <h3 className="font-semibold mb-2 line-clamp-2">
                       {video.title}
                     </h3>
                     
                     {video.episodeNumber && (
                       <p className="text-sm text-neutral-600 mb-2">
-                        Program {video.episodeNumber}
-                        {video.seasonNumber && video.seasonNumber > 1 && ` • Series ${video.seasonNumber}`}
+                        Episode {video.episodeNumber}
+                        {video.seasonNumber && video.seasonNumber > 1 && ` • Season ${video.seasonNumber}`}
                       </p>
                     )}
                     
                     {video.description && (
-                      <p className="text-sm text-neutral-600 line-clamp-2">
+                      <p className="text-sm text-neutral-600 line-clamp-2 mb-auto">
                         {video.description}
                       </p>
                     )}
+
+                    {!video.hasAccess && (
+                      <div className="mt-3 pt-3 border-t">
+                        <Link href="/programs/community#membership-tiers">
+                          <Button size="sm" className="w-full">
+                            Upgrade to Access
+                          </Button>
+                        </Link>
+                      </div>
+                    )}
                   </div>
-                </Link>
-              </Card>
-            ))}
+                </Card>
+              )
+
+              if (video.hasAccess) {
+                return (
+                  <Link key={video.id} href={`/programs/community/${slug}/${video.slug}`}>
+                    {VideoCard}
+                  </Link>
+                )
+              }
+
+              return <div key={video.id}>{VideoCard}</div>
+            })}
           </div>
         </Suspense>
 
-        {accessibleVideos.length === 0 && (
+        {allVideos.length === 0 && (
           <div className="text-center py-12">
             <p className="text-neutral-600 mb-4">
-              No programs available with your current membership
+              No episodes available yet
             </p>
-            <Link href="/programs/community#membership-tiers">
-              <Button>Upgrade Membership</Button>
-            </Link>
           </div>
         )}
       </section>
