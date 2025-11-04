@@ -40,11 +40,15 @@ export function CompactStickyNav({ hasSession }: CompactStickyNavProps) {
           transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
           className={`fixed top-0 left-0 right-0 z-50 border-b shadow-lg transition-colors duration-300 ${
             isTransparent 
-              ? "bg-black/50 supports-[backdrop-filter]:bg-black/60 backdrop-blur-xl border-white/10" 
+              ? "supports-[backdrop-filter]:bg-black/60 backdrop-blur-xl border-white/10" 
               : "bg-background/95 backdrop-blur-xl border-border"
           }`}
         >
-          <div className="container mx-auto px-4">
+          {/* Fallback overlay for browsers that don't support backdrop-filter */}
+          {isTransparent && (
+            <div className="absolute inset-0 bg-black/50 supports-[backdrop-filter]:hidden pointer-events-none" />
+          )}
+          <div className="container mx-auto px-4 relative z-10">
             <div className="flex items-center justify-between h-16">
               {/* Desktop Navigation */}
               <div className="hidden lg:flex items-center justify-between w-full">

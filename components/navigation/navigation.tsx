@@ -60,11 +60,15 @@ export function Navigation() {
         <nav 
           className={`relative w-full border-t border-b transition-colors duration-300 ${
             isTransparent 
-              ? "bg-black/50 supports-[backdrop-filter]:bg-black/20 backdrop-blur-md border-white/10" 
+              ? "supports-[backdrop-filter]:bg-black/20 backdrop-blur-md border-white/10" 
               : "bg-background/95 backdrop-blur-md border-border"
           }`}
         >
-          <div className="container mx-auto px-4">
+          {/* Fallback overlay for browsers that don't support backdrop-filter */}
+          {isTransparent && (
+            <div className="absolute inset-0 bg-black/50 supports-[backdrop-filter]:hidden pointer-events-none" />
+          )}
+          <div className="container mx-auto px-4 relative z-10">
             <div className="flex items-center justify-between h-20">
               {/* Desktop Navigation */}
               <div className="hidden lg:flex items-center justify-between w-full">
