@@ -102,14 +102,32 @@ export function PoetryContent({ post, relatedPosts }: PoetryContentProps) {
       {/* Poetry Content - Verse by verse animation */}
       <section className="pb-20 px-6 pt-20 bg-brand-bg-darker relative z-10">
         <style dangerouslySetInnerHTML={{__html: `
+          .poetry-content {
+            font-family: var(--font-crimson), 'Crimson Text', Georgia, serif;
+            text-align: center;
+          }
           .poetry-content p {
-            font-family: var(--font-crimson);
+            font-family: var(--font-crimson), 'Crimson Text', Georgia, serif;
             font-weight: 400;
             color: white !important;
-            font-size: 1.25rem;
-            line-height: 1.75;
+            font-size: 1.5rem;
+            line-height: 1.8;
             text-align: center;
-            margin: 2rem 0;
+            margin: 2.5rem 0;
+            padding: 0 1rem;
+          }
+          .poetry-content p br {
+            line-height: 2;
+          }
+          .poetry-content p.poem-stanza {
+            font-family: var(--font-crimson), 'Crimson Text', Georgia, serif;
+            font-weight: 400;
+            color: white !important;
+            font-size: 1.5rem;
+            line-height: 1.8;
+            text-align: center;
+            margin: 2.5rem 0;
+            padding: 0 1rem;
           }
           .poetry-content h1,
           .poetry-content h2,
@@ -117,13 +135,13 @@ export function PoetryContent({ post, relatedPosts }: PoetryContentProps) {
           .poetry-content h4,
           .poetry-content h5,
           .poetry-content h6 {
-            font-family: var(--font-crimson);
+            font-family: var(--font-crimson), 'Crimson Text', Georgia, serif;
             font-weight: 400;
             color: white !important;
             text-align: center;
           }
           .poetry-content blockquote {
-            font-family: var(--font-crimson);
+            font-family: var(--font-crimson), 'Crimson Text', Georgia, serif;
             color: white !important;
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
@@ -146,13 +164,13 @@ export function PoetryContent({ post, relatedPosts }: PoetryContentProps) {
           }
           .poetry-content ul,
           .poetry-content ol {
-            font-family: var(--font-crimson);
+            font-family: var(--font-crimson), 'Crimson Text', Georgia, serif;
             color: white !important;
             text-align: center;
             list-style-position: inside;
           }
           .poetry-content li {
-            font-family: var(--font-crimson);
+            font-family: var(--font-crimson), 'Crimson Text', Georgia, serif;
             color: white !important;
           }
         `}} />
