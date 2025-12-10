@@ -130,28 +130,28 @@ export default async function AdminStoriesPage() {
         <Card className="bg-[#1c1c1e] border-white/10">
           <CardContent className="p-0">
             <div className="overflow-x-auto">
-              <table className="w-full">
+              <table className="w-full table-fixed">
                 <thead className="border-b border-white/10">
                   <tr>
-                    <th className="px-6 py-4 text-left text-xs font-semibold text-white/60 uppercase tracking-wider">
+                    <th className="px-2 py-2 text-left text-xs font-semibold text-white/60 uppercase tracking-wider" style={{ width: '25%' }}>
                       Title
                     </th>
-                    <th className="px-6 py-4 text-left text-xs font-semibold text-white/60 uppercase tracking-wider">
+                    <th className="px-2 py-2 text-left text-xs font-semibold text-white/60 uppercase tracking-wider hidden md:table-cell" style={{ width: '12%' }}>
                       Category
                     </th>
-                    <th className="px-6 py-4 text-left text-xs font-semibold text-white/60 uppercase tracking-wider">
+                    <th className="px-2 py-2 text-left text-xs font-semibold text-white/60 uppercase tracking-wider" style={{ width: '10%' }}>
                       Status
                     </th>
-                    <th className="px-6 py-4 text-left text-xs font-semibold text-white/60 uppercase tracking-wider">
+                    <th className="px-2 py-2 text-left text-xs font-semibold text-white/60 uppercase tracking-wider hidden lg:table-cell" style={{ width: '15%' }}>
                       Author
                     </th>
-                    <th className="px-6 py-4 text-left text-xs font-semibold text-white/60 uppercase tracking-wider">
+                    <th className="px-2 py-2 text-left text-xs font-semibold text-white/60 uppercase tracking-wider hidden md:table-cell" style={{ width: '10%' }}>
                       Views
                     </th>
-                    <th className="px-6 py-4 text-left text-xs font-semibold text-white/60 uppercase tracking-wider">
+                    <th className="px-2 py-2 text-left text-xs font-semibold text-white/60 uppercase tracking-wider hidden xl:table-cell" style={{ width: '12%' }}>
                       Published
                     </th>
-                    <th className="px-6 py-4 text-right text-xs font-semibold text-white/60 uppercase tracking-wider">
+                    <th className="px-2 py-2 text-right text-xs font-semibold text-white/60 uppercase tracking-wider" style={{ width: '16%' }}>
                       Actions
                     </th>
                   </tr>
@@ -159,10 +159,10 @@ export default async function AdminStoriesPage() {
                 <tbody className="divide-y divide-white/10">
                   {allStories.map((story) => (
                     <tr key={story.id} className="hover:bg-white/5 transition-colors">
-                      <td className="px-6 py-4">
-                        <div className="flex items-center gap-3">
+                      <td className="px-2 py-2">
+                        <div className="flex items-center gap-2">
                           {story.coverImage && (
-                            <div className="relative w-12 h-12 rounded-lg overflow-hidden bg-white/5 flex-shrink-0">
+                            <div className="relative w-10 h-10 rounded overflow-hidden bg-white/5 flex-shrink-0">
                               <Image
                                 src={story.coverImage}
                                 alt=""
@@ -171,40 +171,41 @@ export default async function AdminStoriesPage() {
                               />
                             </div>
                           )}
-                          <div className="min-w-0">
-                            <div className="font-semibold text-white truncate">{story.title}</div>
-                            <div className="text-sm text-white/50 line-clamp-1">{story.excerpt}</div>
+                          <div className="min-w-0 flex-1">
+                            <div className="font-semibold text-white text-xs truncate">{story.title}</div>
+                            <div className="text-[10px] text-white/50 line-clamp-1 hidden md:block">{story.excerpt}</div>
+                            <div className="text-[10px] text-blue-400 truncate md:hidden">{story.category}</div>
                           </div>
                         </div>
                       </td>
-                      <td className="px-6 py-4">
+                      <td className="px-2 py-2 hidden md:table-cell">
                         <CategoryBadge category={story.category} />
                       </td>
-                      <td className="px-6 py-4">
+                      <td className="px-2 py-2">
                         <StatusBadge status={story.status} />
                       </td>
-                      <td className="px-6 py-4 text-sm text-white/70">
+                      <td className="px-2 py-2 text-xs text-white/70 truncate hidden lg:table-cell">
                         {story.author.name || story.author.email}
                       </td>
-                      <td className="px-6 py-4">
-                        <div className="flex items-center gap-2 text-white/70">
-                          <Eye className="h-4 w-4" />
-                          <span className="text-sm">{story.viewCount.toLocaleString()}</span>
+                      <td className="px-2 py-2 hidden md:table-cell">
+                        <div className="flex items-center gap-1 text-white/70">
+                          <Eye className="h-3 w-3" />
+                          <span className="text-xs">{story.viewCount.toLocaleString()}</span>
                         </div>
                       </td>
-                      <td className="px-6 py-4 text-sm text-white/70">
-                        {story.publishedAt ? new Date(story.publishedAt).toLocaleDateString() : "—"}
+                      <td className="px-2 py-2 text-xs text-white/70 whitespace-nowrap hidden xl:table-cell">
+                        {story.publishedAt ? new Date(story.publishedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : "—"}
                       </td>
-                      <td className="px-6 py-4">
+                      <td className="px-2 py-2">
                         <div className="flex items-center justify-end gap-1">
                           <Link href={`/stories/${story.category}/${story.slug}`} target="_blank">
-                            <Button variant="ghost" size="sm" className="text-white/70 hover:text-white hover:bg-white/10">
-                              <ExternalLink className="h-4 w-4" />
+                            <Button variant="ghost" size="sm" className="h-6 w-6 p-0 text-white/70 hover:text-white hover:bg-white/10">
+                              <ExternalLink className="h-3 w-3" />
                             </Button>
                           </Link>
                           <Link href={`/dashboard/admin/stories/${story.id}`}>
-                            <Button variant="ghost" size="sm" className="text-white/70 hover:text-white hover:bg-white/10">
-                              <Pencil className="h-4 w-4" />
+                            <Button variant="ghost" size="sm" className="h-6 w-6 p-0 text-white/70 hover:text-white hover:bg-white/10">
+                              <Pencil className="h-3 w-3" />
                             </Button>
                           </Link>
                           <DeleteStoryButton 
@@ -234,7 +235,7 @@ function CategoryBadge({ category }: { category: string }) {
   }
 
   return (
-    <Badge variant="outline" className={variants[category as keyof typeof variants] || "bg-white/10 text-white/70 border-white/20"}>
+    <Badge variant="outline" className={`${variants[category as keyof typeof variants] || "bg-white/10 text-white/70 border-white/20"} text-xs px-1.5 py-0.5`}>
       {category}
     </Badge>
   )
@@ -248,7 +249,7 @@ function StatusBadge({ status }: { status: string }) {
   }
 
   return (
-    <Badge variant="outline" className={variants[status as keyof typeof variants]}>
+    <Badge variant="outline" className={`${variants[status as keyof typeof variants]} text-xs px-1.5 py-0.5`}>
       {status.charAt(0).toUpperCase() + status.slice(1)}
     </Badge>
   )

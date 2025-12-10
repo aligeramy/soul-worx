@@ -21,19 +21,21 @@ export default async function EditProductPage({
   }
 
   return (
-    <div className="max-w-4xl space-y-8">
-      <div>
-        <h1 className="text-4xl font-bold">Edit Product</h1>
-        <p className="text-neutral-600 mt-2">
-          Update product details
-        </p>
-      </div>
+    <div className="bg-white rounded-lg p-8 shadow-sm">
+      <div className="max-w-4xl mx-auto space-y-8">
+        <div>
+          <h1 className="text-4xl font-bold text-neutral-900">Edit Product</h1>
+          <p className="text-neutral-600 mt-2">
+            Update product details
+          </p>
+        </div>
 
-      <ProductForm product={{
-        ...product,
-        tags: product.tags || [],
-        specifications: product.specifications || {}
-      }} />
+        <ProductForm product={{
+          ...product,
+          tags: product.tags || [],
+          specifications: product.specifications || {}
+        }} />
+      </div>
     </div>
   )
 }

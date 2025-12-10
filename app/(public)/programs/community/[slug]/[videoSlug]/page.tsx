@@ -6,6 +6,8 @@ import { eq, and } from "drizzle-orm"
 import Link from "next/link"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
+import { VideoViewTracker } from "@/components/video-view-tracker"
+import { SessionProvider } from "@/components/providers/session-provider"
 
 async function getUserMembership(userId: string | undefined) {
   if (!userId) return null
@@ -94,8 +96,10 @@ export default async function VideoPage({
   })
 
   return (
-    <div className="min-h-screen bg-neutral-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <SessionProvider>
+      <VideoViewTracker videoId={video.id} videoDuration={video.duration || null} />
+      <div className="min-h-screen bg-neutral-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Breadcrumb */}
         <div className="mb-6 text-sm">
           <Link href="/programs/community" className="text-neutral-600 hover:text-neutral-900">
@@ -272,8 +276,9 @@ export default async function VideoPage({
             </div>
           </div>
         </div>
+        </div>
       </div>
-    </div>
+    </SessionProvider>
   )
 }
 

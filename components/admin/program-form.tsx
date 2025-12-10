@@ -200,7 +200,7 @@ export function ProgramForm({ program }: ProgramFormProps) {
             onChange={handleChange}
             placeholder="Brief overview of the program (shown in listings)..."
             rows={3}
-            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+            className="w-full px-4 py-3 border border-neutral-300 rounded-lg bg-white shadow-sm transition-all outline-none focus:border-neutral-400 focus:ring-2 focus:ring-neutral-200 focus:shadow-md"
             required
           />
         </Field>
@@ -213,7 +213,7 @@ export function ProgramForm({ program }: ProgramFormProps) {
             onChange={handleChange}
             placeholder="Detailed description with all program details (supports markdown)..."
             rows={8}
-            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black font-mono text-sm"
+            className="w-full px-4 py-3 border border-neutral-300 rounded-lg bg-white shadow-sm transition-all outline-none focus:border-neutral-400 focus:ring-2 focus:ring-neutral-200 focus:shadow-md font-mono text-sm"
           />
         </Field>
 
@@ -467,7 +467,7 @@ export function ProgramForm({ program }: ProgramFormProps) {
               onChange={(e) => updateFaq(index, "answer", e.target.value)}
               placeholder="Answer..."
               rows={2}
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+              className="w-full px-4 py-3 border border-neutral-300 rounded-lg bg-white shadow-sm transition-all outline-none focus:border-neutral-400 focus:ring-2 focus:ring-neutral-200 focus:shadow-md"
             />
           </div>
         ))}
@@ -495,7 +495,7 @@ export function ProgramForm({ program }: ProgramFormProps) {
             onChange={handleChange}
             placeholder="SEO description (leave blank to use program description)"
             rows={2}
-            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+            className="w-full px-4 py-3 border border-neutral-300 rounded-lg bg-white shadow-sm transition-all outline-none focus:border-neutral-400 focus:ring-2 focus:ring-neutral-200 focus:shadow-md"
           />
         </Field>
       </div>

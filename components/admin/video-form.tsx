@@ -257,12 +257,20 @@ export function VideoForm({ video, channelId, onSuccess }: VideoFormProps) {
 
       <Field>
         <Label htmlFor="description">Description</Label>
-        <textarea
-          id="description"
-          value={formData.description}
-          onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-          className="w-full min-h-[100px] rounded-md border border-neutral-300 px-3 py-2"
-        />
+        <div className="space-y-2">
+          <textarea
+            id="description"
+            value={formData.description}
+            onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+            placeholder="Enter a detailed description of the video content, what viewers will learn, key topics covered, and any important information..."
+            className="w-full min-h-[200px] rounded-lg border border-neutral-300 bg-white px-4 py-3 text-sm resize-y shadow-sm transition-all outline-none focus:border-neutral-400 focus:ring-2 focus:ring-neutral-200 focus:shadow-md"
+            rows={8}
+          />
+          <div className="text-xs text-neutral-500 flex justify-between">
+            <span>Provide a comprehensive description to help viewers understand the video content</span>
+            <span>{formData.description.length} characters</span>
+          </div>
+        </div>
       </Field>
 
       <Field>

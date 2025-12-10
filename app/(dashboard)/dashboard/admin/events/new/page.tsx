@@ -18,15 +18,17 @@ export default async function NewEventPage() {
   })
 
   return (
-    <div className="max-w-4xl space-y-8">
-      <div>
-        <h1 className="text-4xl font-bold">New Event</h1>
-        <p className="text-neutral-600 mt-2">
-          Create a new event or session
-        </p>
-      </div>
+    <div className="bg-white rounded-lg p-8 shadow-sm">
+      <div className="max-w-4xl mx-auto space-y-8">
+        <div>
+          <h1 className="text-4xl font-bold text-neutral-900">New Event</h1>
+          <p className="text-neutral-600 mt-2">
+            Create a new event or session
+          </p>
+        </div>
 
-      <EventForm programs={programs} />
+        <EventForm programs={programs} />
+      </div>
     </div>
   )
 }

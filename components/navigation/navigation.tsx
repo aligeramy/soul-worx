@@ -16,7 +16,7 @@ export function Navigation() {
   
   const [activeSubmenu, setActiveSubmenu] = useState<NavigationItem["submenu"] | undefined>()
   const [isSubmenuVisible, setIsSubmenuVisible] = useState(false)
-  const closeTimeoutRef = useRef<NodeJS.Timeout | undefined>(undefined)
+  const closeTimeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
   const navContainerRef = useRef<HTMLDivElement>(null)
 
   const handleMenuItemEnter = (submenu?: NavigationItem["submenu"]) => {
