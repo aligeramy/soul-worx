@@ -12,7 +12,14 @@
         "thumbnailImage": "/optimized/0K0A0925.jpg",
         "requiredTierLevel": 1,
         "isFeatured": true,
-        "tags": ["ball-handling", "dribbling", "fundamentals", "no-court", "training", "basketball-skills"],
+        "tags": [
+          "ball-handling",
+          "dribbling",
+          "fundamentals",
+          "no-court",
+          "training",
+          "basketball-skills"
+        ],
         "metaTitle": "Ball Handling Fundamentals - No Court Required Basketball Training",
         "metaDescription": "Master ball handling skills with professional basketball drills you can practice anywhere. Learn pound dribbles, crossovers, figure-8s, and advanced combinations.",
         "sortOrder": 1
@@ -22,7 +29,7 @@
           "title": "Ball Handling & Footwork Introduction",
           "slug": "ball-handling-footwork-introduction",
           "description": "Introduction to ball handling fundamentals and footwork. Learn the basics of proper technique and body positioning for effective ball control.",
-          "videoUrl": "",
+          "videoUrl": "https://c5ycdc1ptiousqvk.public.blob.vercel-storage.com/videos/ball-handling-s1e1.mp4",
           "thumbnailUrl": "",
           "duration": null,
           "episodeNumber": 1,
@@ -30,7 +37,12 @@
           "isFirstEpisode": true,
           "requiredTierLevel": 1,
           "status": "published",
-          "tags": ["ball-handling", "footwork", "introduction", "fundamentals"],
+          "tags": [
+            "ball-handling",
+            "footwork",
+            "introduction",
+            "fundamentals"
+          ],
           "metaTitle": "Ball Handling & Footwork Introduction - Episode 1",
           "metaDescription": "Learn the fundamentals of ball handling and footwork with proper technique and body positioning."
         },
@@ -38,7 +50,7 @@
           "title": "Ball Handling Pound Drill",
           "slug": "ball-handling-pound-drill",
           "description": "Master the foundational pound dribble drill. Practice variations including pound to the knee and higher pound techniques to build strength and control.",
-          "videoUrl": "",
+          "videoUrl": "https://c5ycdc1ptiousqvk.public.blob.vercel-storage.com/videos/ball-handling-s1e2.mp4",
           "thumbnailUrl": "",
           "duration": null,
           "episodeNumber": 2,
@@ -46,7 +58,12 @@
           "isFirstEpisode": false,
           "requiredTierLevel": 2,
           "status": "published",
-          "tags": ["pound-dribble", "ball-handling", "drills", "fundamentals"],
+          "tags": [
+            "pound-dribble",
+            "ball-handling",
+            "drills",
+            "fundamentals"
+          ],
           "metaTitle": "Ball Handling Pound Drill - Episode 2",
           "metaDescription": "Learn the pound dribble drill with variations to build ball handling strength and control."
         },
@@ -54,7 +71,7 @@
           "title": "Injured Player Ball Handling Drills",
           "slug": "injured-player-ball-handling-drills",
           "description": "Maintain your ball handling skills even when injured. Practice variations around the body to keep your touch sharp during recovery.",
-          "videoUrl": "",
+          "videoUrl": "https://c5ycdc1ptiousqvk.public.blob.vercel-storage.com/videos/ball-handling-s1e3.mp4",
           "thumbnailUrl": "",
           "duration": null,
           "episodeNumber": 3,
@@ -62,7 +79,12 @@
           "isFirstEpisode": false,
           "requiredTierLevel": 2,
           "status": "published",
-          "tags": ["injured-training", "ball-handling", "recovery", "variations"],
+          "tags": [
+            "injured-training",
+            "ball-handling",
+            "recovery",
+            "variations"
+          ],
           "metaTitle": "Injured Player Ball Handling Drills - Episode 3",
           "metaDescription": "Maintain ball handling skills during injury recovery with body movement variations."
         },
@@ -70,7 +92,7 @@
           "title": "Advanced Footwork Drills",
           "slug": "advanced-footwork-drills",
           "description": "Develop quick feet and better coordination with advanced footwork drills. Improve your agility and movement patterns for better on-court performance.",
-          "videoUrl": "",
+          "videoUrl": "https://c5ycdc1ptiousqvk.public.blob.vercel-storage.com/videos/ball-handling-s1e4.mp4",
           "thumbnailUrl": "",
           "duration": null,
           "episodeNumber": 4,
@@ -78,7 +100,12 @@
           "isFirstEpisode": false,
           "requiredTierLevel": 2,
           "status": "published",
-          "tags": ["footwork", "agility", "coordination", "advanced"],
+          "tags": [
+            "footwork",
+            "agility",
+            "coordination",
+            "advanced"
+          ],
           "metaTitle": "Advanced Footwork Drills - Episode 4",
           "metaDescription": "Improve agility and coordination with advanced footwork drills for basketball."
         },
@@ -86,7 +113,7 @@
           "title": "Dribble Drag Drill",
           "slug": "dribble-drag-drill",
           "description": "Master the dribble drag technique to create space and maintain control. Learn how to effectively use this move to beat defenders.",
-          "videoUrl": "",
+          "videoUrl": "https://c5ycdc1ptiousqvk.public.blob.vercel-storage.com/videos/ball-handling-s1e5.mp4",
           "thumbnailUrl": "",
           "duration": null,
           "episodeNumber": 5,
@@ -94,7 +121,12 @@
           "isFirstEpisode": false,
           "requiredTierLevel": 2,
           "status": "published",
-          "tags": ["dribble-drag", "ball-handling", "moves", "technique"],
+          "tags": [
+            "dribble-drag",
+            "ball-handling",
+            "moves",
+            "technique"
+          ],
           "metaTitle": "Dribble Drag Drill - Episode 5",
           "metaDescription": "Learn the dribble drag technique to create space and maintain ball control."
         },
@@ -102,7 +134,7 @@
           "title": "Pound Between the Legs & Behind the Back",
           "slug": "pound-between-legs-behind-back",
           "description": "Advanced pound dribble variations including between the legs and behind the back techniques. Build advanced ball handling skills with expert commentary.",
-          "videoUrl": "",
+          "videoUrl": "https://c5ycdc1ptiousqvk.public.blob.vercel-storage.com/videos/ball-handling-s1e6.mp4",
           "thumbnailUrl": "",
           "duration": null,
           "episodeNumber": 6,
@@ -110,7 +142,12 @@
           "isFirstEpisode": false,
           "requiredTierLevel": 2,
           "status": "published",
-          "tags": ["pound-dribble", "between-legs", "behind-back", "advanced"],
+          "tags": [
+            "pound-dribble",
+            "between-legs",
+            "behind-back",
+            "advanced"
+          ],
           "metaTitle": "Pound Between the Legs & Behind the Back - Episode 6",
           "metaDescription": "Master advanced pound dribble variations including between the legs and behind the back techniques."
         },
@@ -118,7 +155,7 @@
           "title": "Pound Dribble Front Cross Combinations",
           "slug": "pound-dribble-front-cross-combinations",
           "description": "Learn pound dribble into front cross combinations. Master these essential combo moves to keep defenders guessing and improve your ball handling repertoire.",
-          "videoUrl": "",
+          "videoUrl": "https://c5ycdc1ptiousqvk.public.blob.vercel-storage.com/videos/ball-handling-s1e7.mp4",
           "thumbnailUrl": "",
           "duration": null,
           "episodeNumber": 7,
@@ -126,7 +163,12 @@
           "isFirstEpisode": false,
           "requiredTierLevel": 2,
           "status": "published",
-          "tags": ["pound-dribble", "crossover", "combinations", "moves"],
+          "tags": [
+            "pound-dribble",
+            "crossover",
+            "combinations",
+            "moves"
+          ],
           "metaTitle": "Pound Dribble Front Cross Combinations - Episode 7",
           "metaDescription": "Master pound dribble into front cross combinations for advanced ball handling."
         },
@@ -134,7 +176,7 @@
           "title": "Pre-Practice Warm Up Routine",
           "slug": "pre-practice-warm-up-routine",
           "description": "Essential warm-up routine to prepare your body and hands for ball handling practice. Get your muscles ready and prevent injury with proper preparation.",
-          "videoUrl": "",
+          "videoUrl": "https://c5ycdc1ptiousqvk.public.blob.vercel-storage.com/videos/ball-handling-s1e8.mp4",
           "thumbnailUrl": "",
           "duration": null,
           "episodeNumber": 8,
@@ -142,7 +184,12 @@
           "isFirstEpisode": false,
           "requiredTierLevel": 2,
           "status": "published",
-          "tags": ["warm-up", "preparation", "injury-prevention", "routine"],
+          "tags": [
+            "warm-up",
+            "preparation",
+            "injury-prevention",
+            "routine"
+          ],
           "metaTitle": "Pre-Practice Warm Up Routine - Episode 8",
           "metaDescription": "Essential warm-up routine to prepare for ball handling practice and prevent injury."
         },
@@ -150,7 +197,7 @@
           "title": "Figure 8 Ball Handling Drill",
           "slug": "figure-8-ball-handling-drill",
           "description": "Master the classic figure-8 drill to improve hand coordination and ball control. This fundamental exercise builds the foundation for advanced moves.",
-          "videoUrl": "",
+          "videoUrl": "https://c5ycdc1ptiousqvk.public.blob.vercel-storage.com/videos/ball-handling-s1e9.mp4",
           "thumbnailUrl": "",
           "duration": null,
           "episodeNumber": 9,
@@ -158,7 +205,12 @@
           "isFirstEpisode": false,
           "requiredTierLevel": 2,
           "status": "published",
-          "tags": ["figure-8", "ball-handling", "coordination", "fundamentals"],
+          "tags": [
+            "figure-8",
+            "ball-handling",
+            "coordination",
+            "fundamentals"
+          ],
           "metaTitle": "Figure 8 Ball Handling Drill - Episode 9",
           "metaDescription": "Master the figure-8 drill to improve hand coordination and ball control."
         },
@@ -166,7 +218,7 @@
           "title": "Double Punch to Double Behind the Back",
           "slug": "double-punch-double-behind-back",
           "description": "Advanced combination move: double punch to double behind the back. Learn the technique and timing with detailed explanation to execute this move effectively.",
-          "videoUrl": "",
+          "videoUrl": "https://c5ycdc1ptiousqvk.public.blob.vercel-storage.com/videos/ball-handling-s1e10.mp4",
           "thumbnailUrl": "",
           "duration": null,
           "episodeNumber": 10,
@@ -174,7 +226,12 @@
           "isFirstEpisode": false,
           "requiredTierLevel": 2,
           "status": "published",
-          "tags": ["advanced", "combinations", "behind-back", "technique"],
+          "tags": [
+            "advanced",
+            "combinations",
+            "behind-back",
+            "technique"
+          ],
           "metaTitle": "Double Punch to Double Behind the Back - Episode 10",
           "metaDescription": "Master the advanced double punch to double behind the back combination move."
         },
@@ -182,7 +239,7 @@
           "title": "Line Ladder Ball Handling Work",
           "slug": "line-ladder-ball-handling-work",
           "description": "Improve your ball handling precision and control with line ladder work. Develop better hand-eye coordination and spatial awareness.",
-          "videoUrl": "",
+          "videoUrl": "https://c5ycdc1ptiousqvk.public.blob.vercel-storage.com/videos/ball-handling-s1e11.mp4",
           "thumbnailUrl": "",
           "duration": null,
           "episodeNumber": 11,
@@ -190,7 +247,12 @@
           "isFirstEpisode": false,
           "requiredTierLevel": 2,
           "status": "published",
-          "tags": ["ladder-drill", "ball-handling", "precision", "coordination"],
+          "tags": [
+            "ladder-drill",
+            "ball-handling",
+            "precision",
+            "coordination"
+          ],
           "metaTitle": "Line Ladder Ball Handling Work - Episode 11",
           "metaDescription": "Improve ball handling precision with line ladder drills for better coordination."
         },
@@ -198,7 +260,7 @@
           "title": "Double Pound Double Front Cross",
           "slug": "double-pound-double-front-cross",
           "description": "Master the double pound double front cross combination. Learn the rhythm and technique with detailed explanation to execute this advanced move smoothly.",
-          "videoUrl": "",
+          "videoUrl": "https://c5ycdc1ptiousqvk.public.blob.vercel-storage.com/videos/ball-handling-s1e12.mp4",
           "thumbnailUrl": "",
           "duration": null,
           "episodeNumber": 12,
@@ -206,7 +268,12 @@
           "isFirstEpisode": false,
           "requiredTierLevel": 2,
           "status": "published",
-          "tags": ["double-pound", "crossover", "combinations", "advanced"],
+          "tags": [
+            "double-pound",
+            "crossover",
+            "combinations",
+            "advanced"
+          ],
           "metaTitle": "Double Pound Double Front Cross - Episode 12",
           "metaDescription": "Master the double pound double front cross combination with detailed technique explanation."
         },
@@ -214,7 +281,7 @@
           "title": "Wrapping the Ball - Unable to Dribble Training",
           "slug": "wrapping-ball-unable-dribble-training",
           "description": "Develop ball control and hand strength with wrapping drills when you can't dribble. Perfect for indoor practice or when space is limited.",
-          "videoUrl": "",
+          "videoUrl": "https://c5ycdc1ptiousqvk.public.blob.vercel-storage.com/videos/ball-handling-s1e13.mp4",
           "thumbnailUrl": "",
           "duration": null,
           "episodeNumber": 13,
@@ -222,7 +289,12 @@
           "isFirstEpisode": false,
           "requiredTierLevel": 2,
           "status": "published",
-          "tags": ["ball-wrapping", "indoor-training", "ball-control", "hand-strength"],
+          "tags": [
+            "ball-wrapping",
+            "indoor-training",
+            "ball-control",
+            "hand-strength"
+          ],
           "metaTitle": "Wrapping the Ball Training - Episode 13",
           "metaDescription": "Develop ball control with wrapping drills perfect for indoor or limited space practice."
         },
@@ -230,7 +302,7 @@
           "title": "Stretching & Flexibility for Ball Handlers",
           "slug": "stretching-flexibility-ball-handlers",
           "description": "Essential stretching routine for ball handlers. Improve flexibility, prevent injury, and maintain mobility for optimal performance.",
-          "videoUrl": "",
+          "videoUrl": "https://c5ycdc1ptiousqvk.public.blob.vercel-storage.com/videos/ball-handling-s1e14.mp4",
           "thumbnailUrl": "",
           "duration": null,
           "episodeNumber": 14,
@@ -238,7 +310,12 @@
           "isFirstEpisode": false,
           "requiredTierLevel": 2,
           "status": "published",
-          "tags": ["stretching", "flexibility", "injury-prevention", "recovery"],
+          "tags": [
+            "stretching",
+            "flexibility",
+            "injury-prevention",
+            "recovery"
+          ],
           "metaTitle": "Stretching & Flexibility for Ball Handlers - Episode 14",
           "metaDescription": "Essential stretching routine to improve flexibility and prevent injury for ball handlers."
         },
@@ -246,7 +323,7 @@
           "title": "Pound Cross Combination Drill",
           "slug": "pound-cross-combination-drill",
           "description": "Master the pound cross combination to improve your ability to change direction quickly. Build the muscle memory needed for game situations.",
-          "videoUrl": "",
+          "videoUrl": "https://c5ycdc1ptiousqvk.public.blob.vercel-storage.com/videos/ball-handling-s1e15.mp4",
           "thumbnailUrl": "",
           "duration": null,
           "episodeNumber": 15,
@@ -254,7 +331,12 @@
           "isFirstEpisode": false,
           "requiredTierLevel": 2,
           "status": "published",
-          "tags": ["pound-dribble", "crossover", "combinations", "direction-change"],
+          "tags": [
+            "pound-dribble",
+            "crossover",
+            "combinations",
+            "direction-change"
+          ],
           "metaTitle": "Pound Cross Combination Drill - Episode 15",
           "metaDescription": "Master the pound cross combination for quick direction changes and better ball control."
         },
@@ -262,7 +344,7 @@
           "title": "Figure 8 Technique Explanation",
           "slug": "figure-8-technique-explanation",
           "description": "Detailed explanation of figure-8 ball handling technique. Understand the proper form, common mistakes, and how to maximize effectiveness.",
-          "videoUrl": "",
+          "videoUrl": "https://c5ycdc1ptiousqvk.public.blob.vercel-storage.com/videos/ball-handling-s1e16.mp4",
           "thumbnailUrl": "",
           "duration": null,
           "episodeNumber": 16,
@@ -270,7 +352,12 @@
           "isFirstEpisode": false,
           "requiredTierLevel": 2,
           "status": "published",
-          "tags": ["figure-8", "technique", "explanation", "fundamentals"],
+          "tags": [
+            "figure-8",
+            "technique",
+            "explanation",
+            "fundamentals"
+          ],
           "metaTitle": "Figure 8 Technique Explanation - Episode 16",
           "metaDescription": "Learn proper figure-8 technique with detailed explanation of form and common mistakes."
         },
@@ -278,7 +365,7 @@
           "title": "Advanced Line Ladder Work",
           "slug": "advanced-line-ladder-work",
           "description": "Take your line ladder work to the next level with advanced patterns and combinations. Challenge yourself with more complex movements.",
-          "videoUrl": "",
+          "videoUrl": "https://c5ycdc1ptiousqvk.public.blob.vercel-storage.com/videos/ball-handling-s1e17.mp4",
           "thumbnailUrl": "",
           "duration": null,
           "episodeNumber": 17,
@@ -286,7 +373,12 @@
           "isFirstEpisode": false,
           "requiredTierLevel": 2,
           "status": "published",
-          "tags": ["ladder-drill", "advanced", "patterns", "coordination"],
+          "tags": [
+            "ladder-drill",
+            "advanced",
+            "patterns",
+            "coordination"
+          ],
           "metaTitle": "Advanced Line Ladder Work - Episode 17",
           "metaDescription": "Advanced line ladder patterns and combinations for improved ball handling."
         },
@@ -294,7 +386,7 @@
           "title": "Pound Double Between the Legs",
           "slug": "pound-double-between-legs",
           "description": "Master the pound double between the legs move. Learn the singular through-the-leg technique with proper form and timing.",
-          "videoUrl": "",
+          "videoUrl": "https://c5ycdc1ptiousqvk.public.blob.vercel-storage.com/videos/ball-handling-s1e18.mp4",
           "thumbnailUrl": "",
           "duration": null,
           "episodeNumber": 18,
@@ -302,7 +394,12 @@
           "isFirstEpisode": false,
           "requiredTierLevel": 2,
           "status": "published",
-          "tags": ["pound-dribble", "between-legs", "technique", "advanced"],
+          "tags": [
+            "pound-dribble",
+            "between-legs",
+            "technique",
+            "advanced"
+          ],
           "metaTitle": "Pound Double Between the Legs - Episode 18",
           "metaDescription": "Master the pound double between the legs move with proper technique and timing."
         },
@@ -310,7 +407,7 @@
           "title": "Training Tips & Best Practices",
           "slug": "training-tips-best-practices",
           "description": "Essential training tips and best practices for ball handling development. Learn how to structure your practice sessions for maximum improvement.",
-          "videoUrl": "",
+          "videoUrl": "https://c5ycdc1ptiousqvk.public.blob.vercel-storage.com/videos/ball-handling-s1e19.mp4",
           "thumbnailUrl": "",
           "duration": null,
           "episodeNumber": 19,
@@ -318,7 +415,12 @@
           "isFirstEpisode": false,
           "requiredTierLevel": 2,
           "status": "published",
-          "tags": ["training-tips", "best-practices", "practice-structure", "development"],
+          "tags": [
+            "training-tips",
+            "best-practices",
+            "practice-structure",
+            "development"
+          ],
           "metaTitle": "Training Tips & Best Practices - Episode 19",
           "metaDescription": "Essential training tips and best practices for effective ball handling development."
         },
@@ -326,7 +428,7 @@
           "title": "Motivational Training Mindset",
           "slug": "motivational-training-mindset",
           "description": "Develop the right mindset for consistent improvement. Learn how to stay motivated and maintain discipline in your daily practice routine.",
-          "videoUrl": "",
+          "videoUrl": "https://c5ycdc1ptiousqvk.public.blob.vercel-storage.com/videos/ball-handling-s1e20.mp4",
           "thumbnailUrl": "",
           "duration": null,
           "episodeNumber": 20,
@@ -334,7 +436,12 @@
           "isFirstEpisode": false,
           "requiredTierLevel": 2,
           "status": "published",
-          "tags": ["mindset", "motivation", "discipline", "mental-game"],
+          "tags": [
+            "mindset",
+            "motivation",
+            "discipline",
+            "mental-game"
+          ],
           "metaTitle": "Motivational Training Mindset - Episode 20",
           "metaDescription": "Develop the right mindset and motivation for consistent ball handling improvement."
         },
@@ -342,7 +449,7 @@
           "title": "Lighthearted Training Moments",
           "slug": "lighthearted-training-moments",
           "description": "Enjoy some lighthearted moments from training. Remember that improvement comes with consistent practice and a positive attitude.",
-          "videoUrl": "",
+          "videoUrl": "https://c5ycdc1ptiousqvk.public.blob.vercel-storage.com/videos/ball-handling-s1e21.mp4",
           "thumbnailUrl": "",
           "duration": null,
           "episodeNumber": 21,
@@ -350,7 +457,12 @@
           "isFirstEpisode": false,
           "requiredTierLevel": 2,
           "status": "published",
-          "tags": ["motivation", "fun", "training", "mindset"],
+          "tags": [
+            "motivation",
+            "fun",
+            "training",
+            "mindset"
+          ],
           "metaTitle": "Lighthearted Training Moments - Episode 21",
           "metaDescription": "Enjoy lighthearted training moments and maintain a positive attitude toward improvement."
         }
@@ -368,7 +480,14 @@
         "thumbnailImage": "/optimized/0K0A0826.jpg",
         "requiredTierLevel": 1,
         "isFeatured": true,
-        "tags": ["shooting", "form", "solo-practice", "jump-shot", "three-point", "fundamentals"],
+        "tags": [
+          "shooting",
+          "form",
+          "solo-practice",
+          "jump-shot",
+          "three-point",
+          "fundamentals"
+        ],
         "metaTitle": "Shooting Fundamentals - Solo Practice Basketball Training",
         "metaDescription": "Master shooting form and accuracy with solo practice drills. Learn jump shots, free throws, and three-point shooting without a rebounder.",
         "sortOrder": 2
@@ -378,7 +497,7 @@
           "title": "Bank Shot Fundamentals",
           "slug": "bank-shot-fundamentals",
           "description": "Master the art of bank shots from various angles. Learn proper technique, angle selection, and how to use the backboard effectively for consistent scoring.",
-          "videoUrl": "",
+          "videoUrl": "https://c5ycdc1ptiousqvk.public.blob.vercel-storage.com/videos/shooting-on-court-s1e1.mp4",
           "thumbnailUrl": "",
           "duration": null,
           "episodeNumber": 1,
@@ -386,7 +505,12 @@
           "isFirstEpisode": true,
           "requiredTierLevel": 1,
           "status": "published",
-          "tags": ["bank-shot", "shooting", "fundamentals", "backboard"],
+          "tags": [
+            "bank-shot",
+            "shooting",
+            "fundamentals",
+            "backboard"
+          ],
           "metaTitle": "Bank Shot Fundamentals - Episode 1",
           "metaDescription": "Learn proper bank shot technique and angle selection for consistent scoring."
         },
@@ -394,7 +518,7 @@
           "title": "Regular Jump Shot Form",
           "slug": "regular-jump-shot-form",
           "description": "Develop consistent jump shot form with proper mechanics. Focus on balance, release point, and follow-through for accurate shooting.",
-          "videoUrl": "",
+          "videoUrl": "https://c5ycdc1ptiousqvk.public.blob.vercel-storage.com/videos/shooting-on-court-s1e2.mp4",
           "thumbnailUrl": "",
           "duration": null,
           "episodeNumber": 2,
@@ -402,7 +526,12 @@
           "isFirstEpisode": false,
           "requiredTierLevel": 2,
           "status": "published",
-          "tags": ["jump-shot", "form", "shooting-mechanics", "technique"],
+          "tags": [
+            "jump-shot",
+            "form",
+            "shooting-mechanics",
+            "technique"
+          ],
           "metaTitle": "Regular Jump Shot Form - Episode 2",
           "metaDescription": "Develop consistent jump shot form with proper balance, release, and follow-through."
         },
@@ -410,7 +539,7 @@
           "title": "Knee Flossing Stretching Routine",
           "slug": "knee-flossing-stretching-routine",
           "description": "Essential knee flossing and stretching routine for shooters. Maintain flexibility and prevent injury with proper warm-up and recovery exercises.",
-          "videoUrl": "",
+          "videoUrl": "https://c5ycdc1ptiousqvk.public.blob.vercel-storage.com/videos/shooting-on-court-s1e3.mp4",
           "thumbnailUrl": "",
           "duration": null,
           "episodeNumber": 3,
@@ -418,7 +547,12 @@
           "isFirstEpisode": false,
           "requiredTierLevel": 2,
           "status": "published",
-          "tags": ["stretching", "knee-flossing", "injury-prevention", "recovery"],
+          "tags": [
+            "stretching",
+            "knee-flossing",
+            "injury-prevention",
+            "recovery"
+          ],
           "metaTitle": "Knee Flossing Stretching Routine - Episode 3",
           "metaDescription": "Essential stretching routine for shooters to maintain flexibility and prevent injury."
         },
@@ -426,7 +560,7 @@
           "title": "Footwork for Shooting Drills - Explanation",
           "slug": "footwork-shooting-drills-explanation",
           "description": "Detailed explanation of proper footwork for shooting drills. Learn how foot positioning affects your shot accuracy and consistency.",
-          "videoUrl": "",
+          "videoUrl": "https://c5ycdc1ptiousqvk.public.blob.vercel-storage.com/videos/shooting-on-court-s1e4.mp4",
           "thumbnailUrl": "",
           "duration": null,
           "episodeNumber": 4,
@@ -434,7 +568,12 @@
           "isFirstEpisode": false,
           "requiredTierLevel": 2,
           "status": "published",
-          "tags": ["footwork", "shooting", "technique", "explanation"],
+          "tags": [
+            "footwork",
+            "shooting",
+            "technique",
+            "explanation"
+          ],
           "metaTitle": "Footwork for Shooting Drills Explanation - Episode 4",
           "metaDescription": "Learn proper footwork for shooting drills and how it affects shot accuracy."
         },
@@ -442,7 +581,7 @@
           "title": "Jump Shot Form & Technique Explanation",
           "slug": "jump-shot-form-technique-explanation",
           "description": "Comprehensive explanation of jump shot form and technique. Understand the key components of a successful shot and how to develop consistency.",
-          "videoUrl": "",
+          "videoUrl": "https://c5ycdc1ptiousqvk.public.blob.vercel-storage.com/videos/shooting-on-court-s1e5.mp4",
           "thumbnailUrl": "",
           "duration": null,
           "episodeNumber": 5,
@@ -450,7 +589,12 @@
           "isFirstEpisode": false,
           "requiredTierLevel": 2,
           "status": "published",
-          "tags": ["jump-shot", "form", "technique", "explanation"],
+          "tags": [
+            "jump-shot",
+            "form",
+            "technique",
+            "explanation"
+          ],
           "metaTitle": "Jump Shot Form & Technique Explanation - Episode 5",
           "metaDescription": "Comprehensive guide to jump shot form and technique for consistent shooting."
         },
@@ -458,7 +602,7 @@
           "title": "Dead Leg to Jumper on the Move",
           "slug": "dead-leg-jumper-on-move",
           "description": "Master the dead leg to jumper combination for shooting on the move. Learn how to create space and maintain balance while shooting off the dribble.",
-          "videoUrl": "",
+          "videoUrl": "https://c5ycdc1ptiousqvk.public.blob.vercel-storage.com/videos/shooting-on-court-s1e6.mp4",
           "thumbnailUrl": "",
           "duration": null,
           "episodeNumber": 6,
@@ -466,7 +610,12 @@
           "isFirstEpisode": false,
           "requiredTierLevel": 2,
           "status": "published",
-          "tags": ["dead-leg", "jumper", "on-move", "advanced"],
+          "tags": [
+            "dead-leg",
+            "jumper",
+            "on-move",
+            "advanced"
+          ],
           "metaTitle": "Dead Leg to Jumper on the Move - Episode 6",
           "metaDescription": "Master shooting on the move with dead leg to jumper combinations."
         },
@@ -474,7 +623,7 @@
           "title": "Form Shooting Fundamentals",
           "slug": "form-shooting-fundamentals",
           "description": "Build your shooting foundation with form shooting drills. Focus on proper mechanics close to the basket before moving to longer distances.",
-          "videoUrl": "",
+          "videoUrl": "https://c5ycdc1ptiousqvk.public.blob.vercel-storage.com/videos/shooting-on-court-s1e7.mp4",
           "thumbnailUrl": "",
           "duration": null,
           "episodeNumber": 7,
@@ -482,7 +631,12 @@
           "isFirstEpisode": false,
           "requiredTierLevel": 2,
           "status": "published",
-          "tags": ["form-shooting", "fundamentals", "close-range", "mechanics"],
+          "tags": [
+            "form-shooting",
+            "fundamentals",
+            "close-range",
+            "mechanics"
+          ],
           "metaTitle": "Form Shooting Fundamentals - Episode 7",
           "metaDescription": "Build shooting foundation with form shooting drills focusing on proper mechanics."
         },
@@ -490,7 +644,7 @@
           "title": "Shooting Drills & Conditioning Explanation",
           "slug": "shooting-drills-conditioning-explanation",
           "description": "Learn how to combine shooting drills with conditioning for game-like practice. Understand the importance of shooting while fatigued.",
-          "videoUrl": "",
+          "videoUrl": "https://c5ycdc1ptiousqvk.public.blob.vercel-storage.com/videos/shooting-on-court-s1e8.mp4",
           "thumbnailUrl": "",
           "duration": null,
           "episodeNumber": 8,
@@ -498,7 +652,12 @@
           "isFirstEpisode": false,
           "requiredTierLevel": 2,
           "status": "published",
-          "tags": ["shooting-drills", "conditioning", "game-like", "explanation"],
+          "tags": [
+            "shooting-drills",
+            "conditioning",
+            "game-like",
+            "explanation"
+          ],
           "metaTitle": "Shooting Drills & Conditioning Explanation - Episode 8",
           "metaDescription": "Learn to combine shooting drills with conditioning for game-like practice situations."
         },
@@ -506,7 +665,7 @@
           "title": "Advanced Bank Shot Techniques",
           "slug": "advanced-bank-shot-techniques",
           "description": "Take your bank shot game to the next level with advanced techniques. Learn when and how to use the backboard from different angles.",
-          "videoUrl": "",
+          "videoUrl": "https://c5ycdc1ptiousqvk.public.blob.vercel-storage.com/videos/shooting-on-court-s1e9.mp4",
           "thumbnailUrl": "",
           "duration": null,
           "episodeNumber": 9,
@@ -514,7 +673,12 @@
           "isFirstEpisode": false,
           "requiredTierLevel": 2,
           "status": "published",
-          "tags": ["bank-shot", "advanced", "backboard", "technique"],
+          "tags": [
+            "bank-shot",
+            "advanced",
+            "backboard",
+            "technique"
+          ],
           "metaTitle": "Advanced Bank Shot Techniques - Episode 9",
           "metaDescription": "Master advanced bank shot techniques from various angles and positions."
         },
@@ -522,7 +686,7 @@
           "title": "Dead Leg to Jumper - Detailed Explanation",
           "slug": "dead-leg-jumper-detailed-explanation",
           "description": "Detailed breakdown of the dead leg to jumper move. Learn the footwork, timing, and mechanics needed to execute this advanced shooting technique.",
-          "videoUrl": "",
+          "videoUrl": "https://c5ycdc1ptiousqvk.public.blob.vercel-storage.com/videos/shooting-on-court-s1e10.mp4",
           "thumbnailUrl": "",
           "duration": null,
           "episodeNumber": 10,
@@ -530,7 +694,12 @@
           "isFirstEpisode": false,
           "requiredTierLevel": 2,
           "status": "published",
-          "tags": ["dead-leg", "jumper", "footwork", "explanation"],
+          "tags": [
+            "dead-leg",
+            "jumper",
+            "footwork",
+            "explanation"
+          ],
           "metaTitle": "Dead Leg to Jumper Detailed Explanation - Episode 10",
           "metaDescription": "Detailed breakdown of dead leg to jumper footwork and shooting mechanics."
         },
@@ -538,7 +707,7 @@
           "title": "Form Shooting Technique Breakdown",
           "slug": "form-shooting-technique-breakdown",
           "description": "In-depth breakdown of form shooting technique. Understand each component of proper shooting form and how to develop consistency.",
-          "videoUrl": "",
+          "videoUrl": "https://c5ycdc1ptiousqvk.public.blob.vercel-storage.com/videos/shooting-on-court-s1e11.mp4",
           "thumbnailUrl": "",
           "duration": null,
           "episodeNumber": 11,
@@ -546,7 +715,12 @@
           "isFirstEpisode": false,
           "requiredTierLevel": 2,
           "status": "published",
-          "tags": ["form-shooting", "technique", "breakdown", "fundamentals"],
+          "tags": [
+            "form-shooting",
+            "technique",
+            "breakdown",
+            "fundamentals"
+          ],
           "metaTitle": "Form Shooting Technique Breakdown - Episode 11",
           "metaDescription": "In-depth breakdown of form shooting technique and proper mechanics."
         },
@@ -554,7 +728,7 @@
           "title": "5 Spot Three-Point Drill",
           "slug": "5-spot-three-point-drill",
           "description": "Master three-point shooting from five key spots on the court. Develop consistency and accuracy from all three-point positions.",
-          "videoUrl": "",
+          "videoUrl": "https://c5ycdc1ptiousqvk.public.blob.vercel-storage.com/videos/shooting-on-court-s1e12.mp4",
           "thumbnailUrl": "",
           "duration": null,
           "episodeNumber": 12,
@@ -562,7 +736,12 @@
           "isFirstEpisode": false,
           "requiredTierLevel": 2,
           "status": "published",
-          "tags": ["three-point", "5-spot", "drill", "consistency"],
+          "tags": [
+            "three-point",
+            "5-spot",
+            "drill",
+            "consistency"
+          ],
           "metaTitle": "5 Spot Three-Point Drill - Episode 12",
           "metaDescription": "Master three-point shooting from five key spots for consistent accuracy."
         },
@@ -570,7 +749,7 @@
           "title": "Arc Drill Behind Backboard",
           "slug": "arc-drill-behind-backboard",
           "description": "Challenge yourself with the arc drill behind the backboard. Improve your shooting arc and develop touch from difficult angles.",
-          "videoUrl": "",
+          "videoUrl": "https://c5ycdc1ptiousqvk.public.blob.vercel-storage.com/videos/shooting-on-court-s1e13.mp4",
           "thumbnailUrl": "",
           "duration": null,
           "episodeNumber": 13,
@@ -578,7 +757,12 @@
           "isFirstEpisode": false,
           "requiredTierLevel": 2,
           "status": "published",
-          "tags": ["arc-drill", "backboard", "shooting-arc", "advanced"],
+          "tags": [
+            "arc-drill",
+            "backboard",
+            "shooting-arc",
+            "advanced"
+          ],
           "metaTitle": "Arc Drill Behind Backboard - Episode 13",
           "metaDescription": "Improve shooting arc and touch with challenging backboard arc drills."
         },
@@ -586,7 +770,7 @@
           "title": "Three-Point Form Shooting",
           "slug": "three-point-form-shooting",
           "description": "Apply proper form shooting principles to three-point range. Learn how to maintain mechanics while extending your range.",
-          "videoUrl": "",
+          "videoUrl": "https://c5ycdc1ptiousqvk.public.blob.vercel-storage.com/videos/shooting-on-court-s1e14.mp4",
           "thumbnailUrl": "",
           "duration": null,
           "episodeNumber": 14,
@@ -594,7 +778,12 @@
           "isFirstEpisode": false,
           "requiredTierLevel": 2,
           "status": "published",
-          "tags": ["three-point", "form-shooting", "range", "mechanics"],
+          "tags": [
+            "three-point",
+            "form-shooting",
+            "range",
+            "mechanics"
+          ],
           "metaTitle": "Three-Point Form Shooting - Episode 14",
           "metaDescription": "Apply proper form shooting mechanics to three-point range for consistent accuracy."
         },
@@ -602,7 +791,7 @@
           "title": "Training Day Reflection & Tips",
           "slug": "training-day-reflection-tips",
           "description": "Reflect on your training day with valuable insights and tips. Learn how to analyze your shooting performance and make adjustments.",
-          "videoUrl": "",
+          "videoUrl": "https://c5ycdc1ptiousqvk.public.blob.vercel-storage.com/videos/shooting-on-court-s1e15.mp4",
           "thumbnailUrl": "",
           "duration": null,
           "episodeNumber": 15,
@@ -610,7 +799,12 @@
           "isFirstEpisode": false,
           "requiredTierLevel": 2,
           "status": "published",
-          "tags": ["reflection", "tips", "analysis", "improvement"],
+          "tags": [
+            "reflection",
+            "tips",
+            "analysis",
+            "improvement"
+          ],
           "metaTitle": "Training Day Reflection & Tips - Episode 15",
           "metaDescription": "Learn to analyze shooting performance and make adjustments for improvement."
         },
@@ -618,7 +812,7 @@
           "title": "Full Court Three-Point Drill",
           "slug": "full-court-three-point-drill",
           "description": "Build endurance and consistency with full court three-point shooting. Challenge yourself to maintain form throughout extended practice.",
-          "videoUrl": "",
+          "videoUrl": "https://c5ycdc1ptiousqvk.public.blob.vercel-storage.com/videos/shooting-on-court-s1e16.mp4",
           "thumbnailUrl": "",
           "duration": null,
           "episodeNumber": 16,
@@ -626,7 +820,12 @@
           "isFirstEpisode": false,
           "requiredTierLevel": 2,
           "status": "published",
-          "tags": ["full-court", "three-point", "endurance", "consistency"],
+          "tags": [
+            "full-court",
+            "three-point",
+            "endurance",
+            "consistency"
+          ],
           "metaTitle": "Full Court Three-Point Drill - Episode 16",
           "metaDescription": "Build endurance and consistency with full court three-point shooting practice."
         },
@@ -634,7 +833,7 @@
           "title": "Corner Three-Point Shooting",
           "slug": "corner-three-point-shooting",
           "description": "Master corner three-point shooting with proper form and footwork. Develop consistency from one of the most important spots on the court.",
-          "videoUrl": "",
+          "videoUrl": "https://c5ycdc1ptiousqvk.public.blob.vercel-storage.com/videos/shooting-on-court-s1e17.mp4",
           "thumbnailUrl": "",
           "duration": null,
           "episodeNumber": 17,
@@ -642,7 +841,12 @@
           "isFirstEpisode": false,
           "requiredTierLevel": 2,
           "status": "published",
-          "tags": ["corner-three", "three-point", "shooting", "consistency"],
+          "tags": [
+            "corner-three",
+            "three-point",
+            "shooting",
+            "consistency"
+          ],
           "metaTitle": "Corner Three-Point Shooting - Episode 17",
           "metaDescription": "Master corner three-point shooting with proper form and consistency."
         },
@@ -650,7 +854,7 @@
           "title": "Wing Three-Point Shooting",
           "slug": "wing-three-point-shooting",
           "description": "Develop your wing three-point shooting game. Learn proper positioning, footwork, and form for consistent shooting from the wings.",
-          "videoUrl": "",
+          "videoUrl": "https://c5ycdc1ptiousqvk.public.blob.vercel-storage.com/videos/shooting-on-court-s1e18.mp4",
           "thumbnailUrl": "",
           "duration": null,
           "episodeNumber": 18,
@@ -658,7 +862,12 @@
           "isFirstEpisode": false,
           "requiredTierLevel": 2,
           "status": "published",
-          "tags": ["wing-three", "three-point", "positioning", "footwork"],
+          "tags": [
+            "wing-three",
+            "three-point",
+            "positioning",
+            "footwork"
+          ],
           "metaTitle": "Wing Three-Point Shooting - Episode 18",
           "metaDescription": "Develop consistent wing three-point shooting with proper positioning and form."
         },
@@ -666,7 +875,7 @@
           "title": "Advanced Bank Shot Practice",
           "slug": "advanced-bank-shot-practice",
           "description": "Advanced bank shot practice from various angles and distances. Refine your touch and develop consistency using the backboard.",
-          "videoUrl": "",
+          "videoUrl": "https://c5ycdc1ptiousqvk.public.blob.vercel-storage.com/videos/shooting-on-court-s1e19.mp4",
           "thumbnailUrl": "",
           "duration": null,
           "episodeNumber": 19,
@@ -674,7 +883,12 @@
           "isFirstEpisode": false,
           "requiredTierLevel": 2,
           "status": "published",
-          "tags": ["bank-shot", "advanced", "practice", "backboard"],
+          "tags": [
+            "bank-shot",
+            "advanced",
+            "practice",
+            "backboard"
+          ],
           "metaTitle": "Advanced Bank Shot Practice - Episode 19",
           "metaDescription": "Advanced bank shot practice from various angles for improved consistency."
         },
@@ -682,7 +896,7 @@
           "title": "Slot Three-Point Shooting & Form Analysis",
           "slug": "slot-three-point-shooting-form-analysis",
           "description": "Master slot three-point shooting with detailed form analysis. Learn why you might be missing shots and how to correct common mistakes.",
-          "videoUrl": "",
+          "videoUrl": "https://c5ycdc1ptiousqvk.public.blob.vercel-storage.com/videos/shooting-on-court-s1e20.mp4",
           "thumbnailUrl": "",
           "duration": null,
           "episodeNumber": 20,
@@ -690,7 +904,12 @@
           "isFirstEpisode": false,
           "requiredTierLevel": 2,
           "status": "published",
-          "tags": ["slot-three", "form-analysis", "troubleshooting", "technique"],
+          "tags": [
+            "slot-three",
+            "form-analysis",
+            "troubleshooting",
+            "technique"
+          ],
           "metaTitle": "Slot Three-Point Shooting & Form Analysis - Episode 20",
           "metaDescription": "Master slot three-point shooting with form analysis and mistake correction."
         },
@@ -698,7 +917,7 @@
           "title": "5 Shots in a Row Challenge",
           "slug": "5-shots-row-challenge",
           "description": "Build consistency and mental toughness with the 5 shots in a row challenge. Develop the focus needed to make consecutive shots.",
-          "videoUrl": "",
+          "videoUrl": "https://c5ycdc1ptiousqvk.public.blob.vercel-storage.com/videos/shooting-on-court-s1e21.mp4",
           "thumbnailUrl": "",
           "duration": null,
           "episodeNumber": 21,
@@ -706,7 +925,12 @@
           "isFirstEpisode": false,
           "requiredTierLevel": 2,
           "status": "published",
-          "tags": ["challenge", "consistency", "mental-toughness", "focus"],
+          "tags": [
+            "challenge",
+            "consistency",
+            "mental-toughness",
+            "focus"
+          ],
           "metaTitle": "5 Shots in a Row Challenge - Episode 21",
           "metaDescription": "Build consistency and mental toughness with consecutive shooting challenges."
         },
@@ -714,7 +938,7 @@
           "title": "Daily Training Reflection & Progress",
           "slug": "daily-training-reflection-progress",
           "description": "Reflect on your daily training progress and understand what to focus on. Learn how to track improvement and adjust your practice accordingly.",
-          "videoUrl": "",
+          "videoUrl": "https://c5ycdc1ptiousqvk.public.blob.vercel-storage.com/videos/shooting-on-court-s1e22.mp4",
           "thumbnailUrl": "",
           "duration": null,
           "episodeNumber": 22,
@@ -722,7 +946,12 @@
           "isFirstEpisode": false,
           "requiredTierLevel": 2,
           "status": "published",
-          "tags": ["reflection", "progress", "tracking", "improvement"],
+          "tags": [
+            "reflection",
+            "progress",
+            "tracking",
+            "improvement"
+          ],
           "metaTitle": "Daily Training Reflection & Progress - Episode 22",
           "metaDescription": "Learn to track shooting progress and adjust practice for continuous improvement."
         }
