@@ -128,7 +128,7 @@ export function EventForm({ programId, programs = [], event }: EventFormProps) {
               name="programId"
               value={formData.programId}
               onChange={handleChange}
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+              className="w-full px-4 py-3 border border-neutral-300 rounded-lg bg-white shadow-sm transition-all outline-none focus:border-neutral-400 focus:ring-2 focus:ring-neutral-200 focus:shadow-md"
               required
             >
               <option value="">Select a program...</option>
@@ -160,7 +160,7 @@ export function EventForm({ programId, programs = [], event }: EventFormProps) {
             onChange={handleChange}
             placeholder="Event details and description..."
             rows={4}
-            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+            className="w-full px-4 py-3 border border-neutral-300 rounded-lg bg-white shadow-sm transition-all outline-none focus:border-neutral-400 focus:ring-2 focus:ring-neutral-200 focus:shadow-md"
           />
         </Field>
 
@@ -170,7 +170,7 @@ export function EventForm({ programId, programs = [], event }: EventFormProps) {
             name="status"
             value={formData.status}
             onChange={handleChange}
-            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+            className="w-full px-4 py-3 border border-neutral-300 rounded-lg bg-white shadow-sm transition-all outline-none focus:border-neutral-400 focus:ring-2 focus:ring-neutral-200 focus:shadow-md"
             required
           >
             <option value="scheduled">Scheduled</option>
@@ -215,7 +215,7 @@ export function EventForm({ programId, programs = [], event }: EventFormProps) {
             name="timezone"
             value={formData.timezone}
             onChange={handleChange}
-            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+            className="w-full px-4 py-3 border border-neutral-300 rounded-lg bg-white shadow-sm transition-all outline-none focus:border-neutral-400 focus:ring-2 focus:ring-neutral-200 focus:shadow-md"
           >
             <option value="America/New_York">Eastern Time (ET)</option>
             <option value="America/Chicago">Central Time (CT)</option>
@@ -237,7 +237,7 @@ export function EventForm({ programId, programs = [], event }: EventFormProps) {
             name="locationType"
             value={formData.locationType}
             onChange={handleChange}
-            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+            className="w-full px-4 py-3 border border-neutral-300 rounded-lg bg-white shadow-sm transition-all outline-none focus:border-neutral-400 focus:ring-2 focus:ring-neutral-200 focus:shadow-md"
             required
           >
             <option value="in_person">In Person</option>
@@ -383,7 +383,7 @@ export function EventForm({ programId, programs = [], event }: EventFormProps) {
             onChange={handleChange}
             placeholder="Internal notes for organizers (not visible to public)..."
             rows={4}
-            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+            className="w-full px-4 py-3 border border-neutral-300 rounded-lg bg-white shadow-sm transition-all outline-none focus:border-neutral-400 focus:ring-2 focus:ring-neutral-200 focus:shadow-md"
           />
         </Field>
       </div>

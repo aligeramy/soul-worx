@@ -43,62 +43,88 @@ export default async function AdminProgramsPage() {
           </CardContent>
         </Card>
       ) : (
-        <div className="grid gap-4">
-          {programs.map((program) => (
-            <Card key={program.id} className="bg-[#1c1c1e] border-white/10 hover:bg-[#2c2c2e] transition-colors">
-              <CardContent className="p-6">
-                <div className="flex items-center gap-6">
-                  {/* Image */}
-                  {program.coverImage && (
-                    <div className="relative w-24 h-24 rounded-xl overflow-hidden flex-shrink-0 bg-white/5">
-                      <Image
-                        src={program.coverImage}
-                        alt={program.title}
-                        fill
-                        className="object-cover"
-                      />
-                    </div>
-                  )}
-                  
-                  {/* Content */}
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-start justify-between gap-4 mb-2">
-                      <div className="flex-1 min-w-0">
-                        <h3 className="text-lg font-bold text-white mb-1">{program.title}</h3>
-                        <p className="text-sm text-white/50">/{program.slug}</p>
-                      </div>
-                      <StatusBadge status={program.status} />
-                    </div>
-                    
-                    <div className="flex items-center gap-3 mt-3">
-                      <Badge variant="outline" className="border-white/20 text-white/70">
-                        {program.category}
-                      </Badge>
-                      <span className="text-xs text-white/50">
-                        Created {format(new Date(program.createdAt), "MMM d, yyyy")}
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Actions */}
-                  <div className="flex items-center gap-2">
-                    <Link href={`/dashboard/admin/programs/${program.id}`}>
-                      <Button variant="ghost" size="sm" className="text-white/70 hover:text-white hover:bg-white/10">
-                        <Pencil className="mr-2 h-4 w-4" />
-                        Edit
-                      </Button>
-                    </Link>
-                    <Link href={`/programs/${program.slug}`} target="_blank">
-                      <Button variant="ghost" size="sm" className="text-white/70 hover:text-white hover:bg-white/10">
-                        <ExternalLink className="h-4 w-4" />
-                      </Button>
-                    </Link>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+        <Card className="bg-[#1c1c1e] border-white/10">
+          <CardContent className="p-0">
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead className="border-b border-white/10">
+                  <tr>
+                    <th className="px-6 py-4 text-left text-xs font-semibold text-white/60 uppercase tracking-wider">
+                      Program
+                    </th>
+                    <th className="px-6 py-4 text-left text-xs font-semibold text-white/60 uppercase tracking-wider">
+                      Category
+                    </th>
+                    <th className="px-6 py-4 text-left text-xs font-semibold text-white/60 uppercase tracking-wider">
+                      Status
+                    </th>
+                    <th className="px-6 py-4 text-left text-xs font-semibold text-white/60 uppercase tracking-wider">
+                      Created
+                    </th>
+                    <th className="px-6 py-4 text-left text-xs font-semibold text-white/60 uppercase tracking-wider">
+                      Created By
+                    </th>
+                    <th className="px-6 py-4 text-right text-xs font-semibold text-white/60 uppercase tracking-wider">
+                      Actions
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-white/10">
+                  {programs.map((program) => (
+                    <tr key={program.id} className="hover:bg-white/5 transition-colors">
+                      <td className="px-6 py-4">
+                        <div className="flex items-center gap-3">
+                          {program.coverImage && (
+                            <div className="relative w-12 h-12 rounded-lg overflow-hidden bg-white/5 flex-shrink-0">
+                              <Image
+                                src={program.coverImage}
+                                alt={program.title}
+                                fill
+                                className="object-cover"
+                              />
+                            </div>
+                          )}
+                          <div className="min-w-0">
+                            <div className="font-semibold text-white">{program.title}</div>
+                            <div className="text-sm text-white/50">/{program.slug}</div>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="px-6 py-4">
+                        <Badge variant="outline" className="border-white/20 text-white/70">
+                          {program.category}
+                        </Badge>
+                      </td>
+                      <td className="px-6 py-4">
+                        <StatusBadge status={program.status} />
+                      </td>
+                      <td className="px-6 py-4 text-sm text-white/70">
+                        {format(new Date(program.createdAt), "MMM d, yyyy")}
+                      </td>
+                      <td className="px-6 py-4 text-sm text-white/70">
+                        {program.createdBy?.name || program.createdBy?.email || "—"}
+                      </td>
+                      <td className="px-6 py-4">
+                        <div className="flex items-center justify-end gap-1">
+                          <Link href={`/programs/${program.slug}`} target="_blank">
+                            <Button variant="ghost" size="sm" className="text-white/70 hover:text-white hover:bg-white/10">
+                              <ExternalLink className="h-4 w-4" />
+                            </Button>
+                          </Link>
+                          <Link href={`/dashboard/admin/programs/${program.id}`}>
+                            <Button variant="ghost" size="sm" className="text-white/70 hover:text-white hover:bg-white/10">
+                              <Pencil className="h-4 w-4" />
+                            </Button>
+                          </Link>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </CardContent>
+        </Card>
       )}
     </div>
   )

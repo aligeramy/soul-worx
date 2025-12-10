@@ -93,8 +93,8 @@ export function TestimonialsStats({
 	useEffect(() => {
 		const currentTitle = ROTATING_TITLES[titleIndex]
 		let charIndex = 0
-		let fadeOutTimer: NodeJS.Timeout
-		let nextTitleTimer: NodeJS.Timeout
+		let fadeOutTimer: ReturnType<typeof setTimeout>
+		let nextTitleTimer: ReturnType<typeof setTimeout>
 
 		// Fade in letter by letter
 		const fadeInInterval = setInterval(() => {

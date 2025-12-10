@@ -23,18 +23,20 @@ export default async function EditStoryPage({
   }
 
   return (
-    <div className="max-w-4xl space-y-8">
-      <div>
-        <h1 className="text-4xl font-bold">Edit Story</h1>
-        <p className="text-neutral-600 mt-2">
-          Update story details
-        </p>
-      </div>
+    <div className="bg-white rounded-lg p-8 shadow-sm">
+      <div className="max-w-4xl mx-auto space-y-8">
+        <div>
+          <h1 className="text-4xl font-bold text-neutral-900">Edit Story</h1>
+          <p className="text-neutral-600 mt-2">
+            Update story details
+          </p>
+        </div>
 
-      <StoryForm story={{
-        ...story,
-        tags: story.tags || []
-      }} />
+        <StoryForm story={{
+          ...story,
+          tags: story.tags || []
+        }} />
+      </div>
     </div>
   )
 }

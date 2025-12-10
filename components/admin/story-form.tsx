@@ -228,7 +228,7 @@ export function StoryForm({ story }: StoryFormProps) {
             onChange={handleChange}
             placeholder="Short summary of the story (optional)..."
             rows={2}
-            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+            className="w-full px-4 py-3 border border-neutral-300 rounded-lg bg-white shadow-sm transition-all outline-none focus:border-neutral-400 focus:ring-2 focus:ring-neutral-200 focus:shadow-md"
           />
           <p className="text-sm text-neutral-500 mt-1">
             Brief description for cards and previews
@@ -258,7 +258,7 @@ export function StoryForm({ story }: StoryFormProps) {
               name="category"
               value={formData.category}
               onChange={handleChange}
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+              className="w-full px-4 py-3 border border-neutral-300 rounded-lg bg-white shadow-sm transition-all outline-none focus:border-neutral-400 focus:ring-2 focus:ring-neutral-200 focus:shadow-md"
               required
             >
               <option value="poetry">Poetry Drop</option>
@@ -275,7 +275,7 @@ export function StoryForm({ story }: StoryFormProps) {
               name="status"
               value={formData.status}
               onChange={handleChange}
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+              className="w-full px-4 py-3 border border-neutral-300 rounded-lg bg-white shadow-sm transition-all outline-none focus:border-neutral-400 focus:ring-2 focus:ring-neutral-200 focus:shadow-md"
               required
             >
               <option value="draft">Draft</option>
@@ -400,7 +400,7 @@ export function StoryForm({ story }: StoryFormProps) {
             onChange={handleChange}
             placeholder="SEO description (leave blank to use excerpt)"
             rows={2}
-            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+            className="w-full px-4 py-3 border border-neutral-300 rounded-lg bg-white shadow-sm transition-all outline-none focus:border-neutral-400 focus:ring-2 focus:ring-neutral-200 focus:shadow-md"
           />
         </Field>
       </div>

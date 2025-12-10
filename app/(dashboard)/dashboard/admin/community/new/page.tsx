@@ -10,15 +10,17 @@ export default async function NewChannelPage() {
   }
 
   return (
-    <div className="max-w-4xl mx-auto space-y-8">
-      <div>
-        <h1 className="text-3xl font-bold">Create Community Channel</h1>
-        <p className="text-neutral-600 mt-2">
-          Create a new channel to organize video content
-        </p>
-      </div>
+    <div className="bg-white rounded-lg p-8 shadow-sm">
+      <div className="max-w-4xl mx-auto space-y-8">
+        <div>
+          <h1 className="text-3xl font-bold text-neutral-900">Create Community Channel</h1>
+          <p className="text-neutral-600 mt-2">
+            Create a new channel to organize video content
+          </p>
+        </div>
 
-      <ChannelForm />
+        <ChannelForm />
+      </div>
     </div>
   )
 }

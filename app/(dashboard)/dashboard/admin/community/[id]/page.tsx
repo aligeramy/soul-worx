@@ -26,15 +26,17 @@ export default async function EditChannelPage({
   }
 
   return (
-    <div className="max-w-4xl mx-auto space-y-8">
-      <div>
-        <h1 className="text-3xl font-bold">Edit Channel</h1>
-        <p className="text-neutral-600 mt-2">
-          Update channel details and settings
-        </p>
-      </div>
+    <div className="bg-white rounded-lg p-8 shadow-sm">
+      <div className="max-w-4xl mx-auto space-y-8">
+        <div>
+          <h1 className="text-3xl font-bold text-neutral-900">Edit Channel</h1>
+          <p className="text-neutral-600 mt-2">
+            Update channel details and settings
+          </p>
+        </div>
 
-      <ChannelForm channel={channel} />
+        <ChannelForm channel={channel} />
+      </div>
     </div>
   )
 }

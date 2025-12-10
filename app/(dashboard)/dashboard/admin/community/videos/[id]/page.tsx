@@ -26,15 +26,17 @@ export default async function EditVideoPage({
   }
 
   return (
-    <div className="max-w-4xl mx-auto space-y-8">
-      <div>
-        <h1 className="text-3xl font-bold">Edit Video</h1>
-        <p className="text-neutral-600 mt-2">
-          Update video details and settings
-        </p>
-      </div>
+    <div className="bg-white rounded-lg p-8 shadow-sm">
+      <div className="max-w-4xl mx-auto space-y-8">
+        <div>
+          <h1 className="text-3xl font-bold text-neutral-900">Edit Video</h1>
+          <p className="text-neutral-600 mt-2">
+            Update video details and settings
+          </p>
+        </div>
 
-      <VideoForm video={video} />
+        <VideoForm video={video} />
+      </div>
     </div>
   )
 }

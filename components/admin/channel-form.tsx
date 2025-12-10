@@ -196,24 +196,38 @@ export function ChannelForm({ channel, onSuccess }: ChannelFormProps) {
 
       <Field>
         <Label htmlFor="description">Short Description</Label>
-        <Input
-          id="description"
-          value={formData.description}
-          onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-          required
-        />
+        <div className="space-y-2">
+          <Input
+            id="description"
+            value={formData.description}
+            onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+            placeholder="A brief, compelling description that appears in listings and previews..."
+            required
+          />
+          <div className="text-xs text-neutral-500">
+            Keep it concise - this appears in channel listings and previews ({formData.description.length} characters)
+          </div>
+        </div>
       </Field>
 
       <Field>
         <Label htmlFor="longDescription">Long Description</Label>
-        <textarea
-          id="longDescription"
-          value={formData.longDescription}
-          onChange={(e) =>
-            setFormData({ ...formData, longDescription: e.target.value })
-          }
-          className="w-full min-h-[120px] rounded-md border border-neutral-300 px-3 py-2"
-        />
+        <div className="space-y-2">
+          <textarea
+            id="longDescription"
+            value={formData.longDescription}
+            onChange={(e) =>
+              setFormData({ ...formData, longDescription: e.target.value })
+            }
+            placeholder="Provide a detailed description of the channel, what viewers can expect, learning outcomes, topics covered, and any important information..."
+            className="w-full min-h-[200px] rounded-lg border border-neutral-300 bg-white px-4 py-3 text-sm resize-y shadow-sm transition-all outline-none focus:border-neutral-400 focus:ring-2 focus:ring-neutral-200 focus:shadow-md"
+            rows={8}
+          />
+          <div className="text-xs text-neutral-500 flex justify-between">
+            <span>Detailed description shown on the channel page</span>
+            <span>{formData.longDescription.length} characters</span>
+          </div>
+        </div>
       </Field>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

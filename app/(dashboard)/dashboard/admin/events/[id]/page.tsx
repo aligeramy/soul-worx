@@ -31,15 +31,17 @@ export default async function EditEventPage({
   })
 
   return (
-    <div className="max-w-4xl space-y-8">
-      <div>
-        <h1 className="text-4xl font-bold">Edit Event</h1>
-        <p className="text-neutral-600 mt-2">
-          Update event details
-        </p>
-      </div>
+    <div className="bg-white rounded-lg p-8 shadow-sm">
+      <div className="max-w-4xl mx-auto space-y-8">
+        <div>
+          <h1 className="text-4xl font-bold text-neutral-900">Edit Event</h1>
+          <p className="text-neutral-600 mt-2">
+            Update event details
+          </p>
+        </div>
 
-      <EventForm event={event} programs={programs} />
+        <EventForm event={event} programs={programs} />
+      </div>
     </div>
   )
 }

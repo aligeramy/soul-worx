@@ -9,15 +9,17 @@ export default async function NewStoryPage() {
   }
 
   return (
-    <div className="max-w-4xl space-y-8">
-      <div>
-        <h1 className="text-4xl font-bold">New Story</h1>
-        <p className="text-neutral-600 mt-2">
-          Create a new story, poetry drop, event recap, or announcement
-        </p>
-      </div>
+    <div className="bg-white rounded-lg p-8 shadow-sm">
+      <div className="max-w-4xl mx-auto space-y-8">
+        <div>
+          <h1 className="text-4xl font-bold text-neutral-900">New Story</h1>
+          <p className="text-neutral-600 mt-2">
+            Create a new story, poetry drop, event recap, or announcement
+          </p>
+        </div>
 
-      <StoryForm />
+        <StoryForm />
+      </div>
     </div>
   )
 }
