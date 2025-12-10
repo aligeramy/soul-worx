@@ -8,6 +8,8 @@
 
 /expo
 
+/public/upload
+
 # testing
 /coverage
 
