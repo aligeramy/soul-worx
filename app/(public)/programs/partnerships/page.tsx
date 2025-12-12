@@ -11,7 +11,6 @@ const sponsorLogos = [
   "/sponsor-logos/Pur and simple.webp",
   "/sponsor-logos/Reframe-Wellbeing-logo.webp",
   "/sponsor-logos/Stellas.png",
-  "/sponsor-logos/Vaughan Library.png",
   "/sponsor-logos/YAY_logo.png",
   "/sponsor-logos/ycdsb-logo.png",
 ]

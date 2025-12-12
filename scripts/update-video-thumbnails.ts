@@ -58,3 +58,4 @@ WHERE slug = '${video.slug}';`
 }
 
 main().catch(console.error)
+
