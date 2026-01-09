@@ -55,7 +55,7 @@ export default async function ChannelVideosPage({
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {channel.videos.map((video) => (
-          <Card key={video.id} className="p-4 bg-[#1c1c1e] border-white/10">
+          <Card key={video.id} className="p-4 bg-white/5 backdrop-blur-sm border-white/10">
             <div className="space-y-3">
               {video.thumbnailUrl && (
                 <Image

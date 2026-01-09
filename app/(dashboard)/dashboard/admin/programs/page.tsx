@@ -27,7 +27,7 @@ export default async function AdminProgramsPage() {
       </div>
 
       {programs.length === 0 ? (
-        <Card className="bg-[#1c1c1e] border-white/10">
+        <Card className="bg-white/5 backdrop-blur-sm border-white/10">
           <CardContent className="text-center py-16">
             <div className="w-16 h-16 mx-auto mb-4 bg-white/5 rounded-full flex items-center justify-center">
               <Plus className="h-8 w-8 text-white/40" />
@@ -43,7 +43,7 @@ export default async function AdminProgramsPage() {
           </CardContent>
         </Card>
       ) : (
-        <Card className="bg-[#1c1c1e] border-white/10">
+        <Card className="bg-white/5 backdrop-blur-sm border-white/10">
           <CardContent className="p-0">
             <div className="overflow-x-auto">
               <table className="w-full">

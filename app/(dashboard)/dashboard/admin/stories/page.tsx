@@ -68,7 +68,7 @@ export default async function AdminStoriesPage() {
 
       {/* Stats Grid */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <Card className="bg-[#1c1c1e] border-blue-500/20">
+        <Card className="bg-white/5 backdrop-blur-sm border-blue-500/20">
           <CardContent className="p-4">
             <div className="text-xs font-semibold text-blue-400 mb-1 uppercase tracking-wider">Poetry Drops</div>
             <div className="text-3xl font-bold text-white">{storyTypes.poetry.length}</div>
@@ -78,7 +78,7 @@ export default async function AdminStoriesPage() {
           </CardContent>
         </Card>
         
-        <Card className="bg-[#1c1c1e] border-purple-500/20">
+        <Card className="bg-white/5 backdrop-blur-sm border-purple-500/20">
           <CardContent className="p-4">
             <div className="text-xs font-semibold text-purple-400 mb-1 uppercase tracking-wider">Blog</div>
             <div className="text-3xl font-bold text-white">{storyTypes.blog.length}</div>
@@ -88,7 +88,7 @@ export default async function AdminStoriesPage() {
           </CardContent>
         </Card>
         
-        <Card className="bg-[#1c1c1e] border-amber-500/20">
+        <Card className="bg-white/5 backdrop-blur-sm border-amber-500/20">
           <CardContent className="p-4">
             <div className="text-xs font-semibold text-amber-400 mb-1 uppercase tracking-wider">Event Recaps</div>
             <div className="text-3xl font-bold text-white">{storyTypes.news.length}</div>
@@ -98,7 +98,7 @@ export default async function AdminStoriesPage() {
           </CardContent>
         </Card>
         
-        <Card className="bg-[#1c1c1e] border-emerald-500/20">
+        <Card className="bg-white/5 backdrop-blur-sm border-emerald-500/20">
           <CardContent className="p-4">
             <div className="text-xs font-semibold text-emerald-400 mb-1 uppercase tracking-wider">Press & Media</div>
             <div className="text-3xl font-bold text-white">{storyTypes.announcements.length}</div>
@@ -111,7 +111,7 @@ export default async function AdminStoriesPage() {
 
       {/* All Stories */}
       {allStories.length === 0 ? (
-        <Card className="bg-[#1c1c1e] border-white/10">
+        <Card className="bg-white/5 backdrop-blur-sm border-white/10">
           <CardContent className="text-center py-16">
             <div className="w-16 h-16 mx-auto mb-4 bg-white/5 rounded-full flex items-center justify-center">
               <FileText className="h-8 w-8 text-white/40" />
@@ -127,7 +127,7 @@ export default async function AdminStoriesPage() {
           </CardContent>
         </Card>
       ) : (
-        <Card className="bg-[#1c1c1e] border-white/10">
+        <Card className="bg-white/5 backdrop-blur-sm border-white/10">
           <CardContent className="p-0">
             <div className="overflow-x-auto">
               <table className="w-full table-fixed">

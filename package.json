@@ -17,7 +17,8 @@
     "db:seed-community": "tsx lib/seed-community.ts",
     "setup-stripe": "tsx scripts/setup-stripe-products.ts",
     "check-user": "tsx scripts/check-user.ts",
-    "make-admin": "tsx scripts/make-admin.ts"
+    "make-admin": "tsx scripts/make-admin.ts",
+    "generate-legal-docs": "tsx scripts/generate-legal-documents.ts"
   },
   "dependencies": {
     "@auth/core": "^0.41.0",

@@ -31,9 +31,9 @@ async function seed() {
     {
       slug: "future-stars-basketball",
       title: "Future Stars Basketball",
-      description: "Future Stars brings back what youth basketball should be about — fun, growth, and opportunity. Led by former NCAA scholarship athletes and community coaches, this program focuses on skill development, teamwork, and life lessons.",
+      description: "Future Stars brings back what youth basketball should be about — fun, growth, and opportunity. Led by former NCAA athletes and community coaches, this program focuses on skill development, teamwork, and life lessons.",
       longDescription: `
-        <p>Future Stars brings back what youth basketball should be about — fun, growth, and opportunity. Led by former NCAA scholarship athletes and community coaches, this program focuses on skill development, teamwork, and life lessons.</p>
+        <p>Future Stars brings back what youth basketball should be about — fun, growth, and opportunity. Led by former NCAA athletes and community coaches, this program focuses on skill development, teamwork, and life lessons.</p>
         <p>With affordable access and genuine mentorship, we're helping kids fall in love with the game while learning values that extend far beyond the court.</p>
         <h3>Program Details:</h3>
         <ul>

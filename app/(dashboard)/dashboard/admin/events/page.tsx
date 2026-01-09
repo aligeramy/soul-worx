@@ -55,28 +55,28 @@ export default async function AdminEventsPage() {
 
       {/* Stats Grid */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <Card className="bg-[#1c1c1e] border-blue-500/20">
+        <Card className="bg-white/5 backdrop-blur-sm border-blue-500/20">
           <CardContent className="p-4">
             <div className="text-xs font-semibold text-blue-400 mb-1 uppercase tracking-wider">Scheduled</div>
             <div className="text-3xl font-bold text-white">{eventsByStatus.scheduled.length}</div>
           </CardContent>
         </Card>
         
-        <Card className="bg-[#1c1c1e] border-emerald-500/20">
+        <Card className="bg-white/5 backdrop-blur-sm border-emerald-500/20">
           <CardContent className="p-4">
             <div className="text-xs font-semibold text-emerald-400 mb-1 uppercase tracking-wider">Completed</div>
             <div className="text-3xl font-bold text-white">{eventsByStatus.completed.length}</div>
           </CardContent>
         </Card>
         
-        <Card className="bg-[#1c1c1e] border-red-500/20">
+        <Card className="bg-white/5 backdrop-blur-sm border-red-500/20">
           <CardContent className="p-4">
             <div className="text-xs font-semibold text-red-400 mb-1 uppercase tracking-wider">Cancelled</div>
             <div className="text-3xl font-bold text-white">{eventsByStatus.cancelled.length}</div>
           </CardContent>
         </Card>
         
-        <Card className="bg-[#1c1c1e] border-amber-500/20">
+        <Card className="bg-white/5 backdrop-blur-sm border-amber-500/20">
           <CardContent className="p-4">
             <div className="text-xs font-semibold text-amber-400 mb-1 uppercase tracking-wider">Postponed</div>
             <div className="text-3xl font-bold text-white">{eventsByStatus.postponed.length}</div>
@@ -86,7 +86,7 @@ export default async function AdminEventsPage() {
 
       {/* Events List */}
       {allEvents.length === 0 ? (
-        <Card className="bg-[#1c1c1e] border-white/10">
+        <Card className="bg-white/5 backdrop-blur-sm border-white/10">
           <CardContent className="text-center py-16">
             <div className="w-16 h-16 mx-auto mb-4 bg-white/5 rounded-full flex items-center justify-center">
               <Calendar className="h-8 w-8 text-white/40" />
@@ -102,7 +102,7 @@ export default async function AdminEventsPage() {
           </CardContent>
         </Card>
       ) : (
-        <Card className="bg-[#1c1c1e] border-white/10">
+        <Card className="bg-white/5 backdrop-blur-sm border-white/10">
           <CardContent className="p-0">
             <div className="overflow-x-auto">
               <table className="w-full">

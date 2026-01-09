@@ -2,10 +2,32 @@ import { auth } from "@/auth"
 import { NextResponse } from "next/server"
 
 export default auth((req) => {
+  const { pathname } = req.nextUrl
+  
   // Add pathname to headers for server components to access
   const requestHeaders = new Headers(req.headers)
-  requestHeaders.set("x-pathname", req.nextUrl.pathname)
+  requestHeaders.set("x-pathname", pathname)
 
+  // Always allow public routes - don't block even if session is expired/invalid
+  const isPublicRoute = 
+    pathname === "/" ||
+    pathname.startsWith("/programs") ||
+    pathname.startsWith("/shop") ||
+    pathname.startsWith("/stories") ||
+    pathname.startsWith("/contact") ||
+    pathname.startsWith("/signin") ||
+    pathname.startsWith("/api/auth")
+
+  // If it's a public route, always allow access regardless of auth state
+  if (isPublicRoute) {
+    return NextResponse.next({
+      request: {
+        headers: requestHeaders,
+      },
+    })
+  }
+
+  // For protected routes, let the authorized callback handle it
   return NextResponse.next({
     request: {
       headers: requestHeaders,

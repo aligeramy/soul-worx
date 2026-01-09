@@ -1,12 +1,13 @@
 import { Suspense } from "react"
 import { auth } from "@/auth"
 import { db } from "@/lib/db"
-import { communityChannels, membershipTiers, userMemberships } from "@/lib/db/schema"
+import { communityChannels, membershipTiers, userMemberships, videos } from "@/lib/db/schema"
 import { eq, and } from "drizzle-orm"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { ChannelCard } from "@/components/community/channel-card"
 import { CommunityPricing } from "@/components/community/community-pricing"
+import { VideoGrid } from "@/components/programs/VideoGrid"
 
 async function getUserMembership(userId: string | undefined) {
   if (!userId) return null
@@ -36,6 +37,30 @@ async function getTiers() {
   })
 }
 
+async function getFreeVideos() {
+  return await db.query.videos.findMany({
+    where: and(
+      eq(videos.isFirstEpisode, true),
+      eq(videos.status, "published")
+    ),
+    with: {
+      channel: {
+        columns: {
+          id: true,
+          slug: true,
+          title: true,
+        },
+      },
+      section: true,
+    },
+    orderBy: (videos, { asc }) => [
+      asc(videos.seasonNumber),
+      asc(videos.episodeNumber),
+    ],
+    limit: 12,
+  })
+}
+
 export default async function CommunityPage({
   searchParams,
 }: {
@@ -57,13 +82,20 @@ export default async function CommunityPage({
     }
   }
   
-  const [membership, channels, tiers] = await Promise.all([
+  const [membership, channels, tiers, freeVideos] = await Promise.all([
     getUserMembership(session?.user?.id),
     getChannels(),
     getTiers(),
+    getFreeVideos(),
   ])
 
   const userTierLevel = membership?.tier?.accessLevel || 1 // Default to tier 1 (free)
+  
+  // Map free videos with access info
+  const freeVideosWithAccess = freeVideos.map((video) => ({
+    ...video,
+    hasAccess: true, // All first episodes are free
+  }))
 
   return (
     <div className="min-h-screen bg-neutral-50">
@@ -121,6 +153,27 @@ export default async function CommunityPage({
           </div>
         </div>
       </section>
+
+      {/* Free Videos Section - Show when user has limited access */}
+      {freeVideosWithAccess.length > 0 && userTierLevel <= 1 && (
+        <section className="py-16 bg-white max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="mb-8">
+            <h2 className="text-3xl font-crimson font-normal tracking-tighter mb-2">
+              Free Episodes to Get Started
+            </h2>
+            <p className="text-lg text-neutral-600">
+              Watch these free first episodes from our channels. Upgrade to unlock full access to all content.
+            </p>
+          </div>
+          
+          <Suspense fallback={<div>Loading videos...</div>}>
+            <VideoGrid 
+              videos={freeVideosWithAccess} 
+              slug="" 
+            />
+          </Suspense>
+        </section>
+      )}
 
       {/* Channels Section */}
       <section className="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

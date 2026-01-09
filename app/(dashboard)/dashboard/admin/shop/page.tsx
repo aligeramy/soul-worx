@@ -35,13 +35,13 @@ export default async function AdminShopPage() {
 
       {/* Stats */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <Card className="bg-[#1c1c1e] border-white/10">
+        <Card className="bg-white/5 backdrop-blur-sm border-white/10">
           <CardContent className="p-4">
             <div className="text-xs font-semibold text-white/60 mb-1 uppercase tracking-wider">Total Products</div>
             <div className="text-3xl font-bold text-white">{products.length}</div>
           </CardContent>
         </Card>
-        <Card className="bg-[#1c1c1e] border-emerald-500/20">
+        <Card className="bg-white/5 backdrop-blur-sm border-emerald-500/20">
           <CardContent className="p-4">
             <div className="text-xs font-semibold text-emerald-400 mb-1 uppercase tracking-wider">Active</div>
             <div className="text-3xl font-bold text-white">
@@ -49,7 +49,7 @@ export default async function AdminShopPage() {
             </div>
           </CardContent>
         </Card>
-        <Card className="bg-[#1c1c1e] border-amber-500/20">
+        <Card className="bg-white/5 backdrop-blur-sm border-amber-500/20">
           <CardContent className="p-4">
             <div className="text-xs font-semibold text-amber-400 mb-1 uppercase tracking-wider">Drafts</div>
             <div className="text-3xl font-bold text-white">
@@ -57,7 +57,7 @@ export default async function AdminShopPage() {
             </div>
           </CardContent>
         </Card>
-        <Card className="bg-[#1c1c1e] border-red-500/20">
+        <Card className="bg-white/5 backdrop-blur-sm border-red-500/20">
           <CardContent className="p-4">
             <div className="text-xs font-semibold text-red-400 mb-1 uppercase tracking-wider">Out of Stock</div>
             <div className="text-3xl font-bold text-white">
@@ -69,7 +69,7 @@ export default async function AdminShopPage() {
 
       {/* Products Table */}
       {products.length === 0 ? (
-        <Card className="bg-[#1c1c1e] border-white/10">
+        <Card className="bg-white/5 backdrop-blur-sm border-white/10">
           <CardContent className="text-center py-16">
             <div className="w-16 h-16 mx-auto mb-4 bg-white/5 rounded-full flex items-center justify-center">
               <Package className="h-8 w-8 text-white/40" />
