@@ -51,7 +51,7 @@ export function ProductsTable({ products }: ProductsTableProps) {
   }
 
   return (
-    <Card className="bg-[#1c1c1e] border-white/10">
+    <Card className="bg-white/5 backdrop-blur-sm border-white/10">
       {/* Filters */}
       <div className="p-6 border-b border-white/10">
         <div className="flex flex-wrap gap-2">

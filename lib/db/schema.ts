@@ -443,6 +443,27 @@ export const communityChannels = pgTable("community_channel", {
   publishedAt: timestamp("publishedAt", { mode: "date" }),
 })
 
+// ==================== CHANNEL SECTIONS ====================
+export const channelSections = pgTable("channel_section", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  
+  // Section info
+  channelId: text("channelId")
+    .notNull()
+    .references(() => communityChannels.id, { onDelete: "cascade" }),
+  slug: text("slug").notNull(),
+  title: text("title").notNull(),
+  description: text("description"),
+  
+  // Order
+  sortOrder: integer("sortOrder").notNull().default(0),
+  
+  createdAt: timestamp("createdAt", { mode: "date" }).notNull().defaultNow(),
+  updatedAt: timestamp("updatedAt", { mode: "date" }).notNull().defaultNow(),
+})
+
 // ==================== VIDEOS ====================
 export type VideoStatus = "draft" | "published" | "unlisted" | "archived"
 
@@ -455,6 +476,8 @@ export const videos = pgTable("video", {
   channelId: text("channelId")
     .notNull()
     .references(() => communityChannels.id, { onDelete: "cascade" }),
+  sectionId: text("sectionId")
+    .references(() => channelSections.id, { onDelete: "set null" }),
   slug: text("slug").notNull().unique(),
   title: text("title").notNull(),
   description: text("description"),
@@ -634,12 +657,25 @@ export const communityChannelsRelations = relations(communityChannels, ({ one, m
     references: [users.id],
   }),
   videos: many(videos),
+  sections: many(channelSections),
+}))
+
+export const channelSectionsRelations = relations(channelSections, ({ one, many }) => ({
+  channel: one(communityChannels, {
+    fields: [channelSections.channelId],
+    references: [communityChannels.id],
+  }),
+  videos: many(videos),
 }))
 
 export const videosRelations = relations(videos, ({ one, many }) => ({
   channel: one(communityChannels, {
     fields: [videos.channelId],
     references: [communityChannels.id],
+  }),
+  section: one(channelSections, {
+    fields: [videos.sectionId],
+    references: [channelSections.id],
   }),
   createdBy: one(users, {
     fields: [videos.createdBy],

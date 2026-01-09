@@ -41,6 +41,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   ],
   session: {
     strategy: "jwt",
+    maxAge: 30 * 24 * 60 * 60, // 30 days
   },
   pages: {
     signIn: "/signin",
@@ -91,6 +92,19 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       const isAdminRoute = nextUrl.pathname.startsWith("/dashboard/admin")
       const isAuth = nextUrl.pathname.startsWith("/signin")
 
+      // Define public routes that should always be accessible
+      const isPublicRoute = 
+        nextUrl.pathname === "/" ||
+        nextUrl.pathname.startsWith("/programs") ||
+        nextUrl.pathname.startsWith("/shop") ||
+        nextUrl.pathname.startsWith("/stories") ||
+        nextUrl.pathname.startsWith("/contact")
+
+      // Always allow access to public routes, even if session is expired/invalid
+      if (isPublicRoute) {
+        return true
+      }
+
       // Protect admin routes
       if (isAdminRoute && !isAdmin) {
         return Response.redirect(new URL("/dashboard", nextUrl))
@@ -106,6 +120,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         return Response.redirect(new URL("/signin", nextUrl))
       }
 
+      // Default: allow access (for any other routes)
       return true
     },
   },
