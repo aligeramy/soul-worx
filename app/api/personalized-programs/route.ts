@@ -4,12 +4,23 @@ import { db } from "@/lib/db"
 import { personalizedPrograms, programChecklistItems } from "@/lib/db/schema"
 import { eq } from "drizzle-orm"
 import { eachDayOfInterval, format, parseISO } from "date-fns"
+import { addCorsHeaders, handleOptions } from "@/lib/cors"
+
+/**
+ * OPTIONS /api/personalized-programs
+ * Handle CORS preflight
+ */
+export async function OPTIONS(request: NextRequest) {
+  const origin = request.headers.get("origin")
+  return handleOptions(origin)
+}
 
 /**
  * POST /api/personalized-programs
  * Create a new personalized program and generate checklist items
  */
 export async function POST(request: NextRequest) {
+  const origin = request.headers.get("origin")
   try {
     const session = await auth()
     if (!session?.user?.id) {
@@ -95,19 +106,25 @@ export async function POST(request: NextRequest) {
       await db.insert(programChecklistItems).values(checklistItems)
     }
 
-    return NextResponse.json({
-      success: true,
-      program: {
-        id: program.id,
-        title: program.title,
-        checklistItemsCount: checklistItems.length,
-      },
-    })
+    return addCorsHeaders(
+      NextResponse.json({
+        success: true,
+        program: {
+          id: program.id,
+          title: program.title,
+          checklistItemsCount: checklistItems.length,
+        },
+      }),
+      origin
+    )
   } catch (error) {
     console.error("Error creating personalized program:", error)
-    return NextResponse.json(
-      { error: "Failed to create program" },
-      { status: 500 }
+    return addCorsHeaders(
+      NextResponse.json(
+        { error: "Failed to create program" },
+        { status: 500 }
+      ),
+      origin
     )
   }
 }
@@ -117,6 +134,11 @@ export async function POST(request: NextRequest) {
  * Get personalized programs for a user
  */
 export async function GET(request: NextRequest) {
+  const origin = request.headers.get("origin")
+  // Handle CORS preflight
+  if (request.method === 'OPTIONS') {
+    return handleOptions(origin)
+  }
   try {
     const session = await auth()
     if (!session?.user?.id) {
@@ -143,12 +165,18 @@ export async function GET(request: NextRequest) {
       },
     })
 
-    return NextResponse.json({ programs })
+    return addCorsHeaders(
+      NextResponse.json({ programs }),
+      origin
+    )
   } catch (error) {
     console.error("Error fetching personalized programs:", error)
-    return NextResponse.json(
-      { error: "Failed to fetch programs" },
-      { status: 500 }
+    return addCorsHeaders(
+      NextResponse.json(
+        { error: "Failed to fetch programs" },
+        { status: 500 }
+      ),
+      origin
     )
   }
 }

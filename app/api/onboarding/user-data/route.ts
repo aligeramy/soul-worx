@@ -1,14 +1,24 @@
-import { NextResponse } from "next/server"
+import { NextRequest, NextResponse } from "next/server"
 import { auth } from "@/auth"
 import { db } from "@/lib/db"
 import { users } from "@/lib/db/schema"
 import { eq } from "drizzle-orm"
+import { addCorsHeaders, handleOptions } from "@/lib/cors"
+
+/**
+ * OPTIONS /api/onboarding/user-data
+ * Handle CORS preflight
+ */
+export async function OPTIONS(request: NextRequest) {
+  const origin = request.headers.get("origin")
+  return handleOptions(origin)
+}
 
 /**
  * GET /api/onboarding/user-data
  * Get current user's onboarding data
  */
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
     const session = await auth()
     if (!session?.user?.id) {
@@ -21,6 +31,7 @@ export async function GET() {
         primaryInterest: true,
         onboardingData: true,
         onboardingCompleted: true,
+        age: true,
       },
     })
 

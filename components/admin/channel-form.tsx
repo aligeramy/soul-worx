@@ -174,8 +174,8 @@ export function ChannelForm({ channel, onSuccess }: ChannelFormProps) {
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="1">Tier 1 (Free/Basic)</SelectItem>
-              <SelectItem value="2">Tier 2 (Premium)</SelectItem>
+              <SelectItem value="1">Tier 1 (Free)</SelectItem>
+              <SelectItem value="2">Tier 2 (Pro)</SelectItem>
               <SelectItem value="3">Tier 3 (VIP)</SelectItem>
             </SelectContent>
           </Select>

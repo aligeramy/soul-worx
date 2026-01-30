@@ -134,13 +134,24 @@ export function TierSelection({ userId }: TierSelectionProps) {
         throw new Error(data.error || "Failed to save tier selection")
       }
 
-      // If Pro+, redirect to questionnaire (which will then redirect to booking)
-      if (selectedTier === "pro_plus") {
-        router.push("/onboarding/pro-plus-questionnaire")
+      // Check if mobile request
+      const isMobile = typeof window !== 'undefined' && window.location.search.includes('mobile=true')
+      
+      // If Pro or Pro+, redirect to upgrade/payment
+      if (selectedTier === "pro" || selectedTier === "pro_plus") {
+        if (isMobile) {
+          // Mobile: redirect to web for payment setup
+          window.location.href = `/upgrade?tier=${selectedTier}&mobile=true&onboarding=true`
+        } else {
+          // Web: redirect to upgrade page
+          router.push(`/upgrade?tier=${selectedTier}&onboarding=true`)
+        }
       } else {
-        // For Free or Pro, complete onboarding and redirect to dashboard
+        // For Free, complete onboarding and redirect to dashboard
         router.push("/dashboard")
       }
+      
+      // Note: Pro+ questionnaire will be shown after payment is completed
     } catch (error) {
       console.error("Error saving tier:", error)
       toast.error(error instanceof Error ? error.message : "Failed to save selection")

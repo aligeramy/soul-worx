@@ -3,16 +3,21 @@ import { auth } from "@/auth"
 import { db } from "@/lib/db"
 import { users, membershipTiers, userMemberships } from "@/lib/db/schema"
 import { eq, and } from "drizzle-orm"
+import { addCorsHeaders } from "@/lib/cors"
 
 /**
  * POST /api/onboarding/tier
  * Save user's tier selection and create membership
  */
 export async function POST(request: NextRequest) {
+  const origin = request.headers.get("origin")
   try {
     const session = await auth()
     if (!session?.user?.id) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+      return addCorsHeaders(
+        NextResponse.json({ error: "Unauthorized" }, { status: 401 }),
+        origin
+      )
     }
 
     const body = await request.json()
@@ -21,9 +26,12 @@ export async function POST(request: NextRequest) {
     // Validate tier
     const validTiers = ["free", "pro", "pro_plus"]
     if (!tier || !validTiers.includes(tier)) {
-      return NextResponse.json(
-        { error: "Invalid tier selection" },
-        { status: 400 }
+      return addCorsHeaders(
+        NextResponse.json(
+          { error: "Invalid tier selection" },
+          { status: 400 }
+        ),
+        origin
       )
     }
 
@@ -33,9 +41,12 @@ export async function POST(request: NextRequest) {
     })
 
     if (!tierRecord) {
-      return NextResponse.json(
-        { error: "Tier not found in database" },
-        { status: 404 }
+      return addCorsHeaders(
+        NextResponse.json(
+          { error: "Tier not found in database" },
+          { status: 404 }
+        ),
+        origin
       )
     }
 
@@ -45,7 +56,10 @@ export async function POST(request: NextRequest) {
     })
 
     if (!user) {
-      return NextResponse.json({ error: "User not found" }, { status: 404 })
+      return addCorsHeaders(
+        NextResponse.json({ error: "User not found" }, { status: 404 }),
+        origin
+      )
     }
 
     // Update onboarding data
@@ -85,16 +99,22 @@ export async function POST(request: NextRequest) {
       })
     }
 
-    return NextResponse.json({ 
-      success: true,
-      tier,
-      needsSubscription: tier !== "free",
-    })
+    return addCorsHeaders(
+      NextResponse.json({ 
+        success: true,
+        tier,
+        needsSubscription: tier !== "free",
+      }),
+      origin
+    )
   } catch (error) {
     console.error("Error saving tier:", error)
-    return NextResponse.json(
-      { error: "Failed to save tier selection" },
-      { status: 500 }
+    return addCorsHeaders(
+      NextResponse.json(
+        { error: "Failed to save tier selection" },
+        { status: 500 }
+      ),
+      origin
     )
   }
 }

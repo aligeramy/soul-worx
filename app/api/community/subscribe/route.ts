@@ -17,16 +17,26 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json()
-    const { tierId } = body
+    const { tierId, tierSlug } = body
 
-    if (!tierId) {
-      return NextResponse.json({ error: "Tier ID is required" }, { status: 400 })
+    // Support both tierId and tierSlug
+    let tier
+    if (tierId) {
+      tier = await db.query.membershipTiers.findFirst({
+        where: eq(membershipTiers.id, tierId),
+      })
+    } else if (tierSlug) {
+      tier = await db.query.membershipTiers.findFirst({
+        where: (tiers, { or, eq }) => or(
+          eq(tiers.slug, tierSlug),
+          eq(tiers.slug, tierSlug.replace("_", "-"))
+        ),
+      })
     }
 
-    // Get tier details
-    const tier = await db.query.membershipTiers.findFirst({
-      where: eq(membershipTiers.id, tierId),
-    })
+    if (!tierId && !tierSlug) {
+      return NextResponse.json({ error: "Tier ID or slug is required" }, { status: 400 })
+    }
 
     if (!tier) {
       return NextResponse.json(
@@ -63,17 +73,27 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    // Check if mobile/onboarding request
+    const isMobile = body.mobile === true || body.mobile === "true"
+    const isOnboarding = body.onboarding === true || body.onboarding === "true"
+    
     // Create checkout session
     const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
+    const successUrl = isMobile
+      ? `${baseUrl}/api/auth/mobile-callback?success=true&session_id={CHECKOUT_SESSION_ID}${isOnboarding ? `&onboarding=true&tier=${tier.slug}` : ''}`
+      : `${baseUrl}/programs/community?success=true&session_id={CHECKOUT_SESSION_ID}`
+    
     const checkoutSession = await createCheckoutSession({
       customerId: customer.id,
       priceId: tier.stripePriceId,
-      successUrl: `${baseUrl}/programs/community?success=true&session_id={CHECKOUT_SESSION_ID}`,
-      cancelUrl: `${baseUrl}/programs/community?canceled=true`,
+      successUrl,
+      cancelUrl: isMobile ? `soulworx://upgrade?canceled=true` : `${baseUrl}/programs/community?canceled=true`,
       metadata: {
         userId: session.user.id,
         tierId: tier.id,
         tierSlug: tier.slug,
+        mobile: isMobile ? "true" : "false",
+        onboarding: isOnboarding ? "true" : "false",
       },
     })
 

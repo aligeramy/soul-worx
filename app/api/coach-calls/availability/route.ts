@@ -5,6 +5,16 @@ import { listBookedDates } from "@/lib/google-calendar"
 import { db } from "@/lib/db"
 import { coachCalls } from "@/lib/db/schema"
 import { eq, gte, and, sql } from "drizzle-orm"
+import { addCorsHeaders, handleOptions } from "@/lib/cors"
+
+/**
+ * OPTIONS /api/coach-calls/availability
+ * Handle CORS preflight
+ */
+export async function OPTIONS(request: NextRequest) {
+  const origin = request.headers.get("origin")
+  return handleOptions(origin)
+}
 
 /**
  * GET /api/coach-calls/availability
@@ -12,17 +22,24 @@ import { eq, gte, and, sql } from "drizzle-orm"
  */
 export async function GET(request: NextRequest) {
   try {
+    const origin = request.headers.get("origin")
     const session = await auth()
     if (!session?.user?.id) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+      return addCorsHeaders(
+        NextResponse.json({ error: "Unauthorized" }, { status: 401 }),
+        origin
+      )
     }
 
     // Check if user is Pro+
     const tier = await getUserTier(session.user.id)
     if (tier !== "pro_plus") {
-      return NextResponse.json(
-        { error: "Coach calls are only available for Pro+ members" },
-        { status: 403 }
+      return addCorsHeaders(
+        NextResponse.json(
+          { error: "Coach calls are only available for Pro+ members" },
+          { status: 403 }
+        ),
+        origin
       )
     }
 
@@ -68,16 +85,23 @@ export async function GET(request: NextRequest) {
     // Generate available time slots (12pm-5pm, hourly)
     const timeSlots = ["12:00", "13:00", "14:00", "15:00", "16:00", "17:00"]
 
-    return NextResponse.json({
-      bookedDates: Array.from(bookedDates),
-      timeSlots,
-      availableHours: timeSlots,
-    })
+    return addCorsHeaders(
+      NextResponse.json({
+        bookedDates: Array.from(bookedDates),
+        timeSlots,
+        availableHours: timeSlots,
+      }),
+      origin
+    )
   } catch (error) {
     console.error("Error fetching availability:", error)
-    return NextResponse.json(
-      { error: "Failed to fetch availability" },
-      { status: 500 }
+    const origin = request.headers.get("origin")
+    return addCorsHeaders(
+      NextResponse.json(
+        { error: "Failed to fetch availability" },
+        { status: 500 }
+      ),
+      origin
     )
   }
 }

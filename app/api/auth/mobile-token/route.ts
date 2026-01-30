@@ -1,6 +1,16 @@
 import { NextRequest, NextResponse } from "next/server"
 import { auth } from "@/auth"
 import jwt from "jsonwebtoken"
+import { addCorsHeaders, handleOptions } from "@/lib/cors"
+
+/**
+ * OPTIONS /api/auth/mobile-token
+ * Handle CORS preflight
+ */
+export async function OPTIONS(request: NextRequest) {
+  const origin = request.headers.get("origin")
+  return handleOptions(origin)
+}
 
 /**
  * POST /api/auth/mobile-token
@@ -8,6 +18,7 @@ import jwt from "jsonwebtoken"
  * Called after user successfully authenticates on web
  */
 export async function POST(request: NextRequest) {
+  const origin = request.headers.get("origin")
   try {
     const session = await auth()
 
@@ -62,7 +73,7 @@ export async function POST(request: NextRequest) {
       },
     })
 
-    return NextResponse.json({
+    const response = NextResponse.json({
       accessToken,
       refreshToken,
       expiresIn: 7 * 24 * 60 * 60, // 7 days in seconds
@@ -74,11 +85,14 @@ export async function POST(request: NextRequest) {
         role: session.user.role,
       },
     })
+    
+    return addCorsHeaders(response, origin)
   } catch (error) {
     console.error("Error generating mobile token:", error)
-    return NextResponse.json(
+    const response = NextResponse.json(
       { error: "Failed to generate token" },
       { status: 500 }
     )
+    return addCorsHeaders(response, origin)
   }
 }

@@ -86,6 +86,8 @@ export async function POST(request: NextRequest) {
  */
 async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
   const userId = session.metadata?.userId
+  const isMobile = session.metadata?.mobile === "true"
+  const isOnboarding = session.metadata?.onboarding === "true"
   const tierId = session.metadata?.tierId
 
   if (!userId || !tierId) {
@@ -129,6 +131,34 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
 
   // Trigger Discord role sync
   await syncDiscordRole(userId, tierId)
+  
+  // Update user onboarding data if this was during onboarding
+  const user = await db.query.users.findFirst({
+    where: eq(users.id, userId),
+  })
+  
+  if (user) {
+    const onboardingData = (user.onboardingData as Record<string, unknown>) || {}
+    const tierSlug = session.metadata?.tierSlug || ""
+    const updatedOnboardingData: Record<string, unknown> = {
+      ...onboardingData,
+      tier: tierSlug,
+    }
+    
+    // If Pro+ and onboarding, set step to questionnaire
+    if (tierSlug === "pro_plus" && isOnboarding) {
+      updatedOnboardingData.step = "questionnaire"
+    } else if (isOnboarding) {
+      updatedOnboardingData.step = "complete"
+    }
+    
+    await db
+      .update(users)
+      .set({
+        onboardingData: updatedOnboardingData,
+      })
+      .where(eq(users.id, userId))
+  }
 }
 
 /**

@@ -26,97 +26,97 @@ This document outlines the complete implementation plan for a dynamic signup/onb
 
 ### 1.3 Pro+ Questionnaire Data
 - [x] Create `pro_plus_questionnaire` table:
-  - [ ] `id` (uuid, primary key)
-  - [ ] `userId` (foreign key to user)
-  - [ ] `age` (integer)
-  - [ ] `skillLevel` (text: beginner, advanced, pro)
-  - [ ] `gameDescription` (text)
-  - [ ] `position` (text: PG, SG, SF, PF, C)
-  - [ ] `yearsPlaying` (text)
-  - [ ] `currentGoalsYearly` (text)
-  - [ ] `currentGoalsOverall` (text)
-  - [ ] `improvementRankings` (jsonb: {ballHandling: 1-5, defence: 1-5, finishing: 1-5, shooting: 1-5, passing: 1-5, other: {text: string, rank: 1-5}})
-  - [ ] `weight` (decimal)
-  - [ ] `height` (text)
-  - [ ] `currentInjuries` (text, nullable)
-  - [ ] `seeingPhysiotherapy` (boolean)
-  - [ ] `weightTrains` (boolean)
-  - [ ] `stretches` (boolean)
-  - [ ] `currentTeam` (text: No Team, Elementary, Middle School, Highschool, College, Pro)
-  - [ ] `outsideSchoolTeams` (text: AAU, Prep, No team)
-  - [ ] `inSeason` (boolean)
-  - [ ] `basketballWatching` (text: Your own film, NBA/Pro/College, Both, None)
-  - [ ] `equipmentAccess` (text: Full gym, Half gym, Driveway, Park)
-  - [ ] `trainingDays` (jsonb array: ["Monday", "Wednesday", "Friday"])
-  - [ ] `averageSessionLength` (integer: 30, 45, 60)
-  - [ ] `biggestStruggle` (text)
-  - [ ] `confidenceLevel` (integer: 1-5)
-  - [ ] `mentalChallenge` (text: Fear of failure, Consistency, Pressure, Motivation, Other)
-  - [ ] `mentalChallengeOther` (text, nullable)
-  - [ ] `coachability` (integer: 1-5)
-  - [ ] `preferredCoachingStyle` (text: Direct, Encouraging, Accountability, Driven, Mix, Other)
-  - [ ] `coachingStyleOther` (text, nullable)
-  - [ ] `gameFilmUrl` (text, nullable) - Link to uploaded video
-  - [ ] `workoutVideos` (jsonb array of video URLs)
+  - [x] `id` (uuid, primary key)
+  - [x] `userId` (foreign key to user)
+  - [x] `age` (integer)
+  - [x] `skillLevel` (text: beginner, advanced, pro)
+  - [x] `gameDescription` (text)
+  - [x] `position` (text: PG, SG, SF, PF, C)
+  - [x] `yearsPlaying` (text)
+  - [x] `currentGoalsYearly` (text)
+  - [x] `currentGoalsOverall` (text)
+  - [x] `improvementRankings` (jsonb: {ballHandling: 1-5, defence: 1-5, finishing: 1-5, shooting: 1-5, passing: 1-5, other: {text: string, rank: 1-5}})
+  - [x] `weight` (decimal)
+  - [x] `height` (text)
+  - [x] `currentInjuries` (text, nullable)
+  - [x] `seeingPhysiotherapy` (boolean)
+  - [x] `weightTrains` (boolean)
+  - [x] `stretches` (boolean)
+  - [x] `currentTeam` (text: No Team, Elementary, Middle School, Highschool, College, Pro)
+  - [x] `outsideSchoolTeams` (text: AAU, Prep, No team)
+  - [x] `inSeason` (boolean)
+  - [x] `basketballWatching` (text: Your own film, NBA/Pro/College, Both, None)
+  - [x] `equipmentAccess` (text: Full gym, Half gym, Driveway, Park)
+  - [x] `trainingDays` (jsonb array: ["Monday", "Wednesday", "Friday"])
+  - [x] `averageSessionLength` (integer: 30, 45, 60)
+  - [x] `biggestStruggle` (text)
+  - [x] `confidenceLevel` (integer: 1-5)
+  - [x] `mentalChallenge` (text: Fear of failure, Consistency, Pressure, Motivation, Other)
+  - [x] `mentalChallengeOther` (text, nullable)
+  - [x] `coachability` (integer: 1-5)
+  - [x] `preferredCoachingStyle` (text: Direct, Encouraging, Accountability, Driven, Mix, Other)
+  - [x] `coachingStyleOther` (text, nullable)
+  - [x] `gameFilmUrl` (text, nullable) - Link to uploaded video
+  - [x] `workoutVideos` (jsonb array of video URLs)
   - [x] `completedAt` (timestamp)
   - [x] `createdAt` (timestamp)
   - [x] `updatedAt` (timestamp)
 
 ### 1.4 Coach Call Booking System
 - [x] Create `coach_calls` table:
-  - [ ] `id` (uuid, primary key)
-  - [ ] `userId` (foreign key to user)
-  - [ ] `adminId` (foreign key to user, nullable - assigned admin)
-  - [ ] `scheduledAt` (timestamp) - Date and time of call
-  - [ ] `duration` (integer, default 60) - Minutes
-  - [ ] `status` (text: scheduled, completed, cancelled, rescheduled)
-  - [ ] `googleMeetLink` (text) - Generated meeting URL
-  - [ ] `meetingId` (text) - Google Calendar event ID
-  - [ ] `questionnaireCompleted` (boolean, default false)
-  - [ ] `videoUploaded` (boolean, default false)
-  - [ ] `notes` (text, nullable) - Admin notes after call
+  - [x] `id` (uuid, primary key)
+  - [x] `userId` (foreign key to user)
+  - [x] `adminId` (foreign key to user, nullable - assigned admin)
+  - [x] `scheduledAt` (timestamp) - Date and time of call
+  - [x] `duration` (integer, default 60) - Minutes
+  - [x] `status` (text: scheduled, completed, cancelled, rescheduled)
+  - [x] `googleMeetLink` (text) - Generated meeting URL
+  - [x] `meetingId` (text) - Google Calendar event ID
+  - [x] `questionnaireCompleted` (boolean, default false)
+  - [x] `videoUploaded` (boolean, default false)
+  - [x] `notes` (text, nullable) - Admin notes after call
   - [x] `createdAt` (timestamp)
   - [x] `updatedAt` (timestamp)
   - [x] Unique constraint on `scheduledAt` date (only 1 appointment per day) - **Using uniqueIndex on DATE()**
 
 ### 1.5 Personalized Programs
 - [x] Create `personalized_programs` table:
-  - [ ] `id` (uuid, primary key)
-  - [ ] `userId` (foreign key to user) - Pro+ user
-  - [ ] `createdBy` (foreign key to user) - Admin who created it
-  - [ ] `title` (text)
-  - [ ] `description` (text)
-  - [ ] `videoUrl` (text) - Uploaded training video
-  - [ ] `thumbnailUrl` (text, nullable)
-  - [ ] `trainingDays` (jsonb array: ["Monday", "Wednesday"])
-  - [ ] `startDate` (date)
-  - [ ] `endDate` (date)
-  - [ ] `status` (text: active, completed, paused)
+  - [x] `id` (uuid, primary key)
+  - [x] `userId` (foreign key to user) - Pro+ user
+  - [x] `createdBy` (foreign key to user) - Admin who created it
+  - [x] `title` (text)
+  - [x] `description` (text)
+  - [x] `videoUrl` (text) - Uploaded training video
+  - [x] `thumbnailUrl` (text, nullable)
+  - [x] `trainingDays` (jsonb array: ["Monday", "Wednesday"])
+  - [x] `startDate` (date)
+  - [x] `endDate` (date)
+  - [x] `status` (text: active, completed, paused)
   - [x] `createdAt` (timestamp)
   - [x] `updatedAt` (timestamp)
 
 ### 1.6 Program Checklists & Completion Tracking
 - [x] Create `program_checklist_items` table:
-  - [ ] `id` (uuid, primary key)
-  - [ ] `programId` (foreign key to personalized_programs)
-  - [ ] `dueDate` (date) - Specific date this workout is due
-  - [ ] `completed` (boolean, default false)
-  - [ ] `completedAt` (timestamp, nullable) - When user checked it off
-  - [ ] `enjoymentRating` (integer, nullable, 1-5)
-  - [ ] `difficultyRating` (integer, nullable, 1-5)
-  - [ ] `daysLate` (integer, default 0) - Calculated: completedAt - dueDate
+  - [x] `id` (uuid, primary key)
+  - [x] `programId` (foreign key to personalized_programs)
+  - [x] `dueDate` (date) - Specific date this workout is due
+  - [x] `completed` (boolean, default false)
+  - [x] `completedAt` (timestamp, nullable) - When user checked it off
+  - [x] `enjoymentRating` (integer, nullable, 1-5)
+  - [x] `difficultyRating` (integer, nullable, 1-5)
+  - [x] `daysLate` (integer, default 0) - Calculated: completedAt - dueDate
   - [x] `createdAt` (timestamp)
   - [x] `updatedAt` (timestamp)
   - [x] Unique constraint on (programId, dueDate) - **Using uniqueIndex**
 
 ### 1.7 Video Uploads
 - [x] Create `user_video_uploads` table:
-  - [ ] `id` (uuid, primary key)
-  - [ ] `userId` (foreign key to user)
-  - [ ] `type` (text: questionnaire_game_film, questionnaire_workout, program_workout)
-  - [ ] `relatedId` (text, nullable) - ID of related questionnaire/program
-  - [ ] `videoUrl` (text) - Vercel Blob Storage URL
-  - [ ] `thumbnailUrl` (text, nullable)
+  - [x] `id` (uuid, primary key)
+  - [x] `userId` (foreign key to user)
+  - [x] `type` (text: questionnaire_game_film, questionnaire_workout, program_workout)
+  - [x] `relatedId` (text, nullable) - ID of related questionnaire/program
+  - [x] `videoUrl` (text) - Vercel Blob Storage URL
+  - [x] `thumbnailUrl` (text, nullable)
   - [x] `uploadedAt` (timestamp)
   - [x] `createdAt` (timestamp)
 
@@ -131,7 +131,7 @@ This document outlines the complete implementation plan for a dynamic signup/onb
 
 ### 2.1 Signup Page (Web & Expo)
 - [x] Create `/signup` page (web)
-- [ ] Create signup screen (Expo) - **TODO: Expo app**
+- [x] Create signup screen (Expo) - Redirects to web for signup (Spotify-style)
 - [x] Form fields:
   - [x] Email (required, validated)
   - [x] Name (required)
@@ -162,7 +162,7 @@ This document outlines the complete implementation plan for a dynamic signup/onb
 
 ### 2.3 Onboarding Flow - Step 1: Interest Selection
 - [x] Create `/onboarding/interest` page (web)
-- [ ] Create onboarding interest screen (Expo) - **TODO: Expo app**
+- [x] Create onboarding interest screen (Expo)
 - [x] Show 3 large cards with icons:
   - [x] Sports / Basketball (basketball icon)
   - [x] Poetry / The Arts (pen/art icon)
@@ -174,7 +174,7 @@ This document outlines the complete implementation plan for a dynamic signup/onb
 
 ### 2.4 Onboarding Flow - Step 2: Basic Questions
 - [x] Create `/onboarding/questions` page (web)
-- [ ] Create onboarding questions screen (Expo) - **TODO: Expo app**
+- [x] Create onboarding questions screen (Expo)
 - [x] Dynamic questions based on interest:
   - [x] **All interests**: Age (number input)
   - [x] **All interests**: "What do you hope to accomplish?" (text area, optional)
@@ -186,7 +186,7 @@ This document outlines the complete implementation plan for a dynamic signup/onb
 
 ### 2.5 Onboarding Flow - Step 3: Tier Selection (Basketball Only)
 - [x] Create `/onboarding/tiers` page (web) - Only show if basketball selected
-- [ ] Create onboarding tiers screen (Expo) - **TODO: Expo app**
+- [x] Create onboarding tiers screen (Expo)
 - [x] Display 3 tier cards with features:
 
 #### Free Tier Card
@@ -231,85 +231,85 @@ This document outlines the complete implementation plan for a dynamic signup/onb
 - [x] Create `/api/onboarding/tier` endpoint
 
 ### 2.6 Onboarding Flow - Step 4: Pro+ Questionnaire (Pro+ Only)
-- [ ] Create `/onboarding/pro-plus-questionnaire` page (web)
-- [ ] Create pro+ questionnaire screen (Expo)
-- [ ] Multi-step form with sections:
+- [x] Create `/onboarding/pro-plus-questionnaire` page (web)
+- [x] Create pro+ questionnaire screen (Expo)
+- [x] Multi-step form with sections:
 
 #### Section 1: Basic Info
-- [ ] Age (pre-filled from Step 2, editable)
-- [ ] Skill level: Radio buttons (Beginner, Advanced, Pro)
-- [ ] Describe what your game is like (text area)
+- [x] Age (pre-filled from Step 2, editable)
+- [x] Skill level: Radio buttons (Beginner, Advanced, Pro)
+- [x] Describe what your game is like (text area)
 
 #### Section 2: Position & Experience
-- [ ] Position: Select/Picker (PG, SG, SF, PF, C)
-- [ ] Years playing basketball or other sports (text input)
+- [x] Position: Select/Picker (PG, SG, SF, PF, C)
+- [x] Years playing basketball or other sports (text input)
 
 #### Section 3: Goals
-- [ ] Current goals - Yearly (text area)
-- [ ] Current goals - Overall (text area)
+- [x] Current goals - Yearly (text area)
+- [x] Current goals - Overall (text area)
 
 #### Section 4: Improvement Rankings (1-5 scale)
-- [ ] Ball handling (1-5 slider/buttons)
-- [ ] Defence (1-5 slider/buttons)
-- [ ] Finishing (1-5 slider/buttons)
-- [ ] Shooting (1-5 slider/buttons)
-- [ ] Passing (1-5 slider/buttons)
-- [ ] Other (text input + 1-5 ranking)
+- [x] Ball handling (1-5 slider/buttons)
+- [x] Defence (1-5 slider/buttons)
+- [x] Finishing (1-5 slider/buttons)
+- [x] Shooting (1-5 slider/buttons)
+- [x] Passing (1-5 slider/buttons)
+- [x] Other (text input + 1-5 ranking)
 
 #### Section 5: Physical Stats
-- [ ] Current Weight (number input, lbs/kg toggle)
-- [ ] Current Height (feet/inches or cm)
-- [ ] Current injuries (text area, optional)
+- [x] Current Weight (number input, lbs/kg toggle)
+- [x] Current Height (feet/inches or cm)
+- [x] Current injuries (text area, optional)
 
 #### Section 6: Training & Health
-- [ ] Are you seeing physiotherapy? (Yes/No toggle)
-- [ ] Do you weight train? (Yes/No toggle)
-- [ ] Do you stretch? (Yes/No toggle)
+- [x] Are you seeing physiotherapy? (Yes/No toggle)
+- [x] Do you weight train? (Yes/No toggle)
+- [x] Do you stretch? (Yes/No toggle)
 
 #### Section 7: Team & Competition
-- [ ] Current Teams: Select (No Team, Elementary, Middle School, Highschool, College, Pro)
-- [ ] Outside of school teams: Select (AAU, Prep, No team)
-- [ ] In season or off season? (Toggle)
+- [x] Current Teams: Select (No Team, Elementary, Middle School, Highschool, College, Pro)
+- [x] Outside of school teams: Select (AAU, Prep, No team)
+- [x] In season or off season? (Toggle)
 
 #### Section 8: Basketball Watching
-- [ ] How much basketball do you watch? (Multi-select: Your own film, NBA/Pro/College, Both, None)
+- [x] How much basketball do you watch? (Multi-select: Your own film, NBA/Pro/College, Both, None)
 
 #### Section 9: Equipment & Availability
-- [ ] Access to equipment: Select (Full gym, Half gym, Driveway, Park)
-- [ ] Days you can train: Multi-select checkboxes (Monday-Sunday)
-- [ ] Average session length: Select (30, 45, 60 minutes)
+- [x] Access to equipment: Select (Full gym, Half gym, Driveway, Park)
+- [x] Days you can train: Multi-select checkboxes (Monday-Sunday)
+- [x] Average session length: Select (30, 45, 60 minutes)
 
 #### Section 10: Mental & Coaching
-- [ ] Biggest in-game struggle right now? (text area)
-- [ ] Confidence Level: 1-5 slider
-- [ ] Biggest mental challenge: Select (Fear of failure, Consistency, Pressure, Motivation, Other)
-- [ ] If Other selected: Text input
-- [ ] How coachable are you? 1-5 slider
-- [ ] Preferred coaching style: Select (Direct, Encouraging, Accountability, Driven, Mix, Other)
-- [ ] If Other selected: Text input
+- [x] Biggest in-game struggle right now? (text area)
+- [x] Confidence Level: 1-5 slider
+- [x] Biggest mental challenge: Select (Fear of failure, Consistency, Pressure, Motivation, Other)
+- [x] If Other selected: Text input
+- [x] How coachable are you? 1-5 slider
+- [x] Preferred coaching style: Select (Direct, Encouraging, Accountability, Driven, Mix, Other)
+- [x] If Other selected: Text input
 
 #### Section 11: Video Upload (Optional)
-- [ ] "Upload Game Film" button
-- [ ] Video picker/uploader
-- [ ] Progress indicator
-- [ ] Preview uploaded video
-- [ ] "Skip" option
+- [x] "Upload Game Film" button
+- [x] Video picker/uploader
+- [x] Progress indicator
+- [x] Preview uploaded video
+- [x] "Skip" option
 
 #### Section 12: Workout Videos Upload (Optional)
-- [ ] "Upload Workout Videos" button
-- [ ] Multiple video upload support
-- [ ] Progress indicators
-- [ ] Preview uploaded videos
-- [ ] "Skip" option
+- [x] "Upload Workout Videos" button
+- [x] Multiple video upload support
+- [x] Progress indicators
+- [x] Preview uploaded videos
+- [x] "Skip" option
 
-- [ ] Save progress as user goes (auto-save)
-- [ ] "Complete Questionnaire" button at end
-- [ ] On submit: Save to `pro_plus_questionnaire` table
-- [ ] Redirect to calendar booking
+- [x] Save progress as user goes (auto-save)
+- [x] "Complete Questionnaire" button at end
+- [x] On submit: Save to `pro_plus_questionnaire` table
+- [x] Redirect to calendar booking
 
 ### 2.7 Onboarding Flow - Step 5: Calendar Booking (Pro+ Only)
 - [x] Create `/onboarding/book-call` page (web)
-- [ ] Create book call screen (Expo) - **TODO: Expo app**
+- [x] Create book call screen (Expo)
 - [x] Calendar view showing available dates
 - [x] Time slots: 12pm-5pm (hourly: 12pm, 1pm, 2pm, 3pm, 4pm, 5pm)
 - [x] Show unavailable dates (already booked)
@@ -346,7 +346,7 @@ This document outlines the complete implementation plan for a dynamic signup/onb
 
 ### 3.2 Upgrade Flow
 - [x] Create `/upgrade` page (web)
-- [ ] Create upgrade screen (Expo) - **TODO: Expo app**
+- [x] Create upgrade screen (Expo)
 - [x] Show current tier
 - [x] Show available upgrade options
 - [ ] Handle subscription upgrades:
@@ -417,14 +417,14 @@ This document outlines the complete implementation plan for a dynamic signup/onb
 - [x] Show user name, email, subscription status
 - [x] Show if they have existing programs
 - [x] "View User" button → User detail screen
-- [ ] Create "Personal Programs" section in admin dashboard (Expo App) - **TODO: Expo app**
+- [x] Create "Personal Programs" section in admin dashboard (Expo App)
 
 ### 5.2 Admin User Detail Screen (Web)
 - [x] Show user info
 - [x] Show questionnaire answers (read-only, scrollable) (`/dashboard/admin/personalized-programs/[userId]/questionnaire`)
 - [x] Show existing programs for this user
 - [x] "+" button → Create new program
-- [ ] Create user detail screen (Expo App) - **TODO: Expo app**
+- [x] Create user detail screen (Expo App)
 
 ### 5.3 Admin Create Program Screen (Web)
 - [x] Form fields:
@@ -443,9 +443,9 @@ This document outlines the complete implementation plan for a dynamic signup/onb
   - [x] Save to `personalized_programs` table
   - [x] Generate checklist items for all dates between start/end dates that match training days
   - [x] Save all checklist items to `program_checklist_items` table
-  - [ ] Send notification to user - **TODO: Push notifications (Phase 8)**
+  - [ ] Send notification to user - **TODO: Scheduled job (Phase 7.2)**
   - [x] Redirect back to user detail
-- [ ] Create program screen (Expo App) - **TODO: Expo app**
+- [x] Create program screen (Expo App)
 
 ### 5.4 Admin Program List View (Web)
 - [x] Show all programs for selected user
@@ -480,7 +480,7 @@ This document outlines the complete implementation plan for a dynamic signup/onb
 - [x] Show count of active programs
 - [x] Show next due date
 - [x] "View Programs" button → Programs list screen
-- [ ] Create programs card (Expo App) - **TODO: Expo app**
+- [x] Create programs card (Expo App) - Added to profile screen
 
 ### 6.2 User Programs List Screen (Web)
 - [x] Show all active programs assigned to user (`/dashboard/personalized-programs`)
@@ -491,7 +491,7 @@ This document outlines the complete implementation plan for a dynamic signup/onb
   - [x] Progress indicator (X/Y completed)
   - [x] Next due date
   - [x] "View Program" button
-- [ ] Create programs list screen (Expo App) - **TODO: Expo app**
+- [x] Create programs list screen (Expo App)
 
 ### 6.3 User Program Detail Screen (Web)
 - [x] Show program title and description
@@ -511,7 +511,7 @@ This document outlines the complete implementation plan for a dynamic signup/onb
   - [x] Save ratings
   - [x] Update checklist item
   - [x] Show success toast notification
-- [ ] Create program detail screen (Expo App) - **TODO: Expo app**
+- [x] Create program detail screen (Expo App)
 
 ### 6.4 Rating Modal (Web)
 - [x] Modal after checking off workout
@@ -524,17 +524,17 @@ This document outlines the complete implementation plan for a dynamic signup/onb
 - [x] "Submit" button
 - [x] Save ratings to checklist item
 - [x] Close modal with animation
-- [ ] Create rating modal (Expo App) - **TODO: Expo app**
+- [x] Create rating modal (Expo App)
 
 ---
 
 ## Phase 7: Push Notifications
 
 ### 7.1 Push Notification Setup (Expo)
-- [ ] Set up Expo Push Notifications
-- [ ] Request notification permissions
-- [ ] Store push token in database (`user.pushToken` field)
-- [ ] Create notification service
+- [x] Set up Expo Push Notifications
+- [x] Request notification permissions
+- [x] Store push token in database (`user.pushToken` field)
+- [x] Create notification service
 
 ### 7.2 Workout Reminder Notifications
 - [ ] Create scheduled job/cron:
@@ -647,6 +647,10 @@ STRIPE_PRO_PLUS_PRICE_ID=price_xxx (new $25/mo price)
 
 # Push Notifications (Expo)
 EXPO_PUSH_NOTIFICATION_KEY=your-expo-push-key
+
+# Expo App Environment Variables
+EXPO_PUBLIC_APP_URL=https://beta.soulworx.ca
+EXPO_PUBLIC_STRIPE_PUBLISHABLE_KEY=your_stripe_publishable_key_here
 ```
 
 ---

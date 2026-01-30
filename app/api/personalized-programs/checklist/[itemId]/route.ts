@@ -4,6 +4,16 @@ import { db } from "@/lib/db"
 import { programChecklistItems, personalizedPrograms } from "@/lib/db/schema"
 import { eq, and } from "drizzle-orm"
 import { differenceInDays } from "date-fns"
+import { addCorsHeaders, handleOptions } from "@/lib/cors"
+
+/**
+ * OPTIONS /api/personalized-programs/checklist/[itemId]
+ * Handle CORS preflight
+ */
+export async function OPTIONS(request: NextRequest) {
+  const origin = request.headers.get("origin")
+  return handleOptions(origin)
+}
 
 /**
  * POST /api/personalized-programs/checklist/[itemId]
@@ -13,6 +23,7 @@ export async function POST(
   request: NextRequest,
   { params }: { params: Promise<{ itemId: string }> }
 ) {
+  const origin = request.headers.get("origin")
   try {
     const session = await auth()
     if (!session?.user?.id) {
@@ -63,12 +74,18 @@ export async function POST(
       })
       .where(eq(programChecklistItems.id, itemId))
 
-    return NextResponse.json({ success: true })
+    return addCorsHeaders(
+      NextResponse.json({ success: true }),
+      origin
+    )
   } catch (error) {
     console.error("Error checking off workout:", error)
-    return NextResponse.json(
-      { error: "Failed to check off workout" },
-      { status: 500 }
+    return addCorsHeaders(
+      NextResponse.json(
+        { error: "Failed to check off workout" },
+        { status: 500 }
+      ),
+      origin
     )
   }
 }
@@ -81,6 +98,7 @@ export async function DELETE(
   request: NextRequest,
   { params }: { params: Promise<{ itemId: string }> }
 ) {
+  const origin = request.headers.get("origin")
   try {
     const session = await auth()
     if (!session?.user?.id) {
@@ -119,12 +137,18 @@ export async function DELETE(
       })
       .where(eq(programChecklistItems.id, itemId))
 
-    return NextResponse.json({ success: true })
+    return addCorsHeaders(
+      NextResponse.json({ success: true }),
+      origin
+    )
   } catch (error) {
     console.error("Error unchecking workout:", error)
-    return NextResponse.json(
-      { error: "Failed to uncheck workout" },
-      { status: 500 }
+    return addCorsHeaders(
+      NextResponse.json(
+        { error: "Failed to uncheck workout" },
+        { status: 500 }
+      ),
+      origin
     )
   }
 }

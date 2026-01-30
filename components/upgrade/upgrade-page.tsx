@@ -22,14 +22,50 @@ export function UpgradePage({ currentTier, selectedTier, userId }: UpgradePagePr
     setIsProcessing(true)
 
     try {
-      // TODO: Create Stripe checkout session
-      // For now, redirect to community page where Stripe is already set up
-      toast.info("Redirecting to checkout...")
-      router.push(`/programs/community?tier=${tier}`)
+      // Check if mobile request
+      const isMobile = typeof window !== 'undefined' && window.location.search.includes('mobile=true')
+      const isOnboarding = typeof window !== 'undefined' && window.location.search.includes('onboarding=true')
+      
+      // Get tier details first
+      const tierResponse = await fetch("/api/community/memberships")
+      const tiersData = await tierResponse.json()
+      const targetTier = tiersData.tiers?.find((t: { slug: string }) => t.slug === tier || t.slug === tier.replace("_", "-"))
+      
+      if (!targetTier) {
+        throw new Error("Tier not found")
+      }
+
+      // Create checkout session
+      const response = await fetch("/api/community/subscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ 
+          tierId: targetTier.id,
+          tierSlug: tier,
+        }),
+      })
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({ error: "Unknown error" }))
+        throw new Error(errorData.error || "Failed to create checkout session")
+      }
+
+      const { url } = await response.json()
+      
+      if (url) {
+        // Update success URL for mobile/onboarding
+        if (isMobile || isOnboarding) {
+          // Note: Stripe checkout URL is already created, but we can redirect after payment
+          window.location.href = url
+        } else {
+          window.location.href = url
+        }
+      } else {
+        throw new Error("No checkout URL received")
+      }
     } catch (error) {
       console.error("Error initiating upgrade:", error)
-      toast.error("Failed to start upgrade process. Please try again.")
-    } finally {
+      toast.error(error instanceof Error ? error.message : "Failed to start upgrade process. Please try again.")
       setIsProcessing(false)
     }
   }

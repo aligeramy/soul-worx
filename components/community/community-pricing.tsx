@@ -29,7 +29,7 @@ export function CommunityPricing({ tiers, currentTierId, isAuthenticated }: Comm
   // Convert database tiers to pricing tiers with light styling
   const pricingTiers: PricingTier[] = tiers.map((tier) => {
     const price = parseFloat(tier.price || "0")
-    const isPopular = tier.level === "premium"
+    const isPopular = tier.level === "pro"
     
     return {
       name: tier.name,

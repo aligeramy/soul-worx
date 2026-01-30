@@ -1,11 +1,22 @@
 import { NextRequest, NextResponse } from "next/server"
 import jwt from "jsonwebtoken"
+import { addCorsHeaders, handleOptions } from "@/lib/cors"
+
+/**
+ * OPTIONS /api/auth/me
+ * Handle CORS preflight
+ */
+export async function OPTIONS(request: NextRequest) {
+  const origin = request.headers.get("origin")
+  return handleOptions(origin)
+}
 
 /**
  * GET /api/auth/me
  * Get current user from JWT token (for mobile app)
  */
 export async function GET(request: NextRequest) {
+  const origin = request.headers.get("origin")
   try {
     const authHeader = request.headers.get("authorization")
     
@@ -36,20 +47,24 @@ export async function GET(request: NextRequest) {
     }
 
     // Return user data (you can fetch from database if needed)
-    return NextResponse.json({
+    const response = NextResponse.json({
       id: decoded.userId,
       email: decoded.email,
       role: decoded.role,
     })
+    
+    return addCorsHeaders(response, origin)
   } catch (error) {
     if (error instanceof jwt.JsonWebTokenError) {
-      return NextResponse.json({ error: "Invalid token" }, { status: 401 })
+      const response = NextResponse.json({ error: "Invalid token" }, { status: 401 })
+      return addCorsHeaders(response, origin)
     }
     
     console.error("Error verifying token:", error)
-    return NextResponse.json(
+    const response = NextResponse.json(
       { error: "Failed to verify token" },
       { status: 500 }
     )
+    return addCorsHeaders(response, origin)
   }
 }

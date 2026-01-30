@@ -3,6 +3,7 @@ import { auth } from "@/auth"
 import { db } from "@/lib/db"
 import { users } from "@/lib/db/schema"
 import { eq } from "drizzle-orm"
+import { addCorsHeaders, handleOptions } from "@/lib/cors"
 
 /**
  * POST /api/onboarding/questions
@@ -46,12 +47,18 @@ export async function POST(request: NextRequest) {
       })
       .where(eq(users.id, session.user.id))
 
-    return NextResponse.json({ success: true })
+    return addCorsHeaders(
+      NextResponse.json({ success: true }),
+      origin
+    )
   } catch (error) {
     console.error("Error saving questions:", error)
-    return NextResponse.json(
-      { error: "Failed to save answers" },
-      { status: 500 }
+    return addCorsHeaders(
+      NextResponse.json(
+        { error: "Failed to save answers" },
+        { status: 500 }
+      ),
+      origin
     )
   }
 }

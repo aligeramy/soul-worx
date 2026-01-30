@@ -5,24 +5,41 @@ import { createCalendarEvent, checkAvailability } from "@/lib/google-calendar"
 import { db } from "@/lib/db"
 import { coachCalls, users } from "@/lib/db/schema"
 import { eq, and, gte, lte } from "drizzle-orm"
+import { addCorsHeaders, handleOptions } from "@/lib/cors"
+
+/**
+ * OPTIONS /api/coach-calls/book
+ * Handle CORS preflight
+ */
+export async function OPTIONS(request: NextRequest) {
+  const origin = request.headers.get("origin")
+  return handleOptions(origin)
+}
 
 /**
  * POST /api/coach-calls/book
  * Book a coach call
  */
 export async function POST(request: NextRequest) {
+  const origin = request.headers.get("origin")
   try {
     const session = await auth()
     if (!session?.user?.id) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+      return addCorsHeaders(
+        NextResponse.json({ error: "Unauthorized" }, { status: 401 }),
+        origin
+      )
     }
 
     // Check if user is Pro+
     const tier = await getUserTier(session.user.id)
     if (tier !== "pro_plus") {
-      return NextResponse.json(
-        { error: "Coach calls are only available for Pro+ members" },
-        { status: 403 }
+      return addCorsHeaders(
+        NextResponse.json(
+          { error: "Coach calls are only available for Pro+ members" },
+          { status: 403 }
+        ),
+        origin
       )
     }
 
@@ -30,9 +47,12 @@ export async function POST(request: NextRequest) {
     const { scheduledAt, duration = 60 } = body
 
     if (!scheduledAt) {
-      return NextResponse.json(
-        { error: "scheduledAt is required" },
-        { status: 400 }
+      return addCorsHeaders(
+        NextResponse.json(
+          { error: "scheduledAt is required" },
+          { status: 400 }
+        ),
+        origin
       )
     }
 
@@ -42,9 +62,12 @@ export async function POST(request: NextRequest) {
     // Validate time is between 12pm-5pm
     const hour = scheduledDate.getHours()
     if (hour < 12 || hour >= 18) {
-      return NextResponse.json(
-        { error: "Coach calls are only available between 12pm-5pm" },
-        { status: 400 }
+      return addCorsHeaders(
+        NextResponse.json(
+          { error: "Coach calls are only available between 12pm-5pm" },
+          { status: 400 }
+        ),
+        origin
       )
     }
 
@@ -69,9 +92,12 @@ export async function POST(request: NextRequest) {
     const existingCall = existingCalls.length > 0 ? existingCalls[0] : null
 
     if (existingCall) {
-      return NextResponse.json(
-        { error: "This date is already booked" },
-        { status: 409 }
+      return addCorsHeaders(
+        NextResponse.json(
+          { error: "This date is already booked" },
+          { status: 409 }
+        ),
+        origin
       )
     }
 
@@ -79,9 +105,12 @@ export async function POST(request: NextRequest) {
     try {
       const isAvailable = await checkAvailability(scheduledDate)
       if (!isAvailable) {
-        return NextResponse.json(
-          { error: "This date is already booked in calendar" },
-          { status: 409 }
+        return addCorsHeaders(
+          NextResponse.json(
+            { error: "This date is already booked in calendar" },
+            { status: 409 }
+          ),
+          origin
         )
       }
     } catch (error) {
@@ -131,20 +160,27 @@ export async function POST(request: NextRequest) {
       })
       .returning()
 
-    return NextResponse.json({
-      success: true,
-      coachCall: {
-        id: coachCall.id,
-        scheduledAt: coachCall.scheduledAt,
-        duration: coachCall.duration,
-        googleMeetLink: coachCall.googleMeetLink,
-      },
-    })
+    return addCorsHeaders(
+      NextResponse.json({
+        success: true,
+        coachCall: {
+          id: coachCall.id,
+          scheduledAt: coachCall.scheduledAt,
+          duration: coachCall.duration,
+          googleMeetLink: coachCall.googleMeetLink,
+        },
+      }),
+      origin
+    )
   } catch (error) {
     console.error("Error booking coach call:", error)
-    return NextResponse.json(
-      { error: "Failed to book coach call" },
-      { status: 500 }
+    const origin = request.headers.get("origin")
+    return addCorsHeaders(
+      NextResponse.json(
+        { error: "Failed to book coach call" },
+        { status: 500 }
+      ),
+      origin
     )
   }
 }
