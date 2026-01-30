@@ -34,6 +34,7 @@ export async function PUT(
       requiresParentConsent,
       tags,
       faqs,
+      requirements,
       metaTitle,
       metaDescription,
     } = body
@@ -82,6 +83,7 @@ export async function PUT(
         requiresParentConsent: requiresParentConsent || false,
         tags: tags || [],
         faqs: faqs || [],
+        requirements: requirements || [],
         metaTitle: metaTitle || null,
         metaDescription: metaDescription || null,
         publishedAt,

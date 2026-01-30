@@ -47,6 +47,7 @@ export async function POST(request: NextRequest) {
       requiresParentConsent,
       tags,
       faqs,
+      requirements,
       metaTitle,
       metaDescription,
     } = body
@@ -84,6 +85,7 @@ export async function POST(request: NextRequest) {
         requiresParentConsent: requiresParentConsent || false,
         tags: tags || [],
         faqs: faqs || [],
+        requirements: requirements || [],
         metaTitle: metaTitle || null,
         metaDescription: metaDescription || null,
         createdBy: session.user.id!,

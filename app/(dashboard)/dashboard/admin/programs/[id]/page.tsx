@@ -36,7 +36,8 @@ export default async function EditProgramPage({
           ...program,
           images: program.images || [],
           tags: program.tags || [],
-          faqs: program.faqs || []
+          faqs: program.faqs || [],
+          requirements: (program.requirements as { id: string; text: string; checked: boolean }[] | undefined) || []
         }} />
       </div>
     </div>

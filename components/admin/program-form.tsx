@@ -6,6 +6,7 @@ import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Field } from "@/components/ui/field"
+import { Checkbox } from "@/components/ui/checkbox"
 import { Loader2, X } from "lucide-react"
 
 interface ProgramFormProps {
@@ -28,6 +29,7 @@ interface ProgramFormProps {
     requiresParentConsent: boolean
     tags: string[]
     faqs: { question: string; answer: string }[]
+    requirements?: { id: string; text: string; checked: boolean }[]
     metaTitle: string | null
     metaDescription: string | null
   }
@@ -44,6 +46,10 @@ export function ProgramForm({ program }: ProgramFormProps) {
   const [faqs, setFaqs] = useState<{ question: string; answer: string }[]>(
     program?.faqs || []
   )
+  const [requirements, setRequirements] = useState<{ id: string; text: string; checked: boolean }[]>(
+    (program?.requirements as { id: string; text: string; checked: boolean }[] | undefined) || []
+  )
+  const [requirementInput, setRequirementInput] = useState("")
 
   const [formData, setFormData] = useState({
     title: program?.title || "",
@@ -81,6 +87,7 @@ export function ProgramForm({ program }: ProgramFormProps) {
           images,
           tags,
           faqs,
+          requirements,
           capacity: formData.capacity ? parseInt(formData.capacity as string) : null,
         }),
       })
@@ -154,6 +161,36 @@ export function ProgramForm({ program }: ProgramFormProps) {
 
   const removeFaq = (index: number) => {
     setFaqs((prev) => prev.filter((_, i) => i !== index))
+  }
+
+  const addRequirement = () => {
+    if (requirementInput.trim()) {
+      setRequirements((prev) => [
+        ...prev,
+        { id: crypto.randomUUID(), text: requirementInput.trim(), checked: false },
+      ])
+      setRequirementInput("")
+    }
+  }
+
+  const toggleRequirement = (id: string, checked?: boolean) => {
+    setRequirements((prev) =>
+      prev.map((req) => 
+        req.id === id 
+          ? { ...req, checked: checked !== undefined ? checked : !req.checked } 
+          : req
+      )
+    )
+  }
+
+  const removeRequirement = (id: string) => {
+    setRequirements((prev) => prev.filter((req) => req.id !== id))
+  }
+
+  const updateRequirementText = (id: string, text: string) => {
+    setRequirements((prev) =>
+      prev.map((req) => (req.id === id ? { ...req, text } : req))
+    )
   }
 
   return (
@@ -431,6 +468,59 @@ export function ProgramForm({ program }: ProgramFormProps) {
                   <X className="h-3 w-3" />
                 </button>
               </span>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* Requirements */}
+      <div className="space-y-6 pt-6 border-t">
+        <div className="flex items-center justify-between">
+          <h2 className="text-xl font-bold">Program Requirements</h2>
+          <Button type="button" onClick={addRequirement} variant="outline">
+            Add Requirement
+          </Button>
+        </div>
+        
+        <div className="flex gap-2">
+          <Input
+            value={requirementInput}
+            onChange={(e) => setRequirementInput(e.target.value)}
+            placeholder="Add a requirement..."
+            onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), addRequirement())}
+          />
+          <Button type="button" onClick={addRequirement}>
+            Add
+          </Button>
+        </div>
+
+        {requirements.length > 0 && (
+          <div className="space-y-2">
+            {requirements.map((requirement) => (
+              <div
+                key={requirement.id}
+                className="flex items-center gap-3 p-3 bg-neutral-50 rounded-lg hover:bg-neutral-100 transition-colors"
+              >
+                <Checkbox
+                  checked={requirement.checked}
+                  onCheckedChange={(checked) => toggleRequirement(requirement.id, checked as boolean)}
+                  id={`req-${requirement.id}`}
+                />
+                <Input
+                  value={requirement.text}
+                  onChange={(e) => updateRequirementText(requirement.id, e.target.value)}
+                  placeholder="Requirement text..."
+                  className="flex-1"
+                />
+                <button
+                  type="button"
+                  onClick={() => removeRequirement(requirement.id)}
+                  className="text-red-600 hover:text-red-800 p-1"
+                  aria-label="Remove requirement"
+                >
+                  <X className="h-4 w-4" />
+                </button>
+              </div>
             ))}
           </div>
         )}

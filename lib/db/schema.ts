@@ -123,6 +123,7 @@ export const programs = pgTable("program", {
   // Metadata
   tags: jsonb("tags").$type<string[]>().default([]),
   faqs: jsonb("faqs").$type<{question: string, answer: string}[]>().default([]),
+  requirements: jsonb("requirements").$type<{id: string, text: string, checked: boolean}[]>().default([]),
   
   // SEO
   metaTitle: text("metaTitle"),
