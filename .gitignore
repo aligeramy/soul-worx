@@ -46,5 +46,6 @@ next-env.d.ts
 # drizzle
 /lib/db/migrations
 
-
+# videos - don't commit large video files
+/vids
 *.mp4
