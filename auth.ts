@@ -2,10 +2,13 @@ import NextAuth from "next-auth"
 import Google from "next-auth/providers/google"
 import Discord from "next-auth/providers/discord"
 import Apple from "next-auth/providers/apple"
+import Credentials from "next-auth/providers/credentials"
 import { DrizzleAdapter } from "@auth/drizzle-adapter"
 import { db } from "@/lib/db"
 import * as schema from "@/lib/db/schema"
 import { getUserById } from "@/lib/db/queries"
+import { verifyPassword } from "@/lib/auth/password"
+import { eq } from "drizzle-orm"
 import type { UserRole } from "@/lib/db/schema"
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
@@ -18,6 +21,46 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     authenticatorsTable: schema.authenticators,
   }),
   providers: [
+    Credentials({
+      name: "Credentials",
+      credentials: {
+        email: { label: "Email", type: "email" },
+        password: { label: "Password", type: "password" },
+      },
+      async authorize(credentials) {
+        if (!credentials?.email || !credentials?.password) {
+          return null
+        }
+
+        // Find user by email
+        const user = await db.query.users.findFirst({
+          where: eq(schema.users.email, credentials.email as string),
+        })
+
+        if (!user || !user.password) {
+          return null
+        }
+
+        // Verify password
+        const isValid = await verifyPassword(
+          credentials.password as string,
+          user.password
+        )
+
+        if (!isValid) {
+          return null
+        }
+
+        // Return user object (password will be excluded by NextAuth)
+        return {
+          id: user.id,
+          email: user.email,
+          name: user.name,
+          image: user.image,
+          role: user.role,
+        }
+      },
+    }),
     Google({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
@@ -53,6 +96,22 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         user.name = user.email.split("@")[0]
       }
       return true
+    },
+    async redirect({ url, baseUrl }) {
+      // Handle mobile app redirects
+      const urlObj = new URL(url, baseUrl)
+      const isMobile = urlObj.searchParams.get("mobile") === "true"
+      const scheme = urlObj.searchParams.get("scheme") || "soulworx"
+      
+      if (isMobile) {
+        // For mobile, redirect to a page that will generate token and deep link
+        return `${baseUrl}/auth/mobile-callback?scheme=${scheme}`
+      }
+      
+      // Default web redirect
+      if (url.startsWith("/")) return `${baseUrl}${url}`
+      if (new URL(url).origin === baseUrl) return url
+      return baseUrl
     },
     async session({ session, token }) {
       if (session.user && token.sub) {
@@ -115,9 +174,16 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         return Response.redirect(new URL("/dashboard", nextUrl))
       }
 
-      // Protect dashboard routes (including onboarding, which is now just a settings page)
+      // Protect dashboard routes (including onboarding)
       if (isDashboard && !isLoggedIn) {
         return Response.redirect(new URL("/signin", nextUrl))
+      }
+
+      // Redirect new signups to onboarding
+      const isOnboardingRoute = nextUrl.pathname.startsWith("/onboarding")
+      if (isLoggedIn && isOnboardingRoute) {
+        // Allow access to onboarding routes
+        return true
       }
 
       // Default: allow access (for any other routes)

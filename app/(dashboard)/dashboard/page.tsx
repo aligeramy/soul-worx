@@ -1,11 +1,11 @@
 import { auth } from "@/auth"
 import { Card, CardContent } from "@/components/ui/card"
 import { DashboardCard } from "@/components/dashboard-card"
-import { getUpcomingUserRsvps } from "@/lib/db/queries"
+import { getUpcomingUserRsvps, getUserTier, getUserPersonalizedPrograms, getNextDueWorkoutDate } from "@/lib/db/queries"
 import Link from "next/link"
 import Image from "next/image"
 import { format } from "date-fns"
-import { Calendar, Sparkles, MapPin, Clock, ArrowRight, Plus } from "lucide-react"
+import { Calendar, Sparkles, MapPin, Clock, ArrowRight, Plus, Bot, Target } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 
@@ -16,7 +16,15 @@ export default async function DashboardPage() {
     return null
   }
 
-  const upcomingRsvps = await getUpcomingUserRsvps(session.user.id)
+  const [upcomingRsvps, userTier, userPrograms, nextDueDate] = await Promise.all([
+    getUpcomingUserRsvps(session.user.id),
+    getUserTier(session.user.id),
+    getUserPersonalizedPrograms(session.user.id),
+    getNextDueWorkoutDate(session.user.id),
+  ])
+
+  const isProPlus = userTier === "pro_plus"
+  const activeProgramsCount = userPrograms.length
 
   // Add mock upcoming event for preview
   const mockEvent = {
@@ -94,14 +102,52 @@ export default async function DashboardPage() {
 
   return (
     <div className="space-y-8">
+      {/* Pro+ Programs Card */}
+      {isProPlus && activeProgramsCount > 0 && (
+        <Card className="border border-white/10 bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-all">
+          <CardContent className="p-6">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <div className="p-3 bg-white/10 rounded-lg">
+                  <Target className="h-6 w-6 text-white" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-crimson font-normal text-white mb-1">
+                    Your Personal Programs
+                  </h3>
+                  <p className="text-white/60 text-sm">
+                    {activeProgramsCount} active program{activeProgramsCount !== 1 ? "s" : ""}
+                    {nextDueDate && (
+                      <> • Next workout: {format(nextDueDate, "MMM d")}</>
+                    )}
+                  </p>
+                </div>
+              </div>
+              <Link href="/dashboard/personalized-programs">
+                <Button className="bg-white/10 hover:bg-white/20 text-white">
+                  View Programs
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+              </Link>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
       {/* Stats Overview */}
-      <div className="grid grid-cols-3 gap-2 sm:gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-4">
         <DashboardCard
           href="/dashboard/calendar"
           icon={Calendar}
           title="Events"
           subtitle="Upcoming"
           value={allRsvps.length}
+        />
+        <DashboardCard
+          href="/dashboard/ai-assistant"
+          icon={Bot}
+          title="AI Assistant"
+          subtitle="Get help"
         />
         <DashboardCard
           href="/programs"

@@ -6,7 +6,23 @@ import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Lock } from "lucide-react"
 
-export function VideoGrid({ videos, slug }: { videos: Array<any>, slug: string }) {
+type Video = {
+  id: string
+  title: string
+  thumbnailUrl: string | null
+  videoUrl: string
+  slug?: string
+  duration?: number | null
+  hasAccess?: boolean
+  isFirstEpisode?: boolean
+  episodeNumber?: number | null
+  seasonNumber?: number | null
+  requiredTierLevel?: number
+  section?: { title: string } | null
+  channel?: { slug: string } | null
+}
+
+export function VideoGrid({ videos, slug }: { videos: Video[], slug: string }) {
   return (
     <Suspense fallback={<div>Loading videos...</div>}>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
@@ -125,7 +141,7 @@ export function VideoGrid({ videos, slug }: { videos: Array<any>, slug: string }
                 </Card>
               )
 
-              if (video.hasAccess) {
+              if (video.hasAccess && video.slug) {
                 const channelSlug = video.channel?.slug || slug
                 return (
                   <Link key={video.id} href={`/programs/community/${channelSlug}/${video.slug}`}>

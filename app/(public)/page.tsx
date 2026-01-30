@@ -38,6 +38,38 @@ export default async function Home() {
       {/* Combined Testimonials + Stats */}
       <TestimonialsStats />
 
+      {/* Soulworx Inspires Section */}
+      <section className="bg-white px-6 py-24">
+        <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div className="space-y-6">
+            <div className="text-xs font-semibold uppercase tracking-[0.2em] text-neutral-500">
+              Soulworx Inspires
+            </div>
+            <h2 className="text-4xl md:text-5xl font-crimson font-normal tracking-tight text-neutral-900">
+              A non-profit initiative built for impact
+            </h2>
+            <p className="text-lg text-neutral-700 leading-relaxed">
+              Soulworx Inspires is our non-profit initiative dedicated to opportunity for youth and families.
+              Resources are used for charitable purposes only: &quot;poverty relief&quot; and &quot;advancement of education&quot;.
+            </p>
+            <Link
+              href="/inspires"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-neutral-900 text-white rounded-md font-semibold hover:bg-neutral-800 transition"
+            >
+              Explore Soulworx Inspires
+            </Link>
+          </div>
+          <div className="relative aspect-[4/3] overflow-hidden rounded-3xl">
+            <Image
+              src="/optimized/0K0A0798.jpg"
+              alt="Soulworx Inspires community impact"
+              fill
+              className="object-cover"
+            />
+          </div>
+        </div>
+      </section>
+
       {/* The Book Section */}
       <section className="bg-neutral-50 px-0 py-0 md:py-32 md:px-6">
         <div className="max-w-7xl mx-auto">

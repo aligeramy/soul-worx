@@ -51,6 +51,10 @@ const programsItems = [
         url: "/dashboard/admin/programs",
       },
       {
+        title: "Personalized Programs",
+        url: "/dashboard/admin/personalized-programs",
+      },
+      {
         title: "Channels",
         url: "/dashboard/admin/community",
       },
@@ -85,7 +89,8 @@ export function AdminSidebar({ user }: AdminSidebarProps) {
   
   // Auto-open Programs submenu if we're on programs, community, or videos pages
   const shouldOpenPrograms = pathname.startsWith("/dashboard/admin/programs") || 
-                              pathname.startsWith("/dashboard/admin/community")
+                              pathname.startsWith("/dashboard/admin/community") ||
+                              pathname.startsWith("/dashboard/admin/personalized-programs")
   
   const [openSubmenus, setOpenSubmenus] = React.useState<string[]>([])
 

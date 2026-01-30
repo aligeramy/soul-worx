@@ -1,5 +1,5 @@
-import { pgTable, text, timestamp, primaryKey, integer, boolean, jsonb, decimal } from "drizzle-orm/pg-core"
-import { relations } from "drizzle-orm"
+import { pgTable, text, timestamp, primaryKey, integer, boolean, jsonb, decimal, uniqueIndex } from "drizzle-orm/pg-core"
+import { relations, sql } from "drizzle-orm"
 import type { AdapterAccountType } from "next-auth/adapters"
 
 // User roles enum
@@ -14,6 +14,19 @@ export const users = pgTable("user", {
   emailVerified: timestamp("emailVerified", { mode: "date" }),
   image: text("image"),
   role: text("role").$type<UserRole>().notNull().default("user"),
+  
+  // Authentication
+  username: text("username").unique(), // @username format, unique
+  password: text("password"), // Hashed password (nullable for OAuth users)
+  
+  // Onboarding
+  onboardingCompleted: boolean("onboardingCompleted").notNull().default(false),
+  onboardingData: jsonb("onboardingData").$type<Record<string, unknown>>(), // Stores all onboarding answers
+  primaryInterest: text("primaryInterest").$type<"sports_basketball" | "poetry_arts" | "life_coaching">(), // What brought them to app
+  age: integer("age"), // User's age
+  
+  // Push Notifications (Expo)
+  pushToken: text("pushToken"), // Expo push notification token
   
   // Discord Integration
   discordId: text("discordId").unique(), // Discord user ID for server management
@@ -365,7 +378,7 @@ export const eventUpdates = pgTable("event_update", {
 })
 
 // ==================== COMMUNITY / MEMBERSHIP TIERS ====================
-export type TierLevel = "free" | "premium" | "vip"
+export type TierLevel = "free" | "pro" | "pro_plus" // Updated: free, pro ($20), pro_plus ($25)
 
 export const membershipTiers = pgTable("membership_tier", {
   id: text("id")
@@ -373,19 +386,22 @@ export const membershipTiers = pgTable("membership_tier", {
     .$defaultFn(() => crypto.randomUUID()),
   
   // Tier details
-  name: text("name").notNull(), // "Free", "Premium", "VIP"
-  slug: text("slug").notNull().unique(), // "free", "premium", "vip"
+  name: text("name").notNull(), // "Free", "Pro", "Pro+"
+  slug: text("slug").notNull().unique(), // "free", "pro", "pro-plus"
   level: text("level").$type<TierLevel>().notNull(),
   description: text("description").notNull(),
   
-  // Features
+  // Features (detailed feature list)
   features: jsonb("features").$type<string[]>().notNull().default([]),
-  accessLevel: integer("accessLevel").notNull().default(1), // 1=first episode, 2=all videos, 3=all+dm
+  accessLevel: integer("accessLevel").notNull().default(1), // 1=free, 2=pro, 3=pro+
   
   // Pricing
   price: decimal("price", { precision: 10, scale: 2 }).notNull().default("0"),
   billingPeriod: text("billingPeriod").$type<"monthly" | "yearly" | "lifetime">().default("monthly"),
   stripePriceId: text("stripePriceId"), // Stripe Price ID for subscriptions
+  
+  // Interest Type (null = all interests, or specific to basketball/poetry/etc)
+  interestType: text("interestType").$type<"sports_basketball" | "poetry_arts" | "life_coaching">(), // null = applies to all
   
   // Discord Integration
   discordRoleId: text("discordRoleId"), // Discord role ID to assign
@@ -703,6 +719,253 @@ export const videoViewsRelations = relations(videoViews, ({ one }) => ({
   }),
   user: one(users, {
     fields: [videoViews.userId],
+    references: [users.id],
+  }),
+}))
+
+// ==================== PRO+ QUESTIONNAIRE ====================
+export const proPlusQuestionnaires = pgTable("pro_plus_questionnaire", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  
+  userId: text("userId")
+    .notNull()
+    .unique()
+    .references(() => users.id, { onDelete: "cascade" }),
+  
+  // Basic Info
+  age: integer("age"),
+  skillLevel: text("skillLevel").$type<"beginner" | "advanced" | "pro">(),
+  gameDescription: text("gameDescription"),
+  
+  // Position & Experience
+  position: text("position").$type<"PG" | "SG" | "SF" | "PF" | "C">(),
+  yearsPlaying: text("yearsPlaying"),
+  
+  // Goals
+  currentGoalsYearly: text("currentGoalsYearly"),
+  currentGoalsOverall: text("currentGoalsOverall"),
+  
+  // Improvement Rankings (1-5)
+  improvementRankings: jsonb("improvementRankings").$type<{
+    ballHandling: number
+    defence: number
+    finishing: number
+    shooting: number
+    passing: number
+    other?: { text: string; rank: number }
+  }>(),
+  
+  // Physical Stats
+  weight: decimal("weight", { precision: 6, scale: 2 }), // in lbs or kg
+  height: text("height"), // e.g., "6'2" or "188cm"
+  currentInjuries: text("currentInjuries"),
+  
+  // Training & Health
+  seeingPhysiotherapy: boolean("seeingPhysiotherapy").default(false),
+  weightTrains: boolean("weightTrains").default(false),
+  stretches: boolean("stretches").default(false),
+  
+  // Team & Competition
+  currentTeam: text("currentTeam").$type<"No Team" | "Elementary" | "Middle School" | "Highschool" | "College" | "Pro">(),
+  outsideSchoolTeams: text("outsideSchoolTeams").$type<"AAU" | "Prep" | "No team">(),
+  inSeason: boolean("inSeason").default(false),
+  
+  // Basketball Watching
+  basketballWatching: text("basketballWatching"), // "Your own film", "NBA/Pro/College", "Both", "None"
+  
+  // Equipment & Availability
+  equipmentAccess: text("equipmentAccess").$type<"Full gym" | "Half gym" | "Driveway" | "Park">(),
+  trainingDays: jsonb("trainingDays").$type<string[]>(), // ["Monday", "Wednesday", "Friday"]
+  averageSessionLength: integer("averageSessionLength"), // 30, 45, or 60 minutes
+  
+  // Mental & Coaching
+  biggestStruggle: text("biggestStruggle"),
+  confidenceLevel: integer("confidenceLevel"), // 1-5
+  mentalChallenge: text("mentalChallenge").$type<"Fear of failure" | "Consistency" | "Pressure" | "Motivation" | "Other">(),
+  mentalChallengeOther: text("mentalChallengeOther"),
+  coachability: integer("coachability"), // 1-5
+  preferredCoachingStyle: text("preferredCoachingStyle").$type<"Direct" | "Encouraging" | "Accountability" | "Driven" | "Mix" | "Other">(),
+  coachingStyleOther: text("coachingStyleOther"),
+  
+  // Video Uploads
+  gameFilmUrl: text("gameFilmUrl"), // Link to uploaded video
+  workoutVideos: jsonb("workoutVideos").$type<string[]>(), // Array of video URLs
+  
+  completedAt: timestamp("completedAt", { mode: "date" }),
+  createdAt: timestamp("createdAt", { mode: "date" }).notNull().defaultNow(),
+  updatedAt: timestamp("updatedAt", { mode: "date" }).notNull().defaultNow(),
+})
+
+// ==================== COACH CALLS ====================
+export type CoachCallStatus = "scheduled" | "completed" | "cancelled" | "rescheduled"
+
+export const coachCalls = pgTable("coach_call", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  
+  userId: text("userId")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  
+  adminId: text("adminId")
+    .references(() => users.id, { onDelete: "set null" }), // Assigned admin/coach
+  
+  scheduledAt: timestamp("scheduledAt", { mode: "date" }).notNull(), // Date and time of call
+  duration: integer("duration").notNull().default(60), // Minutes
+  
+  status: text("status").$type<CoachCallStatus>().notNull().default("scheduled"),
+  
+  // Google Meet Integration
+  googleMeetLink: text("googleMeetLink"), // Generated meeting URL
+  meetingId: text("meetingId"), // Google Calendar event ID
+  
+  // Completion Status
+  questionnaireCompleted: boolean("questionnaireCompleted").notNull().default(false),
+  videoUploaded: boolean("videoUploaded").notNull().default(false),
+  
+  // Notes
+  notes: text("notes"), // Admin notes after call
+  
+  createdAt: timestamp("createdAt", { mode: "date" }).notNull().defaultNow(),
+  updatedAt: timestamp("updatedAt", { mode: "date" }).notNull().defaultNow(),
+}, (table) => ({
+  // Unique constraint: only 1 appointment per day (based on date part)
+  uniqueDateIdx: uniqueIndex("coach_call_unique_date_idx").on(sql`DATE(${table.scheduledAt})`),
+}))
+
+// ==================== PERSONALIZED PROGRAMS ====================
+export type PersonalizedProgramStatus = "active" | "completed" | "paused"
+
+export const personalizedPrograms = pgTable("personalized_program", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  
+  userId: text("userId")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }), // Pro+ user
+  
+  createdBy: text("createdBy")
+    .notNull()
+    .references(() => users.id), // Admin who created it
+  
+  title: text("title").notNull(),
+  description: text("description").notNull(),
+  
+  // Media
+  videoUrl: text("videoUrl").notNull(), // Uploaded training video
+  thumbnailUrl: text("thumbnailUrl"),
+  
+  // Schedule
+  trainingDays: jsonb("trainingDays").$type<string[]>(), // ["Monday", "Wednesday"]
+  startDate: timestamp("startDate", { mode: "date" }).notNull(),
+  endDate: timestamp("endDate", { mode: "date" }).notNull(),
+  
+  status: text("status").$type<PersonalizedProgramStatus>().notNull().default("active"),
+  
+  createdAt: timestamp("createdAt", { mode: "date" }).notNull().defaultNow(),
+  updatedAt: timestamp("updatedAt", { mode: "date" }).notNull().defaultNow(),
+})
+
+// ==================== PROGRAM CHECKLIST ITEMS ====================
+export const programChecklistItems = pgTable("program_checklist_item", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  
+  programId: text("programId")
+    .notNull()
+    .references(() => personalizedPrograms.id, { onDelete: "cascade" }),
+  
+  dueDate: timestamp("dueDate", { mode: "date" }).notNull(), // Specific date this workout is due
+  
+  completed: boolean("completed").notNull().default(false),
+  completedAt: timestamp("completedAt", { mode: "date" }), // When user checked it off
+  
+  // Ratings (after completion)
+  enjoymentRating: integer("enjoymentRating"), // 1-5
+  difficultyRating: integer("difficultyRating"), // 1-5
+  
+  // Late tracking
+  daysLate: integer("daysLate").default(0), // Calculated: completedAt - dueDate
+  
+  createdAt: timestamp("createdAt", { mode: "date" }).notNull().defaultNow(),
+  updatedAt: timestamp("updatedAt", { mode: "date" }).notNull().defaultNow(),
+}, (table) => ({
+  // Unique constraint: one checklist item per program per date
+  uniqueProgramDateIdx: uniqueIndex("program_checklist_unique_program_date_idx").on(
+    table.programId,
+    sql`DATE(${table.dueDate})`
+  ),
+}))
+
+// ==================== USER VIDEO UPLOADS ====================
+export type VideoUploadType = "questionnaire_game_film" | "questionnaire_workout" | "program_workout"
+
+export const userVideoUploads = pgTable("user_video_upload", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  
+  userId: text("userId")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  
+  type: text("type").$type<VideoUploadType>().notNull(),
+  relatedId: text("relatedId"), // ID of related questionnaire/program
+  
+  videoUrl: text("videoUrl").notNull(), // Vercel Blob Storage URL
+  thumbnailUrl: text("thumbnailUrl"),
+  
+  uploadedAt: timestamp("uploadedAt", { mode: "date" }).notNull().defaultNow(),
+  createdAt: timestamp("createdAt", { mode: "date" }).notNull().defaultNow(),
+})
+
+// ==================== ADDITIONAL RELATIONS ====================
+
+export const proPlusQuestionnaireRelations = relations(proPlusQuestionnaires, ({ one }) => ({
+  user: one(users, {
+    fields: [proPlusQuestionnaires.userId],
+    references: [users.id],
+  }),
+}))
+
+export const coachCallRelations = relations(coachCalls, ({ one }) => ({
+  user: one(users, {
+    fields: [coachCalls.userId],
+    references: [users.id],
+  }),
+  admin: one(users, {
+    fields: [coachCalls.adminId],
+    references: [users.id],
+  }),
+}))
+
+export const personalizedProgramRelations = relations(personalizedPrograms, ({ one, many }) => ({
+  user: one(users, {
+    fields: [personalizedPrograms.userId],
+    references: [users.id],
+  }),
+  createdByUser: one(users, {
+    fields: [personalizedPrograms.createdBy],
+    references: [users.id],
+  }),
+  checklistItems: many(programChecklistItems),
+}))
+
+export const programChecklistItemRelations = relations(programChecklistItems, ({ one }) => ({
+  program: one(personalizedPrograms, {
+    fields: [programChecklistItems.programId],
+    references: [personalizedPrograms.id],
+  }),
+}))
+
+export const userVideoUploadRelations = relations(userVideoUploads, ({ one }) => ({
+  user: one(users, {
+    fields: [userVideoUploads.userId],
     references: [users.id],
   }),
 }))

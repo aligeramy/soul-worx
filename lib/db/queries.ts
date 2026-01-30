@@ -1,5 +1,5 @@
 import { db } from "./index"
-import { programs, events, rsvps, posts, products, users, eventUpdates, type UserRole } from "./schema"
+import { programs, events, rsvps, posts, products, users, eventUpdates, personalizedPrograms, programChecklistItems, userMemberships, type UserRole } from "./schema"
 import { eq, and, gte, desc, asc, count } from "drizzle-orm"
 
 // ==================== USER QUERIES ====================
@@ -604,4 +604,77 @@ export async function updateProduct(productId: string, data: Partial<typeof prod
  */
 export async function deleteProduct(productId: string) {
   return await db.delete(products).where(eq(products.id, productId))
+}
+
+/**
+ * Get user's current membership tier
+ */
+export async function getUserTier(userId: string): Promise<"free" | "pro" | "pro_plus" | null> {
+  const membership = await db.query.userMemberships.findFirst({
+    where: and(
+      eq(userMemberships.userId, userId),
+      eq(userMemberships.status, "active")
+    ),
+    with: {
+      tier: true,
+    },
+    orderBy: desc(userMemberships.createdAt),
+  })
+
+  if (!membership?.tier) {
+    return "free" // Default to free if no active membership
+  }
+
+  const tierSlug = membership.tier.slug
+  if (tierSlug === "pro") return "pro"
+  if (tierSlug === "pro-plus" || tierSlug === "pro_plus") return "pro_plus"
+  return "free"
+}
+
+/**
+ * Get user's personalized programs with checklist items
+ */
+export async function getUserPersonalizedPrograms(userId: string) {
+  return await db.query.personalizedPrograms.findMany({
+    where: and(
+      eq(personalizedPrograms.userId, userId),
+      eq(personalizedPrograms.status, "active")
+    ),
+    orderBy: desc(personalizedPrograms.createdAt),
+    with: {
+      checklistItems: {
+        orderBy: asc(programChecklistItems.dueDate),
+      },
+    },
+  })
+}
+
+/**
+ * Get next due workout date for a user
+ */
+export async function getNextDueWorkoutDate(userId: string): Promise<Date | null> {
+  const programs = await getUserPersonalizedPrograms(userId)
+  
+  const today = new Date()
+  today.setHours(0, 0, 0, 0)
+
+  let nextDueDate: Date | null = null
+
+  for (const program of programs) {
+    for (const item of program.checklistItems) {
+      if (!item.completed) {
+        const dueDate = new Date(item.dueDate)
+        dueDate.setHours(0, 0, 0, 0)
+
+        // If due today or in the future
+        if (dueDate >= today) {
+          if (!nextDueDate || dueDate < nextDueDate) {
+            nextDueDate = dueDate
+          }
+        }
+      }
+    }
+  }
+
+  return nextDueDate
 }

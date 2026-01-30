@@ -7,6 +7,7 @@
 .yarn/install-state.gz
 
 /expo
+/expo-app
 
 /public/upload
 
@@ -47,5 +48,7 @@ next-env.d.ts
 /lib/db/migrations
 
 # videos - don't commit large video files
-/vids
-*.mp4
+
+# Google Cloud service account keys
+soulworx-calendar-key.json
+*-calendar-key.json

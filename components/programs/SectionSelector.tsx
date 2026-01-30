@@ -15,12 +15,12 @@ interface Section {
   slug: string
   title: string
   description?: string | null
-  videos: Array<any>
+  videos: Array<{ id: string; title: string; thumbnailUrl: string | null; videoUrl: string; sectionId: string | null }>
 }
 
 interface SectionSelectorProps {
   sections: Section[]
-  allVideos: Array<any>
+  allVideos: Array<{ id: string; title: string; thumbnailUrl: string | null; videoUrl: string; sectionId: string | null }>
   slug: string
 }
 

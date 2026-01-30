@@ -120,6 +120,11 @@ export function Footer() {
                     Partnerships
                   </Link>
                 </li>
+                <li>
+                  <Link href="/inspires" className="text-white/70 hover:text-white transition-colors font-light">
+                    Soulworx Inspires
+                  </Link>
+                </li>
               </ul>
             </div>
 
@@ -274,4 +279,3 @@ export function Footer() {
     </footer>
   )
 }
-

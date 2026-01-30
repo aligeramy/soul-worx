@@ -3,6 +3,7 @@ import { getPublishedPrograms } from "@/lib/db/queries"
 import { ProgramCard } from "@/components/programs/program-card"
 import { getCategoryGradient } from "@/lib/constants/programs"
 import Image from "next/image"
+import Link from "next/link"
 import { Calendar } from "lucide-react"
 
 export default async function ProgramsPage() {
@@ -26,6 +27,12 @@ export default async function ProgramsPage() {
       description: "Collaborative programs with educational institutions",
       href: "/programs/partnerships",
       image: "/optimized/0K0A3921.jpg"
+    },
+    {
+      title: "Inspires",
+      description: "Our non-profit initiative for opportunity and education",
+      href: "/inspires",
+      image: "/optimized/0K0A1736.jpg"
     },
     {
       title: "FAQ",
@@ -80,6 +87,40 @@ export default async function ProgramsPage() {
         </div>
       </section>
 
+      {/* Soulworx Inspires Section */}
+      <section className="relative z-0 pb-20 px-6 bg-white">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center rounded-3xl border border-neutral-200 p-10 md:p-14 bg-neutral-50">
+          <div className="space-y-6">
+            <div className="text-xs font-semibold uppercase tracking-[0.2em] text-neutral-500">
+              Soulworx Inspires
+            </div>
+            <h2 className="text-4xl md:text-5xl font-crimson font-normal tracking-tight text-neutral-900">
+              Non-profit work that centers community needs
+            </h2>
+            <p className="text-lg text-neutral-700 leading-relaxed">
+              Soulworx Inspires focuses on poverty relief and advancement of education through partnerships,
+              workshops, and direct support that create lasting opportunity.
+            </p>
+            <div>
+              <Link
+                href="/inspires"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-neutral-900 text-white rounded-md font-semibold hover:bg-neutral-800 transition"
+              >
+                Visit Soulworx Inspires
+              </Link>
+            </div>
+          </div>
+          <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
+            <Image
+              src="/optimized/0K0A0687.jpg"
+              alt="Soulworx Inspires"
+              fill
+              className="object-cover"
+            />
+          </div>
+        </div>
+      </section>
+
       {/* All Programs Grid */}
       <section className="relative z-0 pb-32 px-6 bg-white">
         <div className="max-w-7xl mx-auto">
@@ -108,4 +149,3 @@ export default async function ProgramsPage() {
     </div>
   )
 }
-
