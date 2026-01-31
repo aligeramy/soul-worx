@@ -1,5 +1,5 @@
 import { DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { Stack } from 'expo-router';
+import { Stack, router } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { View, ActivityIndicator, Image, StyleSheet } from 'react-native';
 import { useEffect } from 'react';
@@ -7,6 +7,7 @@ import 'react-native-reanimated';
 import { UserProvider, useUser } from '@/contexts/UserContext';
 import { SoulworxColors } from '@/constants/colors';
 import { setupDeepLinkListener } from '@/lib/auth';
+import { setupNotificationListeners } from '@/lib/push-notifications';
 
 export const unstable_settings = {
   anchor: '(tabs)',
@@ -47,6 +48,30 @@ function RootLayoutContent() {
   // Setup deep link listener for auth callbacks
   useEffect(() => {
     const cleanup = setupDeepLinkListener();
+    return cleanup;
+  }, []);
+
+  // Setup notification listeners for push notifications
+  useEffect(() => {
+    const cleanup = setupNotificationListeners(
+      (notification) => {
+        console.log('Notification received:', notification);
+      },
+      (response) => {
+        console.log('Notification tapped:', response);
+        const data = response.notification.request.content.data;
+        
+        // Handle deep links from notifications
+        if (data?.deepLink) {
+          // Parse deep link (e.g., soulworx://personalized-programs/[programId])
+          const url = data.deepLink.replace('soulworx://', '/');
+          router.push(url as any);
+        } else if (data?.programId) {
+          // Navigate to program detail
+          router.push(`/personalized-programs/${data.programId}` as any);
+        }
+      }
+    );
     return cleanup;
   }, []);
 
