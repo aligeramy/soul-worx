@@ -100,37 +100,31 @@ export default function AdminProgramsScreen() {
           </TouchableOpacity>
         </View>
       ) : (
-        programs.map((program) => (
-          <TouchableOpacity
-            key={program.id}
-            style={styles.programCard}
-            onPress={() => router.push(`/admin/programs/${program.id}` as any)}
-          >
-            <View style={styles.thumbnailContainer}>
-              <Image
-                source={getImageSource(program.coverImage, 'program')}
-                style={StyleSheet.absoluteFill}
-                resizeMode="cover"
-              />
-            </View>
-            <View style={styles.programContent}>
-              <View style={styles.programInfo}>
-                <Text style={styles.programTitle}>{program.title}</Text>
-                <Text style={styles.programSlug}>{program.slug}</Text>
-                <Text style={styles.programDescription} numberOfLines={2}>
-                  {program.description}
+        <View style={styles.programList}>
+          {programs.map((program) => (
+            <TouchableOpacity
+              key={program.id}
+              style={styles.programCard}
+              onPress={() => router.push(`/admin/programs/${program.id}` as any)}
+              activeOpacity={0.7}
+            >
+              <View style={styles.programCardThumb}>
+                <Image
+                  source={getImageSource(program.coverImage, 'program')}
+                  style={StyleSheet.absoluteFill}
+                  resizeMode="cover"
+                />
+              </View>
+              <View style={styles.programCardContent}>
+                <Text style={styles.programCardTitle} numberOfLines={1}>{program.title}</Text>
+                <Text style={styles.programCardMeta} numberOfLines={1}>
+                  {program.slug} · {program.status}
                 </Text>
               </View>
-              <View style={styles.programMeta}>
-                <View style={[styles.statusBadge, { backgroundColor: getStatusColor(program.status) }]}>
-                  <Text style={styles.statusText}>{program.status}</Text>
-                </View>
-                <Text style={styles.programCategory}>{program.category}</Text>
-              </View>
-            </View>
-            <Ionicons name="chevron-forward" size={20} color={SoulworxColors.textTertiary} />
-          </TouchableOpacity>
-        ))
+              <Ionicons name="chevron-forward" size={20} color={SoulworxColors.brandBrown} />
+            </TouchableOpacity>
+          ))}
+        </View>
       )}
     </ScrollView>
   );
@@ -175,68 +169,42 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     ...Shadows.small,
   },
+  programList: {
+    gap: Spacing.md,
+  },
   programCard: {
     backgroundColor: SoulworxColors.white,
-    borderRadius: BorderRadius.xl,
+    borderRadius: BorderRadius.sm,
     padding: Spacing.md,
-    marginBottom: Spacing.md,
-    flexDirection: 'row',
-    alignItems: 'stretch',
-    gap: Spacing.md,
-    ...Shadows.small,
-  },
-  thumbnailContainer: {
-    width: 100,
-    flexShrink: 0,
-    borderRadius: BorderRadius.md,
-    overflow: 'hidden',
-    backgroundColor: SoulworxColors.darkBeige,
-    position: 'relative',
-  },
-  programContent: {
-    flex: 1,
-  },
-  programInfo: {
-    marginBottom: Spacing.sm,
-  },
-  programTitle: {
-    fontSize: Typography.base,
-    fontWeight: Typography.semibold,
-    color: SoulworxColors.textOnLight,
-    marginBottom: 4,
-  },
-  programSlug: {
-    fontSize: Typography.sm,
-    color: SoulworxColors.textOnLight,
-    opacity: 0.6,
-    marginBottom: Spacing.xs,
-  },
-  programDescription: {
-    fontSize: Typography.sm,
-    color: SoulworxColors.textOnLight,
-    opacity: 0.7,
-  },
-  programMeta: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: Spacing.sm,
+    gap: Spacing.md,
+    borderWidth: 1,
+    borderColor: 'rgba(121, 79, 65, 0.2)',
+    ...Shadows.small,
   },
-  statusBadge: {
-    paddingHorizontal: Spacing.sm,
-    paddingVertical: 4,
-    borderRadius: BorderRadius.sm,
+  programCardThumb: {
+    width: 56,
+    height: 56,
+    borderRadius: BorderRadius.md,
+    overflow: 'hidden',
+    backgroundColor: SoulworxColors.accent,
+    position: 'relative',
   },
-  statusText: {
-    fontSize: Typography.xs,
+  programCardContent: {
+    flex: 1,
+    minWidth: 0,
+  },
+  programCardTitle: {
+    fontSize: Typography.base,
     fontWeight: Typography.semibold,
-    color: SoulworxColors.white,
-    textTransform: 'capitalize',
+    color: SoulworxColors.brandBrown,
+    marginBottom: 4,
   },
-  programCategory: {
-    fontSize: Typography.xs,
-    color: SoulworxColors.textOnLight,
-    opacity: 0.7,
-    textTransform: 'capitalize',
+  programCardMeta: {
+    fontSize: Typography.sm,
+    color: SoulworxColors.brandBrownDark,
+    opacity: 0.9,
   },
   emptyState: {
     alignItems: 'center',
@@ -253,7 +221,7 @@ const styles = StyleSheet.create({
     backgroundColor: SoulworxColors.accent,
     paddingHorizontal: Spacing.xl,
     paddingVertical: Spacing.md,
-    borderRadius: BorderRadius.lg,
+    borderRadius: BorderRadius.md,
   },
   emptyButtonText: {
     fontSize: Typography.base,

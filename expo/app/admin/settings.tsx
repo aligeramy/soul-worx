@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
   },
   sectionCard: {
     backgroundColor: SoulworxColors.white,
-    borderRadius: BorderRadius.xl,
+    borderRadius: BorderRadius.md,
     padding: Spacing.md,
     ...Shadows.small,
   },

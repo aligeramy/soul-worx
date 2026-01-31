@@ -387,7 +387,7 @@ const styles = StyleSheet.create({
   },
   form: {
     backgroundColor: SoulworxColors.white,
-    borderRadius: BorderRadius.xl,
+    borderRadius: BorderRadius.md,
     padding: Spacing.lg,
     ...Shadows.small,
   },

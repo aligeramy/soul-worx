@@ -193,7 +193,7 @@ const styles = StyleSheet.create({
   },
   productCard: {
     backgroundColor: SoulworxColors.white,
-    borderRadius: BorderRadius.xl,
+    borderRadius: BorderRadius.md,
     padding: Spacing.md,
     marginBottom: Spacing.md,
     flexDirection: 'row',
@@ -269,7 +269,7 @@ const styles = StyleSheet.create({
     backgroundColor: SoulworxColors.accent,
     paddingHorizontal: Spacing.xl,
     paddingVertical: Spacing.md,
-    borderRadius: BorderRadius.lg,
+    borderRadius: BorderRadius.md,
   },
   emptyButtonText: {
     fontSize: Typography.base,

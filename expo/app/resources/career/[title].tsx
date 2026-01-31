@@ -394,7 +394,7 @@ const styles = StyleSheet.create({
   },
   resourceCard: {
     backgroundColor: SoulworxColors.white,
-    borderRadius: BorderRadius.lg,
+    borderRadius: BorderRadius.md,
     padding: Spacing.md,
     marginBottom: Spacing.md,
     borderWidth: 1,

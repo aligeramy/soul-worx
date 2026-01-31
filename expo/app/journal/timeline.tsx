@@ -383,7 +383,7 @@ const styles = StyleSheet.create({
   statsCard: {
     flexDirection: 'row',
     backgroundColor: SoulworxColors.white,
-    borderRadius: BorderRadius.xl,
+    borderRadius: BorderRadius.md,
     padding: Spacing.lg,
     marginBottom: Spacing.xl,
     alignItems: 'center',
@@ -413,7 +413,7 @@ const styles = StyleSheet.create({
   },
   timelineCard: {
     backgroundColor: SoulworxColors.white,
-    borderRadius: BorderRadius.xl,
+    borderRadius: BorderRadius.md,
     padding: Spacing.lg,
     marginBottom: Spacing.xl,
     minHeight: TIMELINE_HEIGHT,
@@ -504,7 +504,7 @@ const styles = StyleSheet.create({
   },
   entryCard: {
     backgroundColor: SoulworxColors.white,
-    borderRadius: BorderRadius.xl,
+    borderRadius: BorderRadius.md,
     padding: Spacing.lg,
     ...Shadows.small,
   },

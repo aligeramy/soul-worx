@@ -110,42 +110,28 @@ export default function AdminUserDetailScreen() {
         </TouchableOpacity>
       </View>
 
-      {/* Questionnaire Card */}
-      <View style={styles.card}>
-        <View style={styles.cardHeader}>
-          <Ionicons name="document-text-outline" size={24} color={SoulworxColors.textPrimary} />
-          <Text style={styles.cardTitle}>Questionnaire</Text>
+      {/* Questionnaire Card - entire row is button */}
+      <TouchableOpacity
+        style={styles.questionnaireCard}
+        onPress={() => router.push(`/admin/personalized-programs/${userId}/questionnaire` as any)}
+        activeOpacity={0.7}
+      >
+        <Ionicons name="document-text-outline" size={20} color={SoulworxColors.brandBrown} />
+        <View style={styles.questionnaireCardContent}>
+          <Text style={styles.questionnaireCardTitle}>Questionnaire</Text>
         </View>
-        <View style={styles.cardContent}>
-          {questionnaire ? (
-            <View style={styles.questionnaireStatus}>
-              <View style={styles.statusRow}>
-                <Ionicons name="checkmark-circle" size={20} color={SoulworxColors.success} />
-                <Text style={styles.statusText}>Completed</Text>
-              </View>
-              {questionnaire.completedAt && (
-                <Text style={styles.completedDate}>
-                  Completed: {format(new Date(questionnaire.completedAt), "MMM d, yyyy")}
-                </Text>
-              )}
-              <TouchableOpacity
-                style={styles.viewButton}
-                onPress={() => router.push(`/admin/personalized-programs/${userId}/questionnaire` as any)}
-              >
-                <Text style={styles.viewButtonText}>View Answers</Text>
-              </TouchableOpacity>
-            </View>
-          ) : (
-            <Text style={styles.noQuestionnaireText}>Questionnaire not completed</Text>
-          )}
-        </View>
-      </View>
+        {questionnaire ? (
+          <Ionicons name="checkmark-circle" size={20} color={SoulworxColors.success} />
+        ) : null}
+        <Text style={styles.questionnaireDetailsLabel}>Details</Text>
+        <Ionicons name="chevron-forward" size={18} color={SoulworxColors.brandBrown} />
+      </TouchableOpacity>
 
       {/* Programs Section */}
-      <View style={styles.card}>
+      <View style={styles.sectionCard}>
         <View style={styles.cardHeader}>
-          <Ionicons name="fitness-outline" size={24} color={SoulworxColors.textPrimary} />
-          <Text style={styles.cardTitle}>Programs ({programs.length})</Text>
+          <Ionicons name="fitness-outline" size={20} color={SoulworxColors.brandBrown} />
+          <Text style={styles.sectionCardTitle}>Programs ({programs.length})</Text>
         </View>
         <View style={styles.cardContent}>
           {programs.length > 0 ? (
@@ -156,40 +142,19 @@ export default function AdminUserDetailScreen() {
                 return (
                   <TouchableOpacity
                     key={program.id}
-                    style={styles.programItem}
+                    style={styles.programCard}
                     onPress={() => router.push(`/admin/personalized-programs/${userId}/programs/${program.id}` as any)}
+                    activeOpacity={0.7}
                   >
-                    <View style={styles.programContent}>
-                      <Text style={styles.programTitle}>{program.title}</Text>
-                      <Text style={styles.programDescription} numberOfLines={2}>
-                        {program.description}
+                    <View style={styles.programCardContent}>
+                      <Text style={styles.programCardTitle} numberOfLines={1}>{program.title}</Text>
+                      <Text style={styles.programCardMeta} numberOfLines={1}>
+                        {format(new Date(program.startDate), "MMM d")} – {format(new Date(program.endDate), "MMM d")}
+                        {program.trainingDays?.length ? ` · ${program.trainingDays.length}d/wk` : ''}
+                        {' · '}{completedCount}/{totalCount} done
                       </Text>
-                      <View style={styles.programMeta}>
-                        <View style={styles.metaItem}>
-                          <Ionicons name="calendar-outline" size={14} color={SoulworxColors.textSecondary} />
-                          <Text style={styles.metaText}>
-                            {format(new Date(program.startDate), "MMM d")} - {format(new Date(program.endDate), "MMM d, yyyy")}
-                          </Text>
-                        </View>
-                        {program.trainingDays && program.trainingDays.length > 0 && (
-                          <Text style={styles.metaText}>
-                            {program.trainingDays.length} day{program.trainingDays.length !== 1 ? 's' : ''}/week
-                          </Text>
-                        )}
-                        <Text style={styles.metaText}>{program.status}</Text>
-                      </View>
-                      <View style={styles.progressRow}>
-                        <Text style={styles.progressText}>
-                          {completedCount} / {totalCount} completed
-                        </Text>
-                      </View>
                     </View>
-                    {program.videoUrl && (
-                      <View style={styles.videoThumbnail}>
-                        <Ionicons name="play-circle" size={24} color={SoulworxColors.textSecondary} />
-                      </View>
-                    )}
-                    <Ionicons name="chevron-forward" size={20} color={SoulworxColors.textTertiary} />
+                    <Ionicons name="chevron-forward" size={20} color={SoulworxColors.textPrimary} />
                   </TouchableOpacity>
                 );
               })}
@@ -252,134 +217,118 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: BorderRadius.full,
-    backgroundColor: SoulworxColors.gold,
+    backgroundColor: SoulworxColors.brandBrownDark,
     alignItems: 'center',
     justifyContent: 'center',
     ...Shadows.small,
   },
-  card: {
-    backgroundColor: SoulworxColors.charcoal,
-    borderRadius: BorderRadius.xl,
-    padding: Spacing.xl,
+  questionnaireCard: {
+    backgroundColor: SoulworxColors.white,
+    borderRadius: BorderRadius.sm,
+    padding: Spacing.md,
+    marginBottom: Spacing.sm,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: Spacing.sm,
+    borderWidth: 1,
+    borderColor: 'rgba(121, 79, 65, 0.18)',
+    ...Shadows.small,
+  },
+  questionnaireCardContent: {
+    flex: 1,
+    minWidth: 0,
+  },
+  questionnaireCardTitle: {
+    fontSize: Typography.sm,
+    fontWeight: Typography.semibold,
+    color: SoulworxColors.brandBrown,
+    marginBottom: 2,
+  },
+  questionnaireDetailsLabel: {
+    fontSize: Typography.xs,
+    fontWeight: Typography.semibold,
+    color: SoulworxColors.brandBrown,
+  },
+  sectionCard: {
+    backgroundColor: SoulworxColors.white,
+    borderRadius: BorderRadius.sm,
+    padding: Spacing.md,
     marginBottom: Spacing.lg,
-    ...Shadows.medium,
+    borderWidth: 1,
+    borderColor: 'rgba(121, 79, 65, 0.18)',
+    ...Shadows.small,
   },
   cardHeader: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: Spacing.sm,
-    marginBottom: Spacing.lg,
+    marginBottom: Spacing.md,
   },
-  cardTitle: {
-    fontSize: Typography.xl,
+  sectionCardTitle: {
+    fontSize: Typography.base,
     fontWeight: Typography.bold,
-    color: SoulworxColors.textPrimary,
+    color: SoulworxColors.brandBrown,
   },
   cardContent: {
     gap: Spacing.md,
   },
-  questionnaireStatus: {
-    gap: Spacing.sm,
-  },
   statusRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: Spacing.sm,
+    gap: Spacing.xs,
+    flexWrap: 'wrap',
   },
   statusText: {
-    fontSize: Typography.sm,
+    fontSize: Typography.xs,
     fontWeight: Typography.semibold,
     color: SoulworxColors.success,
   },
   completedDate: {
     fontSize: Typography.xs,
-    color: SoulworxColors.textSecondary,
-  },
-  viewButton: {
-    marginTop: Spacing.sm,
-    padding: Spacing.sm,
-    borderRadius: BorderRadius.md,
-    borderWidth: 1,
-    borderColor: SoulworxColors.border,
-    alignItems: 'center',
-  },
-  viewButtonText: {
-    fontSize: Typography.sm,
-    color: SoulworxColors.textPrimary,
+    color: SoulworxColors.brandBrownDark,
+    opacity: 0.8,
   },
   noQuestionnaireText: {
-    fontSize: Typography.sm,
-    color: SoulworxColors.textSecondary,
-    textAlign: 'center',
-    paddingVertical: Spacing.md,
+    fontSize: Typography.xs,
+    color: SoulworxColors.brandBrownDark,
+    opacity: 0.8,
   },
   programsList: {
     gap: Spacing.md,
   },
-  programItem: {
-    backgroundColor: SoulworxColors.beige,
-    borderRadius: BorderRadius.md,
+  programCard: {
+    backgroundColor: SoulworxColors.charcoal,
+    borderRadius: BorderRadius.sm,
     padding: Spacing.md,
     flexDirection: 'row',
     alignItems: 'center',
     gap: Spacing.md,
     borderWidth: 1,
     borderColor: SoulworxColors.border,
+    ...Shadows.small,
   },
-  programContent: {
+  programCardContent: {
     flex: 1,
+    minWidth: 0,
   },
-  programTitle: {
-    fontSize: Typography.lg,
+  programCardTitle: {
+    fontSize: Typography.base,
     fontWeight: Typography.semibold,
-    color: SoulworxColors.textOnLight,
-    marginBottom: Spacing.xs,
+    color: SoulworxColors.textPrimary,
+    marginBottom: 4,
   },
-  programDescription: {
+  programCardMeta: {
     fontSize: Typography.sm,
-    color: SoulworxColors.textOnLight,
-    opacity: 0.7,
-    marginBottom: Spacing.sm,
-  },
-  programMeta: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: Spacing.sm,
-    marginBottom: Spacing.xs,
-  },
-  metaItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: Spacing.xs,
-  },
-  metaText: {
-    fontSize: Typography.xs,
-    color: SoulworxColors.textOnLight,
-    opacity: 0.6,
-  },
-  progressRow: {
-    marginTop: Spacing.xs,
-  },
-  progressText: {
-    fontSize: Typography.xs,
-    color: SoulworxColors.textOnLight,
-    opacity: 0.7,
-  },
-  videoThumbnail: {
-    width: 60,
-    height: 40,
-    borderRadius: BorderRadius.sm,
-    backgroundColor: SoulworxColors.darkBeige,
-    alignItems: 'center',
-    justifyContent: 'center',
+    color: SoulworxColors.textSecondary,
   },
   emptyPrograms: {
     alignItems: 'center',
     paddingVertical: Spacing.xl,
   },
   emptyProgramsText: {
-    fontSize: Typography.base,
-    color: SoulworxColors.textSecondary,
+    fontSize: Typography.sm,
+    color: SoulworxColors.brandBrownDark,
+    opacity: 0.9,
     marginBottom: Spacing.md,
   },
   createFirstButton: {

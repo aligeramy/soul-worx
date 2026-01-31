@@ -198,7 +198,7 @@ const styles = StyleSheet.create({
     marginBottom: Spacing.md,
   },
   assistantCard: {
-    borderRadius: BorderRadius.lg,
+    borderRadius: BorderRadius.md,
     backgroundColor: SoulworxColors.charcoal,
     overflow: 'hidden',
     minHeight: 320,
@@ -206,7 +206,7 @@ const styles = StyleSheet.create({
     ...Shadows.medium,
   },
   journalCard: {
-    borderRadius: BorderRadius.lg,
+    borderRadius: BorderRadius.md,
     backgroundColor: SoulworxColors.charcoal,
     overflow: 'hidden',
     minHeight: 320,

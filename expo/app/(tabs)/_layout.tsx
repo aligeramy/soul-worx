@@ -75,15 +75,11 @@ export default function TabLayout() {
         }}
       />
 
-      {/* My Programs - Only visible for Pro+ users */}
+      {/* My Programs tab removed - Pro+ personalized programs shown at top of Programs tab */}
       <Tabs.Screen
         name="my-programs"
         options={{
-          title: 'My Programs',
-          href: isProPlus ? '/my-programs' : null,
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="star" size={size} color={color} />
-          ),
+          href: null,
         }}
       />
 

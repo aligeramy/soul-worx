@@ -95,7 +95,7 @@ function RootLayoutContent() {
         <Stack.Screen name="onboarding/pro-plus-questionnaire" options={{ headerShown: false }} />
         <Stack.Screen name="onboarding/book-call" options={{ headerShown: false }} />
         <Stack.Screen name="upgrade" options={{ headerShown: false }} />
-        <Stack.Screen name="personalized-programs" options={{ headerShown: false }} />
+        <Stack.Screen name="personalized-programs/index" options={{ headerShown: false }} />
         <Stack.Screen name="personalized-programs/[programId]" options={{ headerShown: false }} />
         <Stack.Screen name="admin/personalized-programs" options={{ headerShown: false }} />
         <Stack.Screen name="admin/personalized-programs/[userId]" options={{ headerShown: false }} />

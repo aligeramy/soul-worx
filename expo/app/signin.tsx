@@ -224,7 +224,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: SoulworxColors.charcoal,
-    borderRadius: BorderRadius.lg,
+    borderRadius: BorderRadius.md,
     paddingHorizontal: Spacing.md,
     gap: Spacing.sm,
     borderWidth: 1,
@@ -252,7 +252,7 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: SoulworxColors.gold,
-    borderRadius: BorderRadius.lg,
+    borderRadius: BorderRadius.md,
     padding: Spacing.md,
     alignItems: 'center',
     marginTop: Spacing.sm,
@@ -269,7 +269,7 @@ const styles = StyleSheet.create({
   },
   secondaryButton: {
     backgroundColor: SoulworxColors.charcoal,
-    borderRadius: BorderRadius.lg,
+    borderRadius: BorderRadius.md,
     padding: Spacing.md,
     alignItems: 'center',
     borderWidth: 1,

@@ -172,7 +172,7 @@ const styles = StyleSheet.create({
   },
   card: {
     backgroundColor: SoulworxColors.charcoal,
-    borderRadius: BorderRadius.xl,
+    borderRadius: BorderRadius.md,
     padding: Spacing.xl,
     borderWidth: 2,
     borderColor: SoulworxColors.border,

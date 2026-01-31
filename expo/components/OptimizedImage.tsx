@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
     backgroundColor: SoulworxColors.darkBeige,
   },
   rounded: {
-    borderRadius: BorderRadius.lg,
+    borderRadius: BorderRadius.md,
   },
   overlay: {
     ...StyleSheet.absoluteFillObject,

@@ -92,11 +92,11 @@ export function ProgramCard({
 
 const styles = StyleSheet.create({
   container: {
-    borderRadius: BorderRadius.lg,
+    borderRadius: BorderRadius.md,
     backgroundColor: SoulworxColors.charcoal,
     overflow: 'hidden',
     ...Shadows.medium,
-    minHeight: 320,
+    minHeight: 280,
   },
   gradient: {
     ...StyleSheet.absoluteFillObject,

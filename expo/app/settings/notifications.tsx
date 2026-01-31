@@ -187,7 +187,7 @@ const styles = StyleSheet.create({
   },
   settingsCard: {
     backgroundColor: SoulworxColors.charcoal,
-    borderRadius: BorderRadius.xl,
+    borderRadius: BorderRadius.md,
     overflow: 'hidden',
     ...Shadows.small,
   },
@@ -220,7 +220,7 @@ const styles = StyleSheet.create({
   infoCard: {
     flexDirection: 'row',
     backgroundColor: SoulworxColors.darkBeige,
-    borderRadius: BorderRadius.lg,
+    borderRadius: BorderRadius.md,
     padding: Spacing.md,
     marginTop: Spacing.lg,
     gap: Spacing.md,

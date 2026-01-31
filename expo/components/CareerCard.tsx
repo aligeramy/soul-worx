@@ -46,7 +46,7 @@ export function CareerCard({ title, description, category, onPress, style }: Car
 
 const styles = StyleSheet.create({
   container: {
-    borderRadius: BorderRadius.lg,
+    borderRadius: BorderRadius.md,
     backgroundColor: SoulworxColors.white,
     padding: Spacing.md,
     marginBottom: Spacing.md,

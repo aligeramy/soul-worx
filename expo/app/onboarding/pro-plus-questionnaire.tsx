@@ -892,7 +892,7 @@ const styles = StyleSheet.create({
   },
   formCard: {
     backgroundColor: SoulworxColors.charcoal,
-    borderRadius: BorderRadius.xl,
+    borderRadius: BorderRadius.md,
     padding: Spacing.xl,
     ...Shadows.medium,
   },

@@ -171,10 +171,10 @@ export default function AdminCreateProgramScreen() {
               disabled={isUploading}
             >
               {isUploading ? (
-                <ActivityIndicator color={SoulworxColors.white} />
+                <ActivityIndicator color={SoulworxColors.black} />
               ) : (
                 <>
-                  <Ionicons name="videocam" size={20} color={SoulworxColors.white} />
+                  <Ionicons name="cloud-upload-outline" size={20} color={SoulworxColors.black} />
                   <Text style={styles.uploadButtonText}>Upload Video</Text>
                 </>
               )}
@@ -235,10 +235,10 @@ export default function AdminCreateProgramScreen() {
           disabled={isSubmitting}
         >
           {isSubmitting ? (
-            <ActivityIndicator color={SoulworxColors.white} />
+            <ActivityIndicator color={SoulworxColors.black} />
           ) : (
             <>
-              <Ionicons name="checkmark" size={20} color={SoulworxColors.white} />
+              <Ionicons name="checkmark" size={20} color={SoulworxColors.black} />
               <Text style={styles.submitButtonText}>Create Program</Text>
             </>
           )}
@@ -273,7 +273,7 @@ const styles = StyleSheet.create({
   },
   formCard: {
     backgroundColor: SoulworxColors.charcoal,
-    borderRadius: BorderRadius.xl,
+    borderRadius: BorderRadius.md,
     padding: Spacing.xl,
     ...Shadows.medium,
   },
@@ -287,11 +287,11 @@ const styles = StyleSheet.create({
     marginBottom: Spacing.sm,
   },
   input: {
-    backgroundColor: SoulworxColors.beige,
+    backgroundColor: SoulworxColors.darkBeige,
     borderRadius: BorderRadius.md,
     padding: Spacing.md,
     fontSize: Typography.base,
-    color: SoulworxColors.textOnLight,
+    color: SoulworxColors.textPrimary,
     borderWidth: 1,
     borderColor: SoulworxColors.border,
   },
@@ -304,14 +304,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     gap: Spacing.sm,
-    backgroundColor: SoulworxColors.gold,
+    backgroundColor: SoulworxColors.white,
     padding: Spacing.md,
     borderRadius: BorderRadius.md,
+    borderWidth: 1,
+    borderColor: 'rgba(0,0,0,0.15)',
   },
   uploadButtonText: {
     fontSize: Typography.base,
     fontWeight: Typography.semibold,
-    color: SoulworxColors.white,
+    color: SoulworxColors.black,
   },
   videoUploaded: {
     flexDirection: 'row',
@@ -337,20 +339,20 @@ const styles = StyleSheet.create({
     paddingHorizontal: Spacing.md,
     paddingVertical: Spacing.sm,
     borderRadius: BorderRadius.md,
-    borderWidth: 2,
-    borderColor: SoulworxColors.border,
-    backgroundColor: SoulworxColors.beige,
+    borderWidth: 1,
+    borderColor: 'rgba(0,0,0,0.2)',
+    backgroundColor: SoulworxColors.white,
   },
   dayButtonSelected: {
-    borderColor: SoulworxColors.gold,
-    backgroundColor: `${SoulworxColors.gold}20`,
+    borderColor: SoulworxColors.brandBrown,
+    backgroundColor: SoulworxColors.white,
   },
   dayButtonText: {
     fontSize: Typography.sm,
-    color: SoulworxColors.textOnLight,
+    color: SoulworxColors.black,
   },
   dayButtonTextSelected: {
-    color: SoulworxColors.gold,
+    color: SoulworxColors.brandBrown,
     fontWeight: Typography.bold,
   },
   submitButton: {
@@ -358,11 +360,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     gap: Spacing.sm,
-    backgroundColor: SoulworxColors.gold,
+    backgroundColor: SoulworxColors.white,
     padding: Spacing.md,
     borderRadius: BorderRadius.md,
     marginTop: Spacing.lg,
-    ...Shadows.medium,
+    borderWidth: 1,
+    borderColor: 'rgba(0,0,0,0.15)',
+    ...Shadows.small,
   },
   buttonDisabled: {
     opacity: 0.5,
@@ -370,6 +374,6 @@ const styles = StyleSheet.create({
   submitButtonText: {
     fontSize: Typography.lg,
     fontWeight: Typography.bold,
-    color: SoulworxColors.white,
+    color: SoulworxColors.black,
   },
 });

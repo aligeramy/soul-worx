@@ -62,7 +62,7 @@ export function HeroCard({ image, title, description, onPress, badge, showRsvpBa
 
 const styles = StyleSheet.create({
   container: {
-    borderRadius: BorderRadius.lg,
+    borderRadius: BorderRadius.md,
     backgroundColor: SoulworxColors.charcoal,
     overflow: 'hidden',
     ...Shadows.medium,

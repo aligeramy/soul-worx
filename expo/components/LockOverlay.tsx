@@ -27,13 +27,13 @@ const styles = StyleSheet.create({
     backgroundColor: SoulworxColors.overlay,
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: BorderRadius.lg,
+    borderRadius: BorderRadius.md,
   },
   content: {
     alignItems: 'center',
     backgroundColor: 'rgba(0, 0, 0, 0.8)',
     padding: Spacing.lg,
-    borderRadius: BorderRadius.lg,
+    borderRadius: BorderRadius.md,
   },
   title: {
     fontSize: Typography.lg,

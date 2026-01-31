@@ -13,6 +13,8 @@ interface UserContextType {
   isInitialized: boolean;
   signOut: () => Promise<void>;
   refreshSession: () => Promise<void>;
+  /** For local/testing: set tier without Stripe/API. Remove when integrating real upgrade flow. */
+  setTierLocally: (tier: MembershipTier) => void;
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
@@ -324,8 +326,12 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
 
   const accessLevel = tier?.accessLevel || 1;
 
+  const setTierLocally = useCallback((newTier: MembershipTier) => {
+    setTier(newTier);
+  }, []);
+
   return (
-    <UserContext.Provider value={{ user, tier, accessLevel, isLoading, isInitialized, signOut, refreshSession }}>
+    <UserContext.Provider value={{ user, tier, accessLevel, isLoading, isInitialized, signOut, refreshSession, setTierLocally }}>
       {children}
     </UserContext.Provider>
   );

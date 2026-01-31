@@ -62,6 +62,17 @@ export default function AdminScreen() {
         <Text style={styles.headerTitle}>Admin Dashboard</Text>
       </View>
 
+      {/* Pro+ Members / Personalized Programs */}
+      <View style={styles.section}>
+        <Text style={styles.sectionTitle}>Pro+ Members</Text>
+        <AdminCard
+          icon="person-add"
+          title="Personalized Programs"
+          subtitle="View Pro+ members, questionnaires & add programs"
+          onPress={() => router.push('/admin/personalized-programs')}
+        />
+      </View>
+
       {/* Programs Section */}
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Programs</Text>
@@ -159,7 +170,7 @@ const styles = StyleSheet.create({
   },
   card: {
     backgroundColor: SoulworxColors.white,
-    borderRadius: BorderRadius.xl,
+    borderRadius: BorderRadius.md,
     padding: Spacing.md,
     ...Shadows.small,
   },

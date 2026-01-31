@@ -565,7 +565,7 @@ const styles = StyleSheet.create({
     backgroundColor: SoulworxColors.accent,
     paddingHorizontal: Spacing.xl,
     paddingVertical: Spacing.md,
-    borderRadius: BorderRadius.lg,
+    borderRadius: BorderRadius.md,
     marginTop: Spacing.lg,
   },
   retryText: {
@@ -648,7 +648,7 @@ const styles = StyleSheet.create({
   },
   selectModalContent: {
     backgroundColor: SoulworxColors.white,
-    borderRadius: BorderRadius.lg,
+    borderRadius: BorderRadius.md,
     width: '90%',
     maxHeight: '70%',
     overflow: 'hidden',

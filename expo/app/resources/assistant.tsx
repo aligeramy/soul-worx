@@ -813,7 +813,7 @@ const styles = StyleSheet.create({
     maxWidth: '80%',
     paddingHorizontal: Spacing.md,
     paddingVertical: Spacing.sm,
-    borderRadius: BorderRadius.lg,
+    borderRadius: BorderRadius.md,
     ...Shadows.small,
   },
   userMessage: {
@@ -949,7 +949,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: Spacing.lg,
     marginHorizontal: Spacing.lg,
     marginBottom: Spacing.md,
-    borderRadius: BorderRadius.lg,
+    borderRadius: BorderRadius.md,
     gap: Spacing.sm,
     ...Shadows.small,
   },

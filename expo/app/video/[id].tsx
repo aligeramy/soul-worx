@@ -717,7 +717,7 @@ const styles = StyleSheet.create({
     backgroundColor: SoulworxColors.accent,
     paddingHorizontal: Spacing.xl,
     paddingVertical: Spacing.md,
-    borderRadius: BorderRadius.lg,
+    borderRadius: BorderRadius.md,
     marginTop: Spacing.lg,
   },
   retryText: {
@@ -773,7 +773,7 @@ const styles = StyleSheet.create({
   },
   episodeItem: {
     backgroundColor: SoulworxColors.charcoal, // Dark brown background
-    borderRadius: BorderRadius.lg,
+    borderRadius: BorderRadius.md,
     marginBottom: Spacing.sm,
     padding: Spacing.md,
     borderWidth: 1,

@@ -115,41 +115,39 @@ export default function AdminPersonalizedProgramsScreen() {
 
       {/* Users List */}
       {proPlusUsers.length > 0 ? (
-        <View style={styles.usersContainer}>
-          {proPlusUsers.map(({ user: proUser, questionnaire, programCount }) => (
+        <View style={styles.listContainer}>
+          {proPlusUsers.map(({ user: proUser, questionnaire, programCount }, index) => (
             <TouchableOpacity
               key={proUser.id}
-              style={styles.userCard}
+              style={[styles.listRow, index === proPlusUsers.length - 1 && styles.listRowLast]}
               onPress={() => router.push(`/admin/personalized-programs/${proUser.id}` as any)}
+              activeOpacity={0.6}
             >
-              <View style={styles.userInfo}>
-                {proUser.image ? (
-                  <Image source={{ uri: proUser.image }} style={styles.avatar} />
-                ) : (
-                  <View style={styles.avatarPlaceholder}>
-                    <Ionicons name="person" size={24} color={SoulworxColors.textSecondary} />
-                  </View>
-                )}
-                <View style={styles.userDetails}>
-                  <Text style={styles.userName}>{proUser.name || 'User'}</Text>
-                  <Text style={styles.userEmail}>{proUser.email}</Text>
-                </View>
+              {proUser.image ? (
+                <Image source={{ uri: proUser.image }} style={styles.avatar} />
+              ) : (
+                <View style={styles.avatarPlaceholder}>
+                <Ionicons name="person" size={18} color={SoulworxColors.white} />
               </View>
-              <View style={styles.userMeta}>
+              )}
+              <View style={styles.rowContent}>
+                <Text style={styles.userName} numberOfLines={1}>{proUser.name || 'User'}</Text>
+                <Text style={styles.userEmail} numberOfLines={1}>{proUser.email}</Text>
+              </View>
+              <View style={styles.rowMeta}>
                 <View style={styles.metaItem}>
-                  <Ionicons name="document-text-outline" size={16} color={SoulworxColors.textSecondary} />
-                  <Text style={styles.metaText}>
-                    {questionnaire ? 'Questionnaire Complete' : 'No Questionnaire'}
-                  </Text>
+                  <Ionicons
+                    name={questionnaire ? 'checkmark-circle' : 'ellipse-outline'}
+                    size={16}
+                    color={questionnaire ? SoulworxColors.accent : SoulworxColors.textSecondary}
+                  />
                 </View>
                 <View style={styles.metaItem}>
                   <Ionicons name="calendar-outline" size={16} color={SoulworxColors.textSecondary} />
-                  <Text style={styles.metaText}>
-                    {programCount} Program{programCount !== 1 ? 's' : ''}
-                  </Text>
+                  <Text style={styles.metaText}>{programCount}</Text>
                 </View>
               </View>
-              <Ionicons name="chevron-forward" size={20} color={SoulworxColors.textTertiary} />
+              <Ionicons name="chevron-forward" size={18} color={SoulworxColors.white} style={{ opacity: 0.6 }} />
             </TouchableOpacity>
           ))}
         </View>
@@ -195,54 +193,56 @@ const styles = StyleSheet.create({
     fontWeight: Typography.bold,
     color: SoulworxColors.textPrimary,
   },
-  usersContainer: {
-    gap: Spacing.md,
-  },
-  userCard: {
+  listContainer: {
     backgroundColor: SoulworxColors.charcoal,
-    borderRadius: BorderRadius.xl,
-    padding: Spacing.md,
-    ...Shadows.medium,
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: Spacing.md,
+    borderRadius: BorderRadius.md,
+    overflow: 'hidden',
+    ...Shadows.small,
   },
-  userInfo: {
+  listRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: Spacing.md,
-    flex: 1,
+    paddingVertical: Spacing.sm,
+    paddingHorizontal: Spacing.md,
+    gap: Spacing.sm,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: SoulworxColors.border,
+  },
+  listRowLast: {
+    borderBottomWidth: 0,
   },
   avatar: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
+    width: 36,
+    height: 36,
+    borderRadius: 18,
     backgroundColor: SoulworxColors.darkBeige,
   },
   avatarPlaceholder: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
+    width: 36,
+    height: 36,
+    borderRadius: 18,
     backgroundColor: SoulworxColors.darkBeige,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  userDetails: {
+  rowContent: {
     flex: 1,
+    minWidth: 0,
   },
   userName: {
-    fontSize: Typography.base,
+    fontSize: Typography.sm,
     fontWeight: Typography.semibold,
     color: SoulworxColors.textPrimary,
-    marginBottom: 2,
+    marginBottom: 1,
   },
   userEmail: {
-    fontSize: Typography.sm,
+    fontSize: Typography.xs,
     color: SoulworxColors.textSecondary,
   },
-  userMeta: {
-    gap: Spacing.xs,
-    alignItems: 'flex-end',
+  rowMeta: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: Spacing.md,
   },
   metaItem: {
     flexDirection: 'row',

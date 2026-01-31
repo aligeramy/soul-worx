@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import { View, Text, ScrollView, StyleSheet, Pressable, ActivityIndicator, Alert } from 'react-native';
 import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
@@ -7,8 +7,10 @@ import { Image } from 'expo-image';
 import * as Haptics from 'expo-haptics';
 import { useUser } from '@/contexts/UserContext';
 import { SoulworxColors, Spacing, Typography, BorderRadius, Shadows } from '@/constants/colors';
-import { apiPost } from '@/lib/api-client';
-import * as WebBrowser from 'expo-web-browser';
+import type { MembershipTier } from '@/lib/types';
+// TODO: When integrating real upgrade flow, uncomment:
+// import { apiPost } from '@/lib/api-client';
+// import * as WebBrowser from 'expo-web-browser';
 
 const tiers = [
   {
@@ -42,48 +44,40 @@ const tiers = [
   },
 ];
 
+const createLocalTier = (level: 'pro' | 'pro_plus'): MembershipTier => ({
+  id: `${level}-tier`,
+  name: level === 'pro_plus' ? 'Pro+' : 'Pro',
+  slug: level,
+  level,
+  description: level === 'pro_plus' ? 'Pro+ tier' : 'Pro tier',
+  features: [],
+  accessLevel: level === 'pro_plus' ? 3 : 2,
+  price: level === 'pro_plus' ? '25' : '9.99',
+  billingPeriod: 'monthly',
+  stripePriceId: null,
+  discordRoleId: null,
+  dmAccessEnabled: false,
+  isActive: true,
+  sortOrder: level === 'pro_plus' ? 3 : 2,
+  createdAt: new Date(),
+  updatedAt: new Date(),
+});
+
 export default function UpgradeScreen() {
   const insets = useSafeAreaInsets();
-  const { user, tier } = useUser();
+  const { tier, setTierLocally } = useUser();
   const [isProcessing, setIsProcessing] = useState(false);
 
   const handleUpgrade = async (tierSlug: "pro" | "pro_plus") => {
     setIsProcessing(true);
 
     try {
-      const response = await apiPost<{ url?: string; redirectToWeb?: boolean; webUrl?: string }>(
-        '/api/community/upgrade-mobile',
-        { tierSlug }
-      );
-
-      if (response.redirectToWeb && response.webUrl) {
-        // No payment method on file - redirect to web
-        Alert.alert(
-          'Complete Payment Setup',
-          'Please complete your payment setup on our website. You\'ll be redirected back to the app.',
-          [
-            {
-              text: 'Continue',
-              onPress: () => {
-                WebBrowser.openBrowserAsync(response.webUrl!);
-              },
-            },
-          ]
-        );
-      } else if (response.url) {
-        // Open Stripe checkout in browser
-        const result = await WebBrowser.openBrowserAsync(response.url);
-        
-        if (result.type === 'cancel') {
-          Alert.alert('Cancelled', 'Upgrade was cancelled');
-        } else {
-          // Success - webhook will handle the rest
-          Alert.alert('Success', 'Your upgrade is being processed. Please refresh the app.');
-          router.back();
-        }
-      } else {
-        throw new Error('No checkout URL received');
-      }
+      // LOCAL/TEST: Upgrade without Stripe or API.
+      // TODO: Replace with real flow when ready - POST to /api/community/upgrade-mobile,
+      // open Stripe checkout or redirect to web, then refreshSession on return.
+      const newTier = createLocalTier(tierSlug);
+      setTierLocally(newTier);
+      router.back();
     } catch (error: any) {
       console.error('Error upgrading:', error);
       Alert.alert('Error', error.message || 'Failed to start upgrade. Please try again.');
@@ -339,7 +333,7 @@ const styles = StyleSheet.create({
   },
   upgradeButton: {
     backgroundColor: SoulworxColors.gold,
-    borderRadius: BorderRadius.lg,
+    borderRadius: BorderRadius.md,
     padding: Spacing.md,
     alignItems: 'center',
     ...Shadows.medium,
@@ -358,7 +352,7 @@ const styles = StyleSheet.create({
   },
   currentButton: {
     backgroundColor: SoulworxColors.charcoal,
-    borderRadius: BorderRadius.lg,
+    borderRadius: BorderRadius.md,
     padding: Spacing.md,
     alignItems: 'center',
     borderWidth: 1,

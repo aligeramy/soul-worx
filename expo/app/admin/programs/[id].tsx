@@ -409,7 +409,7 @@ const styles = StyleSheet.create({
   },
   form: {
     backgroundColor: SoulworxColors.white,
-    borderRadius: BorderRadius.xl,
+    borderRadius: BorderRadius.md,
     padding: Spacing.lg,
     ...Shadows.small,
   },
@@ -481,7 +481,7 @@ const styles = StyleSheet.create({
   },
   saveButton: {
     backgroundColor: SoulworxColors.accent,
-    borderRadius: BorderRadius.lg,
+    borderRadius: BorderRadius.md,
     padding: Spacing.md,
     alignItems: 'center',
     justifyContent: 'center',

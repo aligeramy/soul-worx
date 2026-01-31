@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
     gap: Spacing.md,
   },
   postCard: {
-    borderRadius: BorderRadius.xl,
+    borderRadius: BorderRadius.md,
     backgroundColor: SoulworxColors.charcoal,
     overflow: 'hidden',
     ...Shadows.medium,

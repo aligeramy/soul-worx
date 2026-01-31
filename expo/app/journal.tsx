@@ -234,7 +234,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     gap: Spacing.sm,
     backgroundColor: SoulworxColors.adminDarkBrown,
-    borderRadius: BorderRadius.lg,
+    borderRadius: BorderRadius.md,
     padding: Spacing.lg,
     marginBottom: Spacing.xl,
     ...Shadows.medium,
@@ -260,7 +260,7 @@ const styles = StyleSheet.create({
   },
   entryCard: {
     backgroundColor: SoulworxColors.charcoal,
-    borderRadius: BorderRadius.xl,
+    borderRadius: BorderRadius.md,
     padding: Spacing.lg,
     marginBottom: Spacing.md,
     ...Shadows.small,
@@ -346,7 +346,7 @@ const styles = StyleSheet.create({
     backgroundColor: SoulworxColors.accent,
     paddingHorizontal: Spacing.xl,
     paddingVertical: Spacing.md,
-    borderRadius: BorderRadius.lg,
+    borderRadius: BorderRadius.md,
   },
   emptyButtonText: {
     fontSize: Typography.base,

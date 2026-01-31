@@ -200,7 +200,7 @@ const styles = StyleSheet.create({
   },
   form: {
     backgroundColor: SoulworxColors.charcoal,
-    borderRadius: BorderRadius.xl,
+    borderRadius: BorderRadius.md,
     padding: Spacing.xl,
     ...Shadows.medium,
   },

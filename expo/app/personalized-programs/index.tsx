@@ -7,7 +7,7 @@ import { Image } from 'expo-image';
 import * as Haptics from 'expo-haptics';
 import { useUser } from '@/contexts/UserContext';
 import { SoulworxColors, Spacing, Typography, BorderRadius, Shadows } from '@/constants/colors';
-import { apiGet } from '@/lib/api-client';
+import { fetchPersonalizedProgramsFromSupabase } from '@/lib/personalized-programs-supabase';
 import { format } from 'date-fns';
 
 interface PersonalizedProgram {
@@ -34,9 +34,14 @@ export default function PersonalizedProgramsListScreen() {
   const [refreshing, setRefreshing] = useState(false);
 
   const loadPrograms = useCallback(async () => {
+    if (!user?.id) {
+      setLoading(false);
+      setRefreshing(false);
+      return;
+    }
     try {
-      const data = await apiGet<{ programs: PersonalizedProgram[] }>(`/api/personalized-programs?userId=${user?.id}`);
-      setPrograms(data.programs || []);
+      const list = await fetchPersonalizedProgramsFromSupabase(user.id);
+      setPrograms(list);
     } catch (error) {
       console.error('Error loading programs:', error);
     } finally {
@@ -222,7 +227,7 @@ const styles = StyleSheet.create({
   },
   programCard: {
     backgroundColor: SoulworxColors.charcoal,
-    borderRadius: BorderRadius.xl,
+    borderRadius: BorderRadius.md,
     overflow: 'hidden',
     ...Shadows.medium,
     flexDirection: 'row',

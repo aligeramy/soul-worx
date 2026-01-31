@@ -6,7 +6,11 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import * as Haptics from 'expo-haptics';
 import { useUser } from '@/contexts/UserContext';
 import { SoulworxColors, Spacing, Typography, BorderRadius, Shadows } from '@/constants/colors';
-import { apiGet, apiPost, apiDelete } from '@/lib/api-client';
+import {
+  fetchPersonalizedProgramFromSupabase,
+  completeChecklistItemSupabase,
+  uncompleteChecklistItemSupabase,
+} from '@/lib/personalized-programs-supabase';
 import { Video, ResizeMode } from 'expo-av';
 import { format, isPast, differenceInDays, isToday, startOfDay } from 'date-fns';
 
@@ -49,8 +53,7 @@ export default function PersonalizedProgramDetailScreen() {
     if (!user?.id || !programId) return;
     
     try {
-      const data = await apiGet<{ programs: PersonalizedProgram[] }>(`/api/personalized-programs?userId=${user.id}`);
-      const foundProgram = data.programs?.find((p) => p.id === programId);
+      const foundProgram = await fetchPersonalizedProgramFromSupabase(user.id, programId);
       if (foundProgram) {
         setProgram(foundProgram);
       } else {
@@ -97,7 +100,7 @@ export default function PersonalizedProgramDetailScreen() {
     if (item.completed) {
       setIsSubmitting(itemId);
       try {
-        await apiDelete(`/api/personalized-programs/checklist/${itemId}`);
+        await uncompleteChecklistItemSupabase(itemId);
         Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
         await loadProgram();
       } catch (error) {
@@ -120,7 +123,7 @@ export default function PersonalizedProgramDetailScreen() {
 
     setIsSubmitting(selectedItemId);
     try {
-      await apiPost(`/api/personalized-programs/checklist/${selectedItemId}`, {
+      await completeChecklistItemSupabase(selectedItemId, {
         enjoymentRating,
         difficultyRating,
       });
@@ -178,6 +181,19 @@ export default function PersonalizedProgramDetailScreen() {
           </View>
         </View>
 
+        {/* Training Video - at top for portrait */}
+        {program.videoUrl && (
+          <View style={styles.videoContainer}>
+            <Text style={styles.detailLabel}>Training Video</Text>
+            <Video
+              source={{ uri: program.videoUrl }}
+              style={styles.video}
+              useNativeControls
+              resizeMode={ResizeMode.CONTAIN}
+            />
+          </View>
+        )}
+
         {/* Program Details */}
         <View style={styles.detailsCard}>
           <Text style={styles.sectionTitle}>Program Details</Text>
@@ -221,27 +237,22 @@ export default function PersonalizedProgramDetailScreen() {
               </View>
             </View>
           </View>
-
-          {program.videoUrl && (
-            <View style={styles.videoContainer}>
-              <Text style={styles.detailLabel}>Training Video</Text>
-              <Video
-                source={{ uri: program.videoUrl }}
-                style={styles.video}
-                useNativeControls
-                resizeMode={ResizeMode.CONTAIN}
-              />
-            </View>
-          )}
         </View>
 
-        {/* Checklist */}
+        {/* Checklist - only show next upcoming item */}
         <View style={styles.checklistCard}>
           <Text style={styles.sectionTitle}>Workout Checklist</Text>
           
-          {program.checklistItems.length > 0 ? (
-            <View style={styles.checklistContainer}>
-              {program.checklistItems.map((item) => {
+          {(() => {
+            const incomplete = [...program.checklistItems]
+              .filter((i) => !i.completed)
+              .sort((a, b) => new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime());
+            const nextItem = incomplete[0] ?? null;
+            const itemsToShow = nextItem ? [nextItem] : [];
+            return (
+              itemsToShow.length > 0 ? (
+                <View style={styles.checklistContainer}>
+              {itemsToShow.map((item) => {
                 const dueDate = new Date(item.dueDate);
                 const today = startOfDay(new Date());
                 const dueDateStart = startOfDay(dueDate);
@@ -269,7 +280,7 @@ export default function PersonalizedProgramDetailScreen() {
                         <View style={styles.checklistItemText}>
                           <View style={styles.dateRow}>
                             <Text style={styles.checklistItemDate}>
-                              {format(dueDate, "EEEE, MMMM d, yyyy")}
+                              {format(dueDate, "EEE, MMM d")}
                             </Text>
                             {isDueToday && !item.completed && (
                               <View style={styles.badge}>
@@ -312,34 +323,48 @@ export default function PersonalizedProgramDetailScreen() {
                           )}
                         </View>
                       </View>
-                      <Pressable
-                        style={({ pressed }) => [
-                          styles.checkButton,
-                          item.completed && styles.checkButtonCompleted,
-                          (!canCheckOff && !item.completed) && styles.checkButtonDisabled,
-                          pressed && styles.checkButtonPressed,
-                        ]}
-                        onPress={() => handleCheckOff(item.id)}
-                        disabled={isSubmitting === item.id || (!canCheckOff && !item.completed)}
-                      >
-                        {isSubmitting === item.id ? (
-                          <ActivityIndicator size="small" color={SoulworxColors.white} />
-                        ) : (
-                          <Text style={styles.checkButtonText}>
-                            {item.completed ? 'Uncheck' : canCheckOff ? 'Mark Complete' : 'Not Due'}
-                          </Text>
-                        )}
-                      </Pressable>
+                      {canCheckOff || item.completed ? (
+                        <Pressable
+                          style={({ pressed }) => [
+                            styles.checkButton,
+                            item.completed && styles.checkButtonCompleted,
+                            pressed && styles.checkButtonPressed,
+                          ]}
+                          onPress={() => handleCheckOff(item.id)}
+                          disabled={isSubmitting === item.id}
+                        >
+                          {isSubmitting === item.id ? (
+                            <ActivityIndicator size="small" color={SoulworxColors.white} />
+                          ) : (
+                            <Text style={styles.checkButtonText}>
+                              {item.completed ? 'Uncheck' : 'Mark Complete'}
+                            </Text>
+                          )}
+                        </Pressable>
+                      ) : (
+                        <View style={styles.badgeNotDueRight}>
+                          <View style={styles.badgeNotDue}>
+                            <Ionicons name="calendar-outline" size={10} color={SoulworxColors.white} />
+                            <Text style={styles.badgeNotDueText}>Up next</Text>
+                          </View>
+                        </View>
+                      )}
                     </View>
                   </View>
                 );
               })}
-            </View>
-          ) : (
-            <View style={styles.emptyState}>
-              <Text style={styles.emptyText}>No checklist items found</Text>
-            </View>
-          )}
+                </View>
+              ) : (
+                <View style={styles.emptyState}>
+                  <Text style={styles.emptyText}>
+                    {program.checklistItems.length === 0
+                      ? 'No checklist items found'
+                      : 'All caught up! No upcoming workouts.'}
+                  </Text>
+                </View>
+              )
+            );
+          })()}
         </View>
       </ScrollView>
 
@@ -492,7 +517,7 @@ const styles = StyleSheet.create({
   },
   detailsCard: {
     backgroundColor: SoulworxColors.charcoal,
-    borderRadius: BorderRadius.xl,
+    borderRadius: BorderRadius.md,
     padding: Spacing.xl,
     marginBottom: Spacing.lg,
     ...Shadows.medium,
@@ -561,17 +586,17 @@ const styles = StyleSheet.create({
     backgroundColor: SoulworxColors.success,
   },
   videoContainer: {
-    marginTop: Spacing.lg,
+    marginBottom: Spacing.lg,
   },
   video: {
     width: '100%',
-    height: 200,
+    height: 280,
     borderRadius: BorderRadius.md,
     marginTop: Spacing.sm,
   },
   checklistCard: {
     backgroundColor: SoulworxColors.charcoal,
-    borderRadius: BorderRadius.xl,
+    borderRadius: BorderRadius.md,
     padding: Spacing.xl,
     ...Shadows.medium,
   },
@@ -640,6 +665,25 @@ const styles = StyleSheet.create({
     fontWeight: Typography.semibold,
     color: SoulworxColors.white,
   },
+  badgeNotDueRight: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'stretch',
+  },
+  badgeNotDue: {
+    backgroundColor: SoulworxColors.charcoal,
+    paddingHorizontal: Spacing.xs,
+    paddingVertical: 2,
+    borderRadius: BorderRadius.sm,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 3,
+  },
+  badgeNotDueText: {
+    fontSize: 10,
+    fontWeight: Typography.semibold,
+    color: SoulworxColors.white,
+  },
   completedRow: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -704,7 +748,7 @@ const styles = StyleSheet.create({
   },
   modalContent: {
     backgroundColor: SoulworxColors.charcoal,
-    borderRadius: BorderRadius.xl,
+    borderRadius: BorderRadius.md,
     padding: Spacing.xl,
     width: '100%',
     maxWidth: 400,

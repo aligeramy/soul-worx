@@ -59,27 +59,7 @@ export default function ProfileScreen() {
         )}
       </View>
 
-      {/* Personalized Programs (Pro+ Only) */}
-      {tier && tier.level === 'pro_plus' && (
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Your Programs</Text>
-          <TouchableOpacity 
-            style={styles.programsCard}
-            onPress={() => router.push('/personalized-programs' as any)}
-          >
-            <View style={styles.programsContent}>
-              <Ionicons name="fitness" size={32} color={SoulworxColors.gold} />
-              <Text style={styles.programsTitle}>Personalized Programs</Text>
-              <Text style={styles.programsDescription}>
-                View your custom training programs and track your progress
-              </Text>
-            </View>
-            <Ionicons name="chevron-forward" size={20} color={SoulworxColors.textTertiary} />
-          </TouchableOpacity>
-        </View>
-      )}
-
-      {/* Admin Section */}
+      {/* Admin Section - above Personalized Programs */}
       {(user?.role === 'admin' || user?.role === 'super_admin') && (
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Admin</Text>
@@ -154,7 +134,7 @@ export default function ProfileScreen() {
 
       {/* Logout */}
       <TouchableOpacity style={styles.logoutButton} onPress={() => signOut()}>
-        <Ionicons name="log-out-outline" size={20} color={SoulworxColors.error} />
+        <Ionicons name="log-out-outline" size={20} color={SoulworxColors.white} />
         <Text style={styles.logoutText}>Sign Out</Text>
       </TouchableOpacity>
     </ScrollView>
@@ -179,7 +159,7 @@ const styles = StyleSheet.create({
   },
   userCard: {
     backgroundColor: SoulworxColors.charcoal,
-    borderRadius: BorderRadius.lg,
+    borderRadius: BorderRadius.md,
     padding: Spacing.xl,
     alignItems: 'center',
     marginBottom: Spacing.xl,
@@ -227,7 +207,7 @@ const styles = StyleSheet.create({
   },
   settingsCard: {
     backgroundColor: SoulworxColors.charcoal,
-    borderRadius: BorderRadius.lg,
+    borderRadius: BorderRadius.md,
     overflow: 'hidden',
     ...Shadows.small,
   },
@@ -263,7 +243,7 @@ const styles = StyleSheet.create({
   },
   upgradeCard: {
     backgroundColor: SoulworxColors.charcoal,
-    borderRadius: BorderRadius.lg,
+    borderRadius: BorderRadius.md,
     padding: Spacing.xl,
     ...Shadows.medium,
     flexDirection: 'row',
@@ -291,19 +271,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     gap: Spacing.sm,
     padding: Spacing.md,
-    borderRadius: BorderRadius.lg,
-    borderWidth: 1,
-    borderColor: SoulworxColors.error,
+    borderRadius: BorderRadius.md,
+    backgroundColor: SoulworxColors.error,
     marginTop: Spacing.lg,
   },
   logoutText: {
     fontSize: Typography.base,
     fontWeight: Typography.semibold,
-    color: SoulworxColors.error,
+    color: SoulworxColors.white,
   },
   adminCard: {
     backgroundColor: SoulworxColors.charcoal,
-    borderRadius: BorderRadius.lg,
+    borderRadius: BorderRadius.md,
     padding: Spacing.xl,
     ...Shadows.medium,
   },
@@ -321,30 +300,6 @@ const styles = StyleSheet.create({
     fontSize: Typography.base,
     color: SoulworxColors.textSecondary,
     textAlign: 'center',
-  },
-  programsCard: {
-    backgroundColor: SoulworxColors.charcoal,
-    borderRadius: BorderRadius.lg,
-    padding: Spacing.xl,
-    ...Shadows.medium,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  programsContent: {
-    flex: 1,
-    alignItems: 'flex-start',
-  },
-  programsTitle: {
-    fontSize: Typography.xl,
-    fontWeight: Typography.bold,
-    color: SoulworxColors.textPrimary,
-    marginTop: Spacing.md,
-    marginBottom: Spacing.sm,
-  },
-  programsDescription: {
-    fontSize: Typography.base,
-    color: SoulworxColors.textSecondary,
   },
 });
 

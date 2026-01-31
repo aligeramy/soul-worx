@@ -702,7 +702,7 @@ const styles = StyleSheet.create({
   },
   eventCard: {
     backgroundColor: SoulworxColors.charcoal,
-    borderRadius: BorderRadius.lg,
+    borderRadius: BorderRadius.md,
     padding: Spacing.md,
     marginBottom: Spacing.sm,
     ...Shadows.small,
@@ -731,7 +731,7 @@ const styles = StyleSheet.create({
   rsvpButton: {
     flexDirection: 'row',
     backgroundColor: SoulworxColors.accent,
-    borderRadius: BorderRadius.lg,
+    borderRadius: BorderRadius.md,
     padding: Spacing.lg,
     alignItems: 'center',
     justifyContent: 'center',
@@ -749,7 +749,7 @@ const styles = StyleSheet.create({
   inputCard: {
     flexDirection: 'row',
     backgroundColor: SoulworxColors.charcoal,
-    borderRadius: BorderRadius.lg,
+    borderRadius: BorderRadius.md,
     padding: Spacing.sm,
     marginBottom: Spacing.md,
     ...Shadows.small,
@@ -773,7 +773,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     backgroundColor: SoulworxColors.charcoal,
-    borderRadius: BorderRadius.lg,
+    borderRadius: BorderRadius.md,
     padding: Spacing.md,
     marginBottom: Spacing.sm,
     borderWidth: 1,
@@ -910,7 +910,7 @@ const styles = StyleSheet.create({
   messageBubble: {
     maxWidth: '80%',
     backgroundColor: SoulworxColors.charcoal,
-    borderRadius: BorderRadius.lg,
+    borderRadius: BorderRadius.md,
     padding: Spacing.md,
     ...Shadows.small,
   },
@@ -952,7 +952,7 @@ const styles = StyleSheet.create({
   chatInput: {
     flex: 1,
     backgroundColor: SoulworxColors.beige,
-    borderRadius: BorderRadius.lg,
+    borderRadius: BorderRadius.md,
     padding: Spacing.md,
     fontSize: Typography.base,
     color: SoulworxColors.textPrimary,
@@ -992,7 +992,7 @@ const styles = StyleSheet.create({
     backgroundColor: SoulworxColors.accent,
     paddingHorizontal: Spacing.xl,
     paddingVertical: Spacing.md,
-    borderRadius: BorderRadius.lg,
+    borderRadius: BorderRadius.md,
     marginTop: Spacing.lg,
   },
   retryText: {
