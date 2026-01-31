@@ -47,6 +47,10 @@ export async function POST(request: NextRequest) {
       }, { status: 400 })
     }
 
+    if (!stripe) {
+      return NextResponse.json({ error: "Stripe is not configured" }, { status: 503 })
+    }
+
     // Get subscription from Stripe
     const stripeSubscription = await stripe.subscriptions.retrieve(membership.stripeSubscriptionId)
     const priceId = stripeSubscription.items.data[0]?.price?.id

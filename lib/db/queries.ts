@@ -632,9 +632,9 @@ export async function getUserTier(userId: string): Promise<"free" | "pro" | "pro
   if (tierSlug === "pro") return "pro"
   if (tierSlug === "pro-plus" || tierSlug === "pro_plus") return "pro_plus"
   
-  // Fallback: check by level if slug doesn't match
+  // Fallback: check by level if slug doesn't match (level is "free" | "pro" | "pro_plus")
   if (tierLevel === "pro") return "pro"
-  if (tierLevel === "pro_plus" || tierLevel === "pro-plus") return "pro_plus"
+  if (tierLevel === "pro_plus") return "pro_plus"
   
   return "free"
 }
