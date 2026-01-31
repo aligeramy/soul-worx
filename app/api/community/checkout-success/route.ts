@@ -77,13 +77,14 @@ export async function POST(request: NextRequest) {
         createdAt: now,
         updatedAt: now,
       })
+    }
 
     // Get tier info to return
     const tier = await db.query.membershipTiers.findFirst({
       where: eq(membershipTiers.id, tierId),
     })
 
-    return NextResponse.json({ 
+    return NextResponse.json({
       success: true,
       tierSlug: tier?.slug,
     })

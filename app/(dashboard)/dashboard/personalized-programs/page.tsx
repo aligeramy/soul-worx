@@ -60,10 +60,10 @@ export default async function PersonalizedProgramsPage() {
                 className="block group"
               >
                 <Card className="border border-white/10 bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-all h-full flex flex-col">
-                  {program.thumbnailUrl && (
+                  {(program.videoUrl ?? program.thumbnailUrl) && (
                     <div className="relative aspect-video overflow-hidden">
                       <video
-                        src={program.videoUrl}
+                        src={program.videoUrl ?? undefined}
                         className="w-full h-full object-cover"
                         muted
                       />

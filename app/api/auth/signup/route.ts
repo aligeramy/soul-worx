@@ -11,7 +11,8 @@ import { eq } from "drizzle-orm"
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    let { email, name, password, username } = body
+    const { name, username } = body
+    let { email, password } = body
 
     // Normalize email (case-insensitive - prevents duplicate accounts)
     email = (email || "").trim().toLowerCase()

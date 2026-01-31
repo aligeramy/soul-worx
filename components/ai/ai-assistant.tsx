@@ -109,10 +109,10 @@ export function AIAssistant({ userId }: AIAssistantProps) {
       const stored = localStorage.getItem(CONVERSATION_STORAGE_KEY)
       if (stored) {
         const parsed = JSON.parse(stored)
-        const loadedMessages: Message[] = parsed.messages.map((msg: any) => ({
+        const loadedMessages: Message[] = parsed.messages.map((msg: Record<string, unknown>) => ({
           ...msg,
-          timestamp: new Date(msg.timestamp),
-        }))
+          timestamp: new Date((msg.timestamp as string) ?? Date.now()),
+        })) as Message[]
         if (loadedMessages.length > 0) {
           setMessages(loadedMessages)
           messagesRef.current = loadedMessages
@@ -408,7 +408,7 @@ If you don't have enough information yet, just respond conversationally without 
 
             success = true
             setIsRetrying(false)
-          } catch (error: any) {
+          } catch (error: unknown) {
             console.error("Error sending message:", error)
 
             if (retryCount < 2) {
@@ -420,11 +420,12 @@ If you don't have enough information yet, just respond conversationally without 
             }
 
             // Final error handling
+            const errorMsg = error instanceof Error ? error.message : ""
             const errorMessage: Message = {
               id: (Date.now() + 1).toString(),
               role: "assistant",
               content:
-                error.message?.includes("API key")
+                errorMsg.includes("API key")
                   ? "Configuration error: Please check your API settings."
                   : "Sorry, I encountered an error. Please check your connection and try again.",
               timestamp: new Date(),

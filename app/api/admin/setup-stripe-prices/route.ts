@@ -9,7 +9,7 @@ import { createProduct, createPrice } from "@/lib/stripe"
  * POST /api/admin/setup-stripe-prices
  * Create Stripe products and prices for Pro and Pro+ tiers, then update database
  */
-export async function POST(request: NextRequest) {
+export async function POST(_request: NextRequest) {
   try {
     const session = await auth()
     
@@ -26,7 +26,7 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const results: Record<string, any> = {}
+    const results: Record<string, { productId?: string; priceId?: string; status?: string; error?: string }> = {}
 
     // Setup Pro tier
     try {
