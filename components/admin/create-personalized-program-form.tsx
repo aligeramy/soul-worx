@@ -6,8 +6,6 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Field } from "@/components/ui/field"
 import { Card, CardContent } from "@/components/ui/card"
-import { Checkbox } from "@/components/ui/checkbox"
-import { Label } from "@/components/ui/label"
 import { Loader2, Upload, X, CheckCircle2 } from "lucide-react"
 import { toast } from "sonner"
 import { put } from "@vercel/blob"
@@ -83,10 +81,6 @@ export function CreatePersonalizedProgramForm({
       newErrors.description = "Description is required"
     }
 
-    if (!formData.videoUrl) {
-      newErrors.videoUrl = "Video is required"
-    }
-
     if (formData.trainingDays.length === 0) {
       newErrors.trainingDays = "Select at least one training day"
     }
@@ -130,7 +124,7 @@ export function CreatePersonalizedProgramForm({
           createdBy: adminId,
           title: formData.title,
           description: formData.description,
-          videoUrl: formData.videoUrl,
+          videoUrl: formData.videoUrl || null,
           thumbnailUrl: formData.thumbnailUrl || null,
           trainingDays: formData.trainingDays,
           startDate: formData.startDate,
@@ -164,6 +158,9 @@ export function CreatePersonalizedProgramForm({
     })
   }
 
+  const inputBase =
+    "bg-white/10 border-white/20 text-white placeholder:text-white/50 focus-visible:border-white/40 focus-visible:ring-white/30 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
+
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       <Card className="border border-white/10 bg-white/5 backdrop-blur-sm">
@@ -176,7 +173,7 @@ export function CreatePersonalizedProgramForm({
               onChange={(e) => setFormData({ ...formData, title: e.target.value })}
               placeholder="e.g., Ball Handling Mastery"
               disabled={isSubmitting}
-              className={errors.title ? "border-red-500" : ""}
+              className={`${inputBase} ${errors.title ? "border-red-500" : ""}`}
             />
             {errors.title && <p className="text-sm text-red-500 mt-1">{errors.title}</p>}
           </Field>
@@ -190,7 +187,7 @@ export function CreatePersonalizedProgramForm({
               placeholder="Describe the program, what the user will learn, key exercises..."
               rows={6}
               disabled={isSubmitting}
-              className={`flex min-h-[120px] w-full rounded-md border border-white/20 bg-white/5 text-white px-3 py-2 text-sm ring-offset-background placeholder:text-white/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 ${
+              className={`flex min-h-[120px] w-full rounded-md border border-white/20 bg-white/10 text-white px-3 py-2 text-sm placeholder:text-white/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent disabled:cursor-not-allowed disabled:opacity-50 ${
                 errors.description ? "border-red-500" : ""
               }`}
             />
@@ -200,8 +197,8 @@ export function CreatePersonalizedProgramForm({
           </Field>
 
           {/* Video Upload */}
-          <Field label="Training Video" htmlFor="video" required>
-            <div className="space-y-3">
+          <Field label="Training Video" htmlFor="video">
+            <div className="space-y-3 relative">
               <input
                 id="video"
                 type="file"
@@ -216,7 +213,7 @@ export function CreatePersonalizedProgramForm({
               <label
                 htmlFor="video"
                 className={`
-                  flex items-center justify-center gap-2 p-4 border-2 border-dashed rounded-lg cursor-pointer transition-colors text-white
+                  flex flex-col items-center justify-center gap-3 p-8 border border-dashed rounded-xl cursor-pointer transition-colors text-white min-h-[140px]
                   ${
                     isUploading || isSubmitting
                       ? "border-white/30 cursor-not-allowed opacity-50"
@@ -228,12 +225,12 @@ export function CreatePersonalizedProgramForm({
               >
                 {isUploading ? (
                   <>
-                    <Loader2 className="h-5 w-5 animate-spin" />
+                    <Loader2 className="h-10 w-10 animate-spin text-white/70" />
                     <span>Uploading...</span>
                   </>
                 ) : formData.videoUrl ? (
                   <>
-                    <CheckCircle2 className="h-5 w-5 text-green-400" />
+                    <CheckCircle2 className="h-10 w-10 text-green-400" />
                     <span>Video uploaded</span>
                     <button
                       type="button"
@@ -241,15 +238,15 @@ export function CreatePersonalizedProgramForm({
                         e.stopPropagation()
                         setFormData({ ...formData, videoUrl: "" })
                       }}
-                      className="ml-auto text-white/70 hover:text-white"
+                      className="absolute top-3 right-3 p-1.5 rounded-md text-white/70 hover:text-white hover:bg-white/10"
                     >
                       <X className="h-4 w-4" />
                     </button>
                   </>
                 ) : (
                   <>
-                    <Upload className="h-5 w-5" />
-                    <span>Click to upload video</span>
+                    <Upload className="h-12 w-12 text-white/60" />
+                    <span className="text-sm font-medium">Click or drop video here</span>
                   </>
                 )}
               </label>
@@ -263,24 +260,30 @@ export function CreatePersonalizedProgramForm({
           </Field>
 
           {/* Training Days */}
-          <Field label="Training Days" htmlFor="trainingDays" required>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-              {DAYS_OF_WEEK.map((day) => (
-                <div key={day} className="flex items-center space-x-2">
-                  <Checkbox
-                    id={`day-${day}`}
-                    checked={formData.trainingDays.includes(day)}
-                    onCheckedChange={() => toggleTrainingDay(day)}
+          <Field label="Training Days" required>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+              {DAYS_OF_WEEK.map((day) => {
+                const isSelected = formData.trainingDays.includes(day)
+                return (
+                  <button
+                    key={day}
+                    type="button"
+                    onClick={() => toggleTrainingDay(day)}
                     disabled={isSubmitting}
-                  />
-                  <Label
-                    htmlFor={`day-${day}`}
-                    className="text-sm font-normal cursor-pointer text-white"
+                    className={`
+                      rounded-xl border-2 py-4 px-4 text-base font-medium transition-all
+                      focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent
+                      disabled:cursor-not-allowed disabled:opacity-50
+                      ${isSelected
+                        ? "border-white/50 bg-white/20 text-white shadow-sm"
+                        : "border-white/20 bg-white/5 text-white/80 hover:border-white/30 hover:bg-white/10"
+                      }
+                    `}
                   >
                     {day}
-                  </Label>
-                </div>
-              ))}
+                  </button>
+                )
+              })}
             </div>
             {errors.trainingDays && (
               <p className="text-sm text-red-500 mt-1">{errors.trainingDays}</p>
@@ -296,7 +299,7 @@ export function CreatePersonalizedProgramForm({
                 value={formData.startDate}
                 onChange={(e) => setFormData({ ...formData, startDate: e.target.value })}
                 disabled={isSubmitting}
-                className={errors.startDate ? "border-red-500" : ""}
+                className={`${inputBase} [color-scheme:dark] ${errors.startDate ? "border-red-500" : ""}`}
                 min={new Date().toISOString().split("T")[0]}
               />
               {errors.startDate && (
@@ -311,7 +314,7 @@ export function CreatePersonalizedProgramForm({
                 value={formData.endDate}
                 onChange={(e) => setFormData({ ...formData, endDate: e.target.value })}
                 disabled={isSubmitting}
-                className={errors.endDate ? "border-red-500" : ""}
+                className={`${inputBase} [color-scheme:dark] ${errors.endDate ? "border-red-500" : ""}`}
                 min={formData.startDate || new Date().toISOString().split("T")[0]}
               />
               {errors.endDate && <p className="text-sm text-red-500 mt-1">{errors.endDate}</p>}

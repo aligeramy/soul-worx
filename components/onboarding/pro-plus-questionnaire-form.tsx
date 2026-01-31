@@ -13,6 +13,7 @@ import { put } from "@vercel/blob"
 
 interface ProPlusQuestionnaireFormProps {
   userId: string
+  fromDashboard?: boolean
 }
 
 const DAYS_OF_WEEK = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
@@ -26,7 +27,7 @@ const MENTAL_CHALLENGES = ["Fear of failure", "Consistency", "Pressure", "Motiva
 const COACHING_STYLES = ["Direct", "Encouraging", "Accountability", "Driven", "Mix", "Other"] as const
 const BASKETBALL_WATCHING = ["Your own film", "NBA/Pro/College", "Both", "None"] as const
 
-export function ProPlusQuestionnaireForm({ userId }: ProPlusQuestionnaireFormProps) {
+export function ProPlusQuestionnaireForm({ userId, fromDashboard = false }: ProPlusQuestionnaireFormProps) {
   const router = useRouter()
   const [currentStep, setCurrentStep] = useState(1)
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -173,7 +174,12 @@ export function ProPlusQuestionnaireForm({ userId }: ProPlusQuestionnaireFormPro
       }
 
       toast.success("Questionnaire completed successfully!")
-      router.push("/onboarding/book-call")
+      // If coming from dashboard, go back to dashboard. Otherwise, continue onboarding flow.
+      if (fromDashboard) {
+        router.push("/dashboard")
+      } else {
+        router.push("/onboarding/book-call")
+      }
     } catch (error) {
       console.error("Error saving questionnaire:", error)
       toast.error(error instanceof Error ? error.message : "Failed to save questionnaire")
@@ -244,15 +250,31 @@ export function ProPlusQuestionnaireForm({ userId }: ProPlusQuestionnaireFormPro
             <h2 className="text-2xl font-semibold mb-4">Basic Information</h2>
             
             <Field label="Age" htmlFor="age">
-              <Input
-                id="age"
-                type="number"
-                min="1"
-                max="120"
-                value={formData.age}
-                onChange={(e) => setFormData({ ...formData, age: e.target.value })}
-                placeholder="Enter your age"
-              />
+              <div className="relative">
+                <Input
+                  id="age"
+                  type="number"
+                  min="1"
+                  max="120"
+                  value={formData.age}
+                  onChange={(e) => {
+                    const value = e.target.value.replace(/\D/g, '')
+                    if (value === '' || (parseInt(value) >= 1 && parseInt(value) <= 120)) {
+                      setFormData({ ...formData, age: value })
+                    }
+                  }}
+                  placeholder="Enter your age"
+                  className="pr-20 text-base"
+                />
+                <div className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-500 text-sm pointer-events-none">
+                  years old
+                </div>
+              </div>
+              {userAge !== null && (
+                <p className="text-xs text-neutral-500 mt-1.5">
+                  Pre-filled from your onboarding — you can change it above if needed.
+                </p>
+              )}
             </Field>
 
             <Field label="Skill Level" htmlFor="skillLevel">
@@ -482,36 +504,90 @@ export function ProPlusQuestionnaireForm({ userId }: ProPlusQuestionnaireFormPro
           <div className="space-y-6">
             <h2 className="text-2xl font-semibold mb-4">Training & Health</h2>
             
-            <div className="space-y-4">
-              <label className="flex items-center gap-3 cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={formData.seeingPhysiotherapy}
-                  onChange={(e) => setFormData({ ...formData, seeingPhysiotherapy: e.target.checked })}
-                  className="w-5 h-5 rounded border-neutral-300"
-                />
-                <span>Are you seeing physiotherapy?</span>
-              </label>
+            <div className="space-y-4 pb-2">
+              <div className="flex items-center justify-between gap-4">
+                <span className="text-base">Are you seeing physiotherapy?</span>
+                <div className="flex gap-1.5 shrink-0">
+                  <button
+                    type="button"
+                    onClick={() => setFormData({ ...formData, seeingPhysiotherapy: false })}
+                    className={`py-1.5 px-3 rounded border text-xs font-medium transition-all ${
+                      !formData.seeingPhysiotherapy
+                        ? "border-neutral-900 bg-neutral-900 text-white"
+                        : "border-neutral-200 bg-white text-neutral-600 hover:border-neutral-300"
+                    }`}
+                  >
+                    No
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setFormData({ ...formData, seeingPhysiotherapy: true })}
+                    className={`py-1.5 px-3 rounded border text-xs font-medium transition-all ${
+                      formData.seeingPhysiotherapy
+                        ? "border-neutral-900 bg-neutral-900 text-white"
+                        : "border-neutral-200 bg-white text-neutral-600 hover:border-neutral-300"
+                    }`}
+                  >
+                    Yes
+                  </button>
+                </div>
+              </div>
 
-              <label className="flex items-center gap-3 cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={formData.weightTrains}
-                  onChange={(e) => setFormData({ ...formData, weightTrains: e.target.checked })}
-                  className="w-5 h-5 rounded border-neutral-300"
-                />
-                <span>Do you weight train?</span>
-              </label>
+              <div className="flex items-center justify-between gap-4">
+                <span className="text-base">Do you weight train?</span>
+                <div className="flex gap-1.5 shrink-0">
+                  <button
+                    type="button"
+                    onClick={() => setFormData({ ...formData, weightTrains: false })}
+                    className={`py-1.5 px-3 rounded border text-xs font-medium transition-all ${
+                      !formData.weightTrains
+                        ? "border-neutral-900 bg-neutral-900 text-white"
+                        : "border-neutral-200 bg-white text-neutral-600 hover:border-neutral-300"
+                    }`}
+                  >
+                    No
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setFormData({ ...formData, weightTrains: true })}
+                    className={`py-1.5 px-3 rounded border text-xs font-medium transition-all ${
+                      formData.weightTrains
+                        ? "border-neutral-900 bg-neutral-900 text-white"
+                        : "border-neutral-200 bg-white text-neutral-600 hover:border-neutral-300"
+                    }`}
+                  >
+                    Yes
+                  </button>
+                </div>
+              </div>
 
-              <label className="flex items-center gap-3 cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={formData.stretches}
-                  onChange={(e) => setFormData({ ...formData, stretches: e.target.checked })}
-                  className="w-5 h-5 rounded border-neutral-300"
-                />
-                <span>Do you stretch?</span>
-              </label>
+              <div className="flex items-center justify-between gap-4">
+                <span className="text-base">Do you stretch?</span>
+                <div className="flex gap-1.5 shrink-0">
+                  <button
+                    type="button"
+                    onClick={() => setFormData({ ...formData, stretches: false })}
+                    className={`py-1.5 px-3 rounded border text-xs font-medium transition-all ${
+                      !formData.stretches
+                        ? "border-neutral-900 bg-neutral-900 text-white"
+                        : "border-neutral-200 bg-white text-neutral-600 hover:border-neutral-300"
+                    }`}
+                  >
+                    No
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setFormData({ ...formData, stretches: true })}
+                    className={`py-1.5 px-3 rounded border text-xs font-medium transition-all ${
+                      formData.stretches
+                        ? "border-neutral-900 bg-neutral-900 text-white"
+                        : "border-neutral-200 bg-white text-neutral-600 hover:border-neutral-300"
+                    }`}
+                  >
+                    Yes
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         )}
@@ -559,15 +635,33 @@ export function ProPlusQuestionnaireForm({ userId }: ProPlusQuestionnaireFormPro
               </div>
             </Field>
 
-            <label className="flex items-center gap-3 cursor-pointer">
-              <input
-                type="checkbox"
-                checked={formData.inSeason}
-                onChange={(e) => setFormData({ ...formData, inSeason: e.target.checked })}
-                className="w-5 h-5 rounded border-neutral-300"
-              />
-              <span>In season or off season?</span>
-            </label>
+            <div className="flex items-center justify-between gap-4">
+              <span className="text-base">In season or off season?</span>
+              <div className="flex gap-1.5 shrink-0">
+                <button
+                  type="button"
+                  onClick={() => setFormData({ ...formData, inSeason: false })}
+                  className={`py-1.5 px-3 rounded border text-xs font-medium transition-all ${
+                    !formData.inSeason
+                      ? "border-neutral-900 bg-neutral-900 text-white"
+                      : "border-neutral-200 bg-white text-neutral-600 hover:border-neutral-300"
+                  }`}
+                >
+                  Off season
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setFormData({ ...formData, inSeason: true })}
+                  className={`py-1.5 px-3 rounded border text-xs font-medium transition-all ${
+                    formData.inSeason
+                      ? "border-neutral-900 bg-neutral-900 text-white"
+                      : "border-neutral-200 bg-white text-neutral-600 hover:border-neutral-300"
+                  }`}
+                >
+                  In season
+                </button>
+              </div>
+            </div>
           </div>
         )}
 
@@ -887,7 +981,7 @@ export function ProPlusQuestionnaireForm({ userId }: ProPlusQuestionnaireFormPro
         )}
 
         {/* Navigation Buttons */}
-        <div className="flex gap-4 pt-6 border-t">
+        <div className="flex gap-4 pt-6">
           <Button
             type="button"
             variant="outline"

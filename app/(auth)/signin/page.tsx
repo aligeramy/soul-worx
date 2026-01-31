@@ -1,3 +1,4 @@
+import { Suspense } from "react"
 import { SoulworxLoginForm } from "@/components/auth/soulworx-login-form"
 import { AuthSlideshow } from "@/components/auth/auth-slideshow"
 import Link from "next/link"
@@ -46,7 +47,13 @@ export default function SignInPage() {
         </div>
         <div className="flex flex-1 items-center justify-center">
           <div className="w-full max-w-xs">
-            <SoulworxLoginForm />
+            <Suspense fallback={
+              <div className="flex items-center justify-center py-12">
+                <div className="h-8 w-8 animate-spin rounded-full border-2 border-neutral-300 border-t-neutral-900" />
+              </div>
+            }>
+              <SoulworxLoginForm />
+            </Suspense>
           </div>
         </div>
       </div>

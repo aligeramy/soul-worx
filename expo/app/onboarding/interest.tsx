@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, ScrollView, StyleSheet, TouchableOpacity, ActivityIndicator, Image } from 'react-native';
 import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
@@ -44,6 +44,12 @@ export default function OnboardingInterestScreen() {
   const { user } = useUser();
   const [selectedInterest, setSelectedInterest] = useState<InterestType | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    if (user?.role === 'admin' || user?.role === 'super_admin') {
+      router.replace('/(tabs)' as any);
+    }
+  }, [user?.role]);
 
   const handleContinue = async () => {
     if (!selectedInterest) return;

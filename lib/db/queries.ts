@@ -1,5 +1,5 @@
 import { db } from "./index"
-import { programs, events, rsvps, posts, products, users, eventUpdates, personalizedPrograms, programChecklistItems, userMemberships, type UserRole } from "./schema"
+import { programs, events, rsvps, posts, products, users, eventUpdates, personalizedPrograms, programChecklistItems, userMemberships, proPlusQuestionnaires, type UserRole } from "./schema"
 import { eq, and, gte, desc, asc, count } from "drizzle-orm"
 
 // ==================== USER QUERIES ====================
@@ -626,8 +626,16 @@ export async function getUserTier(userId: string): Promise<"free" | "pro" | "pro
   }
 
   const tierSlug = membership.tier.slug
+  const tierLevel = membership.tier.level
+  
+  // Check by slug first
   if (tierSlug === "pro") return "pro"
   if (tierSlug === "pro-plus" || tierSlug === "pro_plus") return "pro_plus"
+  
+  // Fallback: check by level if slug doesn't match
+  if (tierLevel === "pro") return "pro"
+  if (tierLevel === "pro_plus" || tierLevel === "pro-plus") return "pro_plus"
+  
   return "free"
 }
 
@@ -640,7 +648,7 @@ export async function getUserPersonalizedPrograms(userId: string) {
       eq(personalizedPrograms.userId, userId),
       eq(personalizedPrograms.status, "active")
     ),
-    orderBy: desc(personalizedPrograms.createdAt),
+    orderBy: asc(personalizedPrograms.startDate),
     with: {
       checklistItems: {
         orderBy: asc(programChecklistItems.dueDate),
@@ -677,4 +685,14 @@ export async function getNextDueWorkoutDate(userId: string): Promise<Date | null
   }
 
   return nextDueDate
+}
+
+/**
+ * Check if Pro+ user has completed questionnaire
+ */
+export async function hasProPlusQuestionnaire(userId: string): Promise<boolean> {
+  const questionnaire = await db.query.proPlusQuestionnaires.findFirst({
+    where: eq(proPlusQuestionnaires.userId, userId),
+  })
+  return !!questionnaire
 }

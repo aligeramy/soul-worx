@@ -856,7 +856,7 @@ export const personalizedPrograms = pgTable("personalized_program", {
   description: text("description").notNull(),
   
   // Media
-  videoUrl: text("videoUrl").notNull(), // Uploaded training video
+  videoUrl: text("videoUrl"), // Uploaded training video (optional)
   thumbnailUrl: text("thumbnailUrl"),
   
   // Schedule

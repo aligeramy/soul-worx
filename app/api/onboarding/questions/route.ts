@@ -10,10 +10,15 @@ import { addCorsHeaders, handleOptions } from "@/lib/cors"
  * Save user's onboarding questions answers
  */
 export async function POST(request: NextRequest) {
+  const origin = request.headers.get("origin")
+  
   try {
     const session = await auth()
     if (!session?.user?.id) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+      return addCorsHeaders(
+        NextResponse.json({ error: "Unauthorized" }, { status: 401 }),
+        origin
+      )
     }
 
     const body = await request.json()
@@ -25,7 +30,10 @@ export async function POST(request: NextRequest) {
     })
 
     if (!user) {
-      return NextResponse.json({ error: "User not found" }, { status: 404 })
+      return addCorsHeaders(
+        NextResponse.json({ error: "User not found" }, { status: 404 }),
+        origin
+      )
     }
 
     // Update onboarding data

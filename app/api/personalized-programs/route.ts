@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server"
 import { auth } from "@/auth"
 import { db } from "@/lib/db"
 import { personalizedPrograms, programChecklistItems } from "@/lib/db/schema"
-import { eq } from "drizzle-orm"
+import { eq, asc } from "drizzle-orm"
 import { eachDayOfInterval, format, parseISO } from "date-fns"
 import { addCorsHeaders, handleOptions } from "@/lib/cors"
 
@@ -46,7 +46,7 @@ export async function POST(request: NextRequest) {
     } = body
 
     // Validation
-    if (!userId || !title || !description || !videoUrl || !trainingDays || !startDate || !endDate) {
+    if (!userId || !title || !description || !trainingDays || !startDate || !endDate) {
       return NextResponse.json(
         { error: "Missing required fields" },
         { status: 400 }
@@ -78,7 +78,7 @@ export async function POST(request: NextRequest) {
         createdBy,
         title,
         description,
-        videoUrl,
+        videoUrl: videoUrl || null,
         thumbnailUrl: thumbnailUrl || null,
         trainingDays,
         startDate: start,
@@ -159,7 +159,7 @@ export async function GET(request: NextRequest) {
 
     const programs = await db.query.personalizedPrograms.findMany({
       where: eq(personalizedPrograms.userId, userId),
-      orderBy: personalizedPrograms.createdAt,
+      orderBy: asc(personalizedPrograms.startDate),
       with: {
         checklistItems: true,
       },

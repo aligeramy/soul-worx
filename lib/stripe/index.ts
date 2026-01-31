@@ -6,13 +6,12 @@
 
 import Stripe from 'stripe'
 
-if (!process.env.STRIPE_SECRET_KEY) {
-  throw new Error('STRIPE_SECRET_KEY is not set')
-}
-
-export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-  typescript: true,
-})
+// Initialize Stripe only if secret key is available
+export const stripe = process.env.STRIPE_SECRET_KEY
+  ? new Stripe(process.env.STRIPE_SECRET_KEY, {
+      typescript: true,
+    })
+  : null
 
 /**
  * Create a Stripe customer
@@ -22,6 +21,9 @@ export async function createStripeCustomer(
   name?: string,
   metadata?: Record<string, string>
 ) {
+  if (!stripe) {
+    throw new Error('STRIPE_SECRET_KEY is not set')
+  }
   return await stripe.customers.create({
     email,
     name: name || undefined,
@@ -45,6 +47,9 @@ export async function createCheckoutSession({
   cancelUrl: string
   metadata?: Record<string, string>
 }) {
+  if (!stripe) {
+    throw new Error('STRIPE_SECRET_KEY is not set')
+  }
   const session = await stripe.checkout.sessions.create({
     customer: customerId,
     mode: 'subscription',
@@ -73,6 +78,9 @@ export async function createBillingPortalSession(
   customerId: string,
   returnUrl: string
 ) {
+  if (!stripe) {
+    throw new Error('STRIPE_SECRET_KEY is not set')
+  }
   const session = await stripe.billingPortal.sessions.create({
     customer: customerId,
     return_url: returnUrl,
@@ -85,6 +93,9 @@ export async function createBillingPortalSession(
  * Get subscription details
  */
 export async function getSubscription(subscriptionId: string) {
+  if (!stripe) {
+    throw new Error('STRIPE_SECRET_KEY is not set')
+  }
   return await stripe.subscriptions.retrieve(subscriptionId)
 }
 
@@ -92,6 +103,9 @@ export async function getSubscription(subscriptionId: string) {
  * Cancel a subscription
  */
 export async function cancelSubscription(subscriptionId: string) {
+  if (!stripe) {
+    throw new Error('STRIPE_SECRET_KEY is not set')
+  }
   return await stripe.subscriptions.update(subscriptionId, {
     cancel_at_period_end: true,
   })
@@ -101,6 +115,9 @@ export async function cancelSubscription(subscriptionId: string) {
  * Immediately cancel a subscription
  */
 export async function cancelSubscriptionImmediately(subscriptionId: string) {
+  if (!stripe) {
+    throw new Error('STRIPE_SECRET_KEY is not set')
+  }
   return await stripe.subscriptions.cancel(subscriptionId)
 }
 
@@ -108,6 +125,9 @@ export async function cancelSubscriptionImmediately(subscriptionId: string) {
  * Resume a subscription
  */
 export async function resumeSubscription(subscriptionId: string) {
+  if (!stripe) {
+    throw new Error('STRIPE_SECRET_KEY is not set')
+  }
   return await stripe.subscriptions.update(subscriptionId, {
     cancel_at_period_end: false,
   })
@@ -120,6 +140,9 @@ export async function updateSubscription(
   subscriptionId: string,
   newPriceId: string
 ) {
+  if (!stripe) {
+    throw new Error('STRIPE_SECRET_KEY is not set')
+  }
   const subscription = await stripe.subscriptions.retrieve(subscriptionId)
   
   return await stripe.subscriptions.update(subscriptionId, {
@@ -145,6 +168,9 @@ export async function createProduct({
   description: string
   metadata?: Record<string, string>
 }) {
+  if (!stripe) {
+    throw new Error('STRIPE_SECRET_KEY is not set')
+  }
   return await stripe.products.create({
     name,
     description,
@@ -170,6 +196,9 @@ export async function createPrice({
   intervalCount?: number
   metadata?: Record<string, string>
 }) {
+  if (!stripe) {
+    throw new Error('STRIPE_SECRET_KEY is not set')
+  }
   return await stripe.prices.create({
     product: productId,
     unit_amount: amount, // in cents
@@ -186,6 +215,9 @@ export async function createPrice({
  * Get customer by email
  */
 export async function getCustomerByEmail(email: string) {
+  if (!stripe) {
+    throw new Error('STRIPE_SECRET_KEY is not set')
+  }
   const customers = await stripe.customers.list({
     email,
     limit: 1,
@@ -202,6 +234,9 @@ export function constructWebhookEvent(
   signature: string,
   secret: string
 ) {
+  if (!stripe) {
+    throw new Error('STRIPE_SECRET_KEY is not set')
+  }
   return stripe.webhooks.constructEvent(payload, signature, secret)
 }
 

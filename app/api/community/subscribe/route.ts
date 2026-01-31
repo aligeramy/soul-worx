@@ -79,9 +79,13 @@ export async function POST(request: NextRequest) {
     
     // Create checkout session
     const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
+    // If Pro+ and onboarding, redirect to questionnaire after payment
+    const isProPlus = tier.slug === "pro-plus" || tier.slug === "pro_plus"
     const successUrl = isMobile
       ? `${baseUrl}/api/auth/mobile-callback?success=true&session_id={CHECKOUT_SESSION_ID}${isOnboarding ? `&onboarding=true&tier=${tier.slug}` : ''}`
-      : `${baseUrl}/programs/community?success=true&session_id={CHECKOUT_SESSION_ID}`
+      : isProPlus && isOnboarding
+        ? `${baseUrl}/onboarding/pro-plus-questionnaire?success=true&session_id={CHECKOUT_SESSION_ID}`
+        : `${baseUrl}/programs/community?success=true&session_id={CHECKOUT_SESSION_ID}`
     
     const checkoutSession = await createCheckoutSession({
       customerId: customer.id,

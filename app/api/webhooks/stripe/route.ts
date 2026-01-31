@@ -95,21 +95,34 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
     return
   }
 
-  const subscription = await db.query.userMemberships.findFirst({
+  // First check by subscription ID
+  let subscription = await db.query.userMemberships.findFirst({
     where: and(
       eq(userMemberships.userId, userId),
       eq(userMemberships.stripeSubscriptionId, session.subscription as string)
     ),
   })
 
+  // If not found by subscription ID, check for any active membership for this user
+  if (!subscription) {
+    subscription = await db.query.userMemberships.findFirst({
+      where: and(
+        eq(userMemberships.userId, userId),
+        eq(userMemberships.status, "active")
+      ),
+    })
+  }
+
   const now = new Date()
 
   if (subscription) {
-    // Update existing
+    // Update existing membership with new tierId
     await db
       .update(userMemberships)
       .set({
+        tierId, // IMPORTANT: Update tierId when subscription changes
         status: "active",
+        stripeSubscriptionId: session.subscription as string,
         stripeCustomerId: session.customer as string,
         updatedAt: now,
       })

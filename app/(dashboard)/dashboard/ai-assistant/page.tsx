@@ -11,13 +11,13 @@ export default async function AIAssistantPage() {
     redirect("/signin")
   }
 
+  const isAdmin = session.user.role === "admin" || session.user.role === "super_admin"
   const userTier = await getUserTier(session.user.id)
 
-  // If free tier, show upgrade prompt
-  if (userTier === "free") {
+  // Admins get full access; free tier users see upgrade prompt
+  if (!isAdmin && (!userTier || userTier === "free")) {
     return <UpgradePrompt feature="AI Assistant" />
   }
 
-  // Pro and Pro+ users can access AI Assistant
   return <AIAssistant userId={session.user.id} />
 }

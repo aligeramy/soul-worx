@@ -19,23 +19,28 @@ export async function GET(request: NextRequest) {
       )
     }
 
-    // Validate username format
+    // Normalize username: remove @ if present, then add it
+    const normalizedUsername = username.startsWith("@") 
+      ? username 
+      : `@${username}`
+
+    // Validate username format (3-20 alphanumeric characters after @)
     const usernameRegex = /^@[a-zA-Z0-9_]{3,20}$/
-    if (!usernameRegex.test(username)) {
+    if (!usernameRegex.test(normalizedUsername)) {
       return NextResponse.json(
-        { available: false, error: "Invalid username format" },
+        { available: false, error: "Username must be 3-20 alphanumeric characters" },
         { status: 400 }
       )
     }
 
     // Check if username exists
     const existing = await db.query.users.findFirst({
-      where: eq(users.username, username),
+      where: eq(users.username, normalizedUsername),
     })
 
     return NextResponse.json({
       available: !existing,
-      username,
+      username: normalizedUsername,
     })
   } catch (error) {
     console.error("Check username error:", error)

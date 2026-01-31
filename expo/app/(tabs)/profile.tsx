@@ -132,8 +132,8 @@ export default function ProfileScreen() {
         </View>
       </View>
 
-      {/* Membership */}
-      {tier && tier.accessLevel < 3 && (
+      {/* Membership - hide upgrade prompt for admins */}
+      {tier && tier.accessLevel < 3 && !(user?.role === 'admin' || user?.role === 'super_admin') && (
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Membership</Text>
           <TouchableOpacity 

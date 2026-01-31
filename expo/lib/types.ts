@@ -277,11 +277,99 @@ export interface JournalEntry {
   aiPrompt: string | null;
   createdAt: Date;
   updatedAt: Date;
-}export type SectionKey = 'assistant' | 'journal' | 'poetry' | 'blog' | 'news' | 'announcements';export interface ArchivedSection {
+}export type SectionKey = 'assistant' | 'journal' | 'poetry' | 'blog' | 'news' | 'announcements';
+
+export interface ArchivedSection {
   id: string;
   sectionKey: SectionKey;
   sectionName: string;
   archived: boolean;
   createdAt: Date;
   updatedAt: Date;
+}
+
+// Personalized Programs Types
+export type PersonalizedProgramStatus = 'active' | 'completed' | 'paused';
+
+export interface ProgramChecklistItem {
+  id: string;
+  programId: string;
+  dueDate: string;
+  completed: boolean;
+  completedAt: string | null;
+  enjoymentRating: number | null;
+  difficultyRating: number | null;
+  daysLate: number;
+}
+
+export interface PersonalizedProgram {
+  id: string;
+  userId: string;
+  createdBy: string;
+  title: string;
+  description: string;
+  videoUrl: string;
+  thumbnailUrl: string | null;
+  trainingDays: string[];
+  startDate: string;
+  endDate: string;
+  status: PersonalizedProgramStatus;
+  checklistItems: ProgramChecklistItem[];
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+export interface ProPlusQuestionnaire {
+  id: string;
+  userId: string;
+  age: number | null;
+  skillLevel: 'beginner' | 'advanced' | 'pro' | null;
+  gameDescription: string | null;
+  position: 'PG' | 'SG' | 'SF' | 'PF' | 'C' | null;
+  yearsPlaying: string | null;
+  currentGoalsYearly: string | null;
+  currentGoalsOverall: string | null;
+  improvementRankings: {
+    ballHandling: number;
+    defence: number;
+    finishing: number;
+    shooting: number;
+    passing: number;
+    other: { text: string; rank: number };
+  } | null;
+  weight: number | null;
+  height: string | null;
+  currentInjuries: string | null;
+  seeingPhysiotherapy: boolean;
+  weightTrains: boolean;
+  stretches: boolean;
+  currentTeam: string | null;
+  outsideSchoolTeams: string | null;
+  inSeason: boolean;
+  basketballWatching: string | null;
+  equipmentAccess: string | null;
+  trainingDays: string[];
+  averageSessionLength: number | null;
+  biggestStruggle: string | null;
+  confidenceLevel: number;
+  mentalChallenge: string | null;
+  mentalChallengeOther: string | null;
+  coachability: number;
+  preferredCoachingStyle: string | null;
+  coachingStyleOther: string | null;
+  gameFilmUrl: string | null;
+  workoutVideos: string[];
+  completedAt: string | null;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface ProPlusMember {
+  id: string;
+  name: string | null;
+  email: string;
+  image: string | null;
+  hasQuestionnaire: boolean;
+  programCount: number;
+  joinedAt: string;
 }

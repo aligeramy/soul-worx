@@ -10,6 +10,11 @@ export default async function BookCoachCallPage() {
     redirect("/signin")
   }
 
+  const isAdmin = session.user.role === "admin" || session.user.role === "super_admin"
+  if (isAdmin) {
+    redirect("/dashboard")
+  }
+
   // Verify user is Pro+
   const tier = await getUserTier(session.user.id)
   if (tier !== "pro_plus") {

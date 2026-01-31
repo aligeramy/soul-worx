@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
 import { auth } from "@/auth"
 import { db } from "@/lib/db"
-import { userMemberships } from "@/lib/db/schema"
+import { userMemberships, membershipTiers } from "@/lib/db/schema"
 import { eq, and } from "drizzle-orm"
 import { stripe } from "@/lib/stripe"
 
@@ -77,9 +77,16 @@ export async function POST(request: NextRequest) {
         createdAt: now,
         updatedAt: now,
       })
-    }
 
-    return NextResponse.json({ success: true })
+    // Get tier info to return
+    const tier = await db.query.membershipTiers.findFirst({
+      where: eq(membershipTiers.id, tierId),
+    })
+
+    return NextResponse.json({ 
+      success: true,
+      tierSlug: tier?.slug,
+    })
   } catch (error: unknown) {
     console.error("Error processing checkout success:", error)
     const errorMessage = error instanceof Error ? error.message : "Failed to process checkout"

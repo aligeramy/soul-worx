@@ -43,6 +43,7 @@ export async function GET(request: NextRequest) {
       primaryInterest: user.primaryInterest,
       onboardingData: user.onboardingData,
       onboardingCompleted: user.onboardingCompleted,
+      age: user.age ?? null,
     })
   } catch (error) {
     console.error("Error fetching user data:", error)

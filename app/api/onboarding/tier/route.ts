@@ -35,19 +35,100 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    // Normalize tier slug: convert "pro_plus" to "pro-plus" for database lookup
+    const tierSlug = tier === "pro_plus" ? "pro-plus" : tier
+
     // Find the tier in database
-    const tierRecord = await db.query.membershipTiers.findFirst({
-      where: eq(membershipTiers.slug, tier),
+    let tierRecord = await db.query.membershipTiers.findFirst({
+      where: eq(membershipTiers.slug, tierSlug),
     })
 
+    // If tier doesn't exist, create it
     if (!tierRecord) {
-      return addCorsHeaders(
-        NextResponse.json(
-          { error: "Tier not found in database" },
-          { status: 404 }
-        ),
-        origin
-      )
+      const tierConfig = {
+        free: {
+          name: "Free",
+          slug: "free",
+          level: "free" as const,
+          description: "Access to first 2 videos, rotate per month",
+          features: [
+            "First 2 videos",
+            "Rotate per month",
+            "Journal",
+            "Public Discord channel",
+          ],
+          accessLevel: 1,
+          price: "0",
+          billingPeriod: "monthly" as const,
+        },
+        pro: {
+          name: "Pro",
+          slug: "pro",
+          level: "pro" as const,
+          description: "Access to all videos and programs",
+          features: [
+            "Access to all videos right away",
+            "1-2 specific programs per month",
+            "Soulworx AI assistant",
+            "Journal",
+            "Discord Community (VIP + public)",
+          ],
+          accessLevel: 2,
+          price: "20",
+          billingPeriod: "monthly" as const,
+        },
+        "pro-plus": {
+          name: "Pro+",
+          slug: "pro-plus",
+          level: "pro_plus" as const,
+          description: "Full access with personalized coaching",
+          features: [
+            "Access to all videos right away",
+            "Ability to upload videos for review and coaching",
+            "Personalized programs",
+            "1-2 specific per month (Not tailored to player)",
+            "Soulworx AI assistant",
+            "Journal",
+            "Discord Community (private channel + VIP + public)",
+          ],
+          accessLevel: 3,
+          price: "25",
+          billingPeriod: "monthly" as const,
+        },
+      }
+
+      const config = tierConfig[tierSlug as keyof typeof tierConfig]
+      if (!config) {
+        return addCorsHeaders(
+          NextResponse.json(
+            { error: "Invalid tier selection" },
+            { status: 400 }
+          ),
+          origin
+        )
+      }
+
+      // Create the tier
+      const [newTier] = await db
+        .insert(membershipTiers)
+        .values({
+          name: config.name,
+          slug: config.slug,
+          level: config.level,
+          description: config.description,
+          features: config.features,
+          accessLevel: config.accessLevel,
+          price: config.price,
+          billingPeriod: config.billingPeriod,
+          stripePriceId: null, // Will need to be set up later
+          discordRoleId: null, // Will need to be set up later
+          dmAccessEnabled: tierSlug === "pro-plus",
+          isActive: true,
+          sortOrder: config.accessLevel,
+        })
+        .returning()
+
+      tierRecord = newTier
     }
 
     // Get current user data

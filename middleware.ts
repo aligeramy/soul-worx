@@ -16,6 +16,7 @@ export default auth((req) => {
     pathname.startsWith("/stories") ||
     pathname.startsWith("/contact") ||
     pathname.startsWith("/signin") ||
+    pathname.startsWith("/signup") ||
     pathname.startsWith("/api/auth")
 
   // If it's a public route, always allow access regardless of auth state

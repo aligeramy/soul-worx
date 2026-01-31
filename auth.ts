@@ -8,7 +8,7 @@ import { db } from "@/lib/db"
 import * as schema from "@/lib/db/schema"
 import { getUserById } from "@/lib/db/queries"
 import { verifyPassword } from "@/lib/auth/password"
-import { eq } from "drizzle-orm"
+import { eq, sql } from "drizzle-orm"
 import type { UserRole } from "@/lib/db/schema"
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
@@ -32,20 +32,22 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           return null
         }
 
-        // Find user by email
-        const user = await db.query.users.findFirst({
-          where: eq(schema.users.email, credentials.email as string),
-        })
+        const email = (credentials.email as string).trim().toLowerCase()
+        const password = (credentials.password as string).trim()
+
+        // Find user by email (case-insensitive - users may have signed up with different casing)
+        const [user] = await db
+          .select()
+          .from(schema.users)
+          .where(sql`lower(${schema.users.email}) = ${email}`)
+          .limit(1)
 
         if (!user || !user.password) {
           return null
         }
 
         // Verify password
-        const isValid = await verifyPassword(
-          credentials.password as string,
-          user.password
-        )
+        const isValid = await verifyPassword(password, user.password)
 
         if (!isValid) {
           return null
@@ -149,7 +151,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       const isOnboarding = nextUrl.pathname.startsWith("/onboarding")
       const isDashboard = nextUrl.pathname.startsWith("/dashboard")
       const isAdminRoute = nextUrl.pathname.startsWith("/dashboard/admin")
-      const isAuth = nextUrl.pathname.startsWith("/signin")
+      const isAuth = nextUrl.pathname.startsWith("/signin") || nextUrl.pathname.startsWith("/signup")
 
       // Define public routes that should always be accessible
       const isPublicRoute = 

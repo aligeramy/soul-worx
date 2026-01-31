@@ -1,5 +1,6 @@
 "use client"
 
+import { useEffect, useState } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useSession, signOut } from "next-auth/react"
@@ -16,6 +17,18 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { UpgradeLink } from "@/components/upgrade-link"
+
+function getTierLabel(tier: string | null): string {
+  switch (tier) {
+    case "pro":
+      return "Pro Tier"
+    case "pro_plus":
+      return "Pro+ Tier"
+    default:
+      return "Free Tier"
+  }
+}
 
 export default function DashboardShell({
   children,
@@ -24,11 +37,21 @@ export default function DashboardShell({
 }) {
   const pathname = usePathname()
   const { data } = useSession()
+  const [tier, setTier] = useState<string | null>(null)
   const isAdminPath = pathname?.startsWith("/dashboard/admin")
-  const isProfilePath = pathname?.startsWith("/profile")
 
-  if (isAdminPath || isProfilePath) {
-    // Admin and Profile: no top bar, full-width, themed by admin layout
+  useEffect(() => {
+    if (!data?.user?.id) return
+    fetch("/api/user/tier")
+      .then((res) => res.ok ? res.json() : null)
+      .then((data) => data?.tier != null ? setTier(data.tier) : setTier("free"))
+      .catch(() => setTier("free"))
+  }, [data?.user?.id])
+  const isProfilePath = pathname?.startsWith("/profile")
+  const isOnboardingPath = pathname?.startsWith("/onboarding")
+
+  if (isAdminPath || isProfilePath || isOnboardingPath) {
+    // Admin, Profile, and Onboarding: no top bar, full-width, themed by their own layouts
     return <>{children}</>
   }
 
@@ -97,7 +120,7 @@ export default function DashboardShell({
                               {user.name}
                             </p>
                             <p className="text-xs text-white/60 leading-none">
-                              {isAdmin ? "Admin" : "Member"}
+                              {isAdmin ? "Admin" : getTierLabel(tier)}
                             </p>
                           </div>
                           <ChevronDown className="h-4 w-4 text-white/60" />
@@ -125,6 +148,7 @@ export default function DashboardShell({
                             <span>Settings</span>
                           </Link>
                         </DropdownMenuItem>
+                        <UpgradeLink />
                         {isAdmin && (
                           <>
                             <DropdownMenuSeparator />
@@ -183,6 +207,7 @@ export default function DashboardShell({
                             <span>Settings</span>
                           </Link>
                         </DropdownMenuItem>
+                        <UpgradeLink />
                         {isAdmin && (
                           <>
                             <DropdownMenuSeparator />

@@ -1,4 +1,5 @@
 import { SoulworxColors } from '@/constants/colors';
+import { useUser } from '@/contexts/UserContext';
 import { Ionicons } from '@expo/vector-icons';
 import { Tabs } from 'expo-router';
 import React from 'react';
@@ -7,6 +8,10 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function TabLayout() {
   const insets = useSafeAreaInsets();
+  const { tier } = useUser();
+
+  // Check if user is Pro+
+  const isProPlus = tier?.level === 'pro_plus';
 
   return (
     <Tabs
@@ -15,7 +20,7 @@ export default function TabLayout() {
         tabBarInactiveTintColor: SoulworxColors.textTertiary,
         headerShown: false,
         tabBarStyle: {
-          backgroundColor: SoulworxColors.charcoal, // Dark brown tab bar
+          backgroundColor: SoulworxColors.charcoal,
           borderTopColor: SoulworxColors.border,
           borderTopWidth: 1,
           height: 60 + insets.bottom,
@@ -69,6 +74,31 @@ export default function TabLayout() {
           ),
         }}
       />
+
+      {/* My Programs - Only visible for Pro+ users */}
+      <Tabs.Screen
+        name="my-programs"
+        options={{
+          title: 'My Programs',
+          href: isProPlus ? '/my-programs' : null,
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="star" size={size} color={color} />
+          ),
+        }}
+      />
+
+      {/* Upgrade - Only visible for Free/Pro users */}
+      <Tabs.Screen
+        name="upgrade-tab"
+        options={{
+          title: 'Upgrade',
+          href: isProPlus ? null : '/upgrade-tab',
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="arrow-up-circle" size={size} color={color} />
+          ),
+        }}
+      />
+
       <Tabs.Screen
         name="profile"
         options={{
@@ -78,7 +108,7 @@ export default function TabLayout() {
           ),
         }}
       />
-      
+
       {/* Hide old tabs */}
       <Tabs.Screen
         name="index"

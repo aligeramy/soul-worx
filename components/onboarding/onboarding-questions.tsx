@@ -117,16 +117,27 @@ export function OnboardingQuestions({ userId }: OnboardingQuestionsProps) {
       <form onSubmit={handleSubmit} className="space-y-6 bg-white p-8 rounded-2xl shadow-sm border border-neutral-200">
         {/* Age */}
         <Field label="Age" htmlFor="age">
-          <Input
-            id="age"
-            type="number"
-            min="1"
-            max="120"
-            value={formData.age}
-            onChange={(e) => setFormData({ ...formData, age: e.target.value })}
-            placeholder="Enter your age"
-            disabled={isSubmitting}
-          />
+          <div className="relative">
+            <Input
+              id="age"
+              type="number"
+              min="1"
+              max="120"
+              value={formData.age}
+              onChange={(e) => {
+                const value = e.target.value.replace(/\D/g, '')
+                if (value === '' || (parseInt(value) >= 1 && parseInt(value) <= 120)) {
+                  setFormData({ ...formData, age: value })
+                }
+              }}
+              placeholder="Enter your age"
+              disabled={isSubmitting}
+              className="pr-20 text-base"
+            />
+            <div className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-500 text-sm pointer-events-none">
+              years old
+            </div>
+          </div>
           <p className="text-xs text-neutral-500 mt-1">
             This helps us provide age-appropriate content
           </p>

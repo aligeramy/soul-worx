@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
-import { Loader2, Activity, PenTool, HeartHandshake } from "lucide-react"
+import { Loader2, Medal, PenTool, HeartHandshake } from "lucide-react"
 import { toast } from "sonner"
 import Image from "next/image"
 
@@ -25,7 +25,7 @@ const interests: {
     id: "sports_basketball",
     title: "Sports / Basketball",
     description: "Training programs, drills, and coaching for basketball players",
-    icon: Activity,
+    icon: Medal,
     color: "text-orange-600",
     bgColor: "bg-orange-50 hover:bg-orange-100",
   },

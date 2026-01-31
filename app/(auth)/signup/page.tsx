@@ -1,3 +1,4 @@
+import { Suspense } from "react"
 import { SignupForm } from "@/components/auth/signup-form"
 import { AuthSlideshow } from "@/components/auth/auth-slideshow"
 import Link from "next/link"
@@ -25,9 +26,9 @@ export default function SignUpPage() {
   return (
     <div className="grid min-h-svh lg:grid-cols-2">
       {/* Left Side - Signup Form */}
-      <div className="flex flex-col gap-4 p-6 md:p-10">
+      <div className="flex flex-col gap-4 p-4 sm:p-6 md:p-10">
         <div className="flex justify-center gap-2 md:justify-start">
-          <Link href="/" className="flex items-center gap-2 font-medium text-sm hover:opacity-80 transition-opacity">
+          <Link href="/" className="flex items-center gap-2 font-medium text-sm hover:opacity-80 transition-opacity touch-manipulation">
             <svg
               className="w-4 h-4"
               fill="none"
@@ -44,9 +45,15 @@ export default function SignUpPage() {
             Back to Home
           </Link>
         </div>
-        <div className="flex flex-1 items-center justify-center">
-          <div className="w-full max-w-xs">
-            <SignupForm />
+        <div className="flex flex-1 items-center justify-center py-4 sm:py-0">
+          <div className="w-full max-w-sm sm:max-w-md">
+            <Suspense fallback={
+              <div className="flex items-center justify-center py-12">
+                <div className="h-8 w-8 animate-spin rounded-full border-2 border-neutral-300 border-t-neutral-900" />
+              </div>
+            }>
+              <SignupForm />
+            </Suspense>
           </div>
         </div>
       </div>

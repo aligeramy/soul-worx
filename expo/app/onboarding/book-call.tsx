@@ -33,12 +33,16 @@ export default function BookCallScreen() {
   const availableDates = Array.from({ length: 30 }, (_, i) => addDays(today, i));
 
   useEffect(() => {
+    if (user?.role === 'admin' || user?.role === 'super_admin') {
+      router.replace('/(tabs)' as any);
+      return;
+    }
     if (tier?.level !== 'pro_plus') {
       router.replace('/(tabs)/programs');
       return;
     }
     fetchAvailability();
-  }, [tier]);
+  }, [tier, user?.role]);
 
   const fetchAvailability = async () => {
     try {

@@ -326,7 +326,7 @@ export default function PersonalizedProgramDetailScreen() {
                           <ActivityIndicator size="small" color={SoulworxColors.white} />
                         ) : (
                           <Text style={styles.checkButtonText}>
-                            {item.completed ? 'Uncheck' : canCheckOff ? 'Check Off' : 'Not Due'}
+                            {item.completed ? 'Uncheck' : canCheckOff ? 'Mark Complete' : 'Not Due'}
                           </Text>
                         )}
                       </Pressable>

@@ -108,6 +108,17 @@ export default function AdminProgramDetailScreen() {
   const totalCount = program.checklistItems.length;
   const completionRate = totalCount > 0 ? Math.round((completedCount / totalCount) * 100) : 0;
 
+  // Analytics calculations
+  const overdueCount = program.checklistItems.filter((item) => !item.completed && isPast(new Date(item.dueDate))).length;
+  const completedItems = program.checklistItems.filter((item) => item.completed);
+  const avgEnjoyment = completedItems.length > 0
+    ? (completedItems.reduce((sum, item) => sum + (item.enjoymentRating || 0), 0) / completedItems.filter(i => i.enjoymentRating).length).toFixed(1)
+    : 'N/A';
+  const avgDifficulty = completedItems.length > 0
+    ? (completedItems.reduce((sum, item) => sum + (item.difficultyRating || 0), 0) / completedItems.filter(i => i.difficultyRating).length).toFixed(1)
+    : 'N/A';
+  const totalDaysLate = completedItems.reduce((sum, item) => sum + (item.daysLate || 0), 0);
+
   return (
     <ScrollView
       style={styles.container}
@@ -122,6 +133,37 @@ export default function AdminProgramDetailScreen() {
           <Text style={styles.headerTitle}>{program.title}</Text>
           <Text style={styles.headerSubtitle}>Program for {program.user?.name || program.user?.email}</Text>
         </View>
+      </View>
+
+      {/* Analytics Summary */}
+      <View style={styles.analyticsCard}>
+        <Text style={styles.sectionTitle}>Analytics</Text>
+        <View style={styles.analyticsGrid}>
+          <View style={styles.analyticsItem}>
+            <Text style={styles.analyticsValue}>{completionRate}%</Text>
+            <Text style={styles.analyticsLabel}>Completion</Text>
+          </View>
+          <View style={styles.analyticsItem}>
+            <Text style={styles.analyticsValue}>{avgEnjoyment}</Text>
+            <Text style={styles.analyticsLabel}>Avg Enjoyment</Text>
+          </View>
+          <View style={styles.analyticsItem}>
+            <Text style={styles.analyticsValue}>{avgDifficulty}</Text>
+            <Text style={styles.analyticsLabel}>Avg Difficulty</Text>
+          </View>
+          <View style={styles.analyticsItem}>
+            <Text style={[styles.analyticsValue, overdueCount > 0 && styles.analyticsValueWarning]}>{overdueCount}</Text>
+            <Text style={styles.analyticsLabel}>Overdue</Text>
+          </View>
+        </View>
+        {totalDaysLate > 0 && (
+          <View style={styles.analyticsNote}>
+            <Ionicons name="information-circle" size={16} color={SoulworxColors.warning} />
+            <Text style={styles.analyticsNoteText}>
+              Total days late across all workouts: {totalDaysLate}
+            </Text>
+          </View>
+        )}
       </View>
 
       {/* Program Details */}
@@ -467,5 +509,51 @@ const styles = StyleSheet.create({
   emptyText: {
     fontSize: Typography.base,
     color: SoulworxColors.textSecondary,
+  },
+  analyticsCard: {
+    backgroundColor: SoulworxColors.charcoal,
+    borderRadius: BorderRadius.xl,
+    padding: Spacing.xl,
+    marginBottom: Spacing.lg,
+    ...Shadows.medium,
+  },
+  analyticsGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: Spacing.md,
+  },
+  analyticsItem: {
+    flex: 1,
+    minWidth: '45%',
+    backgroundColor: SoulworxColors.beige,
+    borderRadius: BorderRadius.md,
+    padding: Spacing.md,
+    alignItems: 'center',
+  },
+  analyticsValue: {
+    fontSize: Typography['2xl'],
+    fontWeight: Typography.bold,
+    color: SoulworxColors.textOnLight,
+    marginBottom: Spacing.xs,
+  },
+  analyticsValueWarning: {
+    color: SoulworxColors.error,
+  },
+  analyticsLabel: {
+    fontSize: Typography.xs,
+    color: SoulworxColors.textTertiary,
+  },
+  analyticsNote: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: Spacing.sm,
+    marginTop: Spacing.md,
+    paddingTop: Spacing.md,
+    borderTopWidth: 1,
+    borderTopColor: SoulworxColors.border,
+  },
+  analyticsNoteText: {
+    fontSize: Typography.sm,
+    color: SoulworxColors.warning,
   },
 });

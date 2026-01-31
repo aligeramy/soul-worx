@@ -69,6 +69,13 @@ export default function ProPlusQuestionnaireScreen() {
   });
 
   useEffect(() => {
+    if (user?.role === 'admin' || user?.role === 'super_admin') {
+      router.replace('/(tabs)' as any);
+      return;
+    }
+  }, [user?.role]);
+
+  useEffect(() => {
     const fetchUserData = async () => {
       try {
         const data = await apiGet<{ age?: number }>('/api/onboarding/user-data');
@@ -161,14 +168,22 @@ export default function ProPlusQuestionnaireScreen() {
             <Text style={styles.stepTitle}>Basic Information</Text>
             <View style={styles.field}>
               <Text style={styles.label}>Age</Text>
-              <TextInput
-                style={styles.input}
-                value={formData.age}
-                onChangeText={(text) => setFormData({ ...formData, age: text })}
-                placeholder="Enter your age"
-                keyboardType="numeric"
-                placeholderTextColor={SoulworxColors.textTertiary}
-              />
+              <View style={styles.ageInputContainer}>
+                <TextInput
+                  style={styles.ageInput}
+                  value={formData.age}
+                  onChangeText={(text) => {
+                    const numericValue = text.replace(/\D/g, '')
+                    if (numericValue === '' || (parseInt(numericValue) >= 1 && parseInt(numericValue) <= 120)) {
+                      setFormData({ ...formData, age: numericValue })
+                    }
+                  }}
+                  placeholder="Enter your age"
+                  keyboardType="numeric"
+                  placeholderTextColor={SoulworxColors.textTertiary}
+                />
+                <Text style={styles.ageSuffix}>years old</Text>
+              </View>
             </View>
             <View style={styles.field}>
               <Text style={styles.label}>Skill Level</Text>
@@ -912,6 +927,26 @@ const styles = StyleSheet.create({
     color: SoulworxColors.textOnLight,
     borderWidth: 1,
     borderColor: SoulworxColors.border,
+  },
+  ageInputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: SoulworxColors.beige,
+    borderRadius: BorderRadius.md,
+    borderWidth: 1,
+    borderColor: SoulworxColors.border,
+    paddingRight: Spacing.md,
+  },
+  ageInput: {
+    flex: 1,
+    padding: Spacing.md,
+    fontSize: Typography.base,
+    color: SoulworxColors.textOnLight,
+  },
+  ageSuffix: {
+    fontSize: Typography.base,
+    color: SoulworxColors.textTertiary,
+    marginLeft: Spacing.xs,
   },
   textArea: {
     minHeight: 100,

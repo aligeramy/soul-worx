@@ -11,7 +11,11 @@ import { eq } from "drizzle-orm"
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const { email, name, password, username } = body
+    let { email, name, password, username } = body
+
+    // Normalize email (case-insensitive - prevents duplicate accounts)
+    email = (email || "").trim().toLowerCase()
+    password = (password || "").trim()
 
     // Validation
     if (!email || !name || !password || !username) {
@@ -38,11 +42,16 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Validate username format (@username)
+    // Normalize username: remove @ if present, then add it
+    const normalizedUsername = username.startsWith("@") 
+      ? username 
+      : `@${username}`
+
+    // Validate username format (3-20 alphanumeric characters after @)
     const usernameRegex = /^@[a-zA-Z0-9_]{3,20}$/
-    if (!usernameRegex.test(username)) {
+    if (!usernameRegex.test(normalizedUsername)) {
       return NextResponse.json(
-        { error: "Username must start with @ and be 3-20 alphanumeric characters" },
+        { error: "Username must be 3-20 alphanumeric characters" },
         { status: 400 }
       )
     }
@@ -60,7 +69,7 @@ export async function POST(request: NextRequest) {
 
     // Check if username already exists
     const existingUsername = await db.query.users.findFirst({
-      where: eq(users.username, username),
+      where: eq(users.username, normalizedUsername),
     })
     if (existingUsername) {
       return NextResponse.json(
@@ -78,7 +87,7 @@ export async function POST(request: NextRequest) {
       .values({
         email,
         name,
-        username,
+        username: normalizedUsername,
         password: hashedPassword,
         onboardingCompleted: false,
         role: "user",

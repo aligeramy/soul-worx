@@ -11,6 +11,12 @@ export default async function OnboardingPage() {
     redirect("/signin")
   }
 
+  // Admins skip onboarding entirely
+  const isAdmin = session.user.role === "admin" || session.user.role === "super_admin"
+  if (isAdmin) {
+    redirect("/dashboard")
+  }
+
   // Check if user has completed onboarding
   const user = await db.query.users.findFirst({
     where: eq(users.id, session.user.id),

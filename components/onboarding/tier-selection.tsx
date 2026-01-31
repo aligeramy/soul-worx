@@ -41,7 +41,7 @@ const tiers: Tier[] = [
       "Public Discord channel",
     ],
     color: "text-neutral-600",
-    bgColor: "bg-neutral-50",
+    bgColor: "bg-white",
     borderColor: "border-neutral-200",
   },
   {
@@ -55,11 +55,11 @@ const tiers: Tier[] = [
       "1-2 specific programs per month",
       "Soulworx AI assistant",
       "Journal",
-      "Discord Community (VIP + public)",
+      "Discord Community (VIP + Public)",
     ],
-    color: "text-blue-600",
-    bgColor: "bg-blue-50",
-    borderColor: "border-blue-300",
+    color: "text-neutral-900",
+    bgColor: "bg-white",
+    borderColor: "border-neutral-300",
     popular: true,
   },
   {
@@ -75,11 +75,11 @@ const tiers: Tier[] = [
       "1-2 specific per month (Not tailored to player)",
       "Soulworx AI assistant",
       "Journal",
-      "Discord Community (private channel + VIP + public)",
+      "Discord Community (Private + VIP + Public)",
     ],
-    color: "text-purple-600",
-    bgColor: "bg-purple-50",
-    borderColor: "border-purple-300",
+    color: "text-neutral-900",
+    bgColor: "bg-white",
+    borderColor: "border-neutral-300",
   },
 ]
 
@@ -169,28 +169,28 @@ export function TierSelection({ userId }: TierSelectionProps) {
   }
 
   return (
-    <div className="w-full space-y-8">
+    <div className="w-full space-y-4">
       {/* Header */}
-      <div className="text-center space-y-4">
-        <div className="flex justify-center mb-4">
+      <div className="text-center space-y-2">
+        <div className="flex justify-center mb-2">
           <Image
             src="/logo-v2/w.png"
             alt="Soulworx Logo"
-            width={60}
-            height={90}
-            className="h-15 w-auto border border-black/10 rounded-lg p-3 px-4 bg-brand-bg-darker"
+            width={40}
+            height={60}
+            className="h-10 w-auto border border-black/10 rounded-lg p-2 px-3 bg-brand-bg-darker"
           />
         </div>
-        <h1 className="text-4xl font-medium font-crimson tracking-tight">
+        <h1 className="text-2xl font-medium font-crimson tracking-tight">
           Choose Your Plan
         </h1>
-        <p className="text-lg text-neutral-600 max-w-2xl mx-auto">
+        <p className="text-sm text-neutral-600 max-w-2xl mx-auto">
           Select the membership tier that best fits your basketball training needs
         </p>
       </div>
 
       {/* Tier Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-stretch">
         {tiers.map((tier) => {
           const Icon = tier.icon
           const isSelected = selectedTier === tier.id
@@ -199,16 +199,16 @@ export function TierSelection({ userId }: TierSelectionProps) {
             <div
               key={tier.id}
               className={`
-                relative p-8 rounded-2xl border-2 transition-all duration-200
-                ${isSelected ? tier.borderColor + " shadow-xl scale-105" : "border-neutral-200"}
-                ${tier.bgColor}
-                ${isSubmitting ? "opacity-50" : ""}
+                relative p-4 rounded-xl border-2 transition-all duration-200 bg-white
+                flex flex-col h-full
+                ${isSelected ? "border-neutral-900 shadow-md scale-[1.01]" : "border-neutral-200"}
+                ${isSubmitting ? "opacity-50" : "hover:border-neutral-300"}
               `}
             >
               {/* Popular Badge */}
               {tier.popular && (
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-                  <span className="bg-blue-600 text-white text-xs font-semibold px-4 py-1 rounded-full">
+                <div className="absolute -top-2 left-1/2 -translate-x-1/2">
+                  <span className="bg-neutral-900 text-white text-xs font-semibold px-3 py-0.5 rounded-full">
                     Most Popular
                   </span>
                 </div>
@@ -216,51 +216,64 @@ export function TierSelection({ userId }: TierSelectionProps) {
 
               {/* Selection Indicator */}
               {isSelected && (
-                <div className="absolute top-4 right-4">
-                  <div className={`w-6 h-6 rounded-full ${tier.color.replace("text-", "bg-")} flex items-center justify-center`}>
-                    <Check className="w-4 h-4 text-white" />
+                <div className="absolute top-2 right-2">
+                  <div className="w-5 h-5 rounded-full bg-neutral-900 flex items-center justify-center">
+                    <Check className="w-3 h-3 text-white" />
                   </div>
                 </div>
               )}
 
               {/* Icon */}
-              <div className="flex justify-center mb-4">
-                <div className={`p-4 rounded-full ${tier.bgColor} ${tier.color}`}>
-                  <Icon className="w-8 h-8" />
+              <div className="flex justify-center mb-2">
+                <div className="p-2 rounded-full bg-neutral-100 text-neutral-700">
+                  <Icon className="w-5 h-5" />
                 </div>
               </div>
 
               {/* Name */}
-              <h3 className="text-2xl font-bold text-neutral-900 mb-2 text-center">
+              <h3 className="text-lg font-bold text-neutral-900 mb-1 text-center">
                 {tier.name}
               </h3>
 
               {/* Price */}
-              <div className="text-center mb-6">
-                <span className="text-4xl font-bold text-neutral-900">{tier.price}</span>
+              <div className="text-center mb-3">
+                <span className="text-2xl font-bold text-neutral-900">{tier.price}</span>
                 {tier.priceNote && (
-                  <span className="text-sm text-neutral-600 ml-2">{tier.priceNote}</span>
+                  <span className="text-xs text-neutral-600 ml-1">{tier.priceNote}</span>
                 )}
               </div>
 
               {/* Features */}
-              <ul className="space-y-3 mb-6">
+              <ul className="space-y-1.5 mb-4 flex-grow text-xs">
                 {tier.features.map((feature, index) => (
-                  <li key={index} className="flex items-start gap-2">
-                    <Check className={`w-5 h-5 ${tier.color} flex-shrink-0 mt-0.5`} />
-                    <span className="text-sm text-neutral-700">{feature}</span>
+                  <li key={index} className="flex items-start gap-1.5">
+                    <Check className="w-3.5 h-3.5 text-neutral-900 flex-shrink-0 mt-0.5" />
+                    <span className="text-neutral-700 leading-tight">{feature}</span>
                   </li>
                 ))}
               </ul>
 
-              {/* Select Button */}
+              {/* Select Button - Always at bottom */}
               <Button
                 onClick={() => setSelectedTier(tier.id)}
                 disabled={isSubmitting}
                 variant={isSelected ? "default" : "outline"}
-                className={`w-full ${isSelected ? tier.bgColor.replace("bg-", "bg-") + " " + tier.color : ""}`}
+                className={`
+                  w-full h-10 text-sm font-medium transition-all
+                  ${isSelected 
+                    ? "bg-neutral-900 text-white hover:bg-neutral-800" 
+                    : "border-neutral-300 text-neutral-900 hover:bg-neutral-50 hover:border-neutral-400"
+                  }
+                `}
               >
-                {isSelected ? "Selected" : "Select Plan"}
+                {isSelected ? (
+                  <span className="flex items-center gap-1.5">
+                    <Check className="w-3.5 h-3.5" />
+                    Selected
+                  </span>
+                ) : (
+                  "Select Plan"
+                )}
               </Button>
             </div>
           )
@@ -268,12 +281,12 @@ export function TierSelection({ userId }: TierSelectionProps) {
       </div>
 
       {/* Continue Button */}
-      <div className="flex justify-center pt-4">
+      <div className="flex justify-center pt-2">
         <Button
           onClick={handleContinue}
           disabled={!selectedTier || isSubmitting}
           size="lg"
-          className="min-w-[200px]"
+          className="min-w-[200px] h-11"
         >
           {isSubmitting ? (
             <>
@@ -287,11 +300,11 @@ export function TierSelection({ userId }: TierSelectionProps) {
       </div>
 
       {/* Progress Indicator */}
-      <div className="flex justify-center">
-        <div className="flex items-center gap-2 text-sm text-neutral-500">
-          <div className="w-2 h-2 rounded-full bg-neutral-300" />
-          <div className="w-2 h-2 rounded-full bg-neutral-300" />
-          <div className="w-2 h-2 rounded-full bg-neutral-900" />
+      <div className="flex justify-center pt-1">
+        <div className="flex items-center gap-1.5">
+          <div className="w-1.5 h-1.5 rounded-full bg-neutral-300" />
+          <div className="w-1.5 h-1.5 rounded-full bg-neutral-300" />
+          <div className="w-1.5 h-1.5 rounded-full bg-neutral-900" />
         </div>
       </div>
     </div>

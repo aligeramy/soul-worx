@@ -69,6 +69,13 @@ export default function OnboardingTiersScreen() {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
+    if (user?.role === 'admin' || user?.role === 'super_admin') {
+      router.replace('/(tabs)' as any);
+      return;
+    }
+  }, [user?.role]);
+
+  useEffect(() => {
     const checkInterest = async () => {
       try {
         const data = await apiGet<{ primaryInterest: string }>('/api/onboarding/user-data');

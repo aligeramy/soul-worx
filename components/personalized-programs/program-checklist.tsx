@@ -193,19 +193,19 @@ export function ProgramChecklist({ programId, checklistItems }: ProgramChecklist
                         size="sm"
                         className={
                           item.completed
-                            ? "border-white/20 text-white/70 hover:text-white"
+                            ? "border-white bg-white text-black hover:bg-white/90"
                             : "bg-white/10 hover:bg-white/20 text-white"
                         }
                       >
                         {isSubmitting === item.id ? (
                           <>
                             <Loader2 className="h-4 w-4 animate-spin mr-2" />
-                            {item.completed ? "Unchecking..." : "Checking..."}
+                            {item.completed ? "Unchecking..." : "Completing..."}
                           </>
                         ) : item.completed ? (
                           "Uncheck"
                         ) : canCheckOff ? (
-                          "Check Off"
+                          "Mark Complete"
                         ) : (
                           "Not Due"
                         )}

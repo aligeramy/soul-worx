@@ -9,8 +9,6 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
-import { Star, TrendingUp, TrendingDown, Smile, Frown } from "lucide-react"
-
 interface RatingModalProps {
   open: boolean
   onClose: () => void
@@ -18,6 +16,7 @@ interface RatingModalProps {
 }
 
 const ENJOYMENT_EMOJIS = ["😞", "😕", "😐", "😊", "😄"]
+const DIFFICULTY_EMOJIS = ["😌", "🙂", "💪", "😓", "💀"] // Very Easy → Very Hard
 const DIFFICULTY_LABELS = ["Very Easy", "Easy", "Medium", "Hard", "Very Hard"]
 
 export function RatingModal({ open, onClose, onSubmit }: RatingModalProps) {
@@ -94,48 +93,46 @@ export function RatingModal({ open, onClose, onSubmit }: RatingModalProps) {
             <label className="block text-sm font-medium text-white/80 mb-3">
               How difficult was it?
             </label>
-            <div className="grid grid-cols-5 gap-2">
-              {DIFFICULTY_LABELS.map((label, index) => {
+            <div className="flex items-center justify-between gap-2">
+              {DIFFICULTY_EMOJIS.map((emoji, index) => {
                 const rating = index + 1
                 const isSelected = difficulty === rating
+                const label = DIFFICULTY_LABELS[index]
                 return (
                   <button
                     key={rating}
                     onClick={() => setDifficulty(rating)}
+                    title={label}
                     className={`
-                      p-3 rounded-lg border-2 transition-all text-xs font-medium
+                      flex-1 flex flex-col items-center gap-1 p-3 rounded-lg border-2 transition-all text-2xl
                       ${
                         isSelected
-                          ? "border-blue-400 bg-blue-400/10 scale-105"
-                          : "border-white/20 hover:border-white/40 bg-white/5 text-white/70"
+                          ? "border-blue-400 bg-blue-400/10 scale-110"
+                          : "border-white/20 hover:border-white/40 bg-white/5"
                       }
                     `}
                   >
-                    <div className="flex flex-col items-center gap-1">
-                      {rating === 1 && <TrendingDown className="h-4 w-4" />}
-                      {rating === 5 && <TrendingUp className="h-4 w-4" />}
-                      {rating !== 1 && rating !== 5 && <div className="h-4 w-4" />}
-                      <span className="text-[10px]">{label}</span>
-                    </div>
+                    <span>{emoji}</span>
+                    <span className="text-[10px] text-white/70">{label}</span>
                   </button>
                 )
               })}
             </div>
           </div>
 
-          {/* Submit Button */}
+          {/* Cancel / Submit */}
           <div className="flex gap-3 pt-4">
             <Button
               variant="outline"
               onClick={handleClose}
-              className="flex-1 border-white/20 text-white/70 hover:text-white hover:bg-white/10"
+              className="flex-1 border-white bg-white text-black hover:bg-white/90"
             >
               Cancel
             </Button>
             <Button
               onClick={handleSubmit}
               disabled={enjoyment === null || difficulty === null}
-              className="flex-1 bg-white/10 hover:bg-white/20 text-white disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex-1 bg-green-500 hover:bg-green-600 text-white disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Submit
             </Button>
