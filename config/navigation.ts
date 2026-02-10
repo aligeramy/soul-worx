@@ -70,10 +70,16 @@ export const navigationConfig: NavigationConfig = {
           icon: "Sparkles"
         },
         {
+          label: "Inspires",
+          href: "/inspires",
+          icon: "Heart"
+        },
+        {
           label: "Partnerships",
           href: "/programs/partnerships",
           icon: "GraduationCap"
         }
+        
       ]
     },
     {

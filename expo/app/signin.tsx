@@ -251,7 +251,7 @@ const styles = StyleSheet.create({
     color: SoulworxColors.error,
   },
   button: {
-    backgroundColor: SoulworxColors.gold,
+    backgroundColor: SoulworxColors.white,
     borderRadius: BorderRadius.md,
     padding: Spacing.md,
     alignItems: 'center',
@@ -264,7 +264,7 @@ const styles = StyleSheet.create({
   buttonText: {
     fontSize: Typography.lg,
     fontWeight: Typography.bold,
-    color: SoulworxColors.white,
+    color: SoulworxColors.black,
     letterSpacing: 0.5,
   },
   secondaryButton: {

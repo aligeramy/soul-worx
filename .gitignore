@@ -50,5 +50,3 @@ next-env.d.ts
 # Google Cloud service account keys
 soulworx-calendar-key.json
 *-calendar-key.json
-
-/expo

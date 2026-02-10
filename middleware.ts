@@ -9,7 +9,7 @@ export default auth((req) => {
   requestHeaders.set("x-pathname", pathname)
 
   // Always allow public routes - don't block even if session is expired/invalid
-  const isPublicRoute = 
+  const isPublicRoute =
     pathname === "/" ||
     pathname.startsWith("/programs") ||
     pathname.startsWith("/shop") ||
@@ -17,6 +17,7 @@ export default auth((req) => {
     pathname.startsWith("/contact") ||
     pathname.startsWith("/signin") ||
     pathname.startsWith("/signup") ||
+    pathname.startsWith("/onboarding") ||
     pathname.startsWith("/api/auth")
 
   // If it's a public route, always allow access regardless of auth state

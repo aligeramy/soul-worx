@@ -21,11 +21,11 @@ export default function InspiresPage() {
                 Soulworx Inspires
               </div>
               <h1 className="mt-4 text-4xl md:text-6xl font-crimson font-normal tracking-tight">
-                A Non-Profit Movement for Opportunity
+                Poverty Relief Initiatives
               </h1>
               <p className="mt-4 text-lg md:text-2xl text-white/90 max-w-3xl font-crimson">
-                Soulworx Inspires is our non-profit initiative focused on building pathways for youth and families.
-                Resources are used for charitable purposes only: &quot;poverty relief&quot; and &quot;advancement of education&quot;.
+                We provide relief of poverty by removing financial barriers that prevent children and youth from
+                accessing essential developmental opportunities.
               </p>
               <div className="mt-8 flex flex-wrap gap-4">
                 <Link
@@ -46,24 +46,21 @@ export default function InspiresPage() {
         </div>
       </section>
 
-      {/* Mission */}
+      {/* Intro */}
       <section className="py-20 px-6 bg-white">
         <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="space-y-6">
             <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-neutral-500">
-              Our Mission
+              Poverty Relief Initiatives
             </div>
             <h2 className="text-4xl md:text-5xl font-crimson font-normal tracking-tight text-neutral-900">
-              Every resource fuels impact where it matters most
+              Removing financial barriers for children and youth
             </h2>
             <p className="text-lg text-neutral-700 leading-relaxed">
-              We activate local partners, educators, mentors, and volunteers to remove barriers to learning and
-              stability. Soulworx Inspires exists to expand access, lift communities, and support youth with
-              programs rooted in dignity, creativity, and growth.
-            </p>
-            <p className="text-lg text-neutral-700 leading-relaxed">
-              As a non-profit initiative, we prioritize transparency and purpose-driven stewardship so that our
-              community knows exactly how resources are used and why.
+              Our organization provides relief of poverty by removing financial barriers that prevent children and
+              youth from accessing essential developmental opportunities. We focus on supporting individuals and
+              families who are experiencing economic hardship, with the goal of improving long-term outcomes,
+              well-being, and self-sufficiency.
             </p>
           </div>
           <div className="relative aspect-[4/5] overflow-hidden rounded-3xl">
@@ -77,47 +74,71 @@ export default function InspiresPage() {
         </div>
       </section>
 
-      {/* Impact Areas */}
+      {/* Initiatives */}
       <section className="py-20 px-6 bg-neutral-950 text-white">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center max-w-3xl mx-auto">
+          <div className="text-center max-w-3xl mx-auto mb-12">
             <div className="text-xs font-semibold uppercase tracking-[0.2em] text-white/60">
-              Impact Areas
+              Our Initiatives
             </div>
             <h2 className="mt-4 text-4xl md:text-5xl font-crimson font-normal tracking-tight">
-              Focused, measurable, and community-led
+              How we deliver poverty relief
             </h2>
-            <p className="mt-4 text-lg text-white/80">
-              We concentrate resources where they can be felt immediately and where long-term opportunity is built.
-            </p>
           </div>
 
-          <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6">
-            {[
-              {
-                title: "Poverty Relief",
-                description:
-                  "Direct support for essential needs that stabilize families and create space for learning and growth."
-              },
-              {
-                title: "Advancement of Education",
-                description:
-                  "Programs, workshops, and mentorship that expand access to learning, literacy, and creative development."
-              }
-            ].map((item) => (
-              <div
-                key={item.title}
-                className="p-8 rounded-2xl border border-white/10 bg-white/5 backdrop-blur"
-              >
-                <h3 className="text-2xl font-crimson font-normal mb-3">{item.title}</h3>
-                <p className="text-white/80 leading-relaxed">{item.description}</p>
-              </div>
-            ))}
+          <div className="space-y-10">
+            <div className="p-8 rounded-2xl border border-white/10 bg-white/5 backdrop-blur">
+              <h3 className="text-2xl font-crimson font-normal mb-3">
+                1. Sponsorship for Youth Participation in Sport
+              </h3>
+              <p className="text-white/80 leading-relaxed mb-4">
+                We provide financial support to children and youth from low-income households to access organized
+                sports programs. This includes covering costs such as registration fees, equipment, uniforms, and
+                related participation expenses.
+              </p>
+              <p className="text-white/80 leading-relaxed">
+                By sponsoring access to sport, we help reduce the financial burden on families living in poverty
+                while supporting physical health, social development, confidence, and positive community engagement.
+              </p>
+            </div>
+
+            <div className="p-8 rounded-2xl border border-white/10 bg-white/5 backdrop-blur">
+              <h3 className="text-2xl font-crimson font-normal mb-3">
+                2. Sponsorship for Youth Participation in Creative Arts
+              </h3>
+              <p className="text-white/80 leading-relaxed mb-4">
+                We provide financial assistance to children and youth from economically disadvantaged backgrounds to
+                participate in creative arts programming, including but not limited to writing, visual arts, music,
+                and performance-based activities.
+              </p>
+              <p className="text-white/80 leading-relaxed">
+                These sponsorships help remove financial barriers to creative expression and skill development,
+                supporting mental well-being, emotional expression, and personal growth for youth who may otherwise
+                lack access to such opportunities due to poverty.
+              </p>
+            </div>
+
+            <div className="p-8 rounded-2xl border border-white/10 bg-white/5 backdrop-blur">
+              <h3 className="text-2xl font-crimson font-normal mb-3">
+                3. Pre-Funded Financial Support for Youth (Ages 12+)
+              </h3>
+              <p className="text-white/80 leading-relaxed mb-4">
+                For youth aged 12 and older from low-income or financially vulnerable households, we provide
+                pre-funded, purpose-restricted financial support to assist with basic and developmental needs. These
+                funds may be used for approved expenses such as education-related costs, transportation, employment
+                readiness, or essential living supports.
+              </p>
+              <p className="text-white/80 leading-relaxed">
+                All financial assistance is provided with clear guidelines and oversight to ensure funds are used in
+                alignment with our charitable purpose of relieving poverty and supporting youth toward stability,
+                independence, and long-term success.
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* How We Work */}
+      {/* Accountability */}
       <section className="py-20 px-6 bg-white">
         <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="relative aspect-[5/4] overflow-hidden rounded-3xl">
@@ -130,29 +151,26 @@ export default function InspiresPage() {
           </div>
           <div className="space-y-6">
             <div className="text-xs font-semibold uppercase tracking-[0.2em] text-neutral-500">
-              How It Works
+              Our Commitment to Accountability
             </div>
             <h2 className="text-4xl md:text-5xl font-crimson font-normal tracking-tight text-neutral-900">
-              Built with partners, guided by community
+              Delivered in accordance with Canadian charity law
             </h2>
             <p className="text-lg text-neutral-700 leading-relaxed">
-              Soulworx Inspires collaborates with schools, non-profit partners, and local leaders to deliver programming that
-              meets real needs. We invest in people, places, and programs with clear outcomes.
+              All poverty relief initiatives are delivered in accordance with Canadian charity law. Beneficiaries are
+              selected based on demonstrated financial need, and all support is provided directly to individuals or
+              through approved third-party programs to ensure funds are used exclusively for charitable purposes.
             </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {[
-                "Youth mentorship and coaching",
-                "School-based workshops and literacy",
-                "Community learning supplies",
-                "Emergency support collaborations"
-              ].map((item) => (
-                <div key={item} className="flex items-center gap-3">
-                  <span className="w-2 h-2 rounded-full bg-neutral-900" />
-                  <span className="text-neutral-700">{item}</span>
-                </div>
-              ))}
-            </div>
           </div>
+        </div>
+      </section>
+
+      {/* Founder signature */}
+      <section className="py-16 px-6 bg-neutral-100">
+        <div className="max-w-6xl mx-auto text-center">
+          <p className="text-lg font-semibold text-neutral-900">Indiana Rotondo</p>
+          <p className="text-neutral-600">Founder | SoulWorx</p>
+          <p className="text-sm text-neutral-500 mt-1">SoulWorx</p>
         </div>
       </section>
 

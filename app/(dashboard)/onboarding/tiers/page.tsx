@@ -1,23 +1,11 @@
-import { auth } from "@/auth"
-import { redirect } from "next/navigation"
 import { TierSelection } from "@/components/onboarding/tier-selection"
 
-export default async function OnboardingTiersPage() {
-  const session = await auth()
-
-  if (!session?.user) {
-    redirect("/signin")
-  }
-
-  const isAdmin = session.user.role === "admin" || session.user.role === "super_admin"
-  if (isAdmin) {
-    redirect("/dashboard")
-  }
-
+/** Showcase: onboarding tier selection (no auth required) */
+export default function OnboardingTiersPage() {
   return (
     <div className="min-h-[100dvh] flex items-center justify-center p-3 bg-white">
       <div className="w-full max-w-5xl">
-        <TierSelection userId={session.user.id} />
+        <TierSelection userId="showcase" />
       </div>
     </div>
   )

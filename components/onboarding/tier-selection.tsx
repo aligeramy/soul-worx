@@ -90,12 +90,19 @@ export function TierSelection({ userId }: TierSelectionProps) {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    // Showcase mode: skip auth/interest check
+    if (userId === "showcase") {
+      setLoading(false)
+      return
+    }
+
     // Verify user selected basketball
     const checkInterest = async () => {
       try {
         const response = await fetch("/api/onboarding/user-data")
+        if (!response.ok) return // Unauthorized etc - stay on page for showcase
         const data = await response.json()
-        
+
         if (data.primaryInterest !== "sports_basketball") {
           // Not basketball, redirect to dashboard
           router.push("/dashboard")
@@ -109,7 +116,7 @@ export function TierSelection({ userId }: TierSelectionProps) {
     }
 
     checkInterest()
-  }, [router])
+  }, [router, userId])
 
   const handleContinue = async () => {
     if (!selectedTier) {
