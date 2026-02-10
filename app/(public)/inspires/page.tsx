@@ -7,7 +7,7 @@ export default function InspiresPage() {
       {/* Hero */}
       <section className="relative h-[60vh] min-h-[480px] overflow-hidden">
         <Image
-          src="/optimized/0K0A1830.jpg"
+          src="/optimized/IMG_4280 copy.jpg"
           alt="Soulworx Inspires"
           fill
           className="object-cover"
@@ -65,7 +65,7 @@ export default function InspiresPage() {
           </div>
           <div className="relative aspect-[4/5] overflow-hidden rounded-3xl">
             <Image
-              src="/optimized/0K0A2892.jpg"
+              src="/optimized/0K0A5675.jpg"
               alt="Community workshop"
               fill
               className="object-cover"
@@ -75,8 +75,13 @@ export default function InspiresPage() {
       </section>
 
       {/* Initiatives */}
-      <section className="py-20 px-6 bg-neutral-950 text-white">
-        <div className="max-w-6xl mx-auto">
+      <section className="relative py-20 px-6 text-white overflow-hidden">
+        <div
+          className="absolute inset-0 bg-cover bg-center bg-fixed"
+          style={{ backgroundImage: "url(/optimized/0K0A4923.jpg)" }}
+        />
+        <div className="absolute inset-0 bg-neutral-950/90" />
+        <div className="relative max-w-6xl mx-auto">
           <div className="text-center max-w-3xl mx-auto mb-12">
             <div className="text-xs font-semibold uppercase tracking-[0.2em] text-white/60">
               Our Initiatives
@@ -143,7 +148,7 @@ export default function InspiresPage() {
         <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="relative aspect-[5/4] overflow-hidden rounded-3xl">
             <Image
-              src="/optimized/0K0A0925.jpg"
+              src="/optimized/img-mine.png"
               alt="Mentorship and learning"
               fill
               className="object-cover"
