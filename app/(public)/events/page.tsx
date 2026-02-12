@@ -48,20 +48,27 @@ export default async function EventsPage() {
                 <Link
                   key={event.id}
                   href={`/events/${event.slug}`}
-                  className="block rounded-3xl border-2 border-dashed border-amber-400/40 bg-[rgb(25,21,18)]/90 p-5 md:p-8 transition-all hover:border-amber-400/70 hover:shadow-[0_0_24px_rgba(251,191,36,0.15)] focus:outline-none focus:ring-2 focus:ring-amber-400/50 focus:ring-offset-2 focus:ring-offset-[rgb(25,21,18)]"
+                  className="block rounded-2xl overflow-hidden border border-white/10 bg-white/5 transition-all hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/20 focus:ring-offset-2 focus:ring-offset-[rgb(25,21,18)]"
                 >
-                  {/* Ticket perforation line */}
-                  <div className="border-t border-dashed border-white/20 my-4 md:my-5" />
-                  <p className="text-amber-400/90 text-[10px] md:text-xs font-semibold uppercase tracking-[0.2em] mb-1 md:mb-2">
-                    SOULWORX PRESENTS
-                  </p>
-                  <h2 className="text-2xl md:text-4xl font-crimson font-normal text-white mb-1 md:mb-2">
-                    {event.title}
-                  </h2>
-                  <p className="text-white/70 text-sm md:text-base mb-3 md:mb-4">{event.dateLabel}</p>
-                  <p className="text-white/50 text-xs md:text-sm">{event.venueAddress}</p>
-                  <div className="border-t border-dashed border-white/20 mt-4 md:mt-5 pt-4 md:pt-5">
-                    <p className="text-amber-400/80 text-sm font-medium">
+                  <div className="relative aspect-[4/3] w-full">
+                    <Image
+                      src="/event-poetry-1.png"
+                      alt={event.title}
+                      fill
+                      className="object-cover object-center"
+                      sizes="(max-width: 768px) 100vw, 896px"
+                    />
+                  </div>
+                  <div className="p-5 md:p-6">
+                    <p className="text-white/60 text-[10px] md:text-xs font-semibold uppercase tracking-wider mb-1 md:mb-2">
+                      SOULWORX PRESENTS
+                    </p>
+                    <h2 className="text-2xl md:text-4xl font-crimson font-normal text-white mb-1 md:mb-2">
+                      {event.title}
+                    </h2>
+                    <p className="text-white/70 text-sm md:text-base mb-3 md:mb-4">{event.dateLabel}</p>
+                    <p className="text-white/50 text-xs md:text-sm">{event.venueAddress}</p>
+                    <p className="text-white/70 text-sm font-medium mt-4 pt-4 border-t border-white/10">
                       From ${(event.minPriceCents / 100).toFixed(0)} — pick your price
                     </p>
                   </div>
