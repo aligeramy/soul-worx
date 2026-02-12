@@ -5,13 +5,10 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 
-const MIN = 15
 const PRESETS = [15, 25, 50, 75, 100]
 
 export function EventTicketForm({
   eventId,
-  eventSlug,
-  eventTitle,
   minPriceCents,
 }: {
   eventId: string
@@ -102,9 +99,9 @@ export function EventTicketForm({
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
-      <div className="space-y-2">
-        <Label htmlFor="email" className="text-white/80">
+    <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
+      <div className="space-y-1.5 md:space-y-2">
+        <Label htmlFor="email" className="text-white/80 text-sm">
           Email
         </Label>
         <Input
@@ -114,11 +111,11 @@ export function EventTicketForm({
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
-          className="bg-white/10 border-white/20 text-white placeholder:text-white/40"
+          className="h-10 md:h-11 bg-white/10 border-white/20 text-white placeholder:text-white/40 text-sm md:text-base"
         />
       </div>
-      <div className="space-y-2">
-        <Label htmlFor="name" className="text-white/80">
+      <div className="space-y-1.5 md:space-y-2">
+        <Label htmlFor="name" className="text-white/80 text-sm">
           Name (for ticket)
         </Label>
         <Input
@@ -127,18 +124,18 @@ export function EventTicketForm({
           placeholder="Your name"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="bg-white/10 border-white/20 text-white placeholder:text-white/40"
+          className="h-10 md:h-11 bg-white/10 border-white/20 text-white placeholder:text-white/40 text-sm md:text-base"
         />
       </div>
-      <div className="space-y-3">
-        <Label className="text-white/80">Amount (CAD)</Label>
-        <div className="flex flex-wrap gap-2">
+      <div className="space-y-2 md:space-y-3">
+        <Label className="text-white/80 text-sm">Amount (CAD)</Label>
+        <div className="flex flex-wrap gap-1.5 md:gap-2">
           {PRESETS.map((d) => (
             <button
               key={d}
               type="button"
               onClick={() => setAmount(d)}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+              className={`px-3 py-1.5 md:px-4 md:py-2 rounded-lg text-xs md:text-sm font-medium transition-colors ${
                 amount === d
                   ? "bg-white text-[rgb(25,21,18)]"
                   : "bg-white/10 text-white hover:bg-white/20"
@@ -149,7 +146,7 @@ export function EventTicketForm({
           ))}
         </div>
         <div className="flex items-center gap-2">
-          <span className="text-white/60">$</span>
+          <span className="text-white/60 text-sm">$</span>
           <Input
             type="number"
             min={minDollars}
@@ -159,15 +156,15 @@ export function EventTicketForm({
               setAmount(parseFloat(e.target.value) || minDollars)
               if (appliedCoupon) setAppliedCoupon(null)
             }}
-            className="bg-white/10 border-white/20 text-white w-24"
+            className="h-10 w-20 md:w-24 bg-white/10 border-white/20 text-white text-sm md:text-base"
           />
-          <span className="text-white/50 text-sm">minimum ${minDollars}</span>
+          <span className="text-white/50 text-xs md:text-sm">minimum ${minDollars}</span>
         </div>
       </div>
 
-      <div className="space-y-2">
-        <Label className="text-white/80">Coupon code</Label>
-        <div className="flex gap-2">
+      <div className="space-y-1.5 md:space-y-2">
+        <Label className="text-white/80 text-sm">Coupon code</Label>
+        <div className="flex gap-1.5 md:gap-2">
           <Input
             type="text"
             placeholder="e.g. POETRY10"
@@ -177,31 +174,31 @@ export function EventTicketForm({
               setAppliedCoupon(null)
               setCouponError(null)
             }}
-            className="bg-white/10 border-white/20 text-white placeholder:text-white/40 flex-1"
+            className="h-10 md:h-11 bg-white/10 border-white/20 text-white placeholder:text-white/40 text-sm flex-1"
           />
           <Button
             type="button"
             variant="outline"
             onClick={validateCoupon}
-            className="border-white/20 text-white hover:bg-white/10 shrink-0"
+            className="h-10 md:h-11 border-white/20 text-white hover:bg-white/10 shrink-0 px-3 md:px-4 text-sm"
           >
             Apply
           </Button>
         </div>
         {appliedCoupon && (
-          <p className="text-sm text-emerald-400">
+          <p className="text-xs md:text-sm text-emerald-400">
             {appliedCoupon.label} applied. You pay: ${(appliedCoupon.discountedCents / 100).toFixed(2)}
             {isFree && " — Free ticket!"}
           </p>
         )}
-        {couponError && <p className="text-sm text-red-400">{couponError}</p>}
+        {couponError && <p className="text-xs md:text-sm text-red-400">{couponError}</p>}
       </div>
 
-      {error && <p className="text-sm text-red-400">{error}</p>}
+      {error && <p className="text-xs md:text-sm text-red-400">{error}</p>}
       <Button
         type="submit"
         disabled={!isValid || loading}
-        className="w-full bg-white text-[rgb(25,21,18)] hover:bg-white/90 font-semibold py-6"
+        className="w-full h-11 md:h-12 bg-white text-[rgb(25,21,18)] hover:bg-white/90 font-semibold text-sm md:text-base"
       >
         {loading
           ? "Redirecting…"
