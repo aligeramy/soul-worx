@@ -37,9 +37,9 @@ export default async function EventTicketSuccessPage({
   }
 
   return (
-    <div className="min-h-screen bg-[rgb(25,21,18)] py-16 px-6">
-      <div className="max-w-xl mx-auto text-center">
-        <div className="rounded-2xl border border-white/10 bg-white/5 p-8 mb-8">
+    <div className="min-h-screen bg-[rgb(25,21,18)] flex flex-col items-center justify-center px-6 pt-24 pb-16">
+      <div className="max-w-xl w-full mx-auto text-center">
+        <div className="rounded-2xl border border-white/10 bg-white/5 p-8">
           <h1 className="text-3xl font-crimson font-normal text-white mb-2">
             You&apos;re in!
           </h1>
