@@ -2,8 +2,10 @@ import { Resend } from "resend"
 import { render } from "@react-email/render"
 import { EventTicketEmail } from "@/emails/event-ticket-email"
 
-const resend = new Resend(process.env.RESEND_API_KEY)
-const from = process.env.EMAIL_FROM || "noreply@soulworx.com"
+const apiKey = process.env.RESEND_API_KEY
+const fromEmail = process.env.EMAIL_FROM || "noreply@soulworx.com"
+const from = `Soulworx Events <${fromEmail}>`
+const resend = apiKey ? new Resend(apiKey) : null
 
 export async function sendEventTicketEmail({
   to,
@@ -22,6 +24,11 @@ export async function sendEventTicketEmail({
   amountPaid: string
   ticketImageUrl: string
 }) {
+  if (!resend) {
+    console.error("RESEND_API_KEY is not set — ticket email not sent to", to)
+    throw new Error("Email is not configured. Your ticket was saved; please contact us for your ticket image.")
+  }
+
   const html = await render(
     EventTicketEmail({
       eventTitle,
@@ -32,14 +39,17 @@ export async function sendEventTicketEmail({
       ticketImageUrl,
     })
   )
-  const { error } = await resend.emails.send({
+
+  const { data, error } = await resend.emails.send({
     from,
-    to,
+    to: to.trim(),
     subject: `Your ticket: ${eventTitle}`,
     html,
   })
+
   if (error) {
-    console.error("Resend error:", error)
+    console.error("Resend error sending ticket email:", error)
     throw new Error(error.message)
   }
+  return data
 }

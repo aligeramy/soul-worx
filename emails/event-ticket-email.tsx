@@ -64,7 +64,9 @@ export function EventTicketEmail({
               <Img
                 src={ticketImageUrl}
                 alt="Your ticket"
-                className="mt-4 w-full rounded-xl border border-neutral-200"
+                width={400}
+                className="mt-4 w-full max-w-[400px] rounded-xl border border-neutral-200"
+                style={{ maxWidth: "400px", width: "100%", height: "auto" }}
               />
             </Section>
             <Hr className="border-neutral-200" />

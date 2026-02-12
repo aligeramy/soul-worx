@@ -48,15 +48,19 @@ export async function createTicketAndSendEmail({
     .set({ ticketImageUrl })
     .where(eq(eventTickets.id, ticketId))
 
-  await sendEventTicketEmail({
-    to: purchaserEmail,
-    eventTitle: event.title,
-    dateLabel: event.dateLabel,
-    venueAddress: event.venueAddress,
-    purchaserName: purchaserName ?? undefined,
-    amountPaid: amountPaidCents === 0 ? "Free (coupon)" : `$${(amountPaidCents / 100).toFixed(2)} CAD`,
-    ticketImageUrl,
-  })
+  try {
+    await sendEventTicketEmail({
+      to: purchaserEmail,
+      eventTitle: event.title,
+      dateLabel: event.dateLabel,
+      venueAddress: event.venueAddress,
+      purchaserName: purchaserName ?? undefined,
+      amountPaid: amountPaidCents === 0 ? "Free (coupon)" : `$${(amountPaidCents / 100).toFixed(2)} CAD`,
+      ticketImageUrl,
+    })
+  } catch (emailError) {
+    console.error("Failed to send ticket email (ticket was created):", emailError)
+  }
 
   return ticket!
 }
