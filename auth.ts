@@ -179,7 +179,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
       // Protect dashboard routes (including onboarding)
       if (isDashboard && !isLoggedIn) {
-        return Response.redirect(new URL("/signin", nextUrl))
+        const signinUrl = new URL("/signin", nextUrl)
+        signinUrl.searchParams.set("callbackUrl", nextUrl.pathname)
+        return Response.redirect(signinUrl)
       }
 
       // Redirect new signups to onboarding
