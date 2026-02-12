@@ -158,8 +158,8 @@ export function EventTicketForm({
             }}
             className="h-10 w-20 md:w-24 bg-white/10 border-white/20 text-white text-sm md:text-base"
           />
-          <span className="text-white/50 text-xs md:text-sm">minimum ${minDollars}</span>
         </div>
+        <p className="text-white/50 text-xs">minimum ${minDollars}</p>
       </div>
 
       <div className="space-y-1.5 md:space-y-2">
@@ -180,7 +180,7 @@ export function EventTicketForm({
             type="button"
             variant="outline"
             onClick={validateCoupon}
-            className="h-10 md:h-11 border-white/20 text-white hover:bg-white/10 shrink-0 px-3 md:px-4 text-sm"
+            className="h-10 md:h-11 shrink-0 px-4 md:px-5 text-sm font-medium border-2 border-white/40 text-white bg-transparent hover:bg-white/15 hover:border-white/70 transition-colors"
           >
             Apply
           </Button>

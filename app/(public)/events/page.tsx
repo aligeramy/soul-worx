@@ -9,17 +9,17 @@ export default async function EventsPage() {
 
   return (
     <div className="min-h-screen bg-[rgb(25,21,18)]">
-      {/* Hero - event poster image */}
-      <section className="relative min-h-[35vh] md:min-h-[40vh] overflow-hidden">
+      {/* Hero - same as event id page: events.jpg with gradient */}
+      <section className="relative min-h-[28vh] sm:min-h-[35vh] md:min-h-[40vh] overflow-hidden">
         <Image
-          src="/event-poetry-1.png"
-          alt="Events"
+          src="/optimized/events.jpg"
+          alt=""
           fill
-          className="object-cover object-center"
+          className="object-cover object-center opacity-60"
           priority
           sizes="100vw"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[rgb(25,21,18)] via-[rgb(25,21,18)]/70 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[rgb(25,21,18)] via-[rgb(25,21,18)]/75 to-transparent" />
         <div className="absolute bottom-0 left-0 right-0 px-4 md:px-6 pb-6 md:pb-12">
           <div className="max-w-7xl mx-auto">
             <p className="text-white/80 mb-1 md:mb-2 text-xs md:text-sm font-semibold uppercase tracking-wider">
@@ -35,7 +35,7 @@ export default async function EventsPage() {
         </div>
       </section>
 
-      {/* Events list - ticket-style cards */}
+      {/* Events list */}
       <section className="relative z-0 py-8 md:py-16 px-4 md:px-6">
         <div className="max-w-4xl mx-auto">
           {events.length === 0 ? (
@@ -43,32 +43,32 @@ export default async function EventsPage() {
               <p className="text-white/60 text-base md:text-lg">No upcoming ticketed events right now. Check back soon.</p>
             </div>
           ) : (
-            <div className="space-y-5 md:space-y-8">
+            <div className="space-y-6 md:space-y-8">
               {events.map((event) => (
                 <Link
                   key={event.id}
                   href={`/events/${event.slug}`}
-                  className="block rounded-2xl overflow-hidden border border-white/10 bg-white/5 transition-all hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/20 focus:ring-offset-2 focus:ring-offset-[rgb(25,21,18)]"
+                  className="block rounded-2xl overflow-hidden border border-white/10 bg-white/[0.06] transition-all hover:bg-white/[0.08] focus:outline-none focus:ring-2 focus:ring-white/20 focus:ring-offset-2 focus:ring-offset-[rgb(25,21,18)]"
                 >
-                  <div className="relative aspect-[4/3] w-full">
+                  <div className="relative aspect-[2/1] sm:aspect-[5/2] w-full max-h-[220px] sm:max-h-[260px] bg-[rgb(25,21,18)]">
                     <Image
                       src="/event-poetry-1.png"
                       alt={event.title}
                       fill
-                      className="object-cover object-center"
+                      className="object-contain object-center"
                       sizes="(max-width: 768px) 100vw, 896px"
                     />
                   </div>
                   <div className="p-5 md:p-6">
-                    <p className="text-white/60 text-[10px] md:text-xs font-semibold uppercase tracking-wider mb-1 md:mb-2">
+                    <p className="text-white/50 text-[10px] md:text-xs font-semibold uppercase tracking-wider mb-1 md:mb-2">
                       SOULWORX PRESENTS
                     </p>
-                    <h2 className="text-2xl md:text-4xl font-crimson font-normal text-white mb-1 md:mb-2">
+                    <h2 className="text-2xl md:text-3xl font-crimson font-normal text-white mb-1 md:mb-2">
                       {event.title}
                     </h2>
-                    <p className="text-white/70 text-sm md:text-base mb-3 md:mb-4">{event.dateLabel}</p>
+                    <p className="text-white/70 text-sm md:text-base mb-2 md:mb-3">{event.dateLabel}</p>
                     <p className="text-white/50 text-xs md:text-sm">{event.venueAddress}</p>
-                    <p className="text-white/70 text-sm font-medium mt-4 pt-4 border-t border-white/10">
+                    <p className="text-white/60 text-sm font-medium mt-4 pt-4 border-t border-white/10">
                       From ${(event.minPriceCents / 100).toFixed(0)} — pick your price
                     </p>
                   </div>
