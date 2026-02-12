@@ -48,18 +48,19 @@ export default async function EventsPage() {
                 <Link
                   key={event.id}
                   href={`/events/${event.slug}`}
-                  className="block rounded-2xl overflow-hidden border border-white/10 bg-white/[0.06] transition-all hover:bg-white/[0.08] focus:outline-none focus:ring-2 focus:ring-white/20 focus:ring-offset-2 focus:ring-offset-[rgb(25,21,18)]"
+                  className="flex flex-col sm:flex-row rounded-2xl overflow-hidden border border-white/10 bg-white/[0.06] transition-all hover:bg-white/[0.08] focus:outline-none focus:ring-2 focus:ring-white/20 focus:ring-offset-2 focus:ring-offset-[rgb(25,21,18)]"
                 >
-                  <div className="relative aspect-[2/1] sm:aspect-[5/2] w-full max-h-[220px] sm:max-h-[260px] bg-[rgb(25,21,18)]">
+                  {/* Portrait image slot - poster fills nicely in landscape card */}
+                  <div className="relative w-full sm:w-[38%] sm:min-w-[180px] aspect-[3/4] bg-[rgb(25,21,18)] shrink-0">
                     <Image
                       src="/event-poetry-1.png"
                       alt={event.title}
                       fill
                       className="object-contain object-center"
-                      sizes="(max-width: 768px) 100vw, 896px"
+                      sizes="(max-width: 640px) 100vw, 42vw"
                     />
                   </div>
-                  <div className="p-5 md:p-6">
+                  <div className="flex-1 p-5 md:p-6 flex flex-col justify-center">
                     <p className="text-white/50 text-[10px] md:text-xs font-semibold uppercase tracking-wider mb-1 md:mb-2">
                       SOULWORX PRESENTS
                     </p>
