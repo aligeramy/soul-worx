@@ -83,6 +83,11 @@ export const navigationConfig: NavigationConfig = {
       ]
     },
     {
+      label: "Events",
+      href: "/events",
+      description: "Tickets for live events",
+    },
+    {
       label: "Shop",
       href: "/shop",
       submenu: [

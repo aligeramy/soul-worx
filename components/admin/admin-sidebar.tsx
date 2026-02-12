@@ -7,6 +7,7 @@ import {
   LayoutDashboard,
   Calendar,
   ShoppingBag,
+  Ticket,
   FileText,
   Sparkles,
   ArrowLeft,
@@ -71,6 +72,11 @@ const contentItems = [
     title: "Events",
     url: "/dashboard/admin/events",
     icon: Calendar,
+  },
+  {
+    title: "Event Tickets",
+    url: "/dashboard/admin/event-tickets",
+    icon: Ticket,
   },
   {
     title: "Stories",

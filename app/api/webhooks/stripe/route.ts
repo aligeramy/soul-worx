@@ -5,6 +5,8 @@ import { userMemberships, membershipTiers, users } from "@/lib/db/schema"
 import { eq, and } from "drizzle-orm"
 import { constructWebhookEvent } from "@/lib/stripe"
 import Stripe from "stripe"
+import { incrementCouponRedemption } from "@/lib/db/queries"
+import { createTicketAndSendEmail } from "@/lib/events/create-ticket-and-email"
 
 /**
  * POST /api/webhooks/stripe
@@ -85,6 +87,12 @@ export async function POST(request: NextRequest) {
  * Handle successful checkout
  */
 async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
+  // Event ticket purchase (pay-what-you-want)
+  if (session.metadata?.type === "event_ticket") {
+    await handleEventTicketCheckout(session)
+    return
+  }
+
   const userId = session.metadata?.userId
   const isMobile = session.metadata?.mobile === "true"
   const isOnboarding = session.metadata?.onboarding === "true"
@@ -171,6 +179,35 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
         onboardingData: updatedOnboardingData,
       })
       .where(eq(users.id, userId))
+  }
+}
+
+/**
+ * Handle event ticket checkout: create ticket, generate image, email
+ */
+async function handleEventTicketCheckout(session: Stripe.Checkout.Session) {
+  const eventId = session.metadata?.eventId
+  const purchaserEmail = session.metadata?.purchaserEmail
+  const purchaserName = session.metadata?.purchaserName ?? null
+  const couponId = session.metadata?.couponId ?? null
+  if (!eventId || !purchaserEmail) {
+    console.error("Event ticket checkout: missing eventId or purchaserEmail")
+    return
+  }
+
+  const amountPaidCents = session.amount_total ?? 0
+  try {
+    await createTicketAndSendEmail({
+      ticketedEventId: eventId,
+      purchaserEmail,
+      purchaserName,
+      amountPaidCents,
+      stripeSessionId: session.id,
+      couponId: couponId || undefined,
+    })
+    if (couponId) await incrementCouponRedemption(couponId)
+  } catch (err) {
+    console.error("Event ticket: create ticket or send email failed", err)
   }
 }
 

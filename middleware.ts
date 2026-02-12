@@ -12,6 +12,7 @@ export default auth((req) => {
   const isPublicRoute =
     pathname === "/" ||
     pathname.startsWith("/programs") ||
+    pathname.startsWith("/events") ||
     pathname.startsWith("/shop") ||
     pathname.startsWith("/stories") ||
     pathname.startsWith("/contact") ||

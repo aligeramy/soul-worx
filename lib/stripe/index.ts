@@ -227,6 +227,47 @@ export async function getCustomerByEmail(email: string) {
 }
 
 /**
+ * Create a one-time payment checkout session (e.g. for event tickets)
+ */
+export async function createPaymentCheckoutSession({
+  successUrl,
+  cancelUrl,
+  lineItems,
+  metadata = {},
+  customerEmail,
+}: {
+  successUrl: string
+  cancelUrl: string
+  lineItems: { name: string; description?: string; amountCents: number; quantity?: number }[]
+  metadata?: Record<string, string>
+  customerEmail?: string
+}) {
+  if (!stripe) {
+    throw new Error('STRIPE_SECRET_KEY is not set')
+  }
+  const session = await stripe.checkout.sessions.create({
+    mode: 'payment',
+    payment_method_types: ['card'],
+    line_items: lineItems.map((item) => ({
+      price_data: {
+        currency: 'cad',
+        product_data: {
+          name: item.name,
+          description: item.description,
+        },
+        unit_amount: item.amountCents,
+      },
+      quantity: item.quantity ?? 1,
+    })),
+    success_url: successUrl,
+    cancel_url: cancelUrl,
+    metadata,
+    customer_email: customerEmail,
+  })
+  return session
+}
+
+/**
  * Verify webhook signature
  */
 export function constructWebhookEvent(

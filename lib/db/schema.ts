@@ -353,6 +353,72 @@ export const products = pgTable("product", {
   updatedAt: timestamp("updatedAt", { mode: "date" }).notNull().defaultNow(),
 })
 
+// ==================== TICKETED EVENTS (Paid / Stripe) ====================
+export type TicketedEventStatus = "scheduled" | "cancelled" | "completed"
+
+export const ticketedEvents = pgTable("ticketed_event", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  slug: text("slug").notNull().unique(),
+  title: text("title").notNull(),
+  description: text("description"),
+  status: text("status").$type<TicketedEventStatus>().notNull().default("scheduled"),
+
+  // Display
+  dateLabel: text("dateLabel").notNull(), // e.g. "Saturday, April 4th"
+  venueAddress: text("venueAddress").notNull(),
+  doorsOpenAt: text("doorsOpenAt"), // e.g. "7:00 PM"
+  performanceAt: text("performanceAt"), // e.g. "8:30 PM"
+  mixMingleEnd: text("mixMingleEnd"), // e.g. "9:30-11 PM"
+
+  // Pricing (pay what you want)
+  minPriceCents: integer("minPriceCents").notNull().default(1500), // $15
+
+  createdAt: timestamp("createdAt", { mode: "date" }).notNull().defaultNow(),
+  updatedAt: timestamp("updatedAt", { mode: "date" }).notNull().defaultNow(),
+})
+
+export const eventTickets = pgTable("event_ticket", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  ticketedEventId: text("ticketedEventId")
+    .notNull()
+    .references(() => ticketedEvents.id, { onDelete: "cascade" }),
+
+  purchaserEmail: text("purchaserEmail").notNull(),
+  purchaserName: text("purchaserName"),
+  amountPaidCents: integer("amountPaidCents").notNull(),
+  stripeSessionId: text("stripeSessionId").unique(),
+  ticketImageUrl: text("ticketImageUrl"), // Vercel Blob URL
+  qrCodeData: text("qrCodeData").notNull(), // Data encoded in QR (e.g. ticket id for verification)
+  couponId: text("couponId").references(() => eventCoupons.id, { onDelete: "set null" }),
+
+  createdAt: timestamp("createdAt", { mode: "date" }).notNull().defaultNow(),
+})
+
+// ==================== EVENT COUPONS ====================
+export type EventCouponType = "percent" | "fixed"
+export type EventCouponStatus = "active" | "inactive"
+
+export const eventCoupons = pgTable("event_coupon", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  code: text("code").notNull().unique(), // e.g. POETRY10, FREETEST (stored uppercase)
+  type: text("type").$type<EventCouponType>().notNull(), // percent | fixed
+  value: integer("value").notNull(), // percent 1-100, or fixed amount in cents
+  ticketedEventId: text("ticketedEventId").references(() => ticketedEvents.id, { onDelete: "cascade" }), // null = any event
+  maxRedemptions: integer("maxRedemptions"), // null = unlimited
+  redemptionCount: integer("redemptionCount").notNull().default(0),
+  validFrom: timestamp("validFrom", { mode: "date" }),
+  validUntil: timestamp("validUntil", { mode: "date" }),
+  status: text("status").$type<EventCouponStatus>().notNull().default("active"),
+  createdAt: timestamp("createdAt", { mode: "date" }).notNull().defaultNow(),
+  updatedAt: timestamp("updatedAt", { mode: "date" }).notNull().defaultNow(),
+})
+
 // ==================== EVENT UPDATES LOG ====================
 // For tracking changes to events to trigger calendar re-syncs
 export const eventUpdates = pgTable("event_update", {
@@ -661,6 +727,29 @@ export const eventUpdatesRelations = relations(eventUpdates, ({ one }) => ({
   updatedBy: one(users, {
     fields: [eventUpdates.updatedBy],
     references: [users.id],
+  }),
+}))
+
+export const eventCouponsRelations = relations(eventCoupons, ({ one }) => ({
+  ticketedEvent: one(ticketedEvents, {
+    fields: [eventCoupons.ticketedEventId],
+    references: [ticketedEvents.id],
+  }),
+}))
+
+export const ticketedEventsRelations = relations(ticketedEvents, ({ many }) => ({
+  tickets: many(eventTickets),
+  coupons: many(eventCoupons),
+}))
+
+export const eventTicketsRelations = relations(eventTickets, ({ one }) => ({
+  ticketedEvent: one(ticketedEvents, {
+    fields: [eventTickets.ticketedEventId],
+    references: [ticketedEvents.id],
+  }),
+  coupon: one(eventCoupons, {
+    fields: [eventTickets.couponId],
+    references: [eventCoupons.id],
   }),
 }))
 

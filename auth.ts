@@ -157,6 +157,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       const isPublicRoute = 
         nextUrl.pathname === "/" ||
         nextUrl.pathname.startsWith("/programs") ||
+        nextUrl.pathname.startsWith("/events") ||
         nextUrl.pathname.startsWith("/shop") ||
         nextUrl.pathname.startsWith("/stories") ||
         nextUrl.pathname.startsWith("/contact")

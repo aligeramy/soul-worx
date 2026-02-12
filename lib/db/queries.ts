@@ -1,5 +1,5 @@
 import { db } from "./index"
-import { programs, events, rsvps, posts, products, users, eventUpdates, personalizedPrograms, programChecklistItems, userMemberships, proPlusQuestionnaires, type UserRole } from "./schema"
+import { programs, events, rsvps, posts, products, users, eventUpdates, personalizedPrograms, programChecklistItems, userMemberships, proPlusQuestionnaires, ticketedEvents, eventTickets, eventCoupons, type UserRole } from "./schema"
 import { eq, and, gte, desc, asc, count } from "drizzle-orm"
 
 // ==================== USER QUERIES ====================
@@ -119,6 +119,86 @@ export async function getEventRsvps(eventId: string) {
       user: true,
     },
   })
+}
+
+// ==================== TICKETED EVENTS ====================
+export async function getTicketedEvents() {
+  return db.query.ticketedEvents.findMany({
+    where: eq(ticketedEvents.status, "scheduled"),
+    orderBy: [asc(ticketedEvents.createdAt)],
+  })
+}
+
+export async function getTicketedEventBySlug(slug: string) {
+  return db.query.ticketedEvents.findFirst({
+    where: eq(ticketedEvents.slug, slug),
+    with: { tickets: true },
+  })
+}
+
+export async function getTicketedEventById(id: string) {
+  return db.query.ticketedEvents.findFirst({
+    where: eq(ticketedEvents.id, id),
+    with: { tickets: true },
+  })
+}
+
+export async function getEventTicketsForAdmin(ticketedEventId: string) {
+  return db.query.eventTickets.findMany({
+    where: eq(eventTickets.ticketedEventId, ticketedEventId),
+    orderBy: [desc(eventTickets.createdAt)],
+  })
+}
+
+export async function getAllTicketedEventsForAdmin() {
+  return db.query.ticketedEvents.findMany({
+    orderBy: [desc(ticketedEvents.createdAt)],
+    with: { tickets: true },
+  })
+}
+
+// ==================== EVENT COUPONS ====================
+export async function getEventCouponByCode(code: string, ticketedEventId: string) {
+  const normalized = code.trim().toUpperCase()
+  if (!normalized) return null
+  const coupon = await db.query.eventCoupons.findFirst({
+    where: eq(eventCoupons.code, normalized),
+  })
+  if (!coupon || coupon.status !== "active") return null
+  if (coupon.ticketedEventId != null && coupon.ticketedEventId !== ticketedEventId) return null
+  const now = new Date()
+  if (coupon.validFrom && now < coupon.validFrom) return null
+  if (coupon.validUntil && now > coupon.validUntil) return null
+  if (coupon.maxRedemptions != null && coupon.redemptionCount >= coupon.maxRedemptions) return null
+  return coupon
+}
+
+/**
+ * Compute discounted amount in cents. Returns { discountedCents, coupon } or { error }.
+ */
+export function applyEventCoupon(
+  amountCents: number,
+  coupon: { type: "percent" | "fixed"; value: number }
+): number {
+  if (coupon.type === "percent") {
+    const discount = Math.round((amountCents * coupon.value) / 100)
+    return Math.max(0, amountCents - discount)
+  }
+  return Math.max(0, amountCents - coupon.value)
+}
+
+export async function incrementCouponRedemption(couponId: string) {
+  const coupon = await db.query.eventCoupons.findFirst({
+    where: eq(eventCoupons.id, couponId),
+  })
+  if (!coupon) return
+  await db
+    .update(eventCoupons)
+    .set({
+      redemptionCount: coupon.redemptionCount + 1,
+      updatedAt: new Date(),
+    })
+    .where(eq(eventCoupons.id, couponId))
 }
 
 export async function checkExistingRsvp(eventId: string, userId: string) {
