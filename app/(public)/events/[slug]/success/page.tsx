@@ -84,94 +84,112 @@ export default async function EventTicketSuccessPage({
     }
   }
 
+  // Overlay nav (TopBar h-12 + Navigation h-20) — push content down so nothing sits under the menu
   return (
     <div className="min-h-[100dvh] bg-[rgb(25,21,18)] flex flex-col">
-      {/* Safe area: clear fixed nav; scrollable content */}
-      <div className="flex-1 flex flex-col items-center px-4 sm:px-6 pt-[calc(5rem+env(safe-area-inset-top))] pb-8 sm:pb-12 overflow-y-auto">
-        <div className="max-w-md w-full flex flex-col gap-6">
-          {/* Header */}
+      <div className="flex-1 flex flex-col items-center px-4 sm:px-6 pt-32 sm:pt-36 pb-8 sm:pb-12 overflow-y-auto">
+        <div className="w-full max-w-2xl flex flex-col gap-8">
+          {/* Order confirmed header */}
           <div className="text-center">
-            <h1 className="text-2xl sm:text-3xl font-crimson font-normal text-white mb-1">
-              You&apos;re in!
+            <div className="inline-flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-white/10 border border-white/20 mb-4 sm:mb-5">
+              <svg className="w-7 h-7 sm:w-8 sm:h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+            <h1 className="text-3xl sm:text-4xl font-crimson font-normal text-white mb-2">
+              Order confirmed
             </h1>
-            <p className="text-white/70 text-sm sm:text-base">
-              Your ticket for <strong>{event.title}</strong> has been sent to your email.
+            <p className="text-white/70 text-base sm:text-lg max-w-md mx-auto">
+              Show the QR code below at the door for <strong className="text-white">{event.title}</strong>.
             </p>
           </div>
 
-          {/* Ticket card: QR + details */}
-          <div className="rounded-2xl border border-white/10 bg-white/[0.06] overflow-hidden">
-            <div className="p-4 sm:p-6 flex flex-col sm:flex-row gap-4 sm:gap-6 items-center sm:items-start">
-              {/* QR code - prominent, scannable */}
-              {qrDataUrl && (
-                <div className="flex-shrink-0 rounded-xl bg-white p-3 sm:p-4 border border-white/20">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={qrDataUrl}
-                    alt="Ticket QR code — show at the door"
-                    className="w-[160px] h-[160px] sm:w-[200px] sm:h-[200px]"
-                    width={200}
-                    height={200}
-                  />
-                </div>
-              )}
-              {/* Details */}
-              <div className="flex-1 min-w-0 text-center sm:text-left space-y-3 sm:space-y-4">
-                <div>
-                  <p className="text-white/50 text-xs uppercase tracking-wider mb-0.5">Event</p>
-                  <p className="text-white font-medium">{event.title}</p>
-                </div>
-                <div>
-                  <p className="text-white/50 text-xs uppercase tracking-wider mb-0.5">Date & time</p>
-                  <p className="text-white/90 text-sm sm:text-base">
-                    {event.dateLabel}
-                    {event.doorsOpenAt && (
-                      <span className="block sm:inline sm:ml-1">
-                        · Doors {event.doorsOpenAt}
-                        {event.performanceAt && ` · Show ${event.performanceAt}`}
-                      </span>
-                    )}
-                  </p>
-                </div>
-                {event.venueAddress && (
-                  <div>
-                    <p className="text-white/50 text-xs uppercase tracking-wider mb-0.5">Venue</p>
-                    <p className="text-white/80 text-sm sm:text-base">{event.venueAddress}</p>
+          {/* Ticket / order details card */}
+          <div className="rounded-2xl border border-white/10 bg-white/[0.06] overflow-hidden shadow-xl">
+            <div className="p-6 sm:p-8 md:p-10">
+              <div className="flex flex-col md:flex-row gap-8 md:gap-10 items-center md:items-start">
+                {/* QR code - large and scannable */}
+                {qrDataUrl && (
+                  <div className="flex-shrink-0 rounded-2xl bg-white p-4 sm:p-5 border border-white/20 shadow-lg">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={qrDataUrl}
+                      alt="Ticket QR code — show at the door"
+                      className="w-[200px] h-[200px] sm:w-[240px] sm:h-[240px]"
+                      width={240}
+                      height={240}
+                    />
                   </div>
                 )}
-                {ticket && (
-                  <>
-                    <div>
-                      <p className="text-white/50 text-xs uppercase tracking-wider mb-0.5">Ticket holder</p>
-                      <p className="text-white/90 text-sm sm:text-base">
-                        {ticket.purchaserName || ticket.purchaserEmail}
+
+                {/* Details list - plenty of space */}
+                <div className="flex-1 min-w-0 w-full space-y-5 sm:space-y-6">
+                  <div>
+                    <p className="text-white/50 text-xs font-semibold uppercase tracking-wider mb-1.5">Event</p>
+                    <p className="text-white text-lg sm:text-xl font-medium">{event.title}</p>
+                  </div>
+                  <div>
+                    <p className="text-white/50 text-xs font-semibold uppercase tracking-wider mb-1.5">Date & time</p>
+                    <p className="text-white/90 text-base sm:text-lg">
+                      {event.dateLabel}
+                    </p>
+                    {(event.doorsOpenAt || event.performanceAt) && (
+                      <p className="text-white/80 text-sm sm:text-base mt-1">
+                        {event.doorsOpenAt && <>Doors {event.doorsOpenAt}</>}
+                        {event.doorsOpenAt && event.performanceAt && " · "}
+                        {event.performanceAt && <>Show {event.performanceAt}</>}
                       </p>
+                    )}
+                  </div>
+                  {event.venueAddress && (
+                    <div>
+                      <p className="text-white/50 text-xs font-semibold uppercase tracking-wider mb-1.5">Venue</p>
+                      <p className="text-white/90 text-base sm:text-lg">{event.venueAddress}</p>
                     </div>
-                    {ticket.amountPaidCents > 0 && (
+                  )}
+                  {ticket && (
+                    <>
                       <div>
-                        <p className="text-white/50 text-xs uppercase tracking-wider mb-0.5">Amount paid</p>
-                        <p className="text-white/90 text-sm sm:text-base">
-                          ${(ticket.amountPaidCents / 100).toFixed(2)}
+                        <p className="text-white/50 text-xs font-semibold uppercase tracking-wider mb-1.5">Ticket holder</p>
+                        <p className="text-white/90 text-base sm:text-lg">
+                          {ticket.purchaserName || ticket.purchaserEmail}
                         </p>
                       </div>
-                    )}
-                  </>
-                )}
+                      {ticket.amountPaidCents > 0 && (
+                        <div>
+                          <p className="text-white/50 text-xs font-semibold uppercase tracking-wider mb-1.5">Amount paid</p>
+                          <p className="text-white text-base sm:text-lg font-medium">
+                            ${(ticket.amountPaidCents / 100).toFixed(2)}
+                          </p>
+                        </div>
+                      )}
+                    </>
+                  )}
+                </div>
               </div>
+
+              {!qrDataUrl && (
+                <p className="text-white/50 text-sm text-center mt-6 pt-6 border-t border-white/10">
+                  Show your confirmation email at the door.
+                </p>
+              )}
             </div>
-            {!qrDataUrl && (
-              <p className="text-white/50 text-xs text-center px-4 pb-4">
-                Show your confirmation email at the door.
-              </p>
-            )}
           </div>
 
-          <Link
-            href="/events"
-            className="inline-block text-center px-6 py-3 bg-white text-[rgb(25,21,18)] font-semibold rounded-lg hover:bg-white/90 transition w-full sm:w-auto"
-          >
-            Back to events
-          </Link>
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-stretch sm:items-center">
+            <Link
+              href="/events"
+              className="inline-flex items-center justify-center px-8 py-3.5 bg-white text-[rgb(25,21,18)] font-semibold rounded-lg hover:bg-white/90 transition text-base"
+            >
+              Back to events
+            </Link>
+            <Link
+              href="/"
+              className="inline-flex items-center justify-center px-8 py-3.5 border border-white/30 text-white font-medium rounded-lg hover:bg-white/10 transition text-base"
+            >
+              Home
+            </Link>
+          </div>
         </div>
       </div>
     </div>
