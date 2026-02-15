@@ -15,6 +15,7 @@ export async function sendEventTicketEmail({
   purchaserName,
   amountPaid,
   ticketImageUrl = "",
+  qrCodeDataUrl,
 }: {
   to: string
   eventTitle: string
@@ -23,6 +24,7 @@ export async function sendEventTicketEmail({
   purchaserName?: string
   amountPaid: string
   ticketImageUrl?: string
+  qrCodeDataUrl?: string
 }) {
   if (!resend) {
     console.error("RESEND_API_KEY is not set — ticket email not sent to", to)
@@ -37,6 +39,7 @@ export async function sendEventTicketEmail({
       purchaserName,
       amountPaid,
       ticketImageUrl,
+      qrCodeDataUrl,
     })
   )
 

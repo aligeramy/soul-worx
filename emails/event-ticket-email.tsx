@@ -19,6 +19,8 @@ interface EventTicketEmailProps {
   purchaserName?: string
   amountPaid: string
   ticketImageUrl?: string
+  /** Data URL of the QR code (actual scannable QR). Shown prominently for door scan. */
+  qrCodeDataUrl?: string
 }
 
 export function EventTicketEmail({
@@ -28,6 +30,7 @@ export function EventTicketEmail({
   purchaserName,
   amountPaid,
   ticketImageUrl,
+  qrCodeDataUrl,
 }: EventTicketEmailProps) {
   return (
     <Html>
@@ -59,19 +62,37 @@ export function EventTicketEmail({
             <Hr className="border-neutral-200" />
             <Section className="my-6">
               <Text className="text-sm text-neutral-600">
-                Hi{purchaserName ? ` ${purchaserName}` : ""}, here&apos;s your ticket. Show this (or the QR code) at the door.
+                Hi{purchaserName ? ` ${purchaserName}` : ""}, here&apos;s your ticket. Show the QR code at the door.
               </Text>
+              {qrCodeDataUrl ? (
+                <>
+                  <Text className="mt-3 text-xs font-semibold uppercase tracking-wider text-neutral-500">
+                    Scan at door
+                  </Text>
+                  <Img
+                    src={qrCodeDataUrl}
+                    alt="Ticket QR code — show this at the door"
+                    width={256}
+                    height={256}
+                    className="mt-2 rounded-lg border-2 border-neutral-200 bg-white p-2"
+                    style={{ width: 256, height: 256 }}
+                  />
+                </>
+              ) : null}
               {ticketImageUrl ? (
-                <Img
-                  src={ticketImageUrl}
-                  alt="Your ticket"
-                  width={400}
-                  className="mt-4 w-full max-w-[400px] rounded-xl border border-neutral-200"
-                  style={{ maxWidth: "400px", width: "100%", height: "auto" }}
-                />
-              ) : (
+                <div className="mt-4">
+                  <Text className="text-xs text-neutral-500 mb-2">Ticket (reference)</Text>
+                  <Img
+                    src={ticketImageUrl}
+                    alt="Your ticket"
+                    width={400}
+                    className="w-full max-w-[400px] rounded-xl border border-neutral-200"
+                    style={{ maxWidth: "400px", width: "100%", height: "auto" }}
+                  />
+                </div>
+              ) : !qrCodeDataUrl ? (
                 <Text className="mt-4 text-sm text-neutral-500">Your ticket is confirmed. Show your confirmation email at the door.</Text>
-              )}
+              ) : null}
             </Section>
             <Hr className="border-neutral-200" />
             <Section>

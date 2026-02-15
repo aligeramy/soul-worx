@@ -1,6 +1,7 @@
 /**
  * Create event ticket record, generate image, send email. Used for both paid (webhook) and free (100% coupon) flows.
  */
+import QRCode from "qrcode"
 import { db } from "@/lib/db"
 import { eventTickets } from "@/lib/db/schema"
 import { eq } from "drizzle-orm"
@@ -55,6 +56,16 @@ export async function createTicketAndSendEmail({
     console.error("Ticket image generation/upload failed (ticket was created):", imgError)
   }
 
+  let qrCodeDataUrl: string | null = null
+  try {
+    qrCodeDataUrl = await QRCode.toDataURL(ticket!.qrCodeData ?? ticketId, {
+      width: 256,
+      margin: 1,
+    })
+  } catch {
+    // non-fatal; email can still show ticket image
+  }
+
   try {
     await sendEventTicketEmail({
       to: purchaserEmail,
@@ -64,6 +75,7 @@ export async function createTicketAndSendEmail({
       purchaserName: purchaserName ?? undefined,
       amountPaid: amountPaidCents === 0 ? "Free (coupon)" : `$${(amountPaidCents / 100).toFixed(2)} CAD`,
       ticketImageUrl: ticketImageUrl ?? "",
+      qrCodeDataUrl: qrCodeDataUrl ?? undefined,
     })
   } catch (emailError) {
     console.error("Failed to send ticket email (ticket was created):", emailError)

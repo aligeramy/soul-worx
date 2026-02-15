@@ -104,25 +104,30 @@ export default async function AdminEventTicketsPage() {
                             </td>
                             <td className="py-3 px-2">
                               <StopPropagation>
-                                {t.ticketImageUrl ? (
-                                  <a
-                                    href={t.ticketImageUrl}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="inline-block"
-                                  >
-                                    <img
-                                      src={t.ticketImageUrl}
-                                      alt="Ticket"
-                                      className="h-16 w-16 object-cover rounded border border-white/20"
-                                    />
-                                  </a>
-                                ) : (
-                                  <div className="flex flex-col items-start gap-1.5">
-                                    <span className="text-white/40 text-xs">Processing…</span>
-                                    <RegenerateTicketButton ticketId={t.id} />
-                                  </div>
-                                )}
+                                <div className="flex items-center gap-2">
+                                  <img
+                                    src={`/api/admin/event-tickets/qr?ticketId=${encodeURIComponent(t.id)}`}
+                                    alt="QR code"
+                                    width={64}
+                                    height={64}
+                                    className="h-16 w-16 rounded border border-white/20 bg-white object-contain"
+                                  />
+                                  {t.ticketImageUrl ? (
+                                    <a
+                                      href={t.ticketImageUrl}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className="text-white/50 hover:text-white text-xs"
+                                    >
+                                      Ticket
+                                    </a>
+                                  ) : (
+                                    <div className="flex flex-col items-start gap-1">
+                                      <span className="text-white/40 text-xs">Image processing…</span>
+                                      <RegenerateTicketButton ticketId={t.id} />
+                                    </div>
+                                  )}
+                                </div>
                               </StopPropagation>
                             </td>
                           </TicketRow>
