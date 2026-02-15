@@ -3,13 +3,12 @@ import { notFound } from "next/navigation"
 import { EventRecapContent } from "./event-recap-content"
 
 interface PageProps {
-  params: {
-    slug: string
-  }
+  params: Promise<{ slug: string }>
 }
 
 export default async function EventRecapDetailPage({ params }: PageProps) {
-  const post = await getPostBySlug(params.slug)
+  const { slug } = await params
+  const post = await getPostBySlug(slug)
   
   if (!post || post.category !== "news" || post.status !== "published") {
     notFound()

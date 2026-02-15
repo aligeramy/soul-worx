@@ -3,13 +3,12 @@ import { notFound } from "next/navigation"
 import { PressContent } from "./press-content"
 
 interface PageProps {
-  params: {
-    slug: string
-  }
+  params: Promise<{ slug: string }>
 }
 
 export default async function PressDetailPage({ params }: PageProps) {
-  const post = await getPostBySlug(params.slug)
+  const { slug } = await params
+  const post = await getPostBySlug(slug)
   
   if (!post || post.category !== "announcements" || post.status !== "published") {
     notFound()

@@ -3,13 +3,12 @@ import { notFound } from "next/navigation"
 import { CommunityContent } from "./community-content"
 
 interface PageProps {
-  params: {
-    slug: string
-  }
+  params: Promise<{ slug: string }>
 }
 
 export default async function CommunityDetailPage({ params }: PageProps) {
-  const post = await getPostBySlug(params.slug)
+  const { slug } = await params
+  const post = await getPostBySlug(slug)
   
   if (!post || post.category !== "blog" || post.status !== "published") {
     notFound()
