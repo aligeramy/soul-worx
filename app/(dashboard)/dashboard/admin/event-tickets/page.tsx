@@ -26,7 +26,7 @@ function getTicketDate(t: { createdAt?: unknown; created_at?: unknown }): Date |
 
 function formatTicketDate(t: { createdAt?: unknown; created_at?: unknown }): string {
   const d = getTicketDate(t)
-  return d ? format(d, "PPp") : "—"
+  return d ? format(d, "MMM d") : "—"
 }
 
 function parsePerPage(value: string | undefined): number {
