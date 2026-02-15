@@ -34,10 +34,13 @@ export function EventTicketForm({
   const displayCents = appliedCoupon ? appliedCoupon.discountedCents : amountCents
   const displayDollars = displayCents / 100
   const isFree = displayCents === 0
+  // When a coupon is applied, allow any discounted amount >= 0 (backend handles Stripe minimum)
+  const amountOk =
+    isFree ||
+    displayCents >= minPriceCents ||
+    (appliedCoupon !== null && displayCents >= 0)
   const isValid =
-    (isFree || displayCents >= minPriceCents) &&
-    email.trim().length > 0 &&
-    (isFree || amount >= minDollars)
+    amountOk && email.trim().length > 0 && (isFree || amount >= minDollars)
 
   const validateCoupon = useCallback(async () => {
     if (!couponCode.trim()) {

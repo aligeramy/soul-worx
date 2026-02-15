@@ -59,9 +59,10 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ url: successUrl })
     }
 
-    if (finalCents < event.minPriceCents) {
+    // Enforce event minimum only when no coupon; with a coupon we allow any discounted amount
+    if (!coupon && finalCents < event.minPriceCents) {
       return NextResponse.json(
-        { error: `After discount, minimum is $${event.minPriceCents / 100}` },
+        { error: `Minimum is $${event.minPriceCents / 100}` },
         { status: 400 }
       )
     }
