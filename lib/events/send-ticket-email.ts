@@ -14,7 +14,7 @@ export async function sendEventTicketEmail({
   venueAddress,
   purchaserName,
   amountPaid,
-  ticketImageUrl,
+  ticketImageUrl = "",
 }: {
   to: string
   eventTitle: string
@@ -22,11 +22,11 @@ export async function sendEventTicketEmail({
   venueAddress: string
   purchaserName?: string
   amountPaid: string
-  ticketImageUrl: string
+  ticketImageUrl?: string
 }) {
   if (!resend) {
     console.error("RESEND_API_KEY is not set — ticket email not sent to", to)
-    throw new Error("Email is not configured. Your ticket was saved; please contact us for your ticket image.")
+    return null
   }
 
   const html = await render(

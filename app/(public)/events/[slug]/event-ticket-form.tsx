@@ -99,8 +99,8 @@ export function EventTicketForm({
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
-      <div className="space-y-1.5 md:space-y-2">
+    <form onSubmit={handleSubmit} className="flex flex-col space-y-4 md:space-y-6">
+      <div className="flex flex-col space-y-1.5 md:space-y-2">
         <Label htmlFor="email" className="text-white/80 text-sm">
           Email
         </Label>
@@ -114,7 +114,7 @@ export function EventTicketForm({
           className="h-10 md:h-11 bg-white/10 border-white/20 text-white placeholder:text-white/40 text-sm md:text-base"
         />
       </div>
-      <div className="space-y-1.5 md:space-y-2">
+      <div className="flex flex-col space-y-1.5 md:space-y-2">
         <Label htmlFor="name" className="text-white/80 text-sm">
           Name (for ticket)
         </Label>
@@ -127,7 +127,7 @@ export function EventTicketForm({
           className="h-10 md:h-11 bg-white/10 border-white/20 text-white placeholder:text-white/40 text-sm md:text-base"
         />
       </div>
-      <div className="space-y-2 md:space-y-3">
+      <div className="flex flex-col space-y-2 md:space-y-3">
         <Label className="text-white/80 text-sm">Amount (CAD)</Label>
         <div className="flex flex-wrap gap-1.5 md:gap-2">
           {PRESETS.map((d) => (
@@ -162,7 +162,7 @@ export function EventTicketForm({
         <p className="text-white/50 text-xs">minimum ${minDollars}</p>
       </div>
 
-      <div className="space-y-1.5 md:space-y-2">
+      <div className="flex flex-col space-y-1.5 md:space-y-2">
         <Label className="text-white/80 text-sm">Coupon code</Label>
         <div className="flex gap-1.5 md:gap-2">
           <Input

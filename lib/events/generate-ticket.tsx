@@ -44,19 +44,19 @@ export async function generateTicketImageAndUpload(
             padding: 32,
           }}
         >
-          <div style={{ fontSize: 10, color: "rgba(255,255,255,0.6)", letterSpacing: 4, marginBottom: 8 }}>
+          <div style={{ display: "flex", fontSize: 10, color: "rgba(255,255,255,0.6)", letterSpacing: 4, marginBottom: 8 }}>
             SOULWORX PRESENTS
           </div>
-          <div style={{ fontSize: 24, fontWeight: 700, color: "white", marginBottom: 4 }}>
+          <div style={{ display: "flex", fontSize: 24, fontWeight: 700, color: "white", marginBottom: 4 }}>
             {event.title}
           </div>
-          <div style={{ fontSize: 14, color: "rgba(255,255,255,0.8)", marginBottom: 16 }}>
+          <div style={{ display: "flex", fontSize: 14, color: "rgba(255,255,255,0.8)", marginBottom: 16 }}>
             {event.dateLabel}
           </div>
-          <div style={{ fontSize: 12, color: "rgba(255,255,255,0.6)", marginBottom: 8 }}>
+          <div style={{ display: "flex", fontSize: 12, color: "rgba(255,255,255,0.6)", marginBottom: 8 }}>
             {event.venueAddress}
           </div>
-          <div style={{ fontSize: 12, color: "rgba(255,255,255,0.5)", marginBottom: 24 }}>
+          <div style={{ display: "flex", fontSize: 12, color: "rgba(255,255,255,0.5)", marginBottom: 24 }}>
             Doors {event.doorsOpenAt || "—"} · Performances {event.performanceAt || "—"}
           </div>
           <div
@@ -68,9 +68,9 @@ export async function generateTicketImageAndUpload(
               paddingTop: 24,
             }}
           >
-            <div>
-              <div style={{ fontSize: 11, color: "rgba(255,255,255,0.5)" }}>Ticket holder</div>
-              <div style={{ fontSize: 14, fontWeight: 500, color: "white" }}>
+            <div style={{ display: "flex", flexDirection: "column" }}>
+              <div style={{ display: "flex", fontSize: 11, color: "rgba(255,255,255,0.5)" }}>Ticket holder</div>
+              <div style={{ display: "flex", fontSize: 14, fontWeight: 500, color: "white" }}>
                 {ticket.purchaserName || ticket.purchaserEmail}
               </div>
             </div>

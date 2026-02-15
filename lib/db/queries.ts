@@ -150,6 +150,13 @@ export async function getEventTicketsForAdmin(ticketedEventId: string) {
   })
 }
 
+export async function getEventTicketById(ticketId: string) {
+  return db.query.eventTickets.findFirst({
+    where: eq(eventTickets.id, ticketId),
+    with: { ticketedEvent: true },
+  })
+}
+
 export async function getAllTicketedEventsForAdmin() {
   return db.query.ticketedEvents.findMany({
     orderBy: [desc(ticketedEvents.createdAt)],

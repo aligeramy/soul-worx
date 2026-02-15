@@ -18,7 +18,7 @@ interface EventTicketEmailProps {
   venueAddress: string
   purchaserName?: string
   amountPaid: string
-  ticketImageUrl: string
+  ticketImageUrl?: string
 }
 
 export function EventTicketEmail({
@@ -61,13 +61,17 @@ export function EventTicketEmail({
               <Text className="text-sm text-neutral-600">
                 Hi{purchaserName ? ` ${purchaserName}` : ""}, here&apos;s your ticket. Show this (or the QR code) at the door.
               </Text>
-              <Img
-                src={ticketImageUrl}
-                alt="Your ticket"
-                width={400}
-                className="mt-4 w-full max-w-[400px] rounded-xl border border-neutral-200"
-                style={{ maxWidth: "400px", width: "100%", height: "auto" }}
-              />
+              {ticketImageUrl ? (
+                <Img
+                  src={ticketImageUrl}
+                  alt="Your ticket"
+                  width={400}
+                  className="mt-4 w-full max-w-[400px] rounded-xl border border-neutral-200"
+                  style={{ maxWidth: "400px", width: "100%", height: "auto" }}
+                />
+              ) : (
+                <Text className="mt-4 text-sm text-neutral-500">Your ticket is confirmed. Show your confirmation email at the door.</Text>
+              )}
             </Section>
             <Hr className="border-neutral-200" />
             <Section>

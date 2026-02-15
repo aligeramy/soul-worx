@@ -27,6 +27,7 @@ export async function createTicketAndSendEmail({
   if (!event) throw new Error("Event not found")
 
   const ticketId = crypto.randomUUID()
+  const now = new Date()
   const [ticket] = await db
     .insert(eventTickets)
     .values({
@@ -39,14 +40,20 @@ export async function createTicketAndSendEmail({
       qrCodeData: ticketId,
       ticketImageUrl: null,
       couponId: couponId ?? null,
+      createdAt: now,
     })
     .returning()
 
-  const ticketImageUrl = await generateTicketImageAndUpload(ticket!, event)
-  await db
-    .update(eventTickets)
-    .set({ ticketImageUrl })
-    .where(eq(eventTickets.id, ticketId))
+  let ticketImageUrl: string | null = null
+  try {
+    ticketImageUrl = await generateTicketImageAndUpload(ticket!, event)
+    await db
+      .update(eventTickets)
+      .set({ ticketImageUrl })
+      .where(eq(eventTickets.id, ticketId))
+  } catch (imgError) {
+    console.error("Ticket image generation/upload failed (ticket was created):", imgError)
+  }
 
   try {
     await sendEventTicketEmail({
@@ -56,7 +63,7 @@ export async function createTicketAndSendEmail({
       venueAddress: event.venueAddress,
       purchaserName: purchaserName ?? undefined,
       amountPaid: amountPaidCents === 0 ? "Free (coupon)" : `$${(amountPaidCents / 100).toFixed(2)} CAD`,
-      ticketImageUrl,
+      ticketImageUrl: ticketImageUrl ?? "",
     })
   } catch (emailError) {
     console.error("Failed to send ticket email (ticket was created):", emailError)

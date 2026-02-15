@@ -6,6 +6,15 @@ import { Badge } from "@/components/ui/badge"
 import Link from "next/link"
 import { format } from "date-fns"
 import { MapPin, Ticket, ExternalLink } from "lucide-react"
+import { RegenerateTicketButton, RegenerateAllForEventButton } from "./regenerate-ticket-button"
+import { TicketRow } from "./ticket-row"
+import { StopPropagation } from "./stop-propagation"
+
+function formatTicketDate(value: unknown): string {
+  if (value == null) return "—"
+  const d = value instanceof Date ? value : new Date(value as string | number)
+  return Number.isNaN(d.getTime()) ? "—" : format(d, "MMM d, yyyy HH:mm")
+}
 
 export default async function AdminEventTicketsPage() {
   const session = await auth()
@@ -45,6 +54,10 @@ export default async function AdminEventTicketsPage() {
                     </p>
                   </div>
                   <div className="flex items-center gap-2">
+                    <RegenerateAllForEventButton
+                      eventId={event.id}
+                      count={event.tickets.filter((t) => !t.ticketImageUrl).length}
+                    />
                     <Badge variant="outline" className="border-white/20 text-white/80">
                       Min ${event.minPriceCents / 100}
                     </Badge>
@@ -78,9 +91,9 @@ export default async function AdminEventTicketsPage() {
                       </thead>
                       <tbody className="divide-y divide-white/10">
                         {event.tickets.map((t) => (
-                          <tr key={t.id} className="hover:bg-white/5">
+                          <TicketRow key={t.id} ticketId={t.id}>
                             <td className="py-3 px-2 text-white/70">
-                              {format(new Date(t.createdAt), "MMM d, yyyy HH:mm")}
+                              {formatTicketDate(t.createdAt)}
                             </td>
                             <td className="py-3 px-2">
                               <div className="font-medium text-white">{t.purchaserName || "—"}</div>
@@ -90,24 +103,29 @@ export default async function AdminEventTicketsPage() {
                               ${(t.amountPaidCents / 100).toFixed(2)}
                             </td>
                             <td className="py-3 px-2">
-                              {t.ticketImageUrl ? (
-                                <a
-                                  href={t.ticketImageUrl}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="inline-block"
-                                >
-                                  <img
-                                    src={t.ticketImageUrl}
-                                    alt="Ticket"
-                                    className="h-16 w-16 object-cover rounded border border-white/20"
-                                  />
-                                </a>
-                              ) : (
-                                <span className="text-white/40 text-xs">Processing…</span>
-                              )}
+                              <StopPropagation>
+                                {t.ticketImageUrl ? (
+                                  <a
+                                    href={t.ticketImageUrl}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="inline-block"
+                                  >
+                                    <img
+                                      src={t.ticketImageUrl}
+                                      alt="Ticket"
+                                      className="h-16 w-16 object-cover rounded border border-white/20"
+                                    />
+                                  </a>
+                                ) : (
+                                  <div className="flex flex-col items-start gap-1.5">
+                                    <span className="text-white/40 text-xs">Processing…</span>
+                                    <RegenerateTicketButton ticketId={t.id} />
+                                  </div>
+                                )}
+                              </StopPropagation>
                             </td>
-                          </tr>
+                          </TicketRow>
                         ))}
                       </tbody>
                     </table>

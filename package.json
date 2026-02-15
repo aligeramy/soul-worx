@@ -16,7 +16,8 @@
     "db:seed-products": "tsx lib/seed-products-standalone.ts",
     "db:seed-community": "tsx lib/seed-community.ts",
     "db:seed-ticketed-events": "tsx scripts/seed-ticketed-events.ts",
-    "setup-stripe": "tsx scripts/setup-stripe-products.ts",
+    "setup-stripe": "tsx scripts/setup-stripe-prices.ts",
+    "setup-stripe-prices": "tsx scripts/setup-stripe-prices.ts",
     "check-user": "tsx scripts/check-user.ts",
     "make-admin": "tsx scripts/make-admin.ts",
     "generate-legal-docs": "tsx scripts/generate-legal-documents.ts"

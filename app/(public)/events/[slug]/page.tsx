@@ -32,7 +32,7 @@ export default async function TicketedEventPage({
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[rgb(25,21,18)] via-[rgb(25,21,18)]/75 to-transparent" />
         <div className="absolute bottom-0 left-0 right-0 px-4 md:px-6 pb-5 md:pb-10">
-          <div className="max-w-4xl mx-auto">
+          <div className="max-w-4xl mx-auto flex flex-col">
             <p className="text-white/80 mb-1 text-xs font-semibold uppercase tracking-wider">
               SOULWORX PRESENTS
             </p>
@@ -66,7 +66,7 @@ export default async function TicketedEventPage({
           </div>
 
           {/* Event details card */}
-          <div className="order-2 lg:order-1 lg:col-span-2 space-y-4 md:space-y-5">
+          <div className="order-2 lg:order-1 lg:col-span-2 flex flex-col space-y-4 md:space-y-5">
             <div className="rounded-2xl border border-white/10 bg-white/[0.06] overflow-hidden">
               <div className="relative aspect-[3/2] w-full max-h-[200px] bg-[rgb(25,21,18)]">
                 <Image

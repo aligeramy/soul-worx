@@ -3,7 +3,7 @@ import { headers } from "next/headers"
 import { db } from "@/lib/db"
 import { userMemberships, membershipTiers, users } from "@/lib/db/schema"
 import { eq, and } from "drizzle-orm"
-import { constructWebhookEvent } from "@/lib/stripe"
+import { constructWebhookEvent, stripe } from "@/lib/stripe"
 import Stripe from "stripe"
 import { incrementCouponRedemption } from "@/lib/db/queries"
 import { createTicketAndSendEmail } from "@/lib/events/create-ticket-and-email"
@@ -195,7 +195,26 @@ async function handleEventTicketCheckout(session: Stripe.Checkout.Session) {
     return
   }
 
-  const amountPaidCents = session.amount_total ?? 0
+  // Webhook payload can have amount_total null; retrieve full session from Stripe if needed
+  let amountPaidCents = session.amount_total ?? 0
+  if (amountPaidCents === 0 && stripe && session.id) {
+    try {
+      const fullSession = await stripe.checkout.sessions.retrieve(session.id, {
+        expand: ["line_items"],
+      })
+      amountPaidCents = fullSession.amount_total ?? 0
+      if (amountPaidCents === 0 && fullSession.line_items?.data?.length) {
+        // amount_total per line item is already (unit_amount * quantity)
+        amountPaidCents = fullSession.line_items.data.reduce(
+          (sum, item) => sum + (item.amount_total ?? 0),
+          0
+        )
+      }
+    } catch (e) {
+      console.error("Failed to retrieve checkout session for amount:", e)
+    }
+  }
+
   try {
     await createTicketAndSendEmail({
       ticketedEventId: eventId,
