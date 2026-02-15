@@ -14,8 +14,7 @@ import { RegenerateTicketButton, RegenerateAllForEventButton } from "./regenerat
 import { TicketRow } from "./ticket-row"
 import { StopPropagation } from "./stop-propagation"
 
-const PER_PAGE_OPTIONS = [5, 10, 50, 100] as const
-const DEFAULT_PER_PAGE = 5
+const EVENTS_PER_PAGE = 8
 
 function getTicketDate(t: { createdAt?: unknown; created_at?: unknown }): Date | null {
   const raw = t.createdAt ?? (t as { created_at?: unknown }).created_at
@@ -26,20 +25,13 @@ function getTicketDate(t: { createdAt?: unknown; created_at?: unknown }): Date |
 
 function formatTicketDate(t: { createdAt?: unknown; created_at?: unknown }): string {
   const d = getTicketDate(t)
-  return d ? format(d, "MMM d") : "—"
-}
-
-function parsePerPage(value: string | undefined): number {
-  const n = parseInt(value ?? "", 10)
-  return PER_PAGE_OPTIONS.includes(n as (typeof PER_PAGE_OPTIONS)[number])
-    ? n
-    : DEFAULT_PER_PAGE
+  return d ? format(d, "MMM d, yyyy HH:mm") : "—"
 }
 
 export default async function AdminEventTicketsPage({
   searchParams,
 }: {
-  searchParams: Promise<{ page?: string; perPage?: string }>
+  searchParams: Promise<{ page?: string }>
 }) {
   const session = await auth()
   if (!session?.user || (session.user.role !== "admin" && session.user.role !== "super_admin")) {
@@ -47,24 +39,13 @@ export default async function AdminEventTicketsPage({
   }
 
   const params = await searchParams
-  const perPage = parsePerPage(params.perPage)
   const page = Math.max(1, parseInt(params.page ?? "1", 10) || 1)
   const [events, totalCount] = await Promise.all([
-    getTicketedEventsForAdminPaginated(page, perPage),
+    getTicketedEventsForAdminPaginated(page, EVENTS_PER_PAGE),
     getTicketedEventsForAdminCount(),
   ])
-  const totalPages = Math.max(1, Math.ceil(totalCount / perPage))
+  const totalPages = Math.max(1, Math.ceil(totalCount / EVENTS_PER_PAGE))
   const currentPage = Math.min(page, totalPages)
-
-  function paginationUrl(opts: { page?: number; perPage?: number }) {
-    const p = opts.page ?? currentPage
-    const pp = opts.perPage ?? perPage
-    const search = new URLSearchParams()
-    if (p > 1) search.set("page", String(p))
-    if (pp !== DEFAULT_PER_PAGE) search.set("perPage", String(pp))
-    const q = search.toString()
-    return `/dashboard/admin/event-tickets${q ? `?${q}` : ""}`
-  }
 
   // Sort tickets by purchase date (newest first) in case relation didn't
   const eventsWithSortedTickets = events.map((event) => ({
@@ -194,42 +175,18 @@ export default async function AdminEventTicketsPage({
             ))}
           </div>
 
-          {events.length > 0 && (
-            <div className="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-white/10">
-              <div className="flex flex-wrap items-center gap-4">
-                <p className="text-white/60 text-sm">
-                  Page {currentPage} of {totalPages}
-                  <span className="text-white/50 ml-1">
-                    ({totalCount} event{totalCount !== 1 ? "s" : ""})
-                  </span>
-                </p>
-                <div className="flex items-center gap-1 text-sm">
-                  <span className="text-white/50">Show</span>
-                  {PER_PAGE_OPTIONS.map((n) =>
-                    n === perPage ? (
-                      <span
-                        key={n}
-                        className="min-w-[2rem] rounded px-2 py-1 text-center font-medium text-white bg-white/15"
-                      >
-                        {n}
-                      </span>
-                    ) : (
-                      <Link
-                        key={n}
-                        href={paginationUrl({ page: 1, perPage: n })}
-                        className="min-w-[2rem] rounded px-2 py-1 text-center text-white/70 hover:text-white hover:bg-white/10 transition-colors"
-                      >
-                        {n}
-                      </Link>
-                    )
-                  )}
-                  <span className="text-white/50">per page</span>
-                </div>
-              </div>
+          {totalPages > 1 && (
+            <div className="flex items-center justify-between gap-4 pt-4 border-t border-white/10">
+              <p className="text-white/60 text-sm">
+                Page {currentPage} of {totalPages}
+                <span className="text-white/50 ml-1">
+                  ({totalCount} event{totalCount !== 1 ? "s" : ""})
+                </span>
+              </p>
               <div className="flex items-center gap-2">
                 {currentPage > 1 ? (
                   <Button variant="outline" size="sm" className="border-white/20 text-white/80" asChild>
-                    <Link href={paginationUrl({ page: currentPage - 1 })}>
+                    <Link href={`/dashboard/admin/event-tickets?page=${currentPage - 1}`}>
                       <ChevronLeft className="h-4 w-4" />
                       Previous
                     </Link>
@@ -242,7 +199,7 @@ export default async function AdminEventTicketsPage({
                 )}
                 {currentPage < totalPages ? (
                   <Button variant="outline" size="sm" className="border-white/20 text-white/80" asChild>
-                    <Link href={paginationUrl({ page: currentPage + 1 })}>
+                    <Link href={`/dashboard/admin/event-tickets?page=${currentPage + 1}`}>
                       Next
                       <ChevronRight className="h-4 w-4" />
                     </Link>

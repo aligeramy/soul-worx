@@ -1,6 +1,6 @@
 import { db } from "./index"
 import { programs, events, rsvps, posts, products, users, eventUpdates, personalizedPrograms, programChecklistItems, userMemberships, proPlusQuestionnaires, ticketedEvents, eventTickets, eventCoupons, type UserRole } from "./schema"
-import { eq, and, gte, desc, asc, count, inArray } from "drizzle-orm"
+import { eq, and, gte, desc, asc, count } from "drizzle-orm"
 
 // ==================== USER QUERIES ====================
 
@@ -157,7 +157,7 @@ export async function getEventTicketById(ticketId: string) {
   })
 }
 
-const DEFAULT_EVENTS_PER_PAGE = 5
+const EVENTS_PER_PAGE = 8
 
 export async function getTicketedEventsForAdminCount() {
   const [row] = await db
@@ -166,35 +166,13 @@ export async function getTicketedEventsForAdminCount() {
   return Number(row?.count ?? 0)
 }
 
-/** Paginated events with tickets. Uses two queries so limit/offset apply correctly to events. */
-export async function getTicketedEventsForAdminPaginated(page: number, perPage: number = DEFAULT_EVENTS_PER_PAGE) {
-  const offset = (page - 1) * perPage
-  const eventRows = await db
-    .select()
-    .from(ticketedEvents)
-    .orderBy(desc(ticketedEvents.createdAt))
-    .limit(perPage)
-    .offset(offset)
-
-  if (eventRows.length === 0) return []
-
-  const eventIds = eventRows.map((e) => e.id)
-  const tickets = await db.query.eventTickets.findMany({
-    where: inArray(eventTickets.ticketedEventId, eventIds),
-    orderBy: [desc(eventTickets.createdAt)],
+export async function getTicketedEventsForAdminPaginated(page: number, perPage: number = EVENTS_PER_PAGE) {
+  return db.query.ticketedEvents.findMany({
+    orderBy: [desc(ticketedEvents.createdAt)],
+    with: { tickets: true },
+    limit: perPage,
+    offset: (page - 1) * perPage,
   })
-
-  const ticketsByEventId = new Map<string, typeof tickets>()
-  for (const t of tickets) {
-    const list = ticketsByEventId.get(t.ticketedEventId) ?? []
-    list.push(t)
-    ticketsByEventId.set(t.ticketedEventId, list)
-  }
-
-  return eventRows.map((event) => ({
-    ...event,
-    tickets: ticketsByEventId.get(event.id) ?? [],
-  }))
 }
 
 /** @deprecated Use getTicketedEventsForAdminPaginated for paginated list */
