@@ -12,7 +12,7 @@ export default async function EventsPage() {
       {/* Hero - same as event id page: events.jpg with gradient */}
       <section className="relative min-h-[28vh] sm:min-h-[35vh] md:min-h-[40vh] overflow-hidden">
         <Image
-          src="/optimized/events.jpg"
+          src="/events-bg.png"
           alt=""
           fill
           className="object-cover object-center opacity-60"

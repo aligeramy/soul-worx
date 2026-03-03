@@ -23,7 +23,7 @@ export default async function TicketedEventPage({
       {/* Hero - header background (same as events list) */}
       <section className="relative min-h-[24vh] sm:min-h-[28vh] md:min-h-[38vh] overflow-hidden">
         <Image
-          src="/optimized/events.jpg"
+          src="/events-bg.png"
           alt=""
           fill
           className="object-cover object-center opacity-60"
