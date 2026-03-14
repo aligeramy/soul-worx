@@ -48,14 +48,20 @@ export async function isUserAdmin(userId: string) {
 }
 
 // ==================== PROGRAMS ====================
+/** When set, only this program slug is shown on the public site (e.g. "future-ready"). Set to null to show all. */
+const ONLY_SHOW_PROGRAM_SLUG: string | null = "future-ready"
+
 export async function getPrograms() {
   const allPrograms = await db.query.programs.findMany({
     where: eq(programs.status, "published"),
     orderBy: [desc(programs.createdAt)],
   })
-  
-  // Filter out special-events program
-  return allPrograms.filter(p => p.slug !== "special-events")
+
+  let list = allPrograms.filter((p) => p.slug !== "special-events")
+  if (ONLY_SHOW_PROGRAM_SLUG) {
+    list = list.filter((p) => p.slug === ONLY_SHOW_PROGRAM_SLUG)
+  }
+  return list
 }
 
 export async function getProgramBySlug(slug: string) {
@@ -337,9 +343,12 @@ export async function getPublishedPrograms() {
     where: eq(programs.status, "published"),
     orderBy: desc(programs.publishedAt),
   })
-  
-  // Filter out special-events program
-  return allPrograms.filter(p => p.slug !== "special-events")
+
+  let list = allPrograms.filter((p) => p.slug !== "special-events")
+  if (ONLY_SHOW_PROGRAM_SLUG) {
+    list = list.filter((p) => p.slug === ONLY_SHOW_PROGRAM_SLUG)
+  }
+  return list
 }
 
 /**

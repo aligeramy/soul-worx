@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Plus, ExternalLink, Pencil } from "lucide-react"
+import { ProgramHideShowButton } from "@/components/admin/program-hide-show-button"
 
 export default async function AdminProgramsPage() {
   const programs = await getAllProgramsAdmin()
@@ -106,6 +107,7 @@ export default async function AdminProgramsPage() {
                       </td>
                       <td className="px-6 py-4">
                         <div className="flex items-center justify-end gap-1">
+                          <ProgramHideShowButton programId={program.id} status={program.status} />
                           <Link href={`/programs/${program.slug}`} target="_blank">
                             <Button variant="ghost" size="sm" className="text-white/70 hover:text-white hover:bg-white/10">
                               <ExternalLink className="h-4 w-4" />
