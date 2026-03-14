@@ -14,9 +14,7 @@ export default async function ProgramDetailPage({
   const { slug } = await params
   const program = await getProgramBySlug(slug)
 
-  if (!program || program.status !== "published") {
-    notFound()
-  }
+  if (!program) notFound()
 
   const events = await getEventsByProgram(program.id)
   const upcomingEvents = events.filter(

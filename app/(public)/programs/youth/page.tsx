@@ -1,20 +1,12 @@
 import { ProgramCard } from "@/components/programs/program-card"
 import { getCategoryGradient } from "@/lib/constants/programs"
-import { db } from "@/lib/db"
-import { programs } from "@/lib/db/schema"
-import { eq, desc } from "drizzle-orm"
+import { getPublishedPrograms } from "@/lib/db/queries"
 import Image from "next/image"
 import { Sparkles } from "lucide-react"
 
 export default async function YouthProgramsPage() {
-  // Get all youth programs
-  const allPrograms = await db.query.programs.findMany({
-    where: eq(programs.category, "youth"),
-    orderBy: desc(programs.publishedAt),
-  })
-  
-  // Filter out special-events program
-  const youthPrograms = allPrograms.filter(p => p.slug !== "special-events")
+  const programs = await getPublishedPrograms()
+  const youthPrograms = programs.filter((p) => p.category === "youth" && p.slug !== "special-events")
 
   return (
     <div className="min-h-screen bg-white">

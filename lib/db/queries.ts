@@ -64,9 +64,10 @@ export async function getPrograms() {
   return list
 }
 
+/** Returns program by slug only if published; draft/archived are hidden (returns null). */
 export async function getProgramBySlug(slug: string) {
   return db.query.programs.findFirst({
-    where: eq(programs.slug, slug),
+    where: and(eq(programs.slug, slug), eq(programs.status, "published")),
     with: {
       events: {
         orderBy: [asc(events.startTime)],
