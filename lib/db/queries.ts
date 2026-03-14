@@ -48,7 +48,7 @@ export async function isUserAdmin(userId: string) {
 }
 
 // ==================== PROGRAMS ====================
-/** When set, only this program slug is shown on the public site (e.g. "future-ready"). Set to null to show all. */
+/** When set, only programs whose slug includes this are shown (e.g. "future-ready"). Set to null to show all. */
 const ONLY_SHOW_PROGRAM_SLUG: string | null = "future-ready"
 
 export async function getPrograms() {
@@ -59,7 +59,7 @@ export async function getPrograms() {
 
   let list = allPrograms.filter((p) => p.slug !== "special-events")
   if (ONLY_SHOW_PROGRAM_SLUG) {
-    list = list.filter((p) => p.slug === ONLY_SHOW_PROGRAM_SLUG)
+    list = list.filter((p) => p.slug.includes(ONLY_SHOW_PROGRAM_SLUG))
   }
   return list
 }
@@ -346,7 +346,7 @@ export async function getPublishedPrograms() {
 
   let list = allPrograms.filter((p) => p.slug !== "special-events")
   if (ONLY_SHOW_PROGRAM_SLUG) {
-    list = list.filter((p) => p.slug === ONLY_SHOW_PROGRAM_SLUG)
+    list = list.filter((p) => p.slug.includes(ONLY_SHOW_PROGRAM_SLUG))
   }
   return list
 }

@@ -1,15 +1,11 @@
-import { getPublishedPrograms, getUpcomingEvents } from "@/lib/db/queries"
+import { getPublishedPrograms } from "@/lib/db/queries"
 import { ProgramCard } from "@/components/programs/program-card"
-import { EventCard } from "@/components/programs/event-card"
 import { getCategoryGradient } from "@/lib/constants/programs"
 import Image from "next/image"
 import { Calendar } from "lucide-react"
 
 export default async function ProgramsCalendarPage() {
-  const [programs, upcomingEvents] = await Promise.all([
-    getPublishedPrograms(),
-    getUpcomingEvents()
-  ])
+  const programs = await getPublishedPrograms()
 
   return (
     <div className="min-h-screen bg-white">
@@ -29,32 +25,14 @@ export default async function ProgramsCalendarPage() {
               CALENDAR
             </div>
             <h1 className="text-4xl md:text-6xl font-crimson font-normal tracking-tighter text-white mb-4">
-              Upcoming Events
+              Calendar
             </h1>
             <p className="text-xl text-white/90 max-w-2xl">
-              Join us for transformative workshops, performances, and community gatherings
+              Explore our programs and workshops
             </p>
           </div>
         </div>
       </section>
-
-      {/* Upcoming Events */}
-      {upcomingEvents.length > 0 && (
-        <section className="pb-16 px-6 pt-12">
-          <div className="max-w-7xl mx-auto">
-            <h2 className="text-3xl font-crimson font-normal tracking-tighter mb-8">Upcoming Events</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {upcomingEvents.map((event) => (
-                <EventCard
-                  key={event.id}
-                  event={event}
-                  categoryGradient={getCategoryGradient(event.program?.category || '')}
-                />
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
 
       {/* All Programs */}
       <section className="pb-2 px-6 pt-16 bg-brand-bg-darker">
